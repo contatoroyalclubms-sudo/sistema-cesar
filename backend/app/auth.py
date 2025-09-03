@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
 from datetime import timedelta
-from ..database import get_db, settings
-from ..models import Usuario, Empresa
-from ..schemas import Token, LoginRequest, Usuario as UsuarioSchema, UsuarioRegister
-from ..auth import autenticar_usuario, criar_access_token, obter_usuario_atual, gerar_hash_senha, validar_cpf_basico
+from .database import get_db, settings
+from .models import Usuario, Empresa
+from .schemas import Token, LoginRequest, Usuario as UsuarioSchema, UsuarioRegister
+from .auth_functions import autenticar_usuario, criar_access_token, obter_usuario_atual, gerar_hash_senha, validar_cpf_basico
 
 router = APIRouter()
 security = HTTPBearer()

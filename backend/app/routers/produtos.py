@@ -22,7 +22,7 @@ async def listar_produtos(
     skip: int = Query(0, ge=0, description="Número de registros para pular"),
     limit: int = Query(100, ge=1, le=1000, description="Número máximo de registros"),
     nome: Optional[str] = Query(None, description="Filtrar por nome"),
-    tipo: Optional[str] = Query(None, description="Filtrar por tipo"),
+    tipo_usuario: Optional[str] = Query(None, description="Filtrar por tipo"),
     categoria: Optional[str] = Query(None, description="Filtrar por categoria"),
     status: Optional[str] = Query(None, description="Filtrar por status"),
     estoque_baixo: Optional[bool] = Query(None, description="Produtos com estoque baixo"),
@@ -36,8 +36,8 @@ async def listar_produtos(
         # Aplicar filtros
         if nome:
             query = query.filter(Produto.nome.ilike(f"%{nome}%"))
-        if tipo:
-            query = query.filter(Produto.tipo_usuario== tipo)
+        if tipo_usuario:
+            query = query.filter(Produto.tipo_usuario == tipo_usuario)
         if categoria:
             query = query.filter(Produto.categoria.ilike(f"%{categoria}%"))
         if status:
@@ -55,13 +55,35 @@ async def listar_produtos(
         pages = (total + limit - 1) // limit
         page = (skip // limit) + 1
         
-        return ProdutoList(
-            produtos=produtos,
-            total=total,
-            page=page,
-            size=len(produtos),
-            pages=pages
-        )
+        # Para debug - vamos retornar os dados simples
+        produtos_dict = []
+        for produto in produtos:
+            produtos_dict.append({
+                "id": produto.id,
+                "nome": produto.nome,
+                "descricao": produto.descricao,
+                "tipo_usuario": produto.tipo_usuario.value if produto.tipo_usuario else None,
+                "preco": str(produto.preco),
+                "categoria": produto.categoria,
+                "codigo_interno": produto.codigo_interno,
+                "estoque_atual": produto.estoque_atual,
+                "estoque_minimo": produto.estoque_minimo,
+                "estoque_maximo": produto.estoque_maximo,
+                "controla_estoque": produto.controla_estoque,
+                "status": produto.status.value if produto.status else None,
+                "imagem_url": produto.imagem_url,
+                "empresa_id": produto.empresa_id,
+                "criado_em": produto.criado_em.isoformat() if produto.criado_em else None,
+                "atualizado_em": produto.atualizado_em.isoformat() if produto.atualizado_em else None,
+            })
+        
+        return {
+            "produtos": produtos_dict,
+            "total": total,
+            "page": page,
+            "size": len(produtos),
+            "pages": pages
+        }
         
     except Exception as e:
         logger.error(f"Erro ao listar produtos: {str(e)}")
@@ -77,6 +99,11 @@ async def criar_produto(
 ):
     """Criar novo produto (global, não atrelado a evento)"""
     try:
+        # Debug: verificar dados recebidos
+        print(f"🔍 DEBUG PRODUTOS - Dados recebidos: {produto.dict()}")
+        logger.info(f"Dados recebidos no create: {produto.dict()}")
+        logger.info(f"Dados recebidos com by_alias: {produto.dict(by_alias=True)}")
+        
         # Verificar código interno único se fornecido
         if produto.codigo_interno:
             produto_existente = db.query(Produto).filter(
@@ -90,8 +117,29 @@ async def criar_produto(
         
         # ✅ Criar produto global (sem evento_id)
         produto_data = produto.dict()
-        # evento_id removido - produtos são globais
-        db_produto = Produto(**produto_data)
+        
+        # Mapeamento direto para resolver incompatibilidade entre frontend/backend
+        if 'tipo' in produto_data:
+            produto_data['tipo_usuario'] = produto_data.pop('tipo')
+        
+        # Remover campos que não existem no modelo
+        campos_validos = {
+            'nome', 'descricao', 'tipo_usuario', 'preco', 'codigo_interno',
+            'estoque_atual', 'estoque_minimo', 'estoque_maximo', 
+            'controla_estoque', 'categoria', 'imagem_url', 'status'
+        }
+        produto_data_filtered = {k: v for k, v in produto_data.items() if k in campos_validos}
+        
+        # Debug: verificar dados filtrados
+        logger.info(f"Dados filtrados para SQLAlchemy: {produto_data_filtered}")
+        
+        # Converter strings para enums se necessário
+        if 'tipo_usuario' in produto_data_filtered and isinstance(produto_data_filtered['tipo_usuario'], str):
+            produto_data_filtered['tipo_usuario'] = TipoProduto(produto_data_filtered['tipo_usuario'])
+        if 'status' in produto_data_filtered and isinstance(produto_data_filtered['status'], str):
+            produto_data_filtered['status'] = StatusProduto(produto_data_filtered['status'])
+        
+        db_produto = Produto(**produto_data_filtered)
         
         db.add(db_produto)
         db.commit()
@@ -383,13 +431,13 @@ async def importar_produtos(
                         status = StatusProduto.ATIVO
                 
                 # Tipo - padrão BEBIDA se não especificado
-                tipo_usuario=TipoProduto.BEBIDA
+                tipo_usuario = TipoProduto.BEBIDA
                 
                 # Criar produto
                 produto_data = ProdutoCreate(
                     nome=nome,
                     descricao=descricao,
-                    tipo_usuario=tipo,
+                    tipo_usuario=tipo_usuario,
                     preco=preco,
                     codigo_interno=codigo_interno,
                     estoque_atual=estoque_atual,
@@ -419,7 +467,7 @@ async def importar_produtos(
                 db_produto = Produto(
                     nome=produto_data.nome,
                     descricao=produto_data.descricao,
-                    tipo_usuario=produto_data.tipo,
+                    tipo_usuario=produto_data.tipo_usuario,
                     preco=produto_data.preco,
                     codigo_interno=produto_data.codigo_interno,
                     estoque_atual=produto_data.estoque_atual,

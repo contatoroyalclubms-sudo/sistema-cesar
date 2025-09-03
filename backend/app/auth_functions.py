@@ -90,7 +90,7 @@ def validar_cpf_basico(cpf: str) -> bool:
 
 def verificar_permissao_admin(usuario_atual: Usuario = Depends(obter_usuario_atual)) -> Usuario:
     """Verificar se o usuário tem permissão de administrador"""
-    if usuario_atual.tipo.value != "admin":
+    if usuario_atual.tipo != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: permissão de administrador necessária"
@@ -99,7 +99,7 @@ def verificar_permissao_admin(usuario_atual: Usuario = Depends(obter_usuario_atu
 
 def verificar_permissao_promoter(usuario_atual: Usuario = Depends(obter_usuario_atual)) -> Usuario:
     """Verificar se o usuário tem permissão de promoter ou admin"""
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: permissão de promoter ou admin necessária"
@@ -108,6 +108,4 @@ def verificar_permissao_promoter(usuario_atual: Usuario = Depends(obter_usuario_
 
 def get_user_tipo(usuario: Usuario) -> str:
     """Helper function para obter tipo do usuário de forma consistente"""
-    if hasattr(usuario.tipo, 'value'):
-        return usuario.tipo.value
     return str(usuario.tipo)

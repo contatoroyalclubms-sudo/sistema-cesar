@@ -131,6 +131,24 @@ class UsuarioBase(BaseModel):
 
 class UsuarioCreate(UsuarioBase):
     senha: str
+    tipo_usuario: Optional[str] = None  # Alias para compatibilidade com frontend
+    
+    def __init__(self, **data):
+        # Mapear tipo_usuario para tipo se fornecido
+        if 'tipo_usuario' in data and 'tipo' not in data:
+            data['tipo'] = data['tipo_usuario']
+        super().__init__(**data)
+    
+    @field_validator('cpf')
+    @classmethod
+    def validar_cpf(cls, v):
+        cpf = re.sub(r'\D', '', v)
+        if len(cpf) != 11:
+            raise ValueError('CPF deve ter 11 dígitos')
+        return f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+
+class UsuarioUpdate(UsuarioBase):
+    senha: Optional[str] = None
     
     @field_validator('cpf')
     @classmethod
@@ -328,12 +346,18 @@ class TransacaoBase(BaseModel):
     nome_comprador: str
     email_comprador: Optional[EmailStr] = None
     telefone_comprador: Optional[str] = None
-    valor: Decimal
+    valor: Optional[Decimal] = None
     metodo_pagamento: Optional[str] = None
 
-class TransacaoCreate(TransacaoBase):
+class TransacaoCreate(BaseModel):
     evento_id: int
     lista_id: int
+    cpf_comprador: str
+    nome_comprador: str
+    email_comprador: Optional[EmailStr] = None
+    telefone_comprador: Optional[str] = None
+    metodo_pagamento: Optional[str] = None
+    quantidade: Optional[int] = 1
     
     @field_validator('cpf_comprador')
     @classmethod
@@ -1232,7 +1256,7 @@ class ProdutoCreate(ProdutoBase):
 class ProdutoUpdate(BaseModel):
     nome: Optional[str] = Field(None, min_length=1, max_length=255)
     descricao: Optional[str] = Field(None, max_length=1000)
-    tipo: Optional[TipoProdutoEnum] = None
+    tipo_usuario: Optional[TipoProdutoEnum] = None
     preco: Optional[Decimal] = Field(None, gt=0)
     categoria: Optional[str] = Field(None, max_length=100)
     codigo_interno: Optional[str] = Field(None, max_length=20)
@@ -1249,13 +1273,12 @@ class ProdutoResponse(ProdutoBase):
     criado_em: datetime
     atualizado_em: Optional[datetime]  # Permitir NULL para compatibilidade
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True, "use_enum_values": True}
 
 # Schemas para listagem com filtros
 class ProdutoFilter(BaseModel):
     nome: Optional[str] = None
-    tipo: Optional[TipoProdutoEnum] = None
+    tipo_usuario: Optional[TipoProdutoEnum] = None
     categoria: Optional[str] = None
     status: Optional[StatusProdutoEnum] = None
     preco_min: Optional[Decimal] = None

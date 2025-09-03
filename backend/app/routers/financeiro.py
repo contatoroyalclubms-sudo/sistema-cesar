@@ -41,7 +41,7 @@ async def criar_movimentacao(
     if not evento:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     db_movimentacao = MovimentacaoFinanceira(
@@ -84,7 +84,7 @@ async def listar_movimentacoes(
     if not evento:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     query = db.query(MovimentacaoFinanceira).filter(
@@ -131,7 +131,7 @@ async def atualizar_movimentacao(
         raise HTTPException(status_code=404, detail="Movimentação não encontrada")
     
     evento = db.query(Evento).filter(Evento.id == movimentacao.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     dados_anteriores = {
@@ -179,7 +179,7 @@ async def upload_comprovante(
         raise HTTPException(status_code=404, detail="Movimentação não encontrada")
     
     evento = db.query(Evento).filter(Evento.id == movimentacao.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     allowed_types = ["image/jpeg", "image/png", "application/pdf"]
@@ -217,7 +217,7 @@ async def obter_dashboard_financeiro(
     if not evento:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     total_entradas = db.query(func.sum(MovimentacaoFinanceira.valor)).filter(
@@ -287,7 +287,7 @@ async def obter_dashboard_financeiro(
         movimentacoes_recentes=[
             {
                 "id": mov.id,
-                "tipo": mov.tipo.value,
+                "tipo": mov.tipo,
                 "categoria": mov.categoria,
                 "valor": float(mov.valor),
                 "criado_em": mov.criado_em.isoformat()
@@ -323,7 +323,7 @@ async def exportar_relatorio_financeiro(
     if not evento:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     query = db.query(MovimentacaoFinanceira).filter(
@@ -359,7 +359,7 @@ async def exportar_relatorio_financeiro(
         
         for row, mov in enumerate(movimentacoes, 2):
             ws.cell(row=row, column=1, value=mov.criado_em.strftime("%d/%m/%Y"))
-            ws.cell(row=row, column=2, value=mov.tipo.value)
+            ws.cell(row=row, column=2, value=mov.tipo)
             ws.cell(row=row, column=3, value=mov.categoria)
             ws.cell(row=row, column=4, value=mov.descricao)
             ws.cell(row=row, column=5, value=float(mov.valor))
@@ -385,7 +385,7 @@ async def exportar_relatorio_financeiro(
         for mov in movimentacoes:
             writer.writerow([
                 mov.criado_em.strftime("%d/%m/%Y"),
-                mov.tipo.value,
+                mov.tipo,
                 mov.categoria,
                 mov.descricao,
                 str(mov.valor),
@@ -410,8 +410,8 @@ async def exportar_relatorio_financeiro(
         p.setFont("Helvetica", 12)
         y_position = height - 100
         
-        total_entradas = sum(float(mov.valor) for mov in movimentacoes if mov.tipo.value == "entrada")
-        total_saidas = sum(float(mov.valor) for mov in movimentacoes if mov.tipo.value == "saida")
+        total_entradas = sum(float(mov.valor) for mov in movimentacoes if mov.tipo == "entrada")
+        total_saidas = sum(float(mov.valor) for mov in movimentacoes if mov.tipo == "saida")
         saldo = total_entradas - total_saidas
         
         p.drawString(50, y_position, f"Total Entradas: R$ {total_entradas:.2f}")
@@ -431,7 +431,7 @@ async def exportar_relatorio_financeiro(
                 p.showPage()
                 y_position = height - 50
             
-            linha = f"{mov.criado_em.strftime('%d/%m/%Y')} - {mov.tipo.value.upper()} - {mov.categoria} - R$ {float(mov.valor):.2f}"
+            linha = f"{mov.criado_em.strftime('%d/%m/%Y')} - {mov.tipo.upper()} - {mov.categoria} - R$ {float(mov.valor):.2f}"
             p.drawString(50, y_position, linha)
             y_position -= 15
         
@@ -458,7 +458,7 @@ async def abrir_caixa_evento(
     if not evento:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     caixa_existente = db.query(CaixaEvento).filter(
@@ -506,7 +506,7 @@ async def fechar_caixa_evento(
         raise HTTPException(status_code=404, detail="Caixa não encontrado")
     
     evento = db.query(Evento).filter(Evento.id == caixa.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado: apenas admins e promoters podem acessar este recurso")
     
     if caixa.status == "fechado":

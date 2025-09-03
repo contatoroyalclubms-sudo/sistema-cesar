@@ -28,7 +28,7 @@ async def gerar_relatorio_vendas(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -94,7 +94,7 @@ async def exportar_vendas_csv(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -156,7 +156,7 @@ async def exportar_checkins_csv(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -290,7 +290,7 @@ async def exportar_vendas_excel(
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
     # Verificação de acesso simplificada
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado")
     
     wb = Workbook()

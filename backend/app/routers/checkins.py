@@ -33,7 +33,7 @@ async def realizar_checkin(
         )
     
     # Verificação simplificada: admins e promoters podem fazer checkin
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem realizar checkin"
@@ -97,7 +97,7 @@ async def listar_checkins_evento(
         )
     
     # Verificação simplificada: admins e promoters podem fazer checkin
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem realizar checkin"
@@ -129,7 +129,7 @@ async def verificar_checkin_cpf(
         )
     
     # Verificação simplificada: admins e promoters podem fazer checkin
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem realizar checkin"

@@ -17,6 +17,15 @@ from decimal import Decimal
 
 router = APIRouter()
 
+@router.get("/", response_model=List[ListaSchema])
+async def listar_listas(
+    db: Session = Depends(get_db),
+    usuario_atual: Usuario = Depends(obter_usuario_atual)
+):
+    """Listar todas as listas"""
+    listas = db.query(Lista).all()
+    return listas
+
 @router.post("/", response_model=ListaSchema)
 async def criar_lista(
     lista: ListaCreate,
@@ -32,7 +41,7 @@ async def criar_lista(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -60,7 +69,7 @@ async def listar_listas_evento(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -77,7 +86,7 @@ async def listar_listas_promoter(
 ):
     """Listar listas de um promoter"""
     
-    if (usuario_atual.tipo.value != "admin" and 
+    if (usuario_atual.tipo != "admin" and 
         usuario_atual.id != promoter_id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -104,7 +113,7 @@ async def atualizar_lista(
         )
     
     evento = db.query(Evento).filter(Evento.id == lista.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -134,7 +143,7 @@ async def desativar_lista(
         )
     
     evento = db.query(Evento).filter(Evento.id == lista.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -159,7 +168,7 @@ async def obter_lista_detalhada(
     
     evento = db.query(Evento).filter(Evento.id == lista.evento_id).first()
     # Admins têm acesso total, outros usuários têm acesso limitado
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado")
     
     total_convidados = db.query(Transacao).filter(
@@ -209,7 +218,7 @@ async def importar_convidados(
         raise HTTPException(status_code=404, detail="Lista não encontrada")
     
     evento = db.query(Evento).filter(Evento.id == lista.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado")
     
     try:
@@ -301,7 +310,7 @@ async def exportar_convidados(
         raise HTTPException(status_code=404, detail="Lista não encontrada")
     
     evento = db.query(Evento).filter(Evento.id == lista.evento_id).first()
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado")
     
     convidados = db.query(Transacao).outerjoin(Checkin).filter(
@@ -379,7 +388,7 @@ async def obter_dashboard_listas(
     if not evento:
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado")
     
     listas = db.query(Lista).filter(Lista.evento_id == evento_id).all()

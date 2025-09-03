@@ -18,7 +18,7 @@ async def obter_resumo_dashboard(
 ):
     """Obter resumo do dashboard"""
     
-    if usuario_atual.tipo.value == "admin":
+    if usuario_atual.tipo == "admin":
         eventos_query = db.query(Evento)
         transacoes_query = db.query(Transacao)
         checkins_query = db.query(Checkin)
@@ -161,7 +161,7 @@ async def obter_aniversariantes(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -189,7 +189,7 @@ async def obter_dados_tempo_real(
         raise HTTPException(status_code=404, detail="Evento não encontrado")
     
     # Verificação de acesso simplificada
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(status_code=403, detail="Acesso negado")
     
     uma_hora_atras = datetime.now() - timedelta(hours=1)

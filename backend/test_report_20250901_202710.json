@@ -1,0 +1,146 @@
+{
+  "start_time": "2025-09-01T20:27:06.773742",
+  "tests": {
+    "health_corretos": {
+      "description": "Health endpoints com caminhos corretos",
+      "start_time": "2025-09-01T20:27:10.162794",
+      "tests": [
+        {
+          "name": "Health Endpoints Corretos",
+          "start_time": "2025-09-01T20:27:10.187740",
+          "status": "passed",
+          "duration": 0.0,
+          "message": "Health endpoints: 3/3 funcionando",
+          "details": {
+            "/": {
+              "status_code": 200,
+              "success": true,
+              "response_size": 277
+            },
+            "/healthz": {
+              "status_code": 200,
+              "success": true,
+              "response_size": 266
+            },
+            "/api/health": {
+              "status_code": 200,
+              "success": true,
+              "response_size": 283
+            }
+          },
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "get_sistematico": {
+      "description": "Teste sistemático de todos os endpoints GET",
+      "start_time": "2025-09-01T20:27:10.187740",
+      "tests": [
+        {
+          "name": "Endpoints GET Sistemáticos",
+          "start_time": "2025-09-01T20:27:10.188738",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "GET endpoints: 0/0 funcionando",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    "routers_especificos": {
+      "description": "Endpoints específicos de cada router",
+      "start_time": "2025-09-01T20:27:10.188738",
+      "tests": [
+        {
+          "name": "Router Endpoints Específicos",
+          "start_time": "2025-09-01T20:27:10.385232",
+          "status": "passed",
+          "duration": 0.0,
+          "message": "Router endpoints: 7/8 funcionando",
+          "details": {
+            "usuarios": {
+              "endpoint": "/api/usuarios/",
+              "status_code": 403,
+              "success": true,
+              "requires_auth": true,
+              "method_allowed": true
+            },
+            "produtos": {
+              "endpoint": "/api/produtos/",
+              "status_code": 200,
+              "success": true,
+              "requires_auth": false,
+              "method_allowed": true
+            },
+            "eventos": {
+              "endpoint": "/api/eventos/",
+              "status_code": 403,
+              "success": true,
+              "requires_auth": true,
+              "method_allowed": true
+            },
+            "empresas": {
+              "endpoint": "/api/empresas/",
+              "status_code": 403,
+              "success": true,
+              "requires_auth": true,
+              "method_allowed": true
+            },
+            "dashboard": {
+              "endpoint": "/api/dashboard/resumo",
+              "status_code": 403,
+              "success": true,
+              "requires_auth": true,
+              "method_allowed": true
+            },
+            "listas": {
+              "endpoint": "/api/listas/",
+              "status_code": 405,
+              "success": false,
+              "requires_auth": false,
+              "method_allowed": false
+            },
+            "transacoes": {
+              "endpoint": "/api/transacoes/",
+              "status_code": 403,
+              "success": true,
+              "requires_auth": true,
+              "method_allowed": true
+            },
+            "formas_pagamento": {
+              "endpoint": "/api/formas-pagamento/",
+              "status_code": 403,
+              "success": true,
+              "requires_auth": true,
+              "method_allowed": true
+            }
+          },
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "summary": {
+    "total": 3,
+    "passed": 2,
+    "failed": 1,
+    "skipped": 0,
+    "errors": []
+  },
+  "end_time": "2025-09-01T20:27:10.385232"
+}

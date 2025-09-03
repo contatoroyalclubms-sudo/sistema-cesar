@@ -131,9 +131,17 @@ const CheckinInteligente: React.FC<CheckinInteligente> = ({ eventoId = 1 }) => {
     try {
       const response = await fetch(`/api/checkins/evento/${eventoSelecionado}`);
       const data = await response.json();
-      setCheckinsRecentes(data.slice(0, 10));
+      
+      // Validar se data é um array antes de usar slice
+      if (Array.isArray(data)) {
+        setCheckinsRecentes(data.slice(0, 10));
+      } else {
+        console.warn('API retornou dados em formato inválido:', data);
+        setCheckinsRecentes([]);
+      }
     } catch (error) {
       console.error('Erro ao carregar check-ins recentes:', error);
+      setCheckinsRecentes([]);
     }
   };
 

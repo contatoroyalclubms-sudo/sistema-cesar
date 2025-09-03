@@ -38,7 +38,7 @@ async def criar_transacao(
         )
     
     # Verificação simplificada: admins e promoters podem gerenciar transações
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem gerenciar transações"
@@ -56,10 +56,13 @@ async def criar_transacao(
     transacao_data['usuario_id'] = usuario_atual.id
     transacao_data['valor'] = lista.preco
     
+    # Remover quantidade do dict se existir (não é campo da tabela)
+    quantidade = transacao_data.pop('quantidade', 1)
+    
     db_transacao = Transacao(**transacao_data)
     db.add(db_transacao)
     
-    lista.vendas_realizadas += 1
+    lista.vendas_realizadas += quantidade
     
     db.commit()
     db.refresh(db_transacao)
@@ -112,7 +115,7 @@ async def obter_transacao(
     
     evento = db.query(Evento).filter(Evento.id == transacao.evento_id).first()
     # Verificação simplificada: admins e promoters podem gerenciar transações
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem gerenciar transações"
@@ -138,7 +141,7 @@ async def atualizar_status_transacao(
     
     evento = db.query(Evento).filter(Evento.id == transacao.evento_id).first()
     # Verificação simplificada: admins e promoters podem gerenciar transações
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem gerenciar transações"

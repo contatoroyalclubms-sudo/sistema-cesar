@@ -125,7 +125,7 @@ const EstoqueModule: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {loading ? '...' : stats.totalProducts.toLocaleString()}
+              {loading ? '...' : (stats?.totalProducts || 0).toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground">
               +12% em relação ao mês anterior
@@ -140,7 +140,7 @@ const EstoqueModule: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {loading ? '...' : formatCurrency(stats.totalValue)}
+              {loading ? '...' : formatCurrency(stats?.totalValue || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
               +8% em relação ao mês anterior
@@ -148,17 +148,17 @@ const EstoqueModule: React.FC = () => {
           </CardContent>
         </Card>
         
-        <Card className={stats.lowStockProducts > 0 ? "border-destructive bg-destructive/5" : ""}>
+        <Card className={(stats?.lowStockProducts || 0) > 0 ? "border-destructive bg-destructive/5" : ""}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Produtos Baixo Estoque</CardTitle>
-            <AlertTriangle className={`h-4 w-4 ${stats.lowStockProducts > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
+            <AlertTriangle className={`h-4 w-4 ${(stats?.lowStockProducts || 0) > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold ${stats.lowStockProducts > 0 ? 'text-destructive' : ''}`}>
-              {loading ? '...' : stats.lowStockProducts}
+            <div className={`text-2xl font-bold ${(stats?.lowStockProducts || 0) > 0 ? 'text-destructive' : ''}`}>
+              {loading ? '...' : (stats?.lowStockProducts || 0)}
             </div>
-            <p className={`text-xs ${stats.lowStockProducts > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>
-              {stats.lowStockProducts > 0 ? 'Requer atenção imediata' : 'Estoque adequado'}
+            <p className={`text-xs ${(stats?.lowStockProducts || 0) > 0 ? 'text-destructive' : 'text-muted-foreground'}`}>
+              {(stats?.lowStockProducts || 0) > 0 ? 'Requer atenção imediata' : 'Estoque adequado'}
             </p>
           </CardContent>
         </Card>
@@ -170,7 +170,7 @@ const EstoqueModule: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {loading ? '...' : stats.todayMovements}
+              {loading ? '...' : (stats?.todayMovements || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
               Entradas e saídas

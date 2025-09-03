@@ -89,7 +89,7 @@ class Lista(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(255), nullable=False)
-    tipo_usuario=Column(Enum(TipoLista), nullable=False)
+    tipo = Column(Enum(TipoLista), nullable=False)
     preco = Column(Numeric(10, 2), default=0)
     limite_vendas = Column(Integer)
     vendas_realizadas = Column(Integer, default=0)
@@ -226,7 +226,7 @@ class Produto(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(255), nullable=False)
     descricao = Column(Text)
-    tipo_usuario=Column(Enum(TipoProduto), nullable=False)
+    tipo_usuario = Column(Enum(TipoProduto), nullable=False)
     preco = Column(Numeric(10, 2), nullable=False)
     codigo_interno = Column(String(20))
     estoque_atual = Column(Integer, default=0)

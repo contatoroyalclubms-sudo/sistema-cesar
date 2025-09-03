@@ -3,7 +3,13 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
 from ..models import Usuario, Empresa
-from ..schemas import Usuario as UsuarioSchema, UsuarioCreate
+from ..schemas import Usuario as UsuarioSchema, UsuarioCreate, UsuarioBase
+from pydantic import BaseModel
+from typing import Optional
+
+# Definir UsuarioUpdate localmente para resolver o problema de importação
+class UsuarioUpdate(UsuarioBase):
+    senha: Optional[str] = None
 from ..auth_functions import obter_usuario_atual, verificar_permissao_admin, gerar_hash_senha, validar_cpf_basico
 
 router = APIRouter()
@@ -15,6 +21,21 @@ async def criar_usuario(
     usuario_atual: Usuario = Depends(verificar_permissao_admin)
 ):
     """Criar novo usuário (apenas admins)"""
+    
+    print(f"🔍 DEBUG CREATE - Objeto recebido: {usuario}")
+    print(f"🔍 DEBUG CREATE - Tipo do objeto: {type(usuario)}")
+    print(f"🔍 DEBUG CREATE - Dict do objeto: {usuario.dict() if hasattr(usuario, 'dict') else 'N/A'}")
+    print(f"🔍 DEBUG CREATE - Atributos disponíveis: {dir(usuario)}")
+    
+    try:
+        cpf_usuario = usuario.cpf
+        print(f"🔍 DEBUG CREATE - CPF acessado com sucesso: {cpf_usuario}")
+    except AttributeError as e:
+        print(f"❌ DEBUG CREATE - Erro ao acessar CPF: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Erro no schema: CPF não encontrado - {str(e)}"
+        )
     
     if not validar_cpf_basico(usuario.cpf):
         raise HTTPException(
@@ -29,18 +50,22 @@ async def criar_usuario(
             detail="CPF já cadastrado"
         )
     
-    email_existente = db.query(Usuario).filter(Usuario.email == usuario.email).first()
-    if email_existente:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email já cadastrado"
-        )
-    
+    if usuario.email:
+        email_existente = db.query(Usuario).filter(Usuario.email == usuario.email).first()
+        if email_existente:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email já cadastrado"
+            )
     
     senha_hash = gerar_hash_senha(usuario.senha)
     usuario_data = usuario.dict()
     del usuario_data['senha']
     usuario_data['senha_hash'] = senha_hash
+    
+    # Corrigir mapeamento de tipo_usuario para tipo se necessário
+    if 'tipo_usuario' in usuario_data:
+        usuario_data['tipo'] = usuario_data.pop('tipo_usuario')
     
     db_usuario = Usuario(**usuario_data)
     db.add(db_usuario)
@@ -77,7 +102,7 @@ async def obter_usuario(
             detail="Usuário não encontrado"
         )
     
-    if (usuario_atual.tipo.value != "admin" and 
+    if (usuario_atual.tipo != "admin" and 
         usuario_atual.id != usuario_id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -89,7 +114,7 @@ async def obter_usuario(
 @router.put("/{usuario_id}", response_model=UsuarioSchema)
 async def atualizar_usuario(
     usuario_id: int,
-    usuario_update: UsuarioCreate,
+    usuario_update: UsuarioUpdate,
     db: Session = Depends(get_db),
     usuario_atual: Usuario = Depends(verificar_permissao_admin)
 ):

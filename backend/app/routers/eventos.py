@@ -118,10 +118,10 @@ async def criar_evento(
     print(f"Limite idade: {evento.limite_idade}")
     print(f"Capacidade: {evento.capacidade_maxima}")
     print(f"Empresa ID: {evento.empresa_id}")
-    print(f"Usuario: {usuario_atual.nome} ({usuario_atual.tipo.value}) - ID: {usuario_atual.id}")
+    print(f"Usuario: {usuario_atual.nome} ({usuario_atual.tipo}) - ID: {usuario_atual.id}")
     print("=" * 50)
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem criar eventos"
@@ -276,7 +276,7 @@ async def obter_evento(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -300,7 +300,7 @@ async def atualizar_evento(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -358,7 +358,7 @@ async def obter_evento_detalhado(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -439,7 +439,7 @@ async def vincular_promoter(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -505,7 +505,7 @@ async def desvincular_promoter(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -543,7 +543,7 @@ async def obter_status_financeiro(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -585,7 +585,7 @@ async def obter_status_financeiro(
         "vendas_por_lista": [
             {
                 "nome": row.nome,
-                "tipo": row.tipo.value,
+                "tipo": row.tipo,
                 "preco": float(row.preco),
                 "vendas": row.vendas,
                 "receita": float(row.receita or 0)
@@ -617,7 +617,7 @@ async def exportar_evento_csv(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"
@@ -675,7 +675,7 @@ async def exportar_evento_pdf(
             detail="Evento não encontrado"
         )
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"

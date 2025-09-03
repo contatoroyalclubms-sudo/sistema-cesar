@@ -15,7 +15,7 @@ import time
 
 from .database import engine, get_db
 from .models import Base
-from .routers import auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, meep, import_export, financeiro
+from .routers import auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, meep, financeiro  # import_export
 from .middleware import LoggingMiddleware
 from .auth_functions import verificar_permissao_admin
 from .scheduler import start_scheduler
@@ -35,6 +35,10 @@ def run_startup_migrations():
         # Verificar se é ambiente Railway
         is_railway = os.getenv("RAILWAY_ENVIRONMENT") is not None
         database_url = os.getenv("DATABASE_URL")
+        
+        # TEMPORARIAMENTE DESABILITADO - Schema já migrado
+        logger.info("🔧 Migrações automáticas temporariamente desabilitadas")
+        return
         
         if is_railway and database_url:
             logger.info("🔄 Ambiente Railway detectado - Executando migrações automáticas...")
@@ -103,7 +107,9 @@ class UltimateCORSMiddleware(BaseHTTPMiddleware):
             # URLs de desenvolvimento
             "http://localhost:3000",
             "http://localhost:5173", 
+            "http://localhost:5174",
             "http://127.0.0.1:5173",
+            "http://127.0.0.1:5174",
             "http://localhost:8080",
             "http://127.0.0.1:8080",
             
@@ -208,18 +214,21 @@ class UltimateCORSMiddleware(BaseHTTPMiddleware):
             self._add_cors_headers(error_response, origin or "*")
             return error_response
 
-# Aplicar middleware CORS customizado
-app.add_middleware(UltimateCORSMiddleware)
+# Aplicar middleware CORS customizado - TEMPORARIAMENTE DESABILITADO
+# app.add_middleware(UltimateCORSMiddleware)
 
 # 🛡️ CORS PADRÃO COMO BACKUP (camada dupla de segurança)
+from fastapi.middleware.cors import CORSMiddleware
+
+# Configuração CORS otimizada para development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permitir todas as origens como backup
-    allow_credentials=True,  # ATIVADO: permitir credentials para autenticação
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
-    max_age=3600
+    allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://localhost:8080', 'http://localhost:4200'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+    expose_headers=['Content-Range', 'X-Content-Range'],
+    max_age=86400
 )
 
 # Middleware de logging
@@ -237,10 +246,9 @@ async def startup_event():
     deploy_monitor.log_startup_info()
     
     # Executar migração automática
-    logger.info("🔧 Verificando necessidade de migração automática...")
-    migration_start = time.time()
-    migration_success = run_auto_migration()
-    migration_duration = time.time() - migration_start
+    logger.info("🔧 Migrações automáticas temporariamente desabilitadas")
+    migration_success = True  # Assumir sucesso para prosseguir
+    migration_duration = 0
     
     # Log do resultado da migração
     deploy_monitor.log_migration_status(migration_success, migration_duration)
@@ -273,12 +281,12 @@ app.include_router(relatorios.router, prefix="/api/relatorios", tags=["Relatóri
 app.include_router(whatsapp.router, prefix="/api/whatsapp", tags=["WhatsApp"])
 app.include_router(cupons.router, prefix="/api/cupons", tags=["Cupons"])
 app.include_router(n8n.router, prefix="/api/n8n", tags=["N8N"])
-app.include_router(pdv.router, prefix="/api")
-# app.include_router(financeiro.router, prefix="/api/financeiro", tags=["Financeiro"])
-app.include_router(gamificacao.router, prefix="/api")
 app.include_router(produtos.router, prefix="/api")
+app.include_router(pdv.router, prefix="/api")
+app.include_router(gamificacao.router, prefix="/api")
+# app.include_router(financeiro.router, prefix="/api/financeiro", tags=["Financeiro"])
 app.include_router(formas_pagamento.router, prefix="/api/formas-pagamento", tags=["Formas de Pagamento"])
-app.include_router(import_export.router, tags=["Import-Export"])
+# app.include_router(import_export.router, tags=["Import-Export"])
 app.include_router(meep.router, prefix="/api/meep", tags=["MEEP Integration"])
 app.include_router(financeiro.router, prefix="/api/financeiro", tags=["Financeiro"])
 

@@ -504,7 +504,17 @@ export const listaService = {
     return response.data;
   },
 
+  async criar(listaData: any): Promise<any> {
+    const response = await api.post('/api/listas/', listaData);
+    return response.data;
+  },
+
   async update(id: number, listaData: any): Promise<any> {
+    const response = await api.put(`/api/listas/${id}`, listaData);
+    return response.data;
+  },
+
+  async atualizar(id: number, listaData: any): Promise<any> {
     const response = await api.put(`/api/listas/${id}`, listaData);
     return response.data;
   },

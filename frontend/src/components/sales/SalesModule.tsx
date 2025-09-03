@@ -123,7 +123,7 @@ const SalesModule: React.FC = () => {
         quantidade: novaVenda.quantidade
       };
 
-      await transacaoService.criar(dadosVenda);
+      await transacaoService.create(dadosVenda);
       
       setSuccess('Venda realizada com sucesso!');
       setNovaVenda({

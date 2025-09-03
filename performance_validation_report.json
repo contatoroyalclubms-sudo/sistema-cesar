@@ -1,0 +1,176 @@
+{
+  "timestamp": "2025-09-01T20:51:05.668834",
+  "tests": {
+    "system_resources": {
+      "cpu": {
+        "usage_percent": 11.3,
+        "cores": 8,
+        "status": "ok"
+      },
+      "memory": {
+        "usage_percent": 70.2,
+        "available_gb": 4.72,
+        "status": "ok"
+      },
+      "disk": {
+        "usage_percent": 45.99,
+        "free_gb": 257.13,
+        "status": "ok"
+      }
+    },
+    "database": {
+      "sqlite": {
+        "status": "connected",
+        "response_time_ms": 1.0,
+        "tables_count": 22,
+        "users_count": 0,
+        "file_size_mb": 0.27
+      },
+      "postgresql": {
+        "status": "connection_failed",
+        "error": ""
+      }
+    },
+    "server_endpoints": {
+      "server_running": false,
+      "endpoints": {
+        "root": {
+          "status": "connection_refused",
+          "error": "Servidor não está rodando"
+        },
+        "health": {
+          "status": "connection_refused",
+          "error": "Servidor não está rodando"
+        },
+        "usuarios_api": {
+          "status": "connection_refused",
+          "error": "Servidor não está rodando"
+        },
+        "produtos_api": {
+          "status": "connection_refused",
+          "error": "Servidor não está rodando"
+        },
+        "login_page": {
+          "status": "connection_refused",
+          "error": "Servidor não está rodando"
+        },
+        "dashboard_page": {
+          "status": "connection_refused",
+          "error": "Servidor não está rodando"
+        }
+      }
+    },
+    "cors_configuration": {
+      "config_files": {
+        "cors_config_development.json": {
+          "environment": "development",
+          "cors": {
+            "allow_credentials": true,
+            "expose_headers": [
+              "Content-Range",
+              "X-Content-Range"
+            ],
+            "max_age": 86400,
+            "allow_origins": [
+              "http://localhost:3000",
+              "http://127.0.0.1:3000",
+              "http://localhost:3001",
+              "http://localhost:5173",
+              "http://localhost:8080",
+              "http://localhost:4200"
+            ],
+            "allow_methods": [
+              "*"
+            ],
+            "allow_headers": [
+              "*"
+            ]
+          },
+          "security_notes": [
+            "ConfiguraÃ§Ã£o otimizada para development",
+            "Origins restritas baseadas no ambiente",
+            "Headers de seguranÃ§a aplicados",
+            "Credentials permitidas apenas para origins confiÃ¡veis"
+          ]
+        }
+      },
+      "runtime_test": {
+        "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/usuarios (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002196320F8E0>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))"
+      }
+    },
+    "optimization_files": {
+      "healthcheck_monitor.py": {
+        "exists": true,
+        "size_bytes": 17267,
+        "size_kb": 16.86,
+        "lines_of_code": 438,
+        "classes": 1,
+        "functions": 14,
+        "imports": 14,
+        "last_modified": "2025-09-01T20:39:22.960629"
+      },
+      "database_config_optimizer.py": {
+        "exists": true,
+        "size_bytes": 17666,
+        "size_kb": 17.25,
+        "lines_of_code": 429,
+        "classes": 1,
+        "functions": 11,
+        "imports": 14,
+        "last_modified": "2025-09-01T20:40:50.824603"
+      },
+      "cors_optimizer.py": {
+        "exists": true,
+        "size_bytes": 16109,
+        "size_kb": 15.73,
+        "lines_of_code": 434,
+        "classes": 1,
+        "functions": 12,
+        "imports": 13,
+        "last_modified": "2025-09-01T20:42:00.707956"
+      },
+      "authenticated_api_tester.py": {
+        "exists": true,
+        "size_bytes": 29572,
+        "size_kb": 28.88,
+        "lines_of_code": 658,
+        "classes": 1,
+        "functions": 17,
+        "imports": 10,
+        "last_modified": "2025-09-01T20:46:03.006802"
+      },
+      "auto_server_manager.py": {
+        "exists": true,
+        "size_bytes": 11040,
+        "size_kb": 10.78,
+        "lines_of_code": 290,
+        "classes": 1,
+        "functions": 11,
+        "imports": 10,
+        "last_modified": "2025-09-01T20:46:51.295150"
+      }
+    }
+  },
+  "performance": {
+    "score": 75,
+    "classification": "Regular",
+    "factors": [
+      "Memória moderada (>60%)",
+      "Servidor offline (-30)",
+      "Poucos endpoints funcionando: 0 (-10)",
+      "SQLite conectado (+10)",
+      "Otimizações implementadas: 5 (+15)"
+    ]
+  },
+  "optimizations": {},
+  "recommendations": [
+    "🚨 Servidor não está rodando - execute auto_server_manager.py",
+    "⚠️ PostgreSQL com erro - verificar configuração e conectividade",
+    "⚡ Score bom - considere otimizações avançadas",
+    "📊 Execute monitoramento contínuo com healthcheck_monitor.py",
+    "🔐 Configure autenticação robusta se ainda não feito",
+    "📈 Monitore logs regularmente para identificar problemas",
+    "🔄 Mantenha backups automáticos configurados"
+  ],
+  "execution_time_seconds": 29.83
+}

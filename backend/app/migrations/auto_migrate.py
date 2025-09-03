@@ -131,9 +131,9 @@ class AutoMigration:
                         
                         # Atualizar para lowercase
                         update_queries = [
-                            "UPDATE usuarios SET tipo_usuario='admin' WHERE tipo_usuario='ADMIN'",
-                            "UPDATE usuarios SET tipo_usuario='promoter' WHERE tipo_usuario='PROMOTER'",
-                            "UPDATE usuarios SET tipo_usuario='cliente' WHERE tipo_usuario='CLIENTE'"
+                            "UPDATE usuarios SET tipo='admin' WHERE tipo='ADMIN'",
+                            "UPDATE usuarios SET tipo='promoter' WHERE tipo='PROMOTER'",
+                            "UPDATE usuarios SET tipo='cliente' WHERE tipo='CLIENTE'"
                         ]
                         
                         for query in update_queries:
@@ -207,8 +207,8 @@ class AutoMigration:
                     logger.info("📝 Padronizando tipos de usuário...")
                     result = conn.execute(text("""
                         UPDATE usuarios 
-                        SET tipo_usuario = LOWER(TRIM(tipo_usuario)) 
-                        WHERE tipo_usuario IS NOT NULL
+                        SET tipo = LOWER(TRIM(tipo)) 
+                        WHERE tipo IS NOT NULL
                     """))
                     tipo_updates = result.rowcount
                     logger.info(f"✅ {tipo_updates} tipos de usuário padronizados")
@@ -216,9 +216,9 @@ class AutoMigration:
                     # 2. Corrigir tipos inválidos para 'cliente'
                     result = conn.execute(text("""
                         UPDATE usuarios 
-                        SET tipo_usuario = 'cliente' 
-                        WHERE tipo_usuario IS NOT NULL 
-                        AND tipo_usuario NOT IN ('admin', 'promoter', 'cliente', 'operador')
+                        SET tipo = 'cliente' 
+                        WHERE tipo IS NOT NULL 
+                        AND tipo NOT IN ('admin', 'promoter', 'cliente', 'operador')
                     """))
                     invalid_updates = result.rowcount
                     logger.info(f"✅ {invalid_updates} tipos inválidos corrigidos")
@@ -226,8 +226,8 @@ class AutoMigration:
                     # 3. Preencher campos NULL
                     result = conn.execute(text("""
                         UPDATE usuarios 
-                        SET tipo_usuario = 'cliente' 
-                        WHERE tipo_usuario IS NULL
+                        SET tipo = 'cliente' 
+                        WHERE tipo IS NULL
                     """))
                     null_updates = result.rowcount
                     logger.info(f"✅ {null_updates} campos NULL preenchidos")
@@ -524,9 +524,9 @@ class AutoMigration:
                 # Verificar tipos problemáticos
                 result = conn.execute(text("""
                     SELECT COUNT(*) FROM usuarios 
-                    WHERE tipo_usuario IS NULL 
-                    OR tipo_usuario != LOWER(TRIM(tipo_usuario))
-                    OR tipo_usuario NOT IN ('admin', 'promoter', 'cliente', 'operador')
+                    WHERE tipo IS NULL 
+                    OR tipo != LOWER(TRIM(tipo))
+                    OR tipo NOT IN ('admin', 'promoter', 'cliente', 'operador')
                 """))
                 problematic_types = result.scalar()
                 

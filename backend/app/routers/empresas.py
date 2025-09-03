@@ -49,7 +49,7 @@ async def obter_empresa(
 ):
     """Obter dados de uma empresa"""
     
-    if usuario_atual.tipo.value not in ["admin", "promoter"]:
+    if usuario_atual.tipo not in ["admin", "promoter"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Acesso negado: apenas admins e promoters podem acessar este recurso"

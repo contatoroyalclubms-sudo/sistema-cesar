@@ -1,0 +1,121 @@
+{
+  "start_time": "2025-09-01T20:15:22.303681",
+  "tests": {
+    "infraestrutura_web": {
+      "description": "Testes de infraestrutura web e endpoints básicos",
+      "start_time": "2025-09-01T20:15:25.317134",
+      "tests": [
+        {
+          "name": "Health Endpoints",
+          "start_time": "2025-09-01T20:15:25.317134",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Funcionalidade CORS",
+          "start_time": "2025-09-01T20:15:25.317134",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:15:25.317134"
+    },
+    "routers_criticos": {
+      "description": "Testes dos routers mais críticos do sistema",
+      "start_time": "2025-09-01T20:15:25.318131",
+      "tests": [
+        {
+          "name": "Auth Router",
+          "start_time": "2025-09-01T20:15:25.319133",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Usuários Router",
+          "start_time": "2025-09-01T20:15:25.319133",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Produtos Router",
+          "start_time": "2025-09-01T20:15:25.319133",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Eventos Router",
+          "start_time": "2025-09-01T20:15:25.319133",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 4,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:15:25.319133"
+    },
+    "routers_principais": {
+      "description": "Testes dos routers principais de negócio",
+      "start_time": "2025-09-01T20:15:25.320131",
+      "tests": [
+        {
+          "name": "Empresas Router",
+          "start_time": "2025-09-01T20:15:25.320131",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Dashboard Router",
+          "start_time": "2025-09-01T20:15:25.320131",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Cliente de teste não configurado",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:15:25.320131"
+    }
+  },
+  "summary": {
+    "total": 8,
+    "passed": 0,
+    "failed": 8,
+    "skipped": 0,
+    "errors": []
+  },
+  "end_time": "2025-09-01T20:15:25.320131"
+}

@@ -10,7 +10,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         start_time = time.time()
         
-        client_ip = request.client.host
+        # Handle test cases where request.client might be None
+        client_ip = request.client.host if request.client else "127.0.0.1"
         user_agent = request.headers.get("user-agent", "")
         method = request.method
         url = str(request.url)

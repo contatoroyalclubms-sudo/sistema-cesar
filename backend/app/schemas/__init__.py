@@ -1,766 +1,651 @@
 # Schemas package
+from pydantic import BaseModel, EmailStr, field_validator, Field
+from datetime import datetime, date, timezone
+from typing import Optional, List
+from decimal import Decimal
 
-try:
-    # Usar import direto do arquivo schemas.py (sem circular import)
-    import sys
-    import os
-    
-    # Adicionar path absoluto para o módulo schemas.py
-    current_dir = os.path.dirname(__file__)
-    parent_dir = os.path.dirname(current_dir)
-    schemas_path = os.path.join(parent_dir, 'schemas.py')
-    
-    # Executar o arquivo schemas.py como módulo
-    exec(open(schemas_path).read(), globals())
-    
-except Exception as e:
-    # Fallback: definir schemas básicos necessários
-    from pydantic import BaseModel
-    from typing import Optional
-    from datetime import datetime
-    
-    class Token(BaseModel):
-        access_token: str
-        token_type: str
-    
-    class TokenData(BaseModel):
-        cpf: Optional[str] = None
-    
-    class LoginRequest(BaseModel):
-        cpf: str
-        senha: str
-    
-    class UsuarioBase(BaseModel):
-        nome: str
-        email: str
-        
-    class UsuarioCreate(UsuarioBase):
-        senha: str
-        
-    class UsuarioRegister(BaseModel):
-        nome: str
-        email: str
-        cpf: str
-        telefone: Optional[str] = None
-        senha: str
-        tipo: Optional[str] = "cliente"  # Default para cliente
-        
-    class Usuario(UsuarioBase):
-        id: int
-        ativo: bool
-        
-        class Config:
-            from_attributes = True
-    
-    # Schemas de Evento (mínimos para funcionar)
-    class EventoBase(BaseModel):
-        nome: str
-        data_evento: datetime
-        
-    class EventoCreate(EventoBase):
-        pass
-        
-    class Evento(EventoBase):
-        id: int
-        
-        class Config:
-            from_attributes = True
-    
-    class EventoDetalhado(Evento):
-        pass
-    
-    class EventoFiltros(BaseModel):
-        nome: Optional[str] = None
-    
-    class PromoterEventoCreate(BaseModel):
-        evento_id: int
-        
-    class PromoterEventoResponse(BaseModel):
-        id: int
-        evento_id: int
-        
-    # Schemas básicos para outros módulos
-    class Empresa(BaseModel):
-        id: int
-        nome: str
-        
-    class EmpresaCreate(BaseModel):
-        nome: str
-        
-    class EmpresaUpdate(BaseModel):
-        nome: Optional[str] = None
-        
-    # Lista schemas
-    class Lista(BaseModel):
-        id: int
-        nome: str
-        
-        class Config:
-            from_attributes = True
-            
-    class ListaCreate(BaseModel):
-        nome: str
-        
-    class ListaUpdate(BaseModel):
-        nome: Optional[str] = None
-        
-    class ListaDetalhada(Lista):
-        convidados_count: int = 0
-        
-    class DashboardListas(BaseModel):
-        total_listas: int = 0
-        
-    # Convidado schemas
-    class Convidado(BaseModel):
-        id: int
-        nome: str
-        
-        class Config:
-            from_attributes = True
-            
-    class ConvidadoCreate(BaseModel):
-        nome: str
-        
-    class ConvidadoUpdate(BaseModel):
-        nome: Optional[str] = None
-        
-    class ConvidadoImport(BaseModel):
-        nome: str
-        
-    # Transacao schemas
-    class Transacao(BaseModel):
-        id: int
-        valor: float
-        
-        class Config:
-            from_attributes = True
-            
-    class TransacaoCreate(BaseModel):
-        valor: float
-        
-    class TransacaoUpdate(BaseModel):
-        valor: Optional[float] = None
-        
-    # Checkin schemas
-    class Checkin(BaseModel):
-        id: int
-        data_checkin: datetime
-        
-        class Config:
-            from_attributes = True
-            
-    class CheckinCreate(BaseModel):
-        data_checkin: datetime
-        
-    class CheckinUpdate(BaseModel):
-        data_checkin: Optional[datetime] = None
-        
-    # Cupom schemas
-    class Cupom(BaseModel):
-        id: int
-        codigo: str
-        
-        class Config:
-            from_attributes = True
-            
-    class CupomCreate(BaseModel):
-        codigo: str
-        
-    class CupomUpdate(BaseModel):
-        codigo: Optional[str] = None
-        
-    class CupomResponse(BaseModel):
-        id: int
-        codigo: str
-        desconto_percentual: Optional[float] = None
-        desconto_valor: Optional[float] = None
-        lista_nome: str = ""
-        evento_nome: str = ""
-        
-        class Config:
-            from_attributes = True
-        
-    # Dashboard schemas
-    class DashboardResumo(BaseModel):
-        total_eventos: int = 0
-        total_usuarios: int = 0
-        total_checkins: int = 0
-        receita_total: float = 0.0
-        
-    class RankingPromoter(BaseModel):
-        id: int
-        nome: str
-        total_vendas: float = 0.0
-        
-    class DashboardAvancado(BaseModel):
-        total_eventos: int = 0
-        total_vendas: int = 0
-        total_checkins: int = 0
-        receita_total: float = 0.0
-        taxa_conversao: float = 0.0
-        vendas_hoje: int = 0
-        vendas_semana: int = 0
-        vendas_mes: int = 0
-        receita_hoje: float = 0.0
-        receita_semana: float = 0.0
-        receita_mes: float = 0.0
-        checkins_hoje: int = 0
-        checkins_semana: int = 0
-        taxa_presenca: float = 0.0
-        fila_espera: int = 0
-        cortesias: int = 0
-        inadimplentes: int = 0
-        aniversariantes_mes: int = 0
-        consumo_medio: float = 0.0
-        
-    class FiltrosDashboard(BaseModel):
-        data_inicio: Optional[datetime] = None
-        data_fim: Optional[datetime] = None
-        evento_id: Optional[int] = None
-        
-    class RankingPromoterAvancado(BaseModel):
-        id: int
-        nome: str
-        total_vendas: float = 0.0
-        total_clientes: int = 0
-        
-    class DadosGrafico(BaseModel):
-        labels: list = []
-        datasets: list = []
-        
-    class RankingPromoterLista(BaseModel):
-        id: int
-        nome: str
-        total_vendas: float = 0.0
-        posicao: int = 1
-        
-    # Relatórios schemas
-    class RelatorioVendas(BaseModel):
-        evento_id: int
-        nome_evento: str
-        total_vendas: int = 0
-        receita_total: float = 0.0
-        vendas_por_lista: list = []
-        vendas_por_promoter: list = []
-        
-    # Gamificação schemas
-    class ConquistaBase(BaseModel):
-        nome: str
-        descricao: str
-        tipo: str = "vendas"
-        criterio_valor: int = 1
-        badge_nivel: str = "bronze"
-        icone: Optional[str] = None
-        
-    class ConquistaCreate(ConquistaBase):
-        pass
-        
-    class Conquista(ConquistaBase):
-        id: int
-        ativa: bool = True
-        criado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
-            
-    class PromoterConquistaResponse(BaseModel):
-        id: int
-        conquista_nome: str
-        conquista_descricao: str
-        badge_nivel: str
-        
-        class Config:
-            from_attributes = True
-            
-    class MetricaPromoterResponse(BaseModel):
-        promoter_id: int
-        promoter_nome: str
-        evento_id: Optional[int] = None
-        evento_nome: Optional[str] = None
-        periodo_inicio: Optional[datetime] = None
-        periodo_fim: Optional[datetime] = None
-        total_vendas: int = 0
-        receita_gerada: float = 0.0
-        total_convidados: int = 0
-        total_presentes: int = 0
-        taxa_presenca: float = 0.0
-        taxa_conversao: float = 0.0
-        crescimento_vendas: float = 0.0
-        posicao_vendas: Optional[int] = None
-        posicao_presenca: Optional[int] = None
-        posicao_geral: Optional[int] = None
-        badge_atual: str = "bronze"
-        conquistas_recentes: list = []
-        
-        class Config:
-            from_attributes = True
-            
-    class RankingGamificado(BaseModel):
-        promoter_id: int
-        nome_promoter: str
-        avatar_url: Optional[str] = None
-        badge_principal: str = "bronze"
-        nivel_experiencia: int = 1
-        total_vendas: int = 0
-        receita_gerada: float = 0.0
-        taxa_presenca: float = 0.0
-        taxa_conversao: float = 0.0
-        crescimento_mensal: float = 0.0
-        posicao_atual: int = 1
-        posicao_anterior: Optional[int] = None
-        conquistas_total: int = 0
-        conquistas_mes: int = 0
-        eventos_ativos: int = 0
-        streak_vendas: int = 0
-        pontuacao_total: int = 0
-        
-    class DashboardGamificacao(BaseModel):
-        ranking_geral: list = []
-        conquistas_recentes: list = []
-        metricas_periodo: dict = {}
-        badges_disponiveis: list = []
-        alertas_gamificacao: list = []
-        estatisticas_gerais: dict = {}
-        
-    class FiltrosRanking(BaseModel):
-        evento_id: Optional[int] = None
-        periodo_inicio: Optional[datetime] = None
-        periodo_fim: Optional[datetime] = None
-        badge_nivel: Optional[str] = None
-        tipo_ranking: Optional[str] = "geral"
-        limit: int = 20
-        
-    # Importar schemas de produtos do arquivo separado
-    try:
-        from .produtos import (
-            ProdutoBase, ProdutoCreate, ProdutoUpdate, ProdutoResponse,
-            ProdutoDetalhado, ProdutoImport, ProdutoExport, ProdutoFiltros,
-            ProdutoFilter, ProdutoList, RelatorioProdutos
-        )
-        # Alias para compatibilidade
-        Produto = ProdutoResponse
-    except ImportError:
-        # Fallback PDV schemas básicos
-        class ProdutoBase(BaseModel):
-            nome: str
-            descricao: Optional[str] = None
-            preco: float = 0.0
-            codigo_barras: Optional[str] = None
-            estoque_atual: int = 0
-            
-        class ProdutoCreate(ProdutoBase):
-            evento_id: int
-            
-        class ProdutoUpdate(BaseModel):
-            nome: Optional[str] = None
-            descricao: Optional[str] = None
-            preco: Optional[float] = None
-            codigo_barras: Optional[str] = None
-            estoque_atual: Optional[int] = None
-            
-        class ProdutoList(BaseModel):
-            produtos: list = []
-            total: int = 0
-            
-        class ProdutoFilter(BaseModel):
-            nome: Optional[str] = None
-            
-        class Produto(ProdutoBase):
-            id: int
-            evento_id: int = 0
-            
-            class Config:
-                from_attributes = True
-                
-        # Aliases
-        ProdutoResponse = Produto
-        ProdutoDetalhado = Produto
-            
-    class ComandaBase(BaseModel):
-        numero_comanda: str
-        cpf_cliente: Optional[str] = None
-        
-    class ComandaCreate(ComandaBase):
-        evento_id: int
-        
-    class Comanda(ComandaBase):
-        id: int
-        saldo: float = 0.0
-        
-        class Config:
-            from_attributes = True
-            
-    class VendaPDVBase(BaseModel):
-        valor_total: float = 0.0
-        
-    class VendaPDVCreate(VendaPDVBase):
-        comanda_id: int
-        
-    class VendaPDV(VendaPDVBase):
-        id: int
-        
-        class Config:
-            from_attributes = True
-            
-    class RecargaComandaBase(BaseModel):
-        valor: float = 0.0
-        
-    class RecargaComandaCreate(RecargaComandaBase):
-        comanda_id: int
-        
-    class RecargaComanda(RecargaComandaBase):
-        id: int
-        
-        class Config:
-            from_attributes = True
-            
-    class CaixaPDVBase(BaseModel):
-        valor_inicial: float = 0.0
-        
-    class CaixaPDVCreate(CaixaPDVBase):
-        evento_id: int
-        
-    class CaixaPDV(CaixaPDVBase):
-        id: int
-        
-        class Config:
-            from_attributes = True
-            
-    class RelatorioVendasPDV(BaseModel):
-        total_vendas: float = 0.0
-        total_produtos: int = 0
-        
-    class DashboardPDV(BaseModel):
-        vendas_hoje: int = 0
-        valor_vendas_hoje: float = 0.0
-        produtos_em_falta: int = 0
-        comandas_ativas: int = 0
-        caixas_abertos: int = 0
-        vendas_por_hora: list = []
-        produtos_mais_vendidos: list = []
-        alertas: list = []
-    
-    # MEEP Schemas
-    class ClienteEventoBase(BaseModel):
-        cpf: str
-        nome_completo: str
-        nome_social: Optional[str] = None
-        data_nascimento: Optional[datetime] = None
-        nome_mae: Optional[str] = None
-        telefone: Optional[str] = None
-        email: Optional[str] = None
-        status: str = "ativo"
-        
-    class ClienteEventoCreate(ClienteEventoBase):
-        pass
-        
-    class ClienteEventoResponse(ClienteEventoBase):
-        id: int
-        criado_em: Optional[datetime] = None
-        atualizado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
+# Schemas básicos para auth
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
-    # FormaPagamento schemas básicos para compatibilidade
-    class FormaPagamentoBase(BaseModel):
-        nome: str
-        descricao: Optional[str] = None
-        
-    class FormaPagamentoCreate(FormaPagamentoBase):
-        pass
-        
-    class FormaPagamentoUpdate(BaseModel):
-        nome: Optional[str] = None
-        descricao: Optional[str] = None
-        
-    class FormaPagamento(FormaPagamentoBase):
-        id: int
-        
-        class Config:
-            from_attributes = True
-            
-    class FormaPagamentoDetalhada(FormaPagamento):
-        pass
-        
-    class FormaPagamentoList(BaseModel):
-        items: list = []
-        total: int = 0
-        
-    # Schemas Financeiros (necessários para o módulo financeiro)
-    class MovimentacaoFinanceiraBase(BaseModel):
-        tipo: str  # "entrada" ou "saida"
-        categoria: str
-        descricao: str
-        valor: float
-        data_movimentacao: Optional[datetime] = None
-        
-    class MovimentacaoFinanceiraCreate(MovimentacaoFinanceiraBase):
-        evento_id: int
-        
-    class MovimentacaoFinanceiraUpdate(BaseModel):
-        tipo: Optional[str] = None
-        categoria: Optional[str] = None
-        descricao: Optional[str] = None
-        valor: Optional[float] = None
-        data_movimentacao: Optional[datetime] = None
-        
-    class MovimentacaoFinanceira(MovimentacaoFinanceiraBase):
-        id: int
-        evento_id: int
-        usuario_responsavel_id: Optional[int] = None
-        status: str = "pendente"
-        criado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
-            
-    class CaixaEventoBase(BaseModel):
-        valor_inicial: float = 0.0
-        observacoes_abertura: Optional[str] = None
-        
-    class CaixaEventoCreate(CaixaEventoBase):
-        evento_id: int
-        
-    class CaixaEvento(CaixaEventoBase):
-        id: int
-        evento_id: int
-        operador_abertura_id: Optional[int] = None
-        operador_fechamento_id: Optional[int] = None
-        data_abertura: Optional[datetime] = None
-        data_fechamento: Optional[datetime] = None
-        valor_final: Optional[float] = None
-        observacoes_fechamento: Optional[str] = None
-        status: str = "aberto"
-        
-        class Config:
-            from_attributes = True
-            
-    class DashboardFinanceiro(BaseModel):
-        total_entradas: float = 0.0
-        total_saidas: float = 0.0
-        saldo_atual: float = 0.0
-        movimentacoes_hoje: int = 0
-        movimentacoes_mes: int = 0
-        receita_hoje: float = 0.0
-        receita_mes: float = 0.0
-        gastos_hoje: float = 0.0
-        gastos_mes: float = 0.0
-        caixas_abertos: int = 0
-        ultima_movimentacao: Optional[datetime] = None
-        categorias_entrada: list = []
-        categorias_saida: list = []
-        evolucao_mensal: list = []
-            
-    class ValidacaoAcessoBase(BaseModel):
-        evento_id: int
-        cliente_id: Optional[int] = None
-        cpf_hash: str
-        qr_code_data: str
-        cpf_digits: str
-        ip_address: Optional[str] = None
-        user_agent: Optional[str] = None
-        sucesso: bool = False
-        motivo_falha: Optional[str] = None
-        latitude: Optional[float] = None
-        longitude: Optional[float] = None
-        device_info: Optional[str] = None
-        
-    class ValidacaoAcessoResponse(ValidacaoAcessoBase):
-        id: int
-        timestamp_validacao: Optional[datetime] = None
-        criado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
-            
-    class EquipamentoEventoBase(BaseModel):
-        evento_id: int
-        nome: str
-        tipo: str
-        ip_address: str
-        mac_address: Optional[str] = None
-        status: str = "offline"
-        configuracao: Optional[str] = None
-        localizacao: Optional[str] = None
-        responsavel_id: Optional[int] = None
-        heartbeat_interval: int = 30
-        
-    class EquipamentoEventoCreate(EquipamentoEventoBase):
-        pass
-        
-    class EquipamentoEventoResponse(EquipamentoEventoBase):
-        id: int
-        ultima_atividade: Optional[datetime] = None
-        criado_em: Optional[datetime] = None
-        atualizado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
-            
-    class PrevisaoIABase(BaseModel):
-        evento_id: int
-        tipo_previsao: str
-        dados_entrada: str
-        resultado_previsao: str
-        confiabilidade: Optional[float] = None
-        aplicada: bool = False
-        feedback_real: Optional[str] = None
-        precisao_real: Optional[float] = None
-        
-    class PrevisaoIAResponse(PrevisaoIABase):
-        id: int
-        timestamp_previsao: Optional[datetime] = None
-        criado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
-            
-    class AnalyticsMEEPBase(BaseModel):
-        evento_id: int
-        metrica: str
-        valor: Optional[float] = None
-        valor_anterior: Optional[float] = None
-        percentual_mudanca: Optional[float] = None
-        periodo: Optional[str] = None
-        dados_detalhados: Optional[str] = None
-        alertas: Optional[str] = None
-        
-    class AnalyticsMEEPResponse(AnalyticsMEEPBase):
-        id: int
-        timestamp_coleta: Optional[datetime] = None
-        criado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
-            
-    class LogSegurancaMEEPBase(BaseModel):
-        evento_id: Optional[int] = None
-        tipo_evento: str
-        gravidade: str = "info"
-        ip_address: Optional[str] = None
-        user_agent: Optional[str] = None
-        dados_evento: str
-        usuario_id: Optional[int] = None
-        resolvido: bool = False
-        
-    class LogSegurancaMEEPResponse(LogSegurancaMEEPBase):
-        id: int
-        timestamp_evento: Optional[datetime] = None
-        criado_em: Optional[datetime] = None
-        
-        class Config:
-            from_attributes = True
+class TokenData(BaseModel):
+    cpf: Optional[str] = None
 
-# Re-export para compatibilidade
+class LoginRequest(BaseModel):
+    cpf: str
+    senha: str
+
+# Schemas básicos para usuários
+class UsuarioBase(BaseModel):
+    nome: str
+    email: str
+    cpf: str
+    telefone: Optional[str] = None
+    tipo_usuario: str = "cliente"
+    
+class UsuarioCreate(UsuarioBase):
+    senha: str
+    
+class UsuarioUpdate(UsuarioBase):
+    senha: Optional[str] = None
+    
+class UsuarioRegister(BaseModel):
+    nome: str
+    email: str
+    cpf: str
+    telefone: Optional[str] = None
+    senha: str
+    tipo_usuario: Optional[str] = "cliente"
+    
+class Usuario(UsuarioBase):
+    id: int
+    ativo: bool = True
+    
+    class Config:
+        from_attributes = True
+
+# Schemas básicos para eventos
+class EventoBase(BaseModel):
+    nome: str
+    local: str
+    data_evento: datetime
+    endereco: Optional[str] = None
+    limite_idade: Optional[int] = None
+    capacidade_maxima: Optional[int] = None
+    
+class EventoCreate(EventoBase):
+    pass
+    
+class Evento(EventoBase):
+    id: int
+    ativo: bool = True
+    
+    class Config:
+        from_attributes = True
+        
+class EventoDetalhado(Evento):
+    total_vendas: int = 0
+    receita_total: float = 0.0
+    
+class EventoFiltros(BaseModel):
+    nome: Optional[str] = None
+
+# Outros schemas básicos necessários
+class PromoterEventoCreate(BaseModel):
+    evento_id: int
+    
+class PromoterEventoResponse(BaseModel):
+    id: int
+    evento_id: int
+
+# Schemas para empresas
+class EmpresaBase(BaseModel):
+    nome: str
+    
+class EmpresaCreate(EmpresaBase):
+    pass
+    
+class Empresa(EmpresaBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+# Schemas para listas
+class ListaBase(BaseModel):
+    nome: str
+    
+class ListaCreate(ListaBase):
+    pass
+    
+class Lista(ListaBase):
+    id: int
+    evento_id: int
+    
+    class Config:
+        from_attributes = True
+
+# Schema detalhado para listas (usado por routers/listas.py)
+class ListaDetalhada(Lista):
+    total_convidados: int = 0
+    convidados_presentes: int = 0
+    taxa_presenca: float = 0.0
+    receita_gerada: Decimal = Decimal('0.00')
+    promoter_nome: Optional[str] = None
+
+class ConvidadoCreate(BaseModel):
+    cpf: str
+    nome: str
+    email: Optional[EmailStr] = None
+    telefone: Optional[str] = None
+
+class ConvidadoImport(BaseModel):
+    cpf: str
+    nome: str
+    email: Optional[EmailStr] = None
+    telefone: Optional[str] = None
+
+# Schemas para transações
+class TransacaoBase(BaseModel):
+    valor: float
+    
+class TransacaoCreate(TransacaoBase):
+    pass
+    
+class Transacao(TransacaoBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+# Schemas para checkins
+class CheckinBase(BaseModel):
+    data_checkin: datetime
+    
+class CheckinCreate(CheckinBase):
+    pass
+    
+class Checkin(CheckinBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+# Schemas para dashboard
+class DashboardResumo(BaseModel):
+    total_eventos: int = 0
+    total_usuarios: int = 0
+    total_checkins: int = 0
+    receita_total: float = 0.0
+    eventos_hoje: int = 0
+    vendas_hoje: int = 0
+
+
+# Schema para retorno do dashboard de listas
+class DashboardListas(BaseModel):
+    total_listas: int = 0
+    total_convidados: int = 0
+    total_presentes: int = 0
+    taxa_presenca_geral: float = 0.0
+    listas_mais_ativas: List[dict] = []
+    promoters_destaque: List[dict] = []
+    convidados_por_tipo: List[dict] = []
+    presencas_tempo_real: List[dict] = []
+
+
+# Schemas para ranking e dashboards avançados
+class RankingPromoter(BaseModel):
+    promoter_id: int
+    nome_promoter: str
+    total_vendas: int
+    receita_gerada: Decimal
+    posicao: int
+
+class RankingPromoterAvancado(RankingPromoter):
+    total_checkins: int = 0
+    taxa_presenca: float = 0.0
+    taxa_conversao: float = 0.0
+    badge: Optional[str] = None
+
+class DadosGrafico(BaseModel):
+    data: str
+    vendas: int
+    receita: float
+
+class FiltrosDashboard(BaseModel):
+    evento_id: Optional[int] = None
+    promoter_id: Optional[int] = None
+    data_inicio: Optional[date] = None
+    data_fim: Optional[date] = None
+
+class DashboardAvancado(BaseModel):
+    total_eventos: int = 0
+    total_vendas: int = 0
+    total_checkins: int = 0
+    receita_total: float = 0.0
+    taxa_conversao: float = 0.0
+    vendas_hoje: int = 0
+    vendas_semana: int = 0
+    vendas_mes: int = 0
+    receita_hoje: float = 0.0
+    receita_semana: float = 0.0
+    receita_mes: float = 0.0
+    checkins_hoje: int = 0
+    checkins_semana: int = 0
+    taxa_presenca: float = 0.0
+    fila_espera: int = 0
+    cortesias: int = 0
+    inadimplentes: int = 0
+    aniversariantes_mes: int = 0
+    consumo_medio: float = 0.0
+
+
+# Schema para relatórios de vendas
+class RelatorioVendas(BaseModel):
+    evento_id: int
+    nome_evento: str
+    total_vendas: int
+    receita_total: float
+    vendas_por_lista: List[dict] = []
+    vendas_por_promoter: List[dict] = []
+
+# Schemas mínimos para PDV
+class ProdutoCreate(BaseModel):
+    nome: str
+    codigo_barras: Optional[str] = None
+    codigo_interno: Optional[str] = None
+    preco: float
+    controla_estoque: bool = False
+    estoque_atual: Optional[int] = 0
+    estoque_minimo: Optional[int] = 0
+    categoria: Optional[str] = None
+
+class Produto(BaseModel):
+    id: int
+    nome: str
+    codigo_barras: Optional[str] = None
+    codigo_interno: Optional[str] = None
+    preco: float
+    controla_estoque: bool = False
+    estoque_atual: Optional[int] = 0
+    estoque_minimo: Optional[int] = 0
+    categoria: Optional[str] = None
+
+class ProdutoUpdate(ProdutoCreate):
+    nome: Optional[str] = None
+    preco: Optional[float] = None
+    controla_estoque: Optional[bool] = None
+    estoque_atual: Optional[int] = None
+    estoque_minimo: Optional[int] = None
+
+class ProdutoResponse(Produto):
+    pass
+
+class ComandaCreate(BaseModel):
+    evento_id: int
+    cpf_cliente: Optional[str] = None
+    saldo_inicial: Decimal = Decimal('0.00')
+
+class Comanda(BaseModel):
+    id: int
+    evento_id: int
+    cpf_cliente: Optional[str] = None
+    saldo_atual: Decimal = Decimal('0.00')
+
+class RecargaComandaCreate(BaseModel):
+    valor: Decimal
+    tipo_pagamento: Optional[str] = None
+
+class RecargaComanda(BaseModel):
+    id: int
+    comanda_id: int
+    valor: Decimal
+
+class ItemVendaPDVCreate(BaseModel):
+    produto_id: int
+    quantidade: int
+    preco_unitario: Decimal
+    observacoes: Optional[str] = None
+
+class PagamentoPDVCreate(BaseModel):
+    tipo_pagamento: str
+    valor: Decimal
+    promoter_id: Optional[int] = None
+    comissao_percentual: Optional[Decimal] = None
+
+class VendaPDVCreate(BaseModel):
+    evento_id: int
+    cpf_cliente: Optional[str] = None
+    nome_cliente: Optional[str] = None
+    itens: List[ItemVendaPDVCreate]
+    pagamentos: List[PagamentoPDVCreate]
+    comanda_id: Optional[int] = None
+    cupom_codigo: Optional[str] = None
+    observacoes: Optional[str] = None
+
+class VendaPDV(BaseModel):
+    id: int
+    numero_venda: str
+    valor_final: Decimal
+
+class CaixaPDVCreate(BaseModel):
+    evento_id: int
+    numero_caixa: str
+    valor_abertura: Decimal
+
+class CaixaPDV(BaseModel):
+    id: int
+    numero_caixa: str
+    evento_id: int
+    valor_abertura: Decimal
+    valor_vendas: Decimal = Decimal('0.00')
+    valor_fechamento: Optional[Decimal] = None
+    status: str = "aberto"
+
+class RelatorioVendasPDV(BaseModel):
+    total_vendas: int
+    valor_total: float
+
+class DashboardPDV(BaseModel):
+    vendas_hoje: int
+    valor_vendas_hoje: float
+    produtos_em_falta: int
+    comandas_ativas: int
+    caixas_abertos: int
+    vendas_por_hora: List[dict] = []
+    produtos_mais_vendidos: List[dict] = []
+    alertas: List[dict] = []
+
+# Schemas mínimos para gamificação
+class ConquistaCreate(BaseModel):
+    nome: str
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    criterio_valor: int = 0
+    ativa: bool = True
+    badge_nivel: Optional[str] = None
+    icone: Optional[str] = None
+
+class Conquista(BaseModel):
+    id: int
+    nome: str
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    criterio_valor: int = 0
+    ativa: bool = True
+    badge_nivel: Optional[str] = None
+    icone: Optional[str] = None
+
+class MetricaPromoterResponse(BaseModel):
+    promoter_id: int
+    total_vendas: int
+    total_checkins: int
+
+class RankingGamificado(BaseModel):
+    promoter_id: int
+    nome_promoter: str
+    badge_principal: str
+    nivel_experiencia: int
+    total_vendas: int
+    receita_gerada: Decimal
+    taxa_presenca: float
+    taxa_conversao: float
+    crescimento_mensal: float
+    posicao_atual: int
+    posicao_anterior: Optional[int]
+    conquistas_total: int
+    conquistas_mes: int
+    eventos_ativos: int
+    streak_vendas: int
+    pontuacao_total: int
+
+class FiltrosRanking(BaseModel):
+    evento_id: Optional[int] = None
+    periodo_inicio: Optional[date] = None
+    periodo_fim: Optional[date] = None
+
+class PromoterConquistaResponse(BaseModel):
+    id: int
+    conquista_nome: str
+    conquista_descricao: Optional[str]
+    badge_nivel: Optional[str]
+    icone: Optional[str]
+    valor_alcancado: Optional[int]
+    data_conquista: Optional[datetime]
+    evento_nome: Optional[str]
+
+class DashboardGamificacao(BaseModel):
+    ranking_geral: List[RankingGamificado]
+    conquistas_recentes: List[PromoterConquistaResponse]
+    metricas_periodo: dict
+    badges_disponiveis: List[dict]
+    alertas_gamificacao: List[dict]
+    estatisticas_gerais: dict
+
+# Schemas para cupons
+class CupomBase(BaseModel):
+    codigo: str
+    
+class CupomCreate(CupomBase):
+    pass
+    
+class Cupom(CupomBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+class CupomResponse(BaseModel):
+    id: int
+    codigo: str
+    desconto_percentual: Optional[float] = None
+    desconto_valor: Optional[float] = None
+    lista_nome: Optional[str] = None
+    evento_nome: Optional[str] = None
+
+# ----- Adições para evitar ImportErrors em múltiplos routers -----
+# Schemas adicionais para listagem e filtros de produtos
+class ProdutoFilter(BaseModel):
+    nome: Optional[str] = None
+    tipo: Optional[str] = None
+    categoria: Optional[str] = None
+    status: Optional[str] = None
+    estoque_baixo: Optional[bool] = None
+
+
+class ProdutoList(BaseModel):
+    produtos: List[Produto] = []
+    total: int = 0
+    page: int = 1
+    size: int = 0
+    pages: int = 1
+
+
+# Schemas para MEep / analytics / equipamentos / clientes
+class ClienteEventoResponse(BaseModel):
+    id: int
+    nome_completo: Optional[str] = None
+    cpf: Optional[str] = None
+    email: Optional[EmailStr] = None
+    telefone: Optional[str] = None
+    status: Optional[str] = None
+
+
+class ClienteEventoCreate(BaseModel):
+    evento_id: int
+    nome_completo: str
+    cpf: str
+    email: Optional[EmailStr] = None
+    telefone: Optional[str] = None
+    status: Optional[str] = "ativo"
+
+
+class ValidacaoAcessoResponse(BaseModel):
+    id: int
+    cliente_id: Optional[int] = None
+    evento_id: Optional[int] = None
+    sucesso: bool = False
+    timestamp_validacao: Optional[datetime] = None
+    motivo_falha: Optional[str] = None
+    ip_address: Optional[str] = None
+
+
+class EquipamentoEventoResponse(BaseModel):
+    id: int
+    evento_id: int
+    ip_address: Optional[str] = None
+    serial: Optional[str] = None
+    status: Optional[str] = None
+    ultima_atividade: Optional[datetime] = None
+
+
+class EquipamentoEventoCreate(BaseModel):
+    evento_id: int
+    ip_address: str
+    serial: Optional[str] = None
+
+
+class PrevisaoIAResponse(BaseModel):
+    id: int
+    evento_id: int
+    tipo_previsao: Optional[str] = None
+    timestamp_previsao: Optional[datetime] = None
+    dados_entrada: Optional[dict] = {}
+    resultado_previsao: Optional[dict] = {}
+
+
+class AnalyticsMEEPResponse(BaseModel):
+    metricas: dict
+    timestamp: Optional[datetime] = None
+
+
+class LogSegurancaMEEPResponse(BaseModel):
+    id: int
+    evento_id: Optional[int] = None
+    gravidade: Optional[str] = None
+    tipo_evento: Optional[str] = None
+    dados_evento: Optional[dict] = {}
+    timestamp_evento: Optional[datetime] = None
+    resolvido: bool = False
+
+
+# Schemas para formas de pagamento
+class FormaPagamento(BaseModel):
+    id: int
+    nome: str
+    codigo: Optional[str] = None
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    status: Optional[str] = None
+    ativo: bool = True
+    ordem_exibicao: Optional[int] = 0
+    limite_minimo: Optional[float] = None
+    limite_maximo: Optional[float] = None
+
+
+class FormaPagamentoCreate(BaseModel):
+    nome: str
+    codigo: Optional[str] = None
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    ativo: bool = True
+    ordem_exibicao: Optional[int] = 0
+    limite_minimo: Optional[float] = None
+    limite_maximo: Optional[float] = None
+
+
+class FormaPagamentoUpdate(BaseModel):
+    nome: Optional[str] = None
+    codigo: Optional[str] = None
+    descricao: Optional[str] = None
+    tipo: Optional[str] = None
+    ativo: Optional[bool] = None
+    ordem_exibicao: Optional[int] = None
+    limite_minimo: Optional[float] = None
+    limite_maximo: Optional[float] = None
+
+
+class FormaPagamentoDetalhada(FormaPagamento):
+    detalhes: Optional[dict] = {}
+
+
+class FormaPagamentoList(BaseModel):
+    items: List[FormaPagamento] = []
+    total: int = 0
+    page: int = 1
+    per_page: int = 10
+    pages: int = 1
+
+# ----- Fim adições -----
+
+# Schemas financeiros mínimos
+class MovimentacaoFinanceiraBase(BaseModel):
+    evento_id: int
+    tipo: str
+    categoria: Optional[str] = None
+    descricao: Optional[str] = None
+    valor: Decimal
+    status: Optional[str] = "pendente"
+    promoter_id: Optional[int] = None
+
+
+class MovimentacaoFinanceiraCreate(MovimentacaoFinanceiraBase):
+    pass
+
+
+class MovimentacaoFinanceiraUpdate(BaseModel):
+    categoria: Optional[str] = None
+    descricao: Optional[str] = None
+    valor: Optional[Decimal] = None
+    status: Optional[str] = None
+
+
+class MovimentacaoFinanceira(MovimentacaoFinanceiraBase):
+    id: int
+    criado_em: Optional[datetime] = None
+
+
+class CaixaEventoCreate(BaseModel):
+    evento_id: int
+    numero_caixa: str
+    saldo_inicial: Decimal
+
+
+class CaixaEvento(BaseModel):
+    id: int
+    evento_id: int
+    numero_caixa: str
+    saldo_inicial: Decimal
+    total_entradas: Decimal = Decimal('0.00')
+    total_saidas: Decimal = Decimal('0.00')
+    total_vendas_listas: Decimal = Decimal('0.00')
+    total_vendas_pdv: Decimal = Decimal('0.00')
+    saldo_final: Decimal = Decimal('0.00')
+    status: str = "aberto"
+    criado_em: Optional[datetime] = None
+
+
+class DashboardFinanceiro(BaseModel):
+    evento_id: int
+    saldo_atual: Decimal
+    total_entradas: Decimal
+    total_saidas: Decimal
+    total_vendas: Decimal
+    lucro_prejuizo: Decimal
+    movimentacoes_recentes: List[dict] = []
+    categorias_despesas: List[dict] = []
+    repasses_promoters: List[dict] = []
+    status_caixa: str = "fechado"
+# Export essentials
 __all__ = [
-    "Token",
-    "TokenData", 
-    "LoginRequest",
-    "UsuarioBase",
-    "UsuarioCreate", 
-    "UsuarioRegister",
-    "Usuario",
-    "EventoBase",
-    "EventoCreate",
-    "Evento", 
-    "EventoDetalhado",
-    "EventoFiltros",
-    "PromoterEventoCreate",
-    "PromoterEventoResponse",
-    "Empresa",
-    "EmpresaCreate",
-    "EmpresaUpdate",
-    "Lista",
-    "ListaCreate",
-    "ListaUpdate",
-    "ListaDetalhada",
-    "DashboardListas",
-    "Convidado",
-    "ConvidadoCreate",
-    "ConvidadoUpdate",
-    "ConvidadoImport",
-    "Transacao",
-    "TransacaoCreate",
-    "TransacaoUpdate",
-    "Checkin",
-    "CheckinCreate",
-    "CheckinUpdate",
-    "Cupom",
-    "CupomCreate",
-    "CupomUpdate",
-    "CupomResponse",
+    "Token", "TokenData", "LoginRequest",
+    "UsuarioBase", "UsuarioCreate", "UsuarioUpdate", "UsuarioRegister", "Usuario",
+    "EventoBase", "EventoCreate", "Evento", "EventoDetalhado", "EventoFiltros",
+    "PromoterEventoCreate", "PromoterEventoResponse",
+    "EmpresaBase", "EmpresaCreate", "Empresa",
+    "ListaBase", "ListaCreate", "Lista", "ListaDetalhada",
+    "TransacaoBase", "TransacaoCreate", "Transacao",
+    "CheckinBase", "CheckinCreate", "Checkin",
     "DashboardResumo",
-    "RankingPromoter",
-    "DashboardAvancado",
-    "FiltrosDashboard",
-    "RankingPromoterAvancado",
-    "DadosGrafico",
-    "RankingPromoterLista",
-    "RelatorioVendas",
-    "ProdutoBase",
-    "ProdutoCreate", 
-    "ProdutoUpdate",  # Agora incluído!
-    "ProdutoResponse",
-    "ProdutoDetalhado",
-    "ProdutoImport",
-    "ProdutoExport",
-    "ProdutoFiltros",
-    "ProdutoFilter",
-    "ProdutoList",
-    "RelatorioProdutos",
-    "Produto",
-    "ComandaBase",
-    "ComandaCreate",
-    "Comanda",
-    "VendaPDVBase",
-    "VendaPDVCreate",
-    "VendaPDV",
-    "RecargaComandaBase",
-    "RecargaComandaCreate",
-    "RecargaComanda",
-    "CaixaPDVBase",
-    "CaixaPDVCreate",
-    "CaixaPDV",
-    "RelatorioVendasPDV",
-    "DashboardPDV",
-    "ConquistaBase",
-    "ConquistaCreate",
-    "Conquista",
-    "PromoterConquistaResponse",
-    "MetricaPromoterResponse",
-    "RankingGamificado",
-    "DashboardGamificacao",
-    "FiltrosRanking",
-    # FormaPagamento schemas
-    "FormaPagamentoBase",
-    "FormaPagamentoCreate",
-    "FormaPagamentoUpdate",
-    "FormaPagamento",
-    "FormaPagamentoDetalhada",
-    "FormaPagamentoList",
-    # Schemas Financeiros
-    "MovimentacaoFinanceiraBase",
-    "MovimentacaoFinanceiraCreate",
-    "MovimentacaoFinanceiraUpdate",
-    "MovimentacaoFinanceira",
-    "CaixaEventoBase",
-    "CaixaEventoCreate",
-    "CaixaEvento",
-    "DashboardFinanceiro",
-    # MEEP Schemas
-    "ClienteEventoBase",
-    "ClienteEventoCreate",
-    "ClienteEventoResponse",
-    "ValidacaoAcessoBase",
-    "ValidacaoAcessoResponse",
-    "EquipamentoEventoBase",
-    "EquipamentoEventoCreate",
-    "EquipamentoEventoResponse",
-    "PrevisaoIABase",
-    "PrevisaoIAResponse",
-    "AnalyticsMEEPBase",
-    "AnalyticsMEEPResponse",
-    "LogSegurancaMEEPBase",
-    "LogSegurancaMEEPResponse",
+    "DashboardListas",
+    "ConvidadoCreate", "ConvidadoImport",
+    "CupomBase", "CupomCreate", "Cupom"
 ]
+
+__all__.extend([
+    # produtos
+    "ProdutoFilter", "ProdutoList",
+    # meep / analytics
+    "ClienteEventoResponse", "ClienteEventoCreate", "ValidacaoAcessoResponse",
+    "EquipamentoEventoResponse", "EquipamentoEventoCreate", "PrevisaoIAResponse",
+    "AnalyticsMEEPResponse", "LogSegurancaMEEPResponse",
+    # formas de pagamento
+    "FormaPagamento", "FormaPagamentoCreate", "FormaPagamentoUpdate", "FormaPagamentoDetalhada", "FormaPagamentoList"
+])
+
+__all__.extend([
+    # financeiro
+    "MovimentacaoFinanceiraBase", "MovimentacaoFinanceiraCreate", "MovimentacaoFinanceiraUpdate", "MovimentacaoFinanceira",
+    "CaixaEventoCreate", "CaixaEvento", "DashboardFinanceiro"
+])

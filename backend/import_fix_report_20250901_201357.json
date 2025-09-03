@@ -1,0 +1,646 @@
+{
+  "timestamp": "2025-09-01T20:13:57.465130",
+  "fixes_made": [
+    {
+      "file": "backend\\app\\auth.py",
+      "backup": "backend\\backups_import_fix\\app\\auth.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth import",
+          "replacement": "from .auth import",
+          "count": 3
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.360577"
+    },
+    {
+      "file": "backend\\app\\routers\\auth.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\auth.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 3
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.364577"
+    },
+    {
+      "file": "backend\\app\\routers\\checkins.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\checkins.py",
+      "issues_fixed": 5,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.websocket import",
+          "replacement": "from .websocket import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.367580"
+    },
+    {
+      "file": "backend\\app\\routers\\cupons.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\cupons.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.369574"
+    },
+    {
+      "file": "backend\\app\\routers\\dashboard.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\dashboard.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.372578"
+    },
+    {
+      "file": "backend\\app\\routers\\empresas.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\empresas.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.375576"
+    },
+    {
+      "file": "backend\\app\\routers\\eventos.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\eventos.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 4
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.378575"
+    },
+    {
+      "file": "backend\\app\\routers\\financeiro.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\financeiro.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.381580"
+    },
+    {
+      "file": "backend\\app\\routers\\formas_pagamento.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\formas_pagamento.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 2
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.384579"
+    },
+    {
+      "file": "backend\\app\\routers\\gamificacao.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\gamificacao.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.387576"
+    },
+    {
+      "file": "backend\\app\\routers\\import_export.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\import_export.py",
+      "issues_fixed": 2,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.393577"
+    },
+    {
+      "file": "backend\\app\\routers\\listas.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\listas.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.396577"
+    },
+    {
+      "file": "backend\\app\\routers\\meep.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\meep.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.400575"
+    },
+    {
+      "file": "backend\\app\\routers\\n8n.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\n8n.py",
+      "issues_fixed": 3,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.403576"
+    },
+    {
+      "file": "backend\\app\\routers\\pdv.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\pdv.py",
+      "issues_fixed": 5,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.websocket import",
+          "replacement": "from .websocket import",
+          "count": 2
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.408580"
+    },
+    {
+      "file": "backend\\app\\routers\\produtos.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\produtos.py",
+      "issues_fixed": 3,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.411360"
+    },
+    {
+      "file": "backend\\app\\routers\\produtos_simple.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\produtos_simple.py",
+      "issues_fixed": 2,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.414717"
+    },
+    {
+      "file": "backend\\app\\routers\\relatorios.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\relatorios.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 2
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.418076"
+    },
+    {
+      "file": "backend\\app\\routers\\transacoes.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\transacoes.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.420859"
+    },
+    {
+      "file": "backend\\app\\routers\\usuarios.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\usuarios.py",
+      "issues_fixed": 4,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.schemas import",
+          "replacement": "from .schemas import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.425761"
+    },
+    {
+      "file": "backend\\app\\routers\\whatsapp.py",
+      "backup": "backend\\backups_import_fix\\app\\routers\\whatsapp.py",
+      "issues_fixed": 3,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.429847"
+    },
+    {
+      "file": "backend\\app\\schemas\\produtos.py",
+      "backup": "backend\\backups_import_fix\\app\\schemas\\produtos.py",
+      "issues_fixed": 1,
+      "issues": [
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.434339"
+    },
+    {
+      "file": "backend\\app\\services\\alert_service.py",
+      "backup": "backend\\backups_import_fix\\app\\services\\alert_service.py",
+      "issues_fixed": 2,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 2
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.438251"
+    },
+    {
+      "file": "backend\\app\\services\\receipt_service.py",
+      "backup": "backend\\backups_import_fix\\app\\services\\receipt_service.py",
+      "issues_fixed": 2,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.443795"
+    },
+    {
+      "file": "backend\\app\\services\\whatsapp_service.py",
+      "backup": "backend\\backups_import_fix\\app\\services\\whatsapp_service.py",
+      "issues_fixed": 3,
+      "issues": [
+        {
+          "pattern": "from \\.\\.database import",
+          "replacement": "from .database import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.models import",
+          "replacement": "from .models import",
+          "count": 1
+        },
+        {
+          "pattern": "from \\.\\.auth_functions import",
+          "replacement": "from .auth_functions import",
+          "count": 1
+        }
+      ],
+      "timestamp": "2025-09-01T20:13:57.447313"
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "files_processed": 25,
+    "files_fixed": 25,
+    "total_issues_fixed": 87
+  }
+}
