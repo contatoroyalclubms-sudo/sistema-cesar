@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, LineChart, PieChart, TrendingUp, TrendingDown, Download, Filter, Calendar, RefreshCw, Target, Brain, ChartBar } from 'lucide-react';
+import { BarChart3, LineChart, PieChart, TrendingUp, TrendingDown, Download, Filter, Calendar, RefreshCw, Target, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -409,7 +409,7 @@ export default function BusinessIntelligenceModule() {
             <Dialog open={showNovoRelatorio} onOpenChange={setShowNovoRelatorio}>
               <DialogTrigger asChild>
                 <Button>
-                  <ChartBar className="mr-2 h-4 w-4" />
+                  <BarChart3 className="mr-2 h-4 w-4" />
                   Novo Relatório
                 </Button>
               </DialogTrigger>
