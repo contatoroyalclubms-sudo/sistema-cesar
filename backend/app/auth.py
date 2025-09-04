@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 from .database import get_db, settings
 from .models import Usuario, Empresa
-from .schemas import Token, LoginRequest, Usuario as UsuarioSchema, UsuarioRegister
+from .schemas import Token, LoginRequest, Usuario as UsuarioSchema
+from .schemas import UsuarioRegister
 from .auth_functions import autenticar_usuario, criar_access_token, obter_usuario_atual, gerar_hash_senha, validar_cpf_basico
 
 router = APIRouter()
@@ -288,7 +289,7 @@ async def registrar_usuario(usuario_data: UsuarioRegister, db: Session = Depends
         print(f"👤 Criando usuário no banco...")
         
         # Converter tipo para string correto
-        tipo_user = usuario_data.tipo  # Usar campo 'tipo' como principal
+        tipo_user = usuario_data.tipo  # Usar campo 'tipo' conforme modelo do banco
         print(f"📋 Tipo de usuário: {tipo_user}")
         
         # 🔧 SOLUÇÃO ROBUSTA: Verificar se há problemas específicos no ambiente
@@ -299,7 +300,7 @@ async def registrar_usuario(usuario_data: UsuarioRegister, db: Session = Depends
                 email=usuario_data.email.lower().strip(),
                 telefone=usuario_data.telefone.replace(" ", "").replace("(", "").replace(")", "").replace("-", "") if usuario_data.telefone else "",
                 senha_hash=senha_hash,
-                tipo=usuario_data.tipo,  # Usar campo 'tipo' como principal
+                tipo=usuario_data.tipo,  # Usar campo 'tipo' conforme modelo do banco
                 ativo=True  # Usuários registrados publicamente ficam ativos por padrão
             )
             

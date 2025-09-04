@@ -40,7 +40,6 @@ async def criar_evento_teste(
     print(f"Endereco: {evento.endereco}")
     print(f"Limite idade: {evento.limite_idade}")
     print(f"Capacidade: {evento.capacidade_maxima}")
-    print(f"Empresa ID: {evento.empresa_id}")
     print("=" * 50)
     
     # Para teste, criar um usuário fake
@@ -117,7 +116,6 @@ async def criar_evento(
     print(f"Endereco: {evento.endereco}")
     print(f"Limite idade: {evento.limite_idade}")
     print(f"Capacidade: {evento.capacidade_maxima}")
-    print(f"Empresa ID: {evento.empresa_id}")
     print(f"Usuario: {usuario_atual.nome} ({usuario_atual.tipo}) - ID: {usuario_atual.id}")
     print("=" * 50)
     
@@ -162,7 +160,7 @@ async def criar_evento(
         )
     
     # Se não foi especificada uma empresa, usar a primeira empresa disponível ou criar uma padrão
-    empresa_id = evento.empresa_id
+    empresa_id = None  # EventoCreate não tem empresa_id
     if not empresa_id:
         from ..models import Empresa
         primeira_empresa = db.query(Empresa).filter(Empresa.ativa == True).first()

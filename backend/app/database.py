@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 import os
 
 class Settings(BaseSettings):
-    database_url: str = os.getenv("DATABASE_URL", "sqlite:///./eventos.db")
+    database_url: str = os.getenv("DATABASE_URL", "postgresql://painel_user:painel123@localhost:5432/paineluniversal")
     secret_key: str = os.getenv("SECRET_KEY", "sua-chave-secreta-super-segura-aqui")
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
@@ -27,7 +27,7 @@ settings = Settings()
 
 engine = create_engine(
     settings.database_url,
-    connect_args={"check_same_thread": False} if "sqlite" in settings.database_url else {}
+    connect_args={} if "postgresql" in settings.database_url else {"check_same_thread": False}
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

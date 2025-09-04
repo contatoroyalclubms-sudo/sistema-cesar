@@ -22,8 +22,9 @@ class ApiService {
 
   constructor() {
     // URL base do backend - ajustar conforme necessário
+    // Para desenvolvimento, use o IP da sua máquina na rede local
     this.baseURL = __DEV__ 
-      ? 'http://192.168.100.165:8000' // IP local da máquina
+      ? 'http://127.0.0.1:8000' // Localhost para desenvolvimento
       : 'https://paineluniversal-production.up.railway.app';
   }
 
@@ -56,11 +57,22 @@ class ApiService {
       ...config,
     };
 
+    // Timeout para desenvolvimento
+    const timeoutMs = __DEV__ ? 5000 : 15000;
+
     let lastError: Error;
 
     for (let attempt = 0; attempt < this.retryAttempts; attempt++) {
       try {
-        const response = await fetch(url, requestConfig);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+        const response = await fetch(url, {
+          ...requestConfig,
+          signal: controller.signal,
+        });
+        
+        clearTimeout(timeoutId);
         
         // Se sucesso, retornar dados
         if (response.ok) {
@@ -88,15 +100,20 @@ class ApiService {
       } catch (error: any) {
         lastError = error;
 
-        // Se é erro de rede ou timeout, tentar novamente
-        if (error.name === 'TypeError' || error.name === 'NetworkError' || 
+        // Se é timeout ou erro de rede, tentar novamente (exceto em desenvolvimento)
+        if ((error.name === 'AbortError' || error.name === 'TypeError' || error.name === 'NetworkError' || 
             error.message.includes('Failed to fetch') || 
-            error.message.includes('Network request failed')) {
+            error.message.includes('Network request failed')) && !__DEV__) {
           
           if (attempt < this.retryAttempts - 1) {
             await this.delay(this.retryDelay * (attempt + 1));
             continue;
           }
+        }
+
+        // Se é desenvolvimento e timeout, falhar rapidamente
+        if (__DEV__ && error.name === 'AbortError') {
+          throw new Error('Conexão com backend indisponível (modo desenvolvimento)');
         }
 
         // Se não é erro de rede ou já esgotou tentativas, rejeitar

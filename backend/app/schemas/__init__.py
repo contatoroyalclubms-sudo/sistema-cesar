@@ -36,7 +36,7 @@ class UsuarioRegister(BaseModel):
     cpf: str
     telefone: Optional[str] = None
     senha: str
-    tipo_usuario: Optional[str] = "cliente"
+    tipo: Optional[str] = "cliente"
     
 class Usuario(UsuarioBase):
     id: int
@@ -81,13 +81,93 @@ class PromoterEventoResponse(BaseModel):
 
 # Schemas para empresas
 class EmpresaBase(BaseModel):
-    nome: str
+    razao_social: str
+    nome_fantasia: Optional[str] = None
+    cnpj: str
+    inscricao_estadual: Optional[str] = None
+    inscricao_municipal: Optional[str] = None
+    email: str
+    telefone: str
+    telefone_secundario: Optional[str] = None
+    whatsapp: Optional[str] = None
+    site: Optional[str] = None
+    responsavel_nome: Optional[str] = None
+    responsavel_cargo: Optional[str] = None
+    responsavel_email: Optional[str] = None
+    responsavel_telefone: Optional[str] = None
+    cep: Optional[str] = None
+    logradouro: Optional[str] = None
+    numero: Optional[str] = None
+    complemento: Optional[str] = None
+    bairro: Optional[str] = None
+    cidade: Optional[str] = None
+    estado: Optional[str] = None
+    banco: Optional[str] = None
+    agencia: Optional[str] = None
+    conta: Optional[str] = None
+    tipo_conta: Optional[str] = None
+    observacoes: Optional[str] = None
+    
+    @field_validator('cnpj')
+    @classmethod
+    def validar_cnpj(cls, v):
+        # Remove caracteres especiais
+        cnpj = ''.join(filter(str.isdigit, v))
+        if len(cnpj) != 14:
+            raise ValueError('CNPJ deve ter 14 dígitos')
+        return cnpj
+    
+    @field_validator('estado')
+    @classmethod
+    def validar_estado(cls, v):
+        if v and len(v) != 2:
+            raise ValueError('Estado deve ter 2 caracteres')
+        return v.upper() if v else v
+    
+    @field_validator('tipo_conta')
+    @classmethod
+    def validar_tipo_conta(cls, v):
+        if v and v not in ['corrente', 'poupanca']:
+            raise ValueError('Tipo de conta deve ser "corrente" ou "poupanca"')
+        return v
     
 class EmpresaCreate(EmpresaBase):
     pass
     
+class EmpresaUpdate(BaseModel):
+    razao_social: Optional[str] = None
+    nome_fantasia: Optional[str] = None
+    cnpj: Optional[str] = None
+    inscricao_estadual: Optional[str] = None
+    inscricao_municipal: Optional[str] = None
+    email: Optional[str] = None
+    telefone: Optional[str] = None
+    telefone_secundario: Optional[str] = None
+    whatsapp: Optional[str] = None
+    site: Optional[str] = None
+    responsavel_nome: Optional[str] = None
+    responsavel_cargo: Optional[str] = None
+    responsavel_email: Optional[str] = None
+    responsavel_telefone: Optional[str] = None
+    cep: Optional[str] = None
+    logradouro: Optional[str] = None
+    numero: Optional[str] = None
+    complemento: Optional[str] = None
+    bairro: Optional[str] = None
+    cidade: Optional[str] = None
+    estado: Optional[str] = None
+    banco: Optional[str] = None
+    agencia: Optional[str] = None
+    conta: Optional[str] = None
+    tipo_conta: Optional[str] = None
+    observacoes: Optional[str] = None
+    ativa: Optional[bool] = None
+    
 class Empresa(EmpresaBase):
     id: int
+    ativa: bool = True
+    criado_em: datetime
+    atualizado_em: Optional[datetime] = None
     
     class Config:
         from_attributes = True
@@ -623,7 +703,7 @@ __all__ = [
     "UsuarioBase", "UsuarioCreate", "UsuarioUpdate", "UsuarioRegister", "Usuario",
     "EventoBase", "EventoCreate", "Evento", "EventoDetalhado", "EventoFiltros",
     "PromoterEventoCreate", "PromoterEventoResponse",
-    "EmpresaBase", "EmpresaCreate", "Empresa",
+    "EmpresaBase", "EmpresaCreate", "EmpresaUpdate", "Empresa",
     "ListaBase", "ListaCreate", "Lista", "ListaDetalhada",
     "TransacaoBase", "TransacaoCreate", "Transacao",
     "CheckinBase", "CheckinCreate", "Checkin",

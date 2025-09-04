@@ -132,8 +132,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Restaurar sessão ao inicializar
   useEffect(() => {
-    restoreSession();
+    restoreSessionSafe();
   }, []);
+
+  const restoreSessionSafe = async () => {
+    try {
+      // Em modo desenvolvimento, timeout mais rápido
+      const timeout = __DEV__ ? 3000 : 10000;
+      
+      await Promise.race([
+        restoreSession(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Timeout')), timeout)
+        )
+      ]);
+    } catch (error) {
+      console.log('Não foi possível restaurar sessão:', error);
+      // Em desenvolvimento, permitir continuar sem autenticação
+      if (__DEV__) {
+        console.log('Modo desenvolvimento: continuando sem autenticação');
+      }
+    }
+  };
 
   // Heartbeat automático a cada 5 minutos
   useEffect(() => {
@@ -165,12 +185,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           payload: { user, evento, token, sessionId }
         });
 
-        // Verificar se sessão ainda é válida
-        await sendHeartbeat();
+        // Verificar se sessão ainda é válida (apenas em produção ou se explicitamente habilitado)
+        if (!__DEV__) {
+          await sendHeartbeat();
+        } else {
+          console.log('Modo desenvolvimento: pulando verificação de heartbeat');
+        }
       }
     } catch (error) {
       console.error('Erro ao restaurar sessão:', error);
-      await logout();
+      // Em desenvolvimento, não fazer logout automático
+      if (!__DEV__) {
+        await logout();
+      }
     }
   };
 

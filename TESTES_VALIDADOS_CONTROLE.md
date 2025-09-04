@@ -26,12 +26,31 @@
 - [x] ✅ BACKEND ENDPOINT CORRIGIDO - `/api/produtos/` funcionando
 - [x] ✅ LISTAGEM DE PRODUTOS - 5 produtos retornados com sucesso
 - [x] ✅ SERIALIZAÇÃO CORRIGIDA - Enums SQLAlchemy para JSON
-- [ ] Interface frontend - aguardando teste
-- [ ] Cadastro de produtos via frontend
-- [ ] Edição de produtos via frontend
-- [ ] Exclusão de produtos via frontend
+- [x] ✅ INTERFACE FRONTEND - Tabela de produtos carrega corretamente
+- [x] ✅ MODAL NOVO PRODUTO - Formulário completo e estruturado
+- [x] ✅ MODAL EDIÇÃO PRODUTO - Carrega dados existentes corretamente
+- [x] ✅ BOTÕES DE AÇÃO - 4 funcionalidades identificadas e testadas:
+  - ✅ Botão 1 (Azul): EDITAR - Modal de edição funcional
+  - ✅ Botão 2 (Verde): DUPLICAR - Console log confirma operação
+  - ✅ Botão 3 (Laranja): LIMITAR ACESSO - Console log confirma operação  
+  - ✅ Botão 4 (Vermelho): EXCLUIR - Modal confirmação funcional
+- [❌] ❌ CADASTRO DE PRODUTOS - ERRO CRÍTICO: tipo_usuario NULL constraint
+- [ ] Atualização de produtos via frontend (provável mesmo erro)
 - [ ] Upload de imagens de produtos
-- [ ] Categorização de produtos
+- [❌] ❌ FILTROS DE BUSCA - Não funcionam (nome e categoria ignorados)
+- [❌] ❌ FILTROS POR CATEGORIA - Não aplicam filtro na tabela
+
+**PRÓXIMAS VALIDAÇÕES MÓDULO PRODUTOS:**
+- [ ] Testar botões Importar/Exportar no cabeçalho
+- [ ] Testar filtros de status (Todos, Habilitados, Desabilitados, Em destaque)
+- [ ] Testar botão "Colunas" para customização da tabela
+- [ ] Testar checkboxes de seleção individual e global
+- [ ] Navegar para submódulos (Categorias, Agendamento, Import/Export, etc.)
+
+**BUGS CRÍTICOS IDENTIFICADOS:**
+1. **Erro 500 ao criar produto**: Campo tipo_usuario NULL viola constraint PostgreSQL
+2. **Filtros não funcionam**: Busca por nome e categoria não filtram resultados
+3. **Mapeamento backend**: tipo_usuario não sendo enviado/processado pelo frontend
 
 **Produtos Disponíveis no Sistema:**
 1. Cerveja Heineken 600ml (R$ 8,50)

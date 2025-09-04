@@ -29,11 +29,45 @@ class Empresa(Base):
     __tablename__ = "empresas"
     
     id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String(255), nullable=False)
-    cnpj = Column(String(18), unique=True, nullable=False)
+    # Dados básicos da empresa
+    razao_social = Column(String(255), nullable=False)
+    nome_fantasia = Column(String(255))
+    cnpj = Column(String(18), unique=True, nullable=False, index=True)
+    inscricao_estadual = Column(String(20))
+    inscricao_municipal = Column(String(20))
+    
+    # Dados de contato
     email = Column(String(255), nullable=False)
-    telefone = Column(String(20))
-    endereco = Column(Text)
+    telefone = Column(String(20), nullable=False)
+    telefone_secundario = Column(String(20))
+    whatsapp = Column(String(20))
+    site = Column(String(255))
+    
+    # Responsável
+    responsavel_nome = Column(String(255))
+    responsavel_cargo = Column(String(100))
+    responsavel_email = Column(String(255))
+    responsavel_telefone = Column(String(20))
+    
+    # Endereço completo
+    cep = Column(String(10))
+    logradouro = Column(String(255))
+    numero = Column(String(10))
+    complemento = Column(String(100))
+    bairro = Column(String(100))
+    cidade = Column(String(100))
+    estado = Column(String(2))
+    
+    # Dados bancários
+    banco = Column(String(100))
+    agencia = Column(String(10))
+    conta = Column(String(20))
+    tipo_conta = Column(String(20))  # 'corrente' ou 'poupanca'
+    
+    # Observações
+    observacoes = Column(Text)
+    
+    # Status e controle
     ativa = Column(Boolean, default=True)
     criado_em = Column(DateTime(timezone=True), server_default=func.now())
     atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())

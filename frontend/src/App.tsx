@@ -33,6 +33,7 @@ import AuthDebugPage from './debug/AuthDebugPage';
 import CadastroFormasPagamento from './components/cadastros/CadastroFormasPagamento';
 import PrinterManagement from './components/PrinterManagement';
 import DiagnosticPage from './pages/DiagnosticPage';
+import Empresas from './pages/Empresas';
 import './App.css';
 
 function App() {
@@ -96,10 +97,7 @@ function App() {
                       } />
                       <Route path="empresas" element={
                         <ProtectedRoute requiredRoles={['admin']}>
-                          <div className="p-8 text-center animate-fade-in">
-                            <h1 className="text-2xl font-heading font-bold text-foreground">Módulo de Empresas</h1>
-                            <p className="text-muted-foreground mt-2">Em desenvolvimento</p>
-                          </div>
+                          <Empresas />
                         </ProtectedRoute>
                       } />
                       <Route path="listas" element={

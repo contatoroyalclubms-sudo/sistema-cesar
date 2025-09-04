@@ -37,7 +37,7 @@ import {
 } from '../ui/dropdown-menu';
 import clientesService from '../../services/clientesService';
 
-const CadastroModule = ({ config, title, description, apiService = null }) => {
+const CadastroModule = ({ config, title, description, apiService = null }: any) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
