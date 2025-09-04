@@ -823,6 +823,159 @@ class LogSegurancaMEEP(Base):
     evento = relationship("Evento")
     usuario = relationship("Usuario")
 
+# ============ SISTEMA DE IMPRESSORAS TÉRMICAS ============
+import uuid
+
+class TipoImpressora(enum.Enum):
+    COZINHA = "cozinha"
+    BAR = "bar"
+    SOBREMESA = "sobremesa"
+    CAIXA = "caixa"
+    GERENCIAL = "gerencial"
+
+class InterfaceImpressora(enum.Enum):
+    USB = "usb"
+    NETWORK = "network"  # TCP/IP via WiFi/Ethernet
+    BLUETOOTH = "bluetooth"
+
+class StatusImpressora(enum.Enum):
+    ONLINE = "online"
+    OFFLINE = "offline"
+    ERRO = "erro"
+    MANUTENCAO = "manutencao"
+
+class StatusPrintJob(enum.Enum):
+    QUEUED = "queued"
+    PRINTING = "printing"
+    DONE = "done"
+    ERROR = "error"
+    RETRY = "retry"
+
+class TipoPrintJob(enum.Enum):
+    RECIBO_CAIXA = "recibo_caixa"
+    PEDIDO_COZINHA = "pedido_cozinha"
+    PEDIDO_BAR = "pedido_bar"
+    COMANDA_RECHARGE = "comanda_recharge"
+    RELATORIO = "relatorio"
+
+class Impressora(Base):
+    __tablename__ = "impressoras"
+    
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    nome = Column(String(255), nullable=False)  # "Cozinha 01", "Bar Principal"
+    tipo = Column(Enum(TipoImpressora), nullable=False)
+    interface = Column(Enum(InterfaceImpressora), nullable=False)
+    endereco = Column(String(255), nullable=False)  # IP:porta, USB vid:pid, BT MAC
+    
+    # Especificações técnicas
+    largura_mm = Column(Integer, default=80)  # 58mm ou 80mm
+    colunas = Column(Integer, default=42)     # 32 colunas (58mm) ou 42 (80mm)
+    perfil_escpos = Column(String(50), default="epson")  # epson, star, bematech
+    densidade = Column(Integer, default=8)    # Intensidade de impressão
+    
+    # Configuração operacional
+    evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
+    localizacao = Column(String(255))  # "Cozinha Andar 1", "Bar Terraço"
+    ativo = Column(Boolean, default=True)
+    impressora_backup_id = Column(String(36), ForeignKey("impressoras.id"))
+    
+    # Status e monitoramento
+    status = Column(Enum(StatusImpressora), default=StatusImpressora.OFFLINE)
+    ultimo_heartbeat = Column(DateTime(timezone=True))
+    ip_bridge = Column(String(45))  # IP do bridge local quando USB/BT
+    versao_driver = Column(String(50))
+    
+    # Configurações avançadas (JSON)
+    configuracoes = Column(Text)  # {"corte_automatico": true, "beep": false, etc}
+    
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    evento = relationship("Evento")
+    impressora_backup = relationship("Impressora", remote_side=[id])
+    jobs = relationship("PrintJob", back_populates="impressora")
+
+class PrintTemplate(Base):
+    __tablename__ = "print_templates"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(255), nullable=False)  # "Recibo Caixa Padrão"
+    tipo_job = Column(Enum(TipoPrintJob), nullable=False)
+    evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
+    
+    # Template Handlebars/Jinja2
+    template_content = Column(Text, nullable=False)
+    
+    # Comandos ESC/POS específicos (JSON)
+    comandos_escpos = Column(Text)  # {"densidade": 8, "corte": true, "pulse": false}
+    
+    # Configurações de layout
+    largura_colunas = Column(Integer, default=42)
+    fonte_tamanho = Column(String(10), default="normal")  # small, normal, large
+    
+    ativo = Column(Boolean, default=True)
+    padrao = Column(Boolean, default=False)  # Template padrão para o tipo
+    
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    evento = relationship("Evento")
+
+class PrintJob(Base):
+    __tablename__ = "print_jobs"
+    
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    impressora_id = Column(String(36), ForeignKey("impressoras.id"), nullable=False)
+    template_id = Column(Integer, ForeignKey("print_templates.id"))
+    
+    tipo = Column(Enum(TipoPrintJob), nullable=False)
+    prioridade = Column(Integer, default=1)  # 1=normal, 2=alta, 3=urgente
+    
+    # Dados para renderização do template (JSON)
+    payload = Column(Text, nullable=False)
+    
+    # Relacionamentos com entidades do sistema
+    venda_pdv_id = Column(Integer, ForeignKey("vendas_pdv.id"))
+    comanda_id = Column(Integer, ForeignKey("comandas.id"))
+    evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
+    
+    # Controle de execução
+    status = Column(Enum(StatusPrintJob), default=StatusPrintJob.QUEUED)
+    tentativas = Column(Integer, default=0)
+    max_tentativas = Column(Integer, default=3)
+    erro_msg = Column(Text)
+    
+    # Auditoria
+    cpf_operador = Column(String(11), nullable=False)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    ip_cliente = Column(String(45))
+    
+    # Timestamps
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    processado_em = Column(DateTime(timezone=True))
+    impresso_em = Column(DateTime(timezone=True))
+    
+    # Relacionamentos
+    impressora = relationship("Impressora", back_populates="jobs")
+    template = relationship("PrintTemplate")
+    venda_pdv = relationship("VendaPDV")
+    comanda = relationship("Comanda")
+    evento = relationship("Evento")
+    usuario = relationship("Usuario")
+
+class PrintJobLog(Base):
+    __tablename__ = "print_job_logs"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    job_id = Column(String(36), ForeignKey("print_jobs.id"), nullable=False)
+    status_anterior = Column(Enum(StatusPrintJob))
+    status_novo = Column(Enum(StatusPrintJob), nullable=False)
+    mensagem = Column(Text)
+    detalhes_erro = Column(Text)  # Stack trace, código de erro da impressora
+    timestamp = Column(DateTime(timezone=True), server_default=func.now())
+    
+    job = relationship("PrintJob")
+
 # Import inventory models to ensure they are registered with SQLAlchemy
 try:
     from .inventory.models import (
@@ -832,4 +985,15 @@ try:
     )
 except ImportError:
     # Inventory module is optional, ignore if not available
+    pass
+
+# Import mobile models to ensure they are registered with SQLAlchemy
+try:
+    from .models_mobile import (
+        SessaoGarcom, ValidacaoNFCMobile, CategoriaMobile, ProdutoMobile,
+        PedidoMobile, ItemPedidoMobile, ConfiguracaoMobile, ComandaNFC,
+        LogAtividadeMobile, ImpressaoPedidoMobile
+    )
+except ImportError:
+    # Mobile module is optional, ignore if not available
     pass

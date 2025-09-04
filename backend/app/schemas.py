@@ -472,7 +472,7 @@ class CupomResponse(BaseModel):
 class ProdutoBase(BaseModel):
     nome: str
     descricao: Optional[str] = None
-    tipo: TipoProduto
+    tipo_usuario: TipoProduto = Field(alias="tipo")
     preco: Decimal
     codigo_interno: Optional[str] = None
     estoque_atual: int = 0
@@ -484,7 +484,9 @@ class ProdutoBase(BaseModel):
 
 class ProdutoCreate(ProdutoBase):
     # evento_id removido - produtos são globais, não atrelados a eventos específicos
-    pass
+    
+    class Config:
+        populate_by_name = True  # Permite usar tanto 'tipo' quanto 'tipo_usuario'
 
 class Produto(ProdutoBase):
     id: int

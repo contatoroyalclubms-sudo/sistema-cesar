@@ -31,6 +31,7 @@ import OperadoresModule from './components/operadores/OperadoresModule';
 import ComandasModule from './components/comandas/ComandasModule';
 import AuthDebugPage from './debug/AuthDebugPage';
 import CadastroFormasPagamento from './components/cadastros/CadastroFormasPagamento';
+import PrinterManagement from './components/PrinterManagement';
 import DiagnosticPage from './pages/DiagnosticPage';
 import './App.css';
 
@@ -200,6 +201,11 @@ function App() {
                       <Route path="cadastros/formas-pagamento" element={
                         <ProtectedRoute requiredRoles={['admin', 'promoter']}>
                           <CadastroFormasPagamento />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="cadastros/impressoras" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <PrinterManagement />
                         </ProtectedRoute>
                       } />
                       <Route path="cadastros/*" element={

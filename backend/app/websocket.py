@@ -80,3 +80,19 @@ async def notify_dashboard_update(evento_id: int, dashboard_data: dict):
         "data": dashboard_data,
         "timestamp": datetime.now().isoformat()
     })
+
+async def notify_new_mobile_order(evento_id: int, order_data: dict):
+    """Notifica novo pedido mobile"""
+    await manager.broadcast_to_event(evento_id, {
+        "type": "new_mobile_order",
+        "data": order_data,
+        "timestamp": datetime.now().isoformat()
+    })
+
+async def notify_order_status_update(evento_id: int, order_data: dict):
+    """Notifica atualização de status do pedido"""
+    await manager.broadcast_to_event(evento_id, {
+        "type": "order_status_update",
+        "data": order_data,
+        "timestamp": datetime.now().isoformat()
+    })

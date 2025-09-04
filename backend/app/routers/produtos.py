@@ -100,9 +100,16 @@ async def criar_produto(
     """Criar novo produto (global, não atrelado a evento)"""
     try:
         # Debug: verificar dados recebidos
-        print(f"🔍 DEBUG PRODUTOS - Dados recebidos: {produto.dict()}")
+        print(f"🔍 DEBUG PRODUTOS ROUTER - Dados recebidos: {produto.dict()}")
+        print(f"🔍 DEBUG PRODUTOS ROUTER - Dados recebidos com by_alias: {produto.dict(by_alias=True)}")
         logger.info(f"Dados recebidos no create: {produto.dict()}")
         logger.info(f"Dados recebidos com by_alias: {produto.dict(by_alias=True)}")
+        
+        # Verificar se o campo tipo está presente
+        produto_dict_original = produto.dict()
+        print(f"🔍 PRODUTOS ROUTER - Campos originais: {list(produto_dict_original.keys())}")
+        print(f"🔍 PRODUTOS ROUTER - Tem campo 'tipo'? {'tipo' in produto_dict_original}")
+        print(f"🔍 PRODUTOS ROUTER - Tem campo 'tipo_usuario'? {'tipo_usuario' in produto_dict_original}")
         
         # Verificar código interno único se fornecido
         if produto.codigo_interno:
@@ -116,11 +123,21 @@ async def criar_produto(
                 )
         
         # ✅ Criar produto global (sem evento_id)
-        produto_data = produto.dict()
+        produto_data = produto.dict(by_alias=True)  # Usar alias para converter tipo->tipo_usuario
         
-        # Mapeamento direto para resolver incompatibilidade entre frontend/backend
+        print(f"🔍 PRODUTOS ROUTER - Dados convertidos com alias: {produto_data}")
+        
+        # Converter enums para strings e mapear 'tipo' para 'tipo_usuario'
         if 'tipo' in produto_data:
-            produto_data['tipo_usuario'] = produto_data.pop('tipo')
+            # Frontend envia 'tipo', convertemos para 'tipo_usuario' string
+            produto_data['tipo_usuario'] = produto_data['tipo'].value if hasattr(produto_data['tipo'], 'value') else str(produto_data['tipo'])
+            del produto_data['tipo']  # Remove o campo alias
+            print(f"🔍 PRODUTOS ROUTER - Convertido 'tipo' para 'tipo_usuario': {produto_data['tipo_usuario']}")
+        
+        # Converter status enum para string se necessário
+        if 'status' in produto_data and hasattr(produto_data['status'], 'value'):
+            produto_data['status'] = produto_data['status'].value
+            print(f"🔍 PRODUTOS ROUTER - Convertido status para string: {produto_data['status']}")
         
         # Remover campos que não existem no modelo
         campos_validos = {
@@ -131,13 +148,10 @@ async def criar_produto(
         produto_data_filtered = {k: v for k, v in produto_data.items() if k in campos_validos}
         
         # Debug: verificar dados filtrados
+        print(f"🔍 PRODUTOS ROUTER - Dados filtrados para SQLAlchemy: {produto_data_filtered}")
         logger.info(f"Dados filtrados para SQLAlchemy: {produto_data_filtered}")
         
-        # Converter strings para enums se necessário
-        if 'tipo_usuario' in produto_data_filtered and isinstance(produto_data_filtered['tipo_usuario'], str):
-            produto_data_filtered['tipo_usuario'] = TipoProduto(produto_data_filtered['tipo_usuario'])
-        if 'status' in produto_data_filtered and isinstance(produto_data_filtered['status'], str):
-            produto_data_filtered['status'] = StatusProduto(produto_data_filtered['status'])
+        print(f"🔍 PRODUTOS ROUTER - Dados finais antes de criar no banco: {produto_data_filtered}")
         
         db_produto = Produto(**produto_data_filtered)
         

@@ -15,7 +15,7 @@ import time
 
 from .database import engine, get_db
 from .models import Base
-from .routers import auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, meep, financeiro  # import_export
+from .routers import auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, meep, financeiro, printer, pdv_mobile  # import_export
 from .middleware import LoggingMiddleware
 from .auth_functions import verificar_permissao_admin
 from .scheduler import start_scheduler
@@ -289,6 +289,8 @@ app.include_router(formas_pagamento.router, prefix="/api/formas-pagamento", tags
 # app.include_router(import_export.router, tags=["Import-Export"])
 app.include_router(meep.router, prefix="/api/meep", tags=["MEEP Integration"])
 app.include_router(financeiro.router, prefix="/api/financeiro", tags=["Financeiro"])
+app.include_router(printer.router)  # Printer router já tem prefix configurado
+app.include_router(pdv_mobile.router, prefix="/api", tags=["PDV Mobile"])
 
 # 🔌 WEBSOCKETS COM CORS
 @app.websocket("/api/pdv/ws/{evento_id}")
