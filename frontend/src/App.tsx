@@ -44,6 +44,9 @@ import IntegracoesModule from './components/integracoes/IntegracoesModule';
 import SolucoesOnlineModule from './components/solucoes-online/SolucoesOnlineModule';
 import TicketsModule from './components/tickets/TicketsModule';
 import ColaboradoresModule from './components/colaboradores/ColaboradoresModule';
+import MultiCardapioModule from './components/multi-cardapio/MultiCardapioModule';
+import KDSModule from './components/kds/KDSModule';
+import MesasModule from './components/mesas/MesasModule';
 import './App.css';
 
 function App() {
@@ -271,6 +274,21 @@ function App() {
                       <Route path="colaboradores/*" element={
                         <ProtectedRoute requiredRoles={['admin', 'promoter']}>
                           <ColaboradoresModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="multi-cardapio/*" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <MultiCardapioModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="kds" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <KDSModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="mesas" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <MesasModule />
                         </ProtectedRoute>
                       } />
                       

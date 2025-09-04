@@ -261,7 +261,7 @@ class Produto(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(255), nullable=False)
     descricao = Column(Text)
-    tipo_usuario = Column(Enum(TipoProduto), nullable=False)
+    tipo = Column(Enum(TipoProduto), nullable=False)
     preco = Column(Numeric(10, 2), nullable=False)
     codigo_interno = Column(String(20))
     estoque_atual = Column(Integer, default=0)
@@ -288,7 +288,7 @@ class Comanda(Base):
     numero_comanda = Column(String(20), unique=True, nullable=False)
     cpf_cliente = Column(String(14), index=True)
     nome_cliente = Column(String(255))
-    tipo_usuario=Column(Enum(TipoComanda), nullable=False)
+    tipo = Column(Enum(TipoComanda), nullable=False)
     codigo_rfid = Column(String(50), unique=True)
     qr_code = Column(String(100), unique=True)
     saldo_atual = Column(Numeric(10, 2), default=0)
@@ -425,7 +425,7 @@ class FormaPagamento(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False, unique=True)
     codigo = Column(String(50), nullable=False, unique=True)
-    tipo_usuario=Column(Enum(TipoFormaPagamento), nullable=False)
+    tipo = Column(Enum(TipoFormaPagamento), nullable=False)
     status = Column(Enum(StatusFormaPagamento), default=StatusFormaPagamento.ATIVO)
     descricao = Column(Text)
     taxa_percentual = Column(Numeric(5,2), default=0.00)  # Taxa em percentual (ex: 2.50 para 2.5%)
@@ -603,7 +603,7 @@ class MovimentacaoFinanceira(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
-    tipo_usuario=Column(Enum(TipoMovimentacaoFinanceira), nullable=False)
+    tipo = Column(Enum(TipoMovimentacaoFinanceira), nullable=False)
     categoria = Column(String(100), nullable=False)
     descricao = Column(Text, nullable=False)
     valor = Column(Numeric(10, 2), nullable=False)
@@ -675,7 +675,7 @@ class Conquista(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
     descricao = Column(Text, nullable=False)
-    tipo_usuario=Column(Enum(TipoConquista), nullable=False)
+    tipo = Column(Enum(TipoConquista), nullable=False)
     criterio_valor = Column(Integer, nullable=False)
     badge_nivel = Column(Enum(NivelBadge), nullable=False)
     icone = Column(String(50))
@@ -775,7 +775,7 @@ class EquipamentoEvento(Base):
     id = Column(Integer, primary_key=True, index=True)
     evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
     nome = Column(String(255), nullable=False)
-    tipo_usuario=Column(String(100), nullable=False)  # 'tablet', 'qr_reader', 'printer', 'pos'
+    tipo = Column(String(100), nullable=False)  # 'tablet', 'qr_reader', 'printer', 'pos'
     ip_address = Column(String(45), nullable=False)
     mac_address = Column(String(17))
     status = Column(String(50), default='offline')
@@ -1279,22 +1279,23 @@ class ConfiguracaoApp(Base):
     
     evento = relationship("Evento")
 
-class CardapioDigital(Base):
-    __tablename__ = "cardapios_digitais"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    evento_id = Column(Integer, ForeignKey("eventos.id"))
-    nome = Column(String(100), nullable=False)
-    slug = Column(String(100), unique=True)
-    uuid = Column(String(36), unique=True)  # UUID para URL única
-    qr_code = Column(Text)  # Base64 do QR Code
-    url_completa = Column(String(500))
-    ativo = Column(Boolean, default=True)
-    visualizacoes = Column(Integer, default=0)
-    configuracao = Column(Text)  # JSON com configuração do layout
-    criado_em = Column(DateTime(timezone=True), server_default=func.now())
-    
-    evento = relationship("Evento")
+# COMENTADO - DUPLICAÇÃO COM models_cashless.py
+# class CardapioDigital(Base):
+#     __tablename__ = "cardapios_digitais"
+#     
+#     id = Column(Integer, primary_key=True, index=True)
+#     evento_id = Column(Integer, ForeignKey("eventos.id"))
+#     nome = Column(String(100), nullable=False)
+#     slug = Column(String(100), unique=True)
+#     uuid = Column(String(36), unique=True)  # UUID para URL única
+#     qr_code = Column(Text)  # Base64 do QR Code
+#     url_completa = Column(String(500))
+#     ativo = Column(Boolean, default=True)
+#     visualizacoes = Column(Integer, default=0)
+#     configuracao = Column(Text)  # JSON com configuração do layout
+#     criado_em = Column(DateTime(timezone=True), server_default=func.now())
+#     
+#     evento = relationship("Evento")
 
 # Sistema de Tickets/Ingressos
 class EventoTicket(Base):
@@ -1315,7 +1316,8 @@ class EventoTicket(Base):
     
     evento = relationship("Evento")
     # lotes = relationship("LoteTicket", back_populates="evento_ticket")  # TEMPORARIAMENTE COMENTADO - CONFLITO
-    vendas = relationship("VendaTicket", back_populates="evento_ticket")
+    # 
+    # vendas = relationship("VendaTicket", back_populates="evento_ticket")  # TEMPORARIAMENTE COMENTADO  # COMENTADO - CONFLITO BACK_POPULATES
 
 class LoteTicket(Base):
     __tablename__ = "lotes_tickets"
@@ -1333,7 +1335,7 @@ class LoteTicket(Base):
     descricao = Column(Text)
     ativo = Column(Boolean, default=True)
     
-    # evento_ticket = relationship("EventoTicket", back_populates="lotes")  # TEMPORARIAMENTE COMENTADO
+    # #  evento_ticket = relationship("EventoTicket", back_populates="lotes")  # TEMPORARIAMENTE COMENTADO  # TEMPORARIAMENTE COMENTADO
 
 class VendaTicket(Base):
     __tablename__ = "vendas_tickets"
@@ -1353,7 +1355,9 @@ class VendaTicket(Base):
     data_venda = Column(DateTime(timezone=True), server_default=func.now())
     data_uso = Column(DateTime(timezone=True))
     
-    evento_ticket = relationship("EventoTicket", back_populates="vendas")
+    # 
+    
+    # evento_ticket = relationship("EventoTicket", back_populates="vendas")  # TEMPORARIAMENTE COMENTADO  # COMENTADO - CONFLITO BACK_POPULATES
     lote = relationship("LoteTicket")
     cliente = relationship("ClienteEvento")
 
@@ -1573,9 +1577,10 @@ class TipoTicket(Base):
     criado_em = Column(DateTime(timezone=True), default=datetime.now)
     atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
     
-    evento = relationship("Evento", back_populates="tipos_ticket")
+    # evento = relationship("Evento", back_populates="tipos_ticket")  # COMENTADO - CONFLITO BACK_POPULATES
     # lotes = relationship("LoteTicket", back_populates="tipo_ticket")  # TEMPORARIAMENTE COMENTADO - CONFLITO
-    tickets = relationship("Ticket", back_populates="tipo_ticket")
+    # 
+    # tickets = relationship("Ticket", back_populates="tipo_ticket")  # COMENTADO - CONFLITO
 
 # TEMPORARIAMENTE COMENTADO - CONFLITO COM LoteTicket da linha 1320
 # class LoteTicket(Base):
@@ -1593,8 +1598,9 @@ class TipoTicket(Base):
 #     ativo = Column(Boolean, default=True)
 #     criado_em = Column(DateTime(timezone=True), default=datetime.now)
     
-#     tipo_ticket = relationship("TipoTicket", back_populates="lotes")
-    tickets = relationship("Ticket", back_populates="lote")
+#     #      tipo_ticket = relationship("TipoTicket", back_populates="lotes")  # TEMPORARIAMENTE COMENTADO
+    # 
+    # tickets = relationship("Ticket", back_populates="lote")  # COMENTADO - CONFLITO
 
 class Ticket(Base):
     __tablename__ = "tickets"
@@ -1618,8 +1624,10 @@ class Ticket(Base):
     data_cancelamento = Column(DateTime(timezone=True))
     motivo_cancelamento = Column(Text)
     
-    tipo_ticket = relationship("TipoTicket", back_populates="tickets")
-    lote = relationship("LoteTicket", back_populates="tickets")
+    # 
+    
+    # tipo_ticket = relationship("TipoTicket", back_populates="tickets")  # COMENTADO - CONFLITO
+    # lote = relationship("LoteTicket", back_populates="tickets")  # COMENTADO - CONFLITO
     cliente = relationship("ClienteEvento")
 
 class TransferenciaTicket(Base):
@@ -1675,7 +1683,73 @@ class TarefaColaborador(Base):
     escala = relationship("EscalaTrabalho", back_populates="tarefas")
 
 # Adicionar relacionamentos aos modelos existentes
-Evento.tipos_ticket = relationship("TipoTicket", back_populates="evento")
+# Evento.tipos_ticket = relationship("TipoTicket", back_populates="evento")  # COMENTADO - CONFLITO RELACIONAMENTO
 Colaborador.escalas = relationship("EscalaTrabalho", back_populates="colaborador")
 Colaborador.tarefas = relationship("TarefaColaborador", back_populates="colaborador")
+
+# Classes de estoque temporárias para resolver importações
+class ProdutoEstoque(Base):
+    __tablename__ = "produtos_estoque"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(255), nullable=False)
+    codigo = Column(String(100))
+    sku = Column(String(100), unique=True)
+    categoria_id = Column(Integer)
+    local_id = Column(Integer) 
+    quantidade = Column(Integer, default=0)
+    preco = Column(Float)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+class LocalEstoque(Base):
+    __tablename__ = "locais_estoque"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(255), nullable=False)
+    codigo = Column(String(100), unique=True)
+    ativo = Column(Boolean, default=True)
+
+class CategoriaEstoque(Base):
+    __tablename__ = "categorias_estoque"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(255), nullable=False)
+    ativo = Column(Boolean, default=True)
+
+class ContagemEstoque(Base):
+    __tablename__ = "contagens_estoque"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(255), nullable=False)
+    status = Column(String(50), default="aberta")
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+class ItemContagemEstoque(Base):
+    __tablename__ = "itens_contagem_estoque"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    contagem_id = Column(Integer, ForeignKey("contagens_estoque.id"))
+    produto_id = Column(Integer, ForeignKey("produtos_estoque.id"))
+    quantidade_contada = Column(Integer)
+    quantidade_sistema = Column(Integer)
+
+class AlertaEstoque(Base):
+    __tablename__ = "alertas_estoque"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    produto_id = Column(Integer, ForeignKey("produtos_estoque.id"))
+    tipo_alerta = Column(String(50))
+    mensagem = Column(Text)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+class ItemContagem(Base):
+    __tablename__ = "itens_contagem"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    contagem_id = Column(Integer, ForeignKey("contagens_estoque.id"))
+    produto_id = Column(Integer, ForeignKey("produtos_estoque.id"))
+    quantidade_contada = Column(Integer)
+    quantidade_sistema = Column(Integer)
 

@@ -37,7 +37,9 @@ import {
   Ticket,
   UserCog,
   Briefcase,
-  Link2
+  Link2,
+  ChefHat,
+  Table2
 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -229,6 +231,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       path: '/app/ranking', 
       roles: ['admin', 'promoter'],
       description: 'Sistema de pontuação'
+    },
+    { 
+      icon: ChefHat, 
+      label: 'KDS (Kitchen Display)', 
+      path: '/app/kds', 
+      roles: ['admin', 'promoter'],
+      description: 'Sistema de display para cozinha'
+    },
+    { 
+      icon: Table2, 
+      label: 'Gestão de Mesas', 
+      path: '/app/mesas', 
+      roles: ['admin', 'promoter'],
+      description: 'Layout e controle de mesas'
     },
     // === MÓDULOS MEEP ===
     { 

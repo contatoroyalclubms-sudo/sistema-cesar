@@ -22,7 +22,7 @@ async def listar_produtos(
     skip: int = Query(0, ge=0, description="Número de registros para pular"),
     limit: int = Query(100, ge=1, le=1000, description="Número máximo de registros"),
     nome: Optional[str] = Query(None, description="Filtrar por nome"),
-    tipo_usuario: Optional[str] = Query(None, description="Filtrar por tipo"),
+    tipo: Optional[str] = Query(None, description="Filtrar por tipo"),
     categoria: Optional[str] = Query(None, description="Filtrar por categoria"),
     status: Optional[str] = Query(None, description="Filtrar por status"),
     estoque_baixo: Optional[bool] = Query(None, description="Produtos com estoque baixo"),
@@ -36,8 +36,8 @@ async def listar_produtos(
         # Aplicar filtros
         if nome:
             query = query.filter(Produto.nome.ilike(f"%{nome}%"))
-        if tipo_usuario:
-            query = query.filter(Produto.tipo_usuario == tipo_usuario)
+        if tipo:
+            query = query.filter(Produto.tipo == tipo)
         if categoria:
             query = query.filter(Produto.categoria.ilike(f"%{categoria}%"))
         if status:
@@ -62,7 +62,7 @@ async def listar_produtos(
                 "id": produto.id,
                 "nome": produto.nome,
                 "descricao": produto.descricao,
-                "tipo_usuario": produto.tipo_usuario.value if produto.tipo_usuario else None,
+                "tipo": produto.tipo.value if produto.tipo else None,
                 "preco": str(produto.preco),
                 "categoria": produto.categoria,
                 "codigo_interno": produto.codigo_interno,
@@ -121,38 +121,13 @@ async def criar_produto(
                 )
         
         # ✅ Criar produto global (sem evento_id)
-        produto_data = produto.model_dump()  # Usar model_dump() em vez de dict()
+        produto_data = produto.model_dump()
         
         print(f"🔍 PRODUTOS ROUTER - Dados do produto: {produto_data}")
         
-        # URGENTE FIX: Garantir que tipo_usuario não seja None
-        if 'tipo' in produto_data and produto_data['tipo']:
-            produto_data['tipo_usuario'] = produto_data['tipo']
-            del produto_data['tipo']  # Remove o campo tipo que não existe no banco
-            print(f"🔍 PRODUTOS ROUTER - Mapeado 'tipo' para 'tipo_usuario': {produto_data['tipo_usuario']}")
-        elif 'tipo_usuario' not in produto_data or produto_data.get('tipo_usuario') is None:
-            # Se não tem tipo_usuario, usar valor padrão
-            produto_data['tipo_usuario'] = 'BEBIDA'
-            print(f"🔍 PRODUTOS ROUTER - Campo 'tipo_usuario' forçado para padrão: {produto_data['tipo_usuario']}")
-        
-        # Converter para enum se ainda for string
-        if isinstance(produto_data.get('tipo_usuario'), str):
-            from ..models import TipoProduto
-            try:
-                produto_data['tipo_usuario'] = TipoProduto(produto_data['tipo_usuario'])
-                print(f"🔍 PRODUTOS ROUTER - Convertido para enum: {produto_data['tipo_usuario']}")
-            except ValueError as e:
-                print(f"❌ PRODUTOS ROUTER - Erro ao converter enum: {e}, usando fallback")
-                produto_data['tipo_usuario'] = TipoProduto.BEBIDA  # Fallback
-                
-        # GARANTIR que tipo_usuario nunca seja None
-        if produto_data.get('tipo_usuario') is None:
-            produto_data['tipo_usuario'] = TipoProduto.BEBIDA
-            print(f"🚨 PRODUTOS ROUTER - FORCED tipo_usuario to BEBIDA (was None)")
-        
         # Remover campos que não existem no modelo
         campos_validos = {
-            'nome', 'descricao', 'tipo_usuario', 'preco', 'codigo_interno',
+            'nome', 'descricao', 'tipo', 'preco', 'codigo_interno',
             'estoque_atual', 'estoque_minimo', 'estoque_maximo', 
             'controla_estoque', 'categoria', 'imagem_url', 'status'
         }
@@ -160,10 +135,7 @@ async def criar_produto(
         
         # Debug: verificar dados filtrados
         print(f"🔍 PRODUTOS ROUTER - Dados filtrados para SQLAlchemy: {produto_data_filtered}")
-        print(f"🔍 PRODUTOS ROUTER - tipo_usuario final: {produto_data_filtered.get('tipo_usuario')} (type: {type(produto_data_filtered.get('tipo_usuario'))})")
         logger.info(f"Dados filtrados para SQLAlchemy: {produto_data_filtered}")
-        
-        print(f"🔍 PRODUTOS ROUTER - Dados finais antes de criar no banco: {produto_data_filtered}")
         
         db_produto = Produto(**produto_data_filtered)
         

@@ -10,6 +10,12 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 if __name__ == "__main__":
+    # Configure UTF-8 encoding for Windows compatibility
+    if sys.platform.startswith('win'):
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
+        sys.stdout.reconfigure(encoding='utf-8', errors='ignore')
+        sys.stderr.reconfigure(encoding='utf-8', errors='ignore')
+    
     print("🚀 Iniciando backend...")
     
     uvicorn.run(
