@@ -44,33 +44,16 @@ async def criar_evento_teste(
     
     # Para teste, criar um usuário fake
     from ..models import Usuario
-    usuario_teste = db.query(Usuario).filter(Usuario.tipo_usuario== "admin").first()
+    usuario_teste = db.query(Usuario).filter(Usuario.tipo == "admin").first()
     if not usuario_teste:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Nenhum usuário admin encontrado para teste"
         )
     
-    # Se não foi especificada uma empresa, usar a primeira empresa disponível ou criar uma padrão
-    empresa_id = evento.empresa_id
-    if not empresa_id:
-        from ..models import Empresa
-        primeira_empresa = db.query(Empresa).filter(Empresa.ativa == True).first()
-        if not primeira_empresa:
-            # Criar empresa padrão se não existir nenhuma
-            empresa_padrao = Empresa(
-                nome="Empresa Padrão",
-                cnpj="00000000000100",
-                email="contato@paineluniversal.com",
-                telefone="(11) 99999-9999",
-                ativa=True
-            )
-            db.add(empresa_padrao)
-            db.commit()
-            db.refresh(empresa_padrao)
-            empresa_id = empresa_padrao.id
-        else:
-            empresa_id = primeira_empresa.id
+    # Para teste simples, usar empresa_id = None
+    empresa_id = None
+    print("TESTE: Usando empresa_id = None para evitar problemas")
     
     try:
         evento_data = evento.dict()
@@ -125,29 +108,26 @@ async def criar_evento(
             detail="Acesso negado: apenas admins e promoters podem criar eventos"
         )
     
-    # Validação de data mais robusta com timezone awareness
+    # Validação de data simplificada
     try:
-        from datetime import timezone
-        
-        # Garantir que ambas as datas tenham timezone para comparação
-        agora = datetime.now(timezone.utc)
+        # Para teste, permitir qualquer data (comentar validação restritiva)
+        agora = datetime.now()
         data_evento = evento.data_evento
         
-        # Se a data do evento não tem timezone, assumir UTC
-        if data_evento.tzinfo is None:
-            data_evento = data_evento.replace(tzinfo=timezone.utc)
-        
         print(f"VALIDAÇÃO DATA:")
-        print(f"  Agora (UTC): {agora}")
+        print(f"  Agora: {agora}")
         print(f"  Evento: {data_evento}")
-        print(f"  É futura: {data_evento > agora}")
+        print(f"  Tipo da data: {type(data_evento)}")
         
-        # Permitir eventos com data próxima (tolerância de 1 hora no passado para testes)
-        tolerancia = agora - timezone.utc.localize(datetime.utcnow().replace(hour=agora.hour-1)) if agora.hour > 0 else agora
-        if data_evento < tolerancia:
-            print(f"  AVISO: Data muito no passado, mas continuando para teste")
-            # Para produção, descomente a linha abaixo:
-            # raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Data do evento deve ser futura. Evento: {data_evento}, Agora: {agora}")
+        # Comentado para teste - permitir qualquer data
+        # if data_evento <= agora:
+        #     raise HTTPException(
+        #         status_code=status.HTTP_400_BAD_REQUEST,
+        #         detail=f"Data do evento deve ser futura. Evento: {data_evento}, Agora: {agora}"
+        #     )
+        
+        print(f"  VALIDAÇÃO: Data aceita para teste")
+        
     except HTTPException:
         # Re-raise HTTP exceptions
         raise
@@ -159,7 +139,7 @@ async def criar_evento(
         print(f"AVISO: Continuando mesmo com erro de validação de data para teste")
     
     # Se não foi especificada uma empresa, usar a primeira empresa disponível ou criar uma padrão
-    empresa_id = evento.empresa_id  # EventoCreate TEM empresa_id
+    empresa_id = getattr(evento, 'empresa_id', None)  # Safe access
     if not empresa_id:
         from ..models import Empresa
         primeira_empresa = db.query(Empresa).filter(Empresa.ativa == True).first()
@@ -447,7 +427,7 @@ async def vincular_promoter(
     
     promoter = db.query(Usuario).filter(
         Usuario.id == promoter_data.promoter_id,
-        Usuario.tipo_usuario== "promoter"
+        Usuario.tipo == "promoter"
     ).first()
     if not promoter:
         raise HTTPException(
