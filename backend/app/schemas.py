@@ -469,36 +469,6 @@ class CupomResponse(BaseModel):
     class Config:
         from_attributes = True
 
-class ProdutoBase(BaseModel):
-    nome: str
-    descricao: Optional[str] = None
-    tipo_usuario: TipoProduto = Field(alias="tipo")
-    preco: Decimal
-    codigo_interno: Optional[str] = None
-    estoque_atual: int = 0
-    estoque_minimo: int = 0
-    estoque_maximo: int = 1000
-    controla_estoque: bool = True
-    categoria: Optional[str] = None
-    imagem_url: Optional[str] = None
-
-class ProdutoCreate(ProdutoBase):
-    # evento_id removido - produtos são globais, não atrelados a eventos específicos
-    
-    class Config:
-        populate_by_name = True  # Permite usar tanto 'tipo' quanto 'tipo_usuario'
-
-class Produto(ProdutoBase):
-    id: int
-    status: StatusProduto
-    # evento_id removido - produtos são globais, não atrelados a eventos específicos
-    empresa_id: Optional[int] = None
-    criado_em: datetime
-    atualizado_em: Optional[datetime] = None
-    
-    class Config:
-        from_attributes = True
-
 class ComandaBase(BaseModel):
     numero_comanda: str
     cpf_cliente: Optional[str] = None

@@ -310,23 +310,24 @@ class RelatorioVendas(BaseModel):
     vendas_por_lista: List[dict] = []
     vendas_por_promoter: List[dict] = []
 
-# Schemas mínimos para PDV
+# Schemas mínimos para PDV  
 class ProdutoCreate(BaseModel):
-    nome: str
-    codigo_barras: Optional[str] = None
-    codigo_interno: Optional[str] = None
-    preco: float
-    controla_estoque: bool = False
-    estoque_atual: Optional[int] = 0
-    estoque_minimo: Optional[int] = 0
-    categoria: Optional[str] = None
+    nome: str = Field(..., min_length=1, max_length=255, description="Nome do produto")
+    descricao: Optional[str] = Field(None, max_length=1000, description="Descrição do produto")
+    tipo: str = Field(..., description="Tipo do produto")  # Campo tipo para compatibilidade com frontend
+    preco: Decimal = Field(..., gt=0, description="Preço do produto")
+    categoria: Optional[str] = Field(None, max_length=100, description="Categoria do produto")
+    codigo_interno: Optional[str] = Field(None, max_length=20, description="Código interno")
+    estoque_atual: Optional[int] = Field(0, ge=0, description="Estoque atual")
+    estoque_minimo: Optional[int] = Field(0, ge=0, description="Estoque mínimo")
+    controla_estoque: Optional[bool] = Field(True, description="Se controla estoque")
 
 class Produto(BaseModel):
     id: int
     nome: str
     codigo_barras: Optional[str] = None
     codigo_interno: Optional[str] = None
-    preco: float
+    preco: Decimal
     controla_estoque: bool = False
     estoque_atual: Optional[int] = 0
     estoque_minimo: Optional[int] = 0

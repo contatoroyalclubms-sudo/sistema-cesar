@@ -34,6 +34,16 @@ import CadastroFormasPagamento from './components/cadastros/CadastroFormasPagame
 import PrinterManagement from './components/PrinterManagement';
 import DiagnosticPage from './pages/DiagnosticPage';
 import Empresas from './pages/Empresas';
+// Novos módulos implementados
+import CategoriasClientesModule from './components/categorias/CategoriasClientesModule';
+import PesquisaSatisfacaoModule from './components/satisfacao/PesquisaSatisfacaoModule';
+import FidelidadeModule from './components/fidelidade/FidelidadeModule';
+import AutomacaoModule from './components/automacao/AutomacaoModule';
+import BusinessIntelligenceModule from './components/business-intelligence/BusinessIntelligenceModule';
+import IntegracoesModule from './components/integracoes/IntegracoesModule';
+import SolucoesOnlineModule from './components/solucoes-online/SolucoesOnlineModule';
+import TicketsModule from './components/tickets/TicketsModule';
+import ColaboradoresModule from './components/colaboradores/ColaboradoresModule';
 import './App.css';
 
 function App() {
@@ -214,6 +224,56 @@ function App() {
                           </div>
                         </ProtectedRoute>
                       } />
+                      
+                      {/* Novos Módulos Implementados */}
+                      <Route path="categorias-clientes" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <CategoriasClientesModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="pesquisa-satisfacao" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <PesquisaSatisfacaoModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="fidelidade" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter', 'cliente']}>
+                          <FidelidadeModule />
+                        </ProtectedRoute>
+                      } />
+                      
+                      {/* Módulos Implementados */}
+                      <Route path="automacao/*" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <AutomacaoModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="bi/*" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <BusinessIntelligenceModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="integracoes/*" element={
+                        <ProtectedRoute requiredRoles={['admin']}>
+                          <IntegracoesModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="solucoes-online/*" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <SolucoesOnlineModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="tickets/*" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter', 'cliente']}>
+                          <TicketsModule />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="colaboradores/*" element={
+                        <ProtectedRoute requiredRoles={['admin', 'promoter']}>
+                          <ColaboradoresModule />
+                        </ProtectedRoute>
+                      } />
+                      
                       <Route path="debug-auth" element={<AuthDebugPage />} />
                     </Routes>
                   </Layout>

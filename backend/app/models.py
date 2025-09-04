@@ -1,8 +1,9 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Numeric, Enum, Date
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Numeric, Enum, Date, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .database import Base
 import enum
+from datetime import datetime
 
 class StatusEvento(enum.Enum):
     ATIVO = "ativo"
@@ -742,6 +743,9 @@ class ClienteEvento(Base):
     status = Column(String(50), default='ativo')
     criado_em = Column(DateTime(timezone=True), server_default=func.now())
     atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Relações adicionadas
+    categorias = relationship("ClienteCategoria", back_populates="cliente")
 
 class ValidacaoAcesso(Base):
     __tablename__ = "validacoes_acesso"
@@ -1010,6 +1014,443 @@ class PrintJobLog(Base):
     
     job = relationship("PrintJob")
 
+# ====== NOVOS MODELOS BASEADOS NA ENGENHARIA REVERSA ======
+
+# Sistema de Categorias de Clientes
+class CategoriaCliente(Base):
+    __tablename__ = "categorias_clientes"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False, unique=True)
+    descricao = Column(Text)
+    icone = Column(String(50))  # Nome do ícone material-ui
+    cor = Column(String(7))  # Cor hexadecimal
+    lista_convidado = Column(Boolean, default=False)  # Se aparece em listas de convidados
+    desconto_padrao = Column(Numeric(5, 2))  # Desconto padrão em %
+    beneficios = Column(Text)  # JSON com benefícios da categoria
+    ordem = Column(Integer, default=0)  # Ordem de exibição
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    clientes = relationship("ClienteCategoria", back_populates="categoria")
+
+# Associação Cliente-Categoria
+class ClienteCategoria(Base):
+    __tablename__ = "clientes_categorias"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    cliente_id = Column(Integer, ForeignKey("clientes_eventos.id"), nullable=False)
+    categoria_id = Column(Integer, ForeignKey("categorias_clientes.id"), nullable=False)
+    data_inicio = Column(DateTime(timezone=True), server_default=func.now())
+    data_fim = Column(DateTime(timezone=True))  # Null = ativo
+    observacoes = Column(Text)
+    
+    cliente = relationship("ClienteEvento", back_populates="categorias")
+    categoria = relationship("CategoriaCliente", back_populates="clientes")
+
+# Sistema de Pesquisa de Satisfação
+class PesquisaSatisfacao(Base):
+    __tablename__ = "pesquisas_satisfacao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    titulo = Column(String(255), nullable=False)
+    descricao = Column(Text)
+    tipo_integracao = Column(String(50))  # 'track.co', 'interno', 'google_forms'
+    url_pesquisa = Column(String(500))
+    qr_code = Column(Text)  # Base64 do QR Code
+    configuracoes = Column(Text)  # JSON com configs específicas
+    ativa = Column(Boolean, default=True)
+    data_inicio = Column(DateTime(timezone=True))
+    data_fim = Column(DateTime(timezone=True))
+    total_respostas = Column(Integer, default=0)
+    nota_media = Column(Numeric(3, 2))
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    evento = relationship("Evento")
+    respostas = relationship("RespostaPesquisa", back_populates="pesquisa")
+
+class RespostaPesquisa(Base):
+    __tablename__ = "respostas_pesquisa"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    pesquisa_id = Column(Integer, ForeignKey("pesquisas_satisfacao.id"), nullable=False)
+    cliente_id = Column(Integer, ForeignKey("clientes_eventos.id"))
+    nota = Column(Integer)  # 1-10
+    comentario = Column(Text)
+    dados_resposta = Column(Text)  # JSON com todas as respostas
+    origem = Column(String(50))  # 'app', 'qrcode', 'totem', 'pos'
+    ip_origem = Column(String(45))
+    data_resposta = Column(DateTime(timezone=True), server_default=func.now())
+    
+    pesquisa = relationship("PesquisaSatisfacao", back_populates="respostas")
+    cliente = relationship("ClienteEvento")
+
+# Sistema de Fidelidade
+class ProgramaFidelidade(Base):
+    __tablename__ = "programas_fidelidade"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    tipo_programa = Column(String(50))  # 'pontos', 'cashback', 'niveis'
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    niveis = relationship("NivelFidelidade", back_populates="programa")
+    participantes = relationship("ParticipanteFidelidade", back_populates="programa")
+
+class NivelFidelidade(Base):
+    __tablename__ = "niveis_fidelidade"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    programa_id = Column(Integer, ForeignKey("programas_fidelidade.id"), nullable=False)
+    nome = Column(String(50), nullable=False)  # 'Bronze', 'Prata', 'Ouro'
+    pontos_minimos = Column(Integer, default=0)
+    pontos_maximos = Column(Integer)
+    cor = Column(String(7))  # Cor hexadecimal
+    icone = Column(String(50))
+    beneficios = Column(Text)  # JSON com benefícios
+    desconto_percentual = Column(Numeric(5, 2))
+    multiplicador_pontos = Column(Numeric(3, 2), default=1.0)
+    ordem = Column(Integer, default=0)
+    
+    programa = relationship("ProgramaFidelidade", back_populates="niveis")
+
+class ParticipanteFidelidade(Base):
+    __tablename__ = "participantes_fidelidade"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    programa_id = Column(Integer, ForeignKey("programas_fidelidade.id"), nullable=False)
+    cliente_id = Column(Integer, ForeignKey("clientes_eventos.id"), nullable=False)
+    nivel_atual_id = Column(Integer, ForeignKey("niveis_fidelidade.id"))
+    pontos_totais = Column(Integer, default=0)
+    pontos_disponiveis = Column(Integer, default=0)
+    data_adesao = Column(DateTime(timezone=True), server_default=func.now())
+    data_ultima_movimentacao = Column(DateTime(timezone=True))
+    
+    programa = relationship("ProgramaFidelidade", back_populates="participantes")
+    cliente = relationship("ClienteEvento")
+    nivel_atual = relationship("NivelFidelidade")
+    movimentacoes = relationship("MovimentacaoPontos", back_populates="participante")
+
+class MovimentacaoPontos(Base):
+    __tablename__ = "movimentacoes_pontos"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    participante_id = Column(Integer, ForeignKey("participantes_fidelidade.id"), nullable=False)
+    tipo = Column(String(20))  # 'credito', 'debito', 'expiracao'
+    pontos = Column(Integer, nullable=False)
+    descricao = Column(String(255))
+    referencia_tipo = Column(String(50))  # 'venda', 'bonus', 'resgate'
+    referencia_id = Column(Integer)  # ID da venda, bonus, etc
+    data_movimentacao = Column(DateTime(timezone=True), server_default=func.now())
+    data_expiracao = Column(DateTime(timezone=True))
+    
+    participante = relationship("ParticipanteFidelidade", back_populates="movimentacoes")
+
+# Sistema de Automação
+class Automacao(Base):
+    __tablename__ = "automacoes"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    gatilho_tipo = Column(String(50))  # 'evento', 'horario', 'condicao', 'webhook'
+    gatilho_config = Column(Text)  # JSON com configuração do gatilho
+    acoes = Column(Text)  # JSON com lista de ações
+    condicoes = Column(Text)  # JSON com condições
+    status = Column(String(20), default='ativo')  # 'ativo', 'inativo', 'pausado'
+    ultima_execucao = Column(DateTime(timezone=True))
+    proxima_execucao = Column(DateTime(timezone=True))
+    execucoes_total = Column(Integer, default=0)
+    execucoes_sucesso = Column(Integer, default=0)
+    execucoes_erro = Column(Integer, default=0)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    logs = relationship("LogAutomacao", back_populates="automacao")
+
+class LogAutomacao(Base):
+    __tablename__ = "logs_automacao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    automacao_id = Column(Integer, ForeignKey("automacoes.id"), nullable=False)
+    status = Column(String(20))  # 'sucesso', 'erro', 'parcial'
+    gatilho_dados = Column(Text)  # JSON com dados do gatilho
+    acoes_executadas = Column(Text)  # JSON com resultado das ações
+    erro_mensagem = Column(Text)
+    tempo_execucao = Column(Integer)  # Em millisegundos
+    data_execucao = Column(DateTime(timezone=True), server_default=func.now())
+    
+    automacao = relationship("Automacao", back_populates="logs")
+
+# Sistema de Business Intelligence (BI)
+class DashboardBI(Base):
+    __tablename__ = "dashboards_bi"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    tipo = Column(String(50))  # 'operacional', 'financeiro', 'vendas', 'custom'
+    layout = Column(Text)  # JSON com configuração do layout
+    filtros_padrao = Column(Text)  # JSON com filtros padrão
+    publico = Column(Boolean, default=False)
+    usuario_criador_id = Column(Integer, ForeignKey("usuarios.id"))
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    widgets = relationship("WidgetBI", back_populates="dashboard")
+    
+class WidgetBI(Base):
+    __tablename__ = "widgets_bi"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    dashboard_id = Column(Integer, ForeignKey("dashboards_bi.id"), nullable=False)
+    tipo = Column(String(50))  # 'grafico_linha', 'grafico_pizza', 'kpi', 'tabela', 'mapa'
+    titulo = Column(String(100))
+    consulta_sql = Column(Text)  # Query para buscar dados
+    configuracao = Column(Text)  # JSON com configuração do widget
+    posicao_x = Column(Integer, default=0)
+    posicao_y = Column(Integer, default=0)
+    largura = Column(Integer, default=4)
+    altura = Column(Integer, default=4)
+    auto_refresh = Column(Integer)  # Segundos para auto-refresh
+    
+    dashboard = relationship("DashboardBI", back_populates="widgets")
+
+# Sistema de Integrações
+class Integracao(Base):
+    __tablename__ = "integracoes"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    tipo = Column(String(50))  # 'comunicacao', 'erp', 'fiscal', 'delivery', 'pagamento'
+    provedor = Column(String(50))  # 'whatsapp', 'ifood', 'omie', etc
+    status = Column(String(20), default='desconectado')  # 'conectado', 'desconectado', 'erro'
+    configuracao = Column(Text)  # JSON com credenciais e configs (criptografado)
+    webhook_url = Column(String(500))
+    ultima_sincronizacao = Column(DateTime(timezone=True))
+    proxima_sincronizacao = Column(DateTime(timezone=True))
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    logs = relationship("LogIntegracao", back_populates="integracao")
+
+class LogIntegracao(Base):
+    __tablename__ = "logs_integracao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    integracao_id = Column(Integer, ForeignKey("integracoes.id"), nullable=False)
+    tipo_operacao = Column(String(50))  # 'envio', 'recepcao', 'sincronizacao'
+    status = Column(String(20))  # 'sucesso', 'erro', 'pendente'
+    dados_enviados = Column(Text)
+    dados_recebidos = Column(Text)
+    erro_mensagem = Column(Text)
+    tempo_resposta = Column(Integer)  # Em millisegundos
+    data_operacao = Column(DateTime(timezone=True), server_default=func.now())
+    
+    integracao = relationship("Integracao", back_populates="logs")
+
+# Sistema de Soluções Online
+class ConfiguracaoApp(Base):
+    __tablename__ = "configuracoes_app"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    visivel_no_app = Column(Boolean, default=True)
+    permite_consumo = Column(Boolean, default=True)
+    pagamento_online = Column(Boolean, default=False)
+    checkin_proximidade = Column(Boolean, default=True)
+    distancia_checkin = Column(Integer, default=0)  # Em metros
+    checkin_remoto = Column(Boolean, default=False)
+    ativacao_qrcode = Column(Boolean, default=False)
+    categoria_app = Column(String(50))
+    tipo_operacao = Column(String(50))  # 'ficha', 'cartao', 'comanda', 'mesa'
+    cardapio_id = Column(Integer)
+    notificacao_push = Column(Boolean, default=True)
+    destaque_perfil = Column(Boolean, default=False)
+    taxa_servico_habilitada = Column(Boolean, default=False)
+    taxa_servico_percentual = Column(Numeric(5, 2), default=0)
+    configuracao_adicional = Column(Text)  # JSON com configs extras
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    evento = relationship("Evento")
+
+class CardapioDigital(Base):
+    __tablename__ = "cardapios_digitais"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    nome = Column(String(100), nullable=False)
+    slug = Column(String(100), unique=True)
+    uuid = Column(String(36), unique=True)  # UUID para URL única
+    qr_code = Column(Text)  # Base64 do QR Code
+    url_completa = Column(String(500))
+    ativo = Column(Boolean, default=True)
+    visualizacoes = Column(Integer, default=0)
+    configuracao = Column(Text)  # JSON com configuração do layout
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    evento = relationship("Evento")
+
+# Sistema de Tickets/Ingressos
+class EventoTicket(Base):
+    __tablename__ = "eventos_tickets"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
+    titulo = Column(String(255), nullable=False)
+    descricao = Column(Text)
+    data_inicio_vendas = Column(DateTime(timezone=True))
+    data_fim_vendas = Column(DateTime(timezone=True))
+    capacidade_total = Column(Integer)
+    vendidos = Column(Integer, default=0)
+    status = Column(String(20), default='ativo')  # 'ativo', 'pausado', 'esgotado', 'finalizado'
+    imagem_capa = Column(Text)
+    configuracao = Column(Text)  # JSON com configs do evento
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    evento = relationship("Evento")
+    # lotes = relationship("LoteTicket", back_populates="evento_ticket")  # TEMPORARIAMENTE COMENTADO - CONFLITO
+    vendas = relationship("VendaTicket", back_populates="evento_ticket")
+
+class LoteTicket(Base):
+    __tablename__ = "lotes_tickets"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_ticket_id = Column(Integer, ForeignKey("eventos_tickets.id"), nullable=False)
+    nome = Column(String(100), nullable=False)
+    numero = Column(Integer, default=1)
+    quantidade = Column(Integer, nullable=False)
+    vendidos = Column(Integer, default=0)
+    valor = Column(Numeric(10, 2), nullable=False)
+    taxa_servico = Column(Numeric(10, 2), default=0)
+    data_inicio = Column(DateTime(timezone=True))
+    data_fim = Column(DateTime(timezone=True))
+    descricao = Column(Text)
+    ativo = Column(Boolean, default=True)
+    
+    # evento_ticket = relationship("EventoTicket", back_populates="lotes")  # TEMPORARIAMENTE COMENTADO
+
+class VendaTicket(Base):
+    __tablename__ = "vendas_tickets"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_ticket_id = Column(Integer, ForeignKey("eventos_tickets.id"), nullable=False)
+    lote_id = Column(Integer, ForeignKey("lotes_tickets.id"), nullable=False)
+    cliente_id = Column(Integer, ForeignKey("clientes_eventos.id"))
+    codigo_venda = Column(String(20), unique=True)
+    quantidade = Column(Integer, nullable=False)
+    valor_unitario = Column(Numeric(10, 2), nullable=False)
+    taxa_servico = Column(Numeric(10, 2))
+    valor_total = Column(Numeric(10, 2), nullable=False)
+    status = Column(String(20))  # 'pendente', 'pago', 'cancelado', 'usado'
+    forma_pagamento = Column(String(50))
+    qr_code = Column(Text)  # QR Code do ingresso
+    data_venda = Column(DateTime(timezone=True), server_default=func.now())
+    data_uso = Column(DateTime(timezone=True))
+    
+    evento_ticket = relationship("EventoTicket", back_populates="vendas")
+    lote = relationship("LoteTicket")
+    cliente = relationship("ClienteEvento")
+
+# Sistema aprimorado de Colaboradores e Cargos
+class Cargo(Base):
+    __tablename__ = "cargos"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False, unique=True)
+    descricao = Column(Text)
+    nivel_hierarquia = Column(Integer, default=0)  # Para organização hierárquica
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    permissoes = relationship("PermissaoCargo", back_populates="cargo")
+    colaboradores = relationship("Colaborador", back_populates="cargo")
+
+class Permissao(Base):
+    __tablename__ = "permissoes"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    modulo = Column(String(50), nullable=False)  # 'dashboard', 'vendas', 'estoque', etc
+    acao = Column(String(50), nullable=False)  # 'visualizar', 'criar', 'editar', 'deletar'
+    descricao = Column(String(255))
+    
+    cargos = relationship("PermissaoCargo", back_populates="permissao")
+
+class PermissaoCargo(Base):
+    __tablename__ = "permissoes_cargos"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    cargo_id = Column(Integer, ForeignKey("cargos.id"), nullable=False)
+    permissao_id = Column(Integer, ForeignKey("permissoes.id"), nullable=False)
+    
+    cargo = relationship("Cargo", back_populates="permissoes")
+    permissao = relationship("Permissao", back_populates="cargos")
+
+class Colaborador(Base):
+    __tablename__ = "colaboradores"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    cargo_id = Column(Integer, ForeignKey("cargos.id"), nullable=False)
+    empresa_id = Column(Integer, ForeignKey("empresas.id"))
+    matricula = Column(String(20), unique=True)
+    data_admissao = Column(Date)
+    data_demissao = Column(Date)
+    salario = Column(Numeric(10, 2))
+    comissao_percentual = Column(Numeric(5, 2))
+    meta_mensal = Column(Numeric(10, 2))
+    observacoes = Column(Text)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    usuario = relationship("Usuario")
+    cargo = relationship("Cargo", back_populates="colaboradores")
+    empresa = relationship("Empresa")
+
+# Sistema de Mapa de Operação
+class MapaOperacao(Base):
+    __tablename__ = "mapas_operacao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
+    nome = Column(String(100), nullable=False)
+    tipo = Column(String(50))  # 'setores', 'mesas', 'areas', 'pontos_venda'
+    configuracao_layout = Column(Text)  # JSON com layout do mapa
+    imagem_fundo = Column(Text)  # Base64 ou URL da imagem de fundo
+    largura = Column(Integer)
+    altura = Column(Integer)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    
+    evento = relationship("Evento")
+    elementos = relationship("ElementoMapa", back_populates="mapa")
+
+class ElementoMapa(Base):
+    __tablename__ = "elementos_mapa"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    mapa_id = Column(Integer, ForeignKey("mapas_operacao.id"), nullable=False)
+    tipo = Column(String(50))  # 'mesa', 'setor', 'pdv', 'entrada', 'saida', 'bar'
+    codigo = Column(String(50))
+    nome = Column(String(100))
+    capacidade = Column(Integer)
+    status = Column(String(20))  # 'livre', 'ocupado', 'reservado', 'manutencao'
+    posicao_x = Column(Integer)
+    posicao_y = Column(Integer)
+    largura = Column(Integer)
+    altura = Column(Integer)
+    rotacao = Column(Integer, default=0)
+    cor = Column(String(7))
+    icone = Column(String(50))
+    dados_adicionais = Column(Text)  # JSON com dados específicos
+    
+    mapa = relationship("MapaOperacao", back_populates="elementos")
+
 # Import inventory models to ensure they are registered with SQLAlchemy
 try:
     from .inventory.models import (
@@ -1031,3 +1472,210 @@ try:
 except ImportError:
     # Mobile module is optional, ignore if not available
     pass
+
+# ====== MODELOS ADICIONAIS FALTANTES ======
+
+class FluxoTrabalho(Base):
+    __tablename__ = "fluxos_trabalho"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    categoria = Column(String(50))
+    passos = Column(Text)  # JSON com passos do fluxo
+    variaveis = Column(Text)  # JSON com variáveis do fluxo
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+    criado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+
+class ExecucaoFluxo(Base):
+    __tablename__ = "execucoes_fluxo"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    fluxo_id = Column(Integer, ForeignKey("fluxos_trabalho.id"))
+    status = Column(String(20))  # pendente, executando, sucesso, erro, cancelado
+    contexto = Column(Text)  # JSON com contexto da execução
+    resultado = Column(Text)  # JSON com resultado
+    erro = Column(Text)
+    iniciado_em = Column(DateTime(timezone=True), default=datetime.now)
+    finalizado_em = Column(DateTime(timezone=True))
+
+class WebhookIntegracao(Base):
+    __tablename__ = "webhooks_integracao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    integracao_id = Column(Integer, ForeignKey("integracoes.id"))
+    url = Column(String(255), nullable=False)
+    evento = Column(String(50), nullable=False)
+    ativo = Column(Boolean, default=True)
+    headers = Column(Text)  # JSON
+    secret = Column(String(255))
+    total_chamadas = Column(Integer, default=0)
+    total_erros = Column(Integer, default=0)
+    ultima_chamada = Column(DateTime(timezone=True))
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+class SolucaoOnline(Base):
+    __tablename__ = "solucoes_online"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    tipo = Column(String(50))  # app, web, pwa, api
+    descricao = Column(Text)
+    url = Column(String(255))
+    recursos = Column(Text)  # JSON lista de recursos
+    configuracoes = Column(Text)  # JSON
+    icone = Column(String(255))
+    ordem = Column(Integer, default=0)
+    ativa = Column(Boolean, default=True)
+    total_acessos = Column(Integer, default=0)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class RecursoApp(Base):
+    __tablename__ = "recursos_app"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    codigo = Column(String(50), unique=True, nullable=False)
+    categoria = Column(String(50))
+    descricao = Column(Text)
+    versao = Column(String(20))
+    dependencias = Column(Text)  # JSON
+    configuracao_padrao = Column(Text)  # JSON
+    documentacao_url = Column(String(255))
+    gratuito = Column(Boolean, default=True)
+    preco = Column(Float)
+    popularidade = Column(Integer, default=0)
+    total_instalacoes = Column(Integer, default=0)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class TipoTicket(Base):
+    __tablename__ = "tipos_ticket"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    preco_base = Column(Float, nullable=False)
+    quantidade_total = Column(Integer, nullable=False)
+    quantidade_disponivel = Column(Integer)
+    quantidade_vendida = Column(Integer, default=0)
+    quantidade_por_pessoa = Column(Integer, default=1)
+    beneficios = Column(Text)  # JSON
+    restricoes = Column(Text)  # JSON
+    categoria = Column(String(50))
+    ordem = Column(Integer, default=0)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+    
+    evento = relationship("Evento", back_populates="tipos_ticket")
+    # lotes = relationship("LoteTicket", back_populates="tipo_ticket")  # TEMPORARIAMENTE COMENTADO - CONFLITO
+    tickets = relationship("Ticket", back_populates="tipo_ticket")
+
+# TEMPORARIAMENTE COMENTADO - CONFLITO COM LoteTicket da linha 1320
+# class LoteTicket(Base):
+#     __tablename__ = "lotes_ticket"
+    
+#     id = Column(Integer, primary_key=True, index=True)
+#     tipo_ticket_id = Column(Integer, ForeignKey("tipos_ticket.id"))
+#     nome = Column(String(100), nullable=False)
+#     quantidade = Column(Integer, nullable=False)
+#     quantidade_vendida = Column(Integer, default=0)
+#     preco = Column(Float, nullable=False)
+#     data_inicio = Column(DateTime(timezone=True), nullable=False)
+#     data_fim = Column(DateTime(timezone=True))
+#     ordem = Column(Integer, default=0)
+#     ativo = Column(Boolean, default=True)
+#     criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    
+#     tipo_ticket = relationship("TipoTicket", back_populates="lotes")
+    tickets = relationship("Ticket", back_populates="lote")
+
+class Ticket(Base):
+    __tablename__ = "tickets"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    tipo_ticket_id = Column(Integer, ForeignKey("tipos_ticket.id"))
+    lote_id = Column(Integer, ForeignKey("lotes_ticket.id"))
+    cliente_id = Column(Integer, ForeignKey("clientes_eventos.id"))
+    codigo = Column(String(50), unique=True, nullable=False)
+    qr_code = Column(Text)
+    status = Column(String(20))  # disponivel, reservado, vendido, usado, cancelado
+    valor_pago = Column(Float)
+    forma_pagamento = Column(String(50))
+    nome_titular = Column(String(100))
+    cpf_titular = Column(String(20))
+    email_titular = Column(String(100))
+    telefone_titular = Column(String(20))
+    data_compra = Column(DateTime(timezone=True), default=datetime.now)
+    data_uso = Column(DateTime(timezone=True))
+    usado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+    data_cancelamento = Column(DateTime(timezone=True))
+    motivo_cancelamento = Column(Text)
+    
+    tipo_ticket = relationship("TipoTicket", back_populates="tickets")
+    lote = relationship("LoteTicket", back_populates="tickets")
+    cliente = relationship("ClienteEvento")
+
+class TransferenciaTicket(Base):
+    __tablename__ = "transferencias_ticket"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    ticket_id = Column(Integer, ForeignKey("tickets.id"))
+    cliente_anterior_id = Column(Integer, ForeignKey("clientes_eventos.id"))
+    cliente_novo_id = Column(Integer, ForeignKey("clientes_eventos.id"))
+    motivo = Column(Text)
+    data_transferencia = Column(DateTime(timezone=True), default=datetime.now)
+
+class EscalaTrabalho(Base):
+    __tablename__ = "escalas_trabalho"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    colaborador_id = Column(Integer, ForeignKey("colaboradores.id"))
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    data_inicio = Column(DateTime(timezone=True), nullable=False)
+    data_fim = Column(DateTime(timezone=True), nullable=False)
+    tipo = Column(String(20))  # normal, plantao, revezamento, evento
+    status = Column(String(20))  # agendada, em_andamento, concluida, cancelada
+    local = Column(String(255))
+    horas_previstas = Column(Float)
+    horas_trabalhadas = Column(Float)
+    checkin_realizado = Column(DateTime(timezone=True))
+    checkout_realizado = Column(DateTime(timezone=True))
+    localizacao_checkin = Column(Text)  # JSON com lat/lng
+    observacoes = Column(Text)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    criado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+    
+    colaborador = relationship("Colaborador", back_populates="escalas")
+    tarefas = relationship("TarefaColaborador", back_populates="escala")
+
+class TarefaColaborador(Base):
+    __tablename__ = "tarefas_colaborador"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    colaborador_id = Column(Integer, ForeignKey("colaboradores.id"))
+    escala_id = Column(Integer, ForeignKey("escalas_trabalho.id"))
+    titulo = Column(String(200), nullable=False)
+    descricao = Column(Text)
+    prioridade = Column(String(20))  # baixa, media, alta, urgente
+    status = Column(String(20))  # pendente, em_andamento, concluida, cancelada
+    prazo = Column(DateTime(timezone=True))
+    data_conclusao = Column(DateTime(timezone=True))
+    categoria = Column(String(50))
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    criado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+    
+    colaborador = relationship("Colaborador", back_populates="tarefas")
+    escala = relationship("EscalaTrabalho", back_populates="tarefas")
+
+# Adicionar relacionamentos aos modelos existentes
+Evento.tipos_ticket = relationship("TipoTicket", back_populates="evento")
+Colaborador.escalas = relationship("EscalaTrabalho", back_populates="colaborador")
+Colaborador.tarefas = relationship("TarefaColaborador", back_populates="colaborador")
+

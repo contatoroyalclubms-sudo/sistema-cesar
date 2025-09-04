@@ -7,6 +7,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, Foreign
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .database import Base
+from .models import CategoriaCliente, ClienteCategoria, Cargo, Permissao  # Importando para evitar duplicação
 import enum
 from decimal import Decimal
 from typing import Dict, List, Any, Optional
@@ -97,96 +98,17 @@ class TipoPermissao(enum.Enum):
     TRANSFERIR_MESA = "transferir_mesa"
 
 # ================================================================================
-# MODELOS PARA CATEGORIAS DE CLIENTES
+# MODELOS PARA CATEGORIAS DE CLIENTES (importado de models.py)
 # ================================================================================
+# CategoriaCliente já está definida em models.py - removendo duplicação
 
-class CategoriaCliente(Base):
-    """Categorias personalizadas para classificação de clientes (VIP, Sócio, etc.)"""
-    __tablename__ = "categorias_clientes"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String(100), nullable=False)
-    descricao = Column(Text)
-    tipo = Column(Enum(TipoCategoriaCliente), nullable=False)
-    cor = Column(String(7), default="#3b82f6")  # Hex color para identificação visual
-    icone = Column(String(50))  # Nome do ícone para UI
-    status = Column(Enum(StatusCategoriaCliente), default=StatusCategoriaCliente.ATIVA)
-    
-    # Benefícios da categoria
-    desconto_percentual = Column(Numeric(5, 2), default=0)  # Desconto padrão
-    prioridade_atendimento = Column(Boolean, default=False)
-    acesso_areas_vip = Column(Boolean, default=False)
-    cashback_percentual = Column(Numeric(5, 2), default=0)
-    
-    # Configurações
-    empresa_id = Column(Integer, ForeignKey("empresas.id"), nullable=True)
-    evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=True)
-    ativa = Column(Boolean, default=True)
-    criado_em = Column(DateTime(timezone=True), server_default=func.now())
-    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
-    
-    # Relacionamentos
-    empresa = relationship("Empresa")
-    evento = relationship("Evento") 
-    clientes = relationship("ClienteCategoria", back_populates="categoria")
-
-class ClienteCategoria(Base):
-    """Associação entre clientes e suas categorias"""
-    __tablename__ = "clientes_categorias"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    cpf_cliente = Column(String(14), nullable=False, index=True)
-    categoria_id = Column(Integer, ForeignKey("categorias_clientes.id"), nullable=False)
-    data_inicio = Column(Date, nullable=False, default=func.current_date())
-    data_fim = Column(Date)  # Null = permanente
-    ativa = Column(Boolean, default=True)
-    observacoes = Column(Text)
-    criado_em = Column(DateTime(timezone=True), server_default=func.now())
-    
-    # Relacionamentos
-    categoria = relationship("CategoriaCliente", back_populates="clientes")
+# ClienteCategoria já está definida em models.py - removendo duplicação
 
 # ================================================================================
 # MODELOS PARA SISTEMA DE PERMISSÕES
 # ================================================================================
 
-class Cargo(Base):
-    """Cargos com permissões granulares do sistema"""
-    __tablename__ = "cargos"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String(100), nullable=False, unique=True)
-    descricao = Column(Text)
-    nivel_hierarquia = Column(Integer, default=1)  # 1=mais baixo, 10=mais alto
-    cor = Column(String(7), default="#6b7280")  # Cor para identificação visual
-    
-    # Configurações
-    empresa_id = Column(Integer, ForeignKey("empresas.id"), nullable=True)
-    ativo = Column(Boolean, default=True)
-    criado_em = Column(DateTime(timezone=True), server_default=func.now())
-    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
-    
-    # Relacionamentos
-    empresa = relationship("Empresa")
-    permissoes = relationship("CargoPermissao", back_populates="cargo")
-    usuarios = relationship("UsuarioCargo", back_populates="cargo")
-
-class Permissao(Base):
-    """Permissões granulares do sistema"""
-    __tablename__ = "permissoes"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    codigo = Column(String(50), unique=True, nullable=False)  # ex: "gestao_cartoes"
-    nome = Column(String(100), nullable=False)
-    descricao = Column(Text)
-    tipo = Column(Enum(TipoPermissao), nullable=False)
-    modulo = Column(String(50))  # ex: "pdv", "cashless", "eventos"
-    nivel_critico = Column(Integer, default=1)  # 1=baixo, 5=crítico
-    ativa = Column(Boolean, default=True)
-    criado_em = Column(DateTime(timezone=True), server_default=func.now())
-    
-    # Relacionamentos
-    cargos = relationship("CargoPermissao", back_populates="permissao")
+# Cargo e Permissao já estão definidas em models.py - removendo duplicação
 
 class CargoPermissao(Base):
     """Associação entre cargos e suas permissões"""

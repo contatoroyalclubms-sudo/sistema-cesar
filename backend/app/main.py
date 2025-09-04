@@ -15,7 +15,13 @@ import time
 
 from .database import engine, get_db
 from .models import Base
-from .routers import auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, meep, financeiro, printer, pdv_mobile, cashless, mesa_kds  # import_export
+from .routers import (
+    auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, 
+    relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, 
+    meep, financeiro, printer, pdv_mobile,  # cashless, mesa_kds - temporariamente desabilitados
+    categorias_clientes, pesquisa_satisfacao, fidelidade,
+    automacao, business_intelligence, integracoes, solucoes_online, tickets, colaboradores
+)  # import_export
 from .middleware import LoggingMiddleware
 from .auth_functions import verificar_permissao_admin
 from .scheduler import start_scheduler
@@ -223,7 +229,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # Configuração CORS otimizada para development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://localhost:8080', 'http://localhost:4200'],
+    allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://localhost:4173', 'http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://localhost:8080', 'http://localhost:4200'],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
@@ -288,11 +294,22 @@ app.include_router(gamificacao.router, prefix="/api")
 app.include_router(formas_pagamento.router, prefix="/api/formas-pagamento", tags=["Formas de Pagamento"])
 # app.include_router(import_export.router, tags=["Import-Export"])
 app.include_router(meep.router, prefix="/api/meep", tags=["MEEP Integration"])
-app.include_router(cashless.router, prefix="/api/cashless", tags=["Sistema Cashless"])
-app.include_router(mesa_kds.router, tags=["Sistema Mesas + KDS"])
+# app.include_router(cashless.router, prefix="/api/cashless", tags=["Sistema Cashless"])  # Temporariamente desabilitado
+# app.include_router(mesa_kds.router, tags=["Sistema Mesas + KDS"])  # Temporariamente desabilitado
 app.include_router(financeiro.router, prefix="/api/financeiro", tags=["Financeiro"])
 app.include_router(printer.router)  # Printer router já tem prefix configurado
 app.include_router(pdv_mobile.router, prefix="/api", tags=["PDV Mobile"])
+
+# Novas rotas baseadas na engenharia reversa
+app.include_router(categorias_clientes.router)
+app.include_router(pesquisa_satisfacao.router)
+app.include_router(fidelidade.router)
+app.include_router(automacao.router)
+app.include_router(business_intelligence.router)
+app.include_router(integracoes.router)
+app.include_router(solucoes_online.router)
+app.include_router(tickets.router)
+app.include_router(colaboradores.router)
 
 # 🔌 WEBSOCKETS COM CORS
 @app.websocket("/api/pdv/ws/{evento_id}")

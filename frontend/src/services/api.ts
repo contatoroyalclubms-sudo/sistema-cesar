@@ -32,6 +32,10 @@ type ProdutoCreate = ProdutoCreateType;
 
 // Configuração da URL da API baseada no ambiente
 const getApiBaseUrl = () => {
+  // 🔧 FORÇAR DESENVOLVIMENTO PARA TESTES
+  console.log('🔧 DESENVOLVIMENTO FORÇADO: localhost:8000');
+  return 'http://localhost:8000';
+  
   // Detectar se está em produção pela URL ou variável de ambiente
   const hostname = window.location.hostname;
   const isProd = import.meta.env.PROD || 

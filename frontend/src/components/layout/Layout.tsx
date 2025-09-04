@@ -27,7 +27,17 @@ import {
   Zap,
   Activity,
   Database,
-  Tablet
+  Tablet,
+  Star,
+  MessageSquare,
+  Tag,
+  Cpu,
+  TrendingUp,
+  Globe,
+  Ticket,
+  UserCog,
+  Briefcase,
+  Link2
 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -54,7 +64,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
-    'Produtos': location.pathname.startsWith('/app/produtos')
+    'Produtos': location.pathname.startsWith('/app/produtos'),
+    'Automação': location.pathname.startsWith('/app/automacao'),
+    'Business Intelligence': location.pathname.startsWith('/app/bi'),
+    'Integrações': location.pathname.startsWith('/app/integracoes'),
+    'Soluções Online': location.pathname.startsWith('/app/solucoes-online'),
+    'Tickets e Ingressos': location.pathname.startsWith('/app/tickets'),
+    'Colaboradores': location.pathname.startsWith('/app/colaboradores'),
+    'MEEP Integration': location.pathname.startsWith('/app/meep'),
+    'Cadastros': location.pathname.startsWith('/app/cadastros')
   });
 
   // Revalidar usuário se necessário
@@ -91,12 +109,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     // TODO: Implementar funcionalidade de busca global
   };
 
-  // Auto-expandir menu produtos quando navegar para a seção
+  // Auto-expandir menus quando navegar para suas seções
   React.useEffect(() => {
-    if (location.pathname.startsWith('/app/produtos')) {
+    const pathMappings = {
+      '/app/produtos': 'Produtos',
+      '/app/automacao': 'Automação',
+      '/app/bi': 'Business Intelligence',
+      '/app/integracoes': 'Integrações',
+      '/app/solucoes-online': 'Soluções Online',
+      '/app/tickets': 'Tickets e Ingressos',
+      '/app/colaboradores': 'Colaboradores',
+      '/app/meep': 'MEEP Integration',
+      '/app/cadastros': 'Cadastros'
+    };
+
+    const expandedMenu = Object.entries(pathMappings).find(([path]) => 
+      location.pathname.startsWith(path)
+    );
+
+    if (expandedMenu) {
       setExpandedMenus(prev => ({
         ...prev,
-        'Produtos': true
+        [expandedMenu[1]]: true
       }));
     }
   }, [location.pathname]);
@@ -285,6 +319,115 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           label: 'Link de Pagamento', 
           description: 'Gestão de links de pagamento' 
         }
+      ]
+    },
+    // === NOVOS MÓDULOS IMPLEMENTADOS ===
+    { 
+      icon: Tag, 
+      label: 'Categorias de Clientes', 
+      path: '/app/categorias-clientes', 
+      roles: ['admin', 'promoter'],
+      description: 'Gestão de categorias e segmentação de clientes'
+    },
+    { 
+      icon: MessageSquare, 
+      label: 'Pesquisa de Satisfação', 
+      path: '/app/pesquisa-satisfacao', 
+      roles: ['admin', 'promoter'],
+      description: 'Pesquisas de satisfação e NPS'
+    },
+    { 
+      icon: Star, 
+      label: 'Programa de Fidelidade', 
+      path: '/app/fidelidade', 
+      roles: ['admin', 'promoter', 'cliente'],
+      description: 'Sistema de pontos e recompensas'
+    },
+    { 
+      icon: Cpu, 
+      label: 'Automação', 
+      path: '/app/automacao', 
+      roles: ['admin', 'promoter'],
+      description: 'Automação de processos e fluxos de trabalho',
+      hasSubmenu: true,
+      submenu: [
+        { label: 'Automações', path: '/app/automacao', description: 'Gestão de automações' },
+        { label: 'Fluxos de Trabalho', path: '/app/automacao/fluxos', description: 'Fluxos e processos' },
+        { label: 'Logs de Execução', path: '/app/automacao/logs', description: 'Histórico de execuções' }
+      ]
+    },
+    { 
+      icon: TrendingUp, 
+      label: 'Business Intelligence', 
+      path: '/app/bi', 
+      roles: ['admin', 'promoter'],
+      description: 'Dashboards e análise de dados',
+      hasSubmenu: true,
+      submenu: [
+        { label: 'Dashboards', path: '/app/bi/dashboards', description: 'Painéis customizados' },
+        { label: 'Relatórios BI', path: '/app/bi/relatorios', description: 'Relatórios avançados' },
+        { label: 'Análise Preditiva', path: '/app/bi/preditiva', description: 'Previsões com IA' },
+        { label: 'Métricas em Tempo Real', path: '/app/bi/tempo-real', description: 'KPIs ao vivo' }
+      ]
+    },
+    { 
+      icon: Link2, 
+      label: 'Integrações', 
+      path: '/app/integracoes', 
+      roles: ['admin'],
+      description: 'Integrações com sistemas externos',
+      hasSubmenu: true,
+      submenu: [
+        { label: 'Integrações Ativas', path: '/app/integracoes', description: 'Gerenciar integrações' },
+        { label: 'Marketplace', path: '/app/integracoes/marketplace', description: 'Novas integrações' },
+        { label: 'Webhooks', path: '/app/integracoes/webhooks', description: 'Gestão de webhooks' },
+        { label: 'Logs', path: '/app/integracoes/logs', description: 'Histórico de integrações' }
+      ]
+    },
+    { 
+      icon: Globe, 
+      label: 'Soluções Online', 
+      path: '/app/solucoes-online', 
+      roles: ['admin', 'promoter'],
+      description: 'Apps e configurações online',
+      hasSubmenu: true,
+      submenu: [
+        { label: 'Configuração de Apps', path: '/app/solucoes-online/apps', description: 'Configurar aplicativos' },
+        { label: 'PWA Manager', path: '/app/solucoes-online/pwa', description: 'Progressive Web Apps' },
+        { label: 'Recursos', path: '/app/solucoes-online/recursos', description: 'Biblioteca de recursos' },
+        { label: 'Templates', path: '/app/solucoes-online/templates', description: 'Templates prontos' }
+      ]
+    },
+    { 
+      icon: Ticket, 
+      label: 'Tickets e Ingressos', 
+      path: '/app/tickets', 
+      roles: ['admin', 'promoter', 'cliente'],
+      description: 'Sistema completo de ingressos',
+      hasSubmenu: true,
+      submenu: [
+        { label: 'Tipos de Ticket', path: '/app/tickets/tipos', description: 'Configurar tipos' },
+        { label: 'Lotes', path: '/app/tickets/lotes', description: 'Gestão de lotes' },
+        { label: 'Vendas', path: '/app/tickets/vendas', description: 'Venda de ingressos' },
+        { label: 'Validação', path: '/app/tickets/validacao', description: 'Validar ingressos' },
+        { label: 'Transferências', path: '/app/tickets/transferencias', description: 'Transferir ingressos' },
+        { label: 'Relatórios', path: '/app/tickets/relatorios', description: 'Relatórios de vendas' }
+      ]
+    },
+    { 
+      icon: UserCog, 
+      label: 'Colaboradores', 
+      path: '/app/colaboradores', 
+      roles: ['admin', 'promoter'],
+      description: 'Gestão de equipe e RH',
+      hasSubmenu: true,
+      submenu: [
+        { label: 'Colaboradores', path: '/app/colaboradores', description: 'Listar colaboradores' },
+        { label: 'Cargos', path: '/app/colaboradores/cargos', description: 'Gestão de cargos' },
+        { label: 'Escalas', path: '/app/colaboradores/escalas', description: 'Escalas de trabalho' },
+        { label: 'Tarefas', path: '/app/colaboradores/tarefas', description: 'Atribuir tarefas' },
+        { label: 'Ponto', path: '/app/colaboradores/ponto', description: 'Controle de ponto' },
+        { label: 'Relatórios RH', path: '/app/colaboradores/relatorios', description: 'Relatórios de RH' }
       ]
     },
     { 

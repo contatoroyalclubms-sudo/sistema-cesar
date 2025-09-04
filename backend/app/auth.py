@@ -486,3 +486,6 @@ async def setup_inicial(db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erro ao realizar setup inicial: {str(e)}"
         )
+
+# Alias para compatibilidade
+from .auth_functions import obter_usuario_atual as get_current_user
