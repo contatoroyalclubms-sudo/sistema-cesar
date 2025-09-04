@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-09-03T19:58:53.219931",
+  "services": {
+    "backend": {
+      "status": "healthy",
+      "url": "http://localhost:8000",
+      "response_time": 0.385754
+    },
+    "frontend": {
+      "status": "healthy",
+      "url": "http://localhost:5173",
+      "response_time": 0.294814
+    }
+  },
+  "system": {
+    "cpu_percent": 68.2,
+    "memory_percent": 90.8,
+    "disk_percent": 45.7,
+    "processes": 367
+  },
+  "modules": {
+    "auth": {
+      "status": "unhealthy",
+      "status_code": 403,
+      "response_time": 0.296707
+    },
+    "eventos": {
+      "status": "unhealthy",
+      "status_code": 405,
+      "response_time": 0.270691
+    },
+    "usuarios": {
+      "status": "unhealthy",
+      "status_code": 405,
+      "response_time": 0.261018
+    },
+    "pdv": {
+      "status": "unhealthy",
+      "status_code": 405,
+      "response_time": 0.25543
+    },
+    "checkin": {
+      "status": "unhealthy",
+      "status_code": 405,
+      "response_time": 0.267142
+    }
+  },
+  "errors": [],
+  "overall_health": "healthy"
+}

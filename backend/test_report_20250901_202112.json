@@ -1,0 +1,121 @@
+{
+  "start_time": "2025-09-01T20:21:06.815465",
+  "tests": {
+    "infraestrutura_web": {
+      "description": "Testes de infraestrutura web e endpoints básicos",
+      "start_time": "2025-09-01T20:21:12.382213",
+      "tests": [
+        {
+          "name": "Health Endpoints",
+          "start_time": "2025-09-01T20:21:12.382213",
+          "status": "failed",
+          "duration": 0.106,
+          "message": "Erro nos health endpoints: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Funcionalidade CORS",
+          "start_time": "2025-09-01T20:21:12.487875",
+          "status": "failed",
+          "duration": 0.007,
+          "message": "Erro no teste CORS: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:21:12.494875"
+    },
+    "routers_criticos": {
+      "description": "Testes dos routers mais críticos do sistema",
+      "start_time": "2025-09-01T20:21:12.495874",
+      "tests": [
+        {
+          "name": "Auth Router",
+          "start_time": "2025-09-01T20:21:12.495874",
+          "status": "failed",
+          "duration": 0.005,
+          "message": "Erro no auth router: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Usuários Router",
+          "start_time": "2025-09-01T20:21:12.500870",
+          "status": "failed",
+          "duration": 0.006,
+          "message": "Erro no usuários router: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Produtos Router",
+          "start_time": "2025-09-01T20:21:12.506874",
+          "status": "failed",
+          "duration": 0.006,
+          "message": "Erro no produtos router: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Eventos Router",
+          "start_time": "2025-09-01T20:21:12.512873",
+          "status": "failed",
+          "duration": 0.006,
+          "message": "Erro no eventos router: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 4,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:21:12.518883"
+    },
+    "routers_principais": {
+      "description": "Testes dos routers principais de negócio",
+      "start_time": "2025-09-01T20:21:12.519882",
+      "tests": [
+        {
+          "name": "Empresas Router",
+          "start_time": "2025-09-01T20:21:12.519882",
+          "status": "failed",
+          "duration": 0.006,
+          "message": "Erro no empresas router: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        },
+        {
+          "name": "Dashboard Router",
+          "start_time": "2025-09-01T20:21:12.525889",
+          "status": "failed",
+          "duration": 0.006,
+          "message": "Erro no dashboard router: 'NoneType' object has no attribute 'host'",
+          "details": {},
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:21:12.531465"
+    }
+  },
+  "summary": {
+    "total": 8,
+    "passed": 0,
+    "failed": 8,
+    "skipped": 0,
+    "errors": []
+  },
+  "end_time": "2025-09-01T20:21:12.531465"
+}

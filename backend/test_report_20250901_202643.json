@@ -1,0 +1,92 @@
+{
+  "start_time": "2025-09-01T20:26:39.631596",
+  "tests": {
+    "health_corretos": {
+      "description": "Health endpoints com caminhos corretos",
+      "start_time": "2025-09-01T20:26:43.277798",
+      "tests": [
+        {
+          "name": "Health Endpoints Corretos",
+          "start_time": "2025-09-01T20:26:43.301932",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Erro durante execução: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given",
+          "details": {},
+          "error": "Traceback (most recent call last):\n  File \"C:\\Users\\User\\Desktop\\universal\\paineluniversal\\backend\\test_framework_complete.py\", line 72, in run_test\n    result = test_function(*args, **kwargs)\nTypeError: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given\n"
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    "get_sistematico": {
+      "description": "Teste sistemático de todos os endpoints GET",
+      "start_time": "2025-09-01T20:26:43.302946",
+      "tests": [
+        {
+          "name": "Endpoints GET Sistemáticos",
+          "start_time": "2025-09-01T20:26:43.302946",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Erro durante execução: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given",
+          "details": {},
+          "error": "Traceback (most recent call last):\n  File \"C:\\Users\\User\\Desktop\\universal\\paineluniversal\\backend\\test_framework_complete.py\", line 72, in run_test\n    result = test_function(*args, **kwargs)\nTypeError: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given\n"
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    "routers_especificos": {
+      "description": "Endpoints específicos de cada router",
+      "start_time": "2025-09-01T20:26:43.302946",
+      "tests": [
+        {
+          "name": "Router Endpoints Específicos",
+          "start_time": "2025-09-01T20:26:43.505764",
+          "status": "failed",
+          "duration": 0.0,
+          "message": "Erro durante execução: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given",
+          "details": {},
+          "error": "Traceback (most recent call last):\n  File \"C:\\Users\\User\\Desktop\\universal\\paineluniversal\\backend\\test_framework_complete.py\", line 72, in run_test\n    result = test_function(*args, **kwargs)\nTypeError: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given\n"
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    }
+  },
+  "summary": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "skipped": 0,
+    "errors": [
+      {
+        "phase": "health_corretos",
+        "test": "Health Endpoints Corretos",
+        "error": "run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\User\\Desktop\\universal\\paineluniversal\\backend\\test_framework_complete.py\", line 72, in run_test\n    result = test_function(*args, **kwargs)\nTypeError: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given\n"
+      },
+      {
+        "phase": "get_sistematico",
+        "test": "Endpoints GET Sistemáticos",
+        "error": "run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\User\\Desktop\\universal\\paineluniversal\\backend\\test_framework_complete.py\", line 72, in run_test\n    result = test_function(*args, **kwargs)\nTypeError: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given\n"
+      },
+      {
+        "phase": "routers_especificos",
+        "test": "Router Endpoints Específicos",
+        "error": "run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\User\\Desktop\\universal\\paineluniversal\\backend\\test_framework_complete.py\", line 72, in run_test\n    result = test_function(*args, **kwargs)\nTypeError: run_correct_endpoint_tests.<locals>.<lambda>() takes 0 positional arguments but 1 was given\n"
+      }
+    ]
+  },
+  "end_time": "2025-09-01T20:26:43.505764"
+}

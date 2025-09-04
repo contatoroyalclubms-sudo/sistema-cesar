@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-09-03T20:14:07.953433",
+  "problems_detected": {
+    "services_down": [
+      {
+        "service": "MEEP Enterprise",
+        "url": "http://localhost:3000",
+        "status_code": 404,
+        "fixable": true
+      }
+    ],
+    "authentication_issues": [
+      {
+        "system": "MEEP",
+        "issue": "Login failed: HTTP 400",
+        "fixable": true
+      }
+    ],
+    "database_issues": [],
+    "configuration_issues": [],
+    "dependency_issues": []
+  },
+  "fixes_applied": [
+    "MEEP Enterprise ja estava rodando"
+  ],
+  "problems_before": 2,
+  "problems_after": 2,
+  "improvement": 0,
+  "success_rate": "0.0%"
+}

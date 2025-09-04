@@ -1,0 +1,181 @@
+{
+  "start_time": "2025-09-01T20:21:54.633047",
+  "tests": {
+    "infraestrutura_web": {
+      "description": "Testes de infraestrutura web e endpoints básicos",
+      "start_time": "2025-09-01T20:21:58.054786",
+      "tests": [
+        {
+          "name": "Health Endpoints",
+          "start_time": "2025-09-01T20:21:58.054786",
+          "status": "passed",
+          "duration": 0.026,
+          "message": "Health endpoints: 3/3 funcionando",
+          "details": {
+            "root": {
+              "status_code": 200,
+              "success": true
+            },
+            "healthz": {
+              "status_code": 200,
+              "success": true
+            },
+            "api_health": {
+              "status_code": 200,
+              "success": true
+            }
+          },
+          "error": null
+        },
+        {
+          "name": "Funcionalidade CORS",
+          "start_time": "2025-09-01T20:21:58.081023",
+          "status": "passed",
+          "duration": 0.006,
+          "message": "CORS funcionando corretamente",
+          "details": {
+            "status_code": 200,
+            "cors_info": {
+              "middleware": "UltimateCORSMiddleware + FastAPI CORSMiddleware",
+              "protection_level": "maximum",
+              "allowed_methods": [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS",
+                "HEAD"
+              ],
+              "wildcard_enabled": true,
+              "credentials_support": "dynamic"
+            },
+            "headers": {
+              "content-length": "702",
+              "content-type": "application/json",
+              "access-control-allow-origin": "*",
+              "access-control-allow-methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD",
+              "access-control-allow-headers": "*, Accept, Accept-Language, Content-Language, Content-Type, Authorization, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers, X-CSRF-Token, X-API-Key",
+              "access-control-allow-credentials": "false",
+              "access-control-expose-headers": "*",
+              "vary": "Origin",
+              "x-process-time": "0.0020003318786621094"
+            }
+          },
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:21:58.087202"
+    },
+    "routers_criticos": {
+      "description": "Testes dos routers mais críticos do sistema",
+      "start_time": "2025-09-01T20:21:58.087202",
+      "tests": [
+        {
+          "name": "Auth Router",
+          "start_time": "2025-09-01T20:21:58.088205",
+          "status": "failed",
+          "duration": 0.203,
+          "message": "Auth router: 1/2 endpoints OK",
+          "details": {
+            "setup_inicial": {
+              "status_code": 500,
+              "success": false
+            },
+            "login_attempt": {
+              "status_code": 401,
+              "success": true
+            }
+          },
+          "error": null
+        },
+        {
+          "name": "Usuários Router",
+          "start_time": "2025-09-01T20:21:58.291027",
+          "status": "failed",
+          "duration": 0.005,
+          "message": "Usuários router falhou: 405",
+          "details": {
+            "response": "{\"detail\":\"Method Not Allowed\"}"
+          },
+          "error": null
+        },
+        {
+          "name": "Produtos Router",
+          "start_time": "2025-09-01T20:21:58.296024",
+          "status": "failed",
+          "duration": 0.004,
+          "message": "Produtos router falhou: 405",
+          "details": {
+            "response": "{\"detail\":\"Method Not Allowed\"}"
+          },
+          "error": null
+        },
+        {
+          "name": "Eventos Router",
+          "start_time": "2025-09-01T20:21:58.300025",
+          "status": "failed",
+          "duration": 0.006,
+          "message": "Eventos router falhou: 405",
+          "details": {
+            "response": "{\"detail\":\"Method Not Allowed\"}"
+          },
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 4,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:21:58.306027"
+    },
+    "routers_principais": {
+      "description": "Testes dos routers principais de negócio",
+      "start_time": "2025-09-01T20:21:58.306027",
+      "tests": [
+        {
+          "name": "Empresas Router",
+          "start_time": "2025-09-01T20:21:58.307024",
+          "status": "failed",
+          "duration": 0.005,
+          "message": "Empresas router falhou: 405",
+          "details": {
+            "response": "{\"detail\":\"Method Not Allowed\"}"
+          },
+          "error": null
+        },
+        {
+          "name": "Dashboard Router",
+          "start_time": "2025-09-01T20:21:58.311645",
+          "status": "failed",
+          "duration": 0.005,
+          "message": "Dashboard router falhou: 405",
+          "details": {
+            "response": "{\"detail\":\"Method Not Allowed\"}"
+          },
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:21:58.317722"
+    }
+  },
+  "summary": {
+    "total": 8,
+    "passed": 2,
+    "failed": 6,
+    "skipped": 0,
+    "errors": []
+  },
+  "end_time": "2025-09-01T20:21:58.317722"
+}

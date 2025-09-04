@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Autenticação Híbrida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            min-height: 30px;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .status {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔌 Teste de Conexão e Autenticação</h1>
+    
+    <div class="test-container">
+        <h2>📡 Status da Conexão</h2>
+        <div id="connection-status" class="result info">Verificando conexão...</div>
+        <button onclick="testConnection()">🔄 Testar Conexão</button>
+        <button onclick="testAutoRecovery()">🔁 Testar Auto-Recovery</button>
+    </div>
+
+    <div class="test-container">
+        <h2>🔐 Teste de Autenticação Híbrida</h2>
+        
+        <div class="test-group">
+            <h3>Teste com EMAIL</h3>
+            <input type="email" id="email-input" placeholder="teste@exemplo.com" value="admin@exemplo.com">
+            <input type="password" id="email-password" placeholder="Senha" value="admin123">
+            <button onclick="testEmailLogin()">🔓 Login com Email</button>
+            <div id="email-result" class="result"></div>
+        </div>
+
+        <div class="test-group">
+            <h3>Teste com CPF</h3>
+            <input type="text" id="cpf-input" placeholder="000.000.000-00" value="12345678900">
+            <input type="password" id="cpf-password" placeholder="Senha" value="admin123">
+            <button onclick="testCpfLogin()">🔓 Login com CPF</button>
+            <div id="cpf-result" class="result"></div>
+        </div>
+
+        <div class="test-group">
+            <h3>Detecção Automática</h3>
+            <input type="text" id="auto-input" placeholder="Email ou CPF">
+            <button onclick="testDetection()">🔍 Detectar Tipo</button>
+            <div id="detection-result" class="result"></div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2>📊 Log de Testes</h2>
+        <div id="test-log" style="background: #f8f9fa; padding: 15px; border-radius: 4px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;"></div>
+        <button onclick="clearLog()">🗑️ Limpar Log</button>
+    </div>
+
+    <script>
+        // Configuração da API
+        const API_CONFIGS = [
+            'https://paineluniversal-backend-production.up.railway.app/api',
+            'https://paineluniversal-production.up.railway.app/api',
+            'http://localhost:8000/api'
+        ];
+        
+        let currentApiIndex = 0;
+        
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('test-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const typeEmoji = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            logDiv.innerHTML += `[${timestamp}] ${typeEmoji} ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('test-log').innerHTML = '';
+        }
+
+        async function getCurrentApi() {
+            return API_CONFIGS[currentApiIndex];
+        }
+
+        async function testConnection() {
+            const statusDiv = document.getElementById('connection-status');
+            statusDiv.className = 'result info';
+            statusDiv.innerHTML = '🔄 Testando conexão...';
+            log('Iniciando teste de conexão');
+            
+            for (let i = 0; i < API_CONFIGS.length; i++) {
+                const api = API_CONFIGS[i];
+                try {
+                    log(`Testando API: ${api}`);
+                    const response = await fetch(`${api}/health`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        statusDiv.className = 'result success';
+                        statusDiv.innerHTML = `✅ Conectado com sucesso!<br>API: ${api}<br>Status: ${response.status}`;
+                        log(`✅ Conexão bem-sucedida com ${api}`, 'success');
+                        currentApiIndex = i;
+                        return;
+                    } else {
+                        log(`❌ Falha na conexão com ${api}: ${response.status}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ Erro ao conectar com ${api}: ${error.message}`, 'error');
+                }
+            }
+            
+            statusDiv.className = 'result error';
+            statusDiv.innerHTML = '❌ Falha na conexão com todas as APIs';
+            log('❌ Todas as tentativas de conexão falharam', 'error');
+        }
+
+        async function testAutoRecovery() {
+            log('🔁 Testando sistema de auto-recovery');
+            
+            // Força um erro para testar recovery
+            const invalidApi = 'https://api-inexistente.com/api';
+            try {
+                await fetch(`${invalidApi}/health`);
+            } catch (error) {
+                log('Erro simulado para testar recovery: ' + error.message);
+            }
+            
+            // Agora testa o recovery
+            await testConnection();
+        }
+
+        function detectarTipoInput(input) {
+            const cleanInput = input.replace(/\D/g, '');
+            
+            if (input.includes('@')) {
+                return 'email';
+            } else if (cleanInput.length === 11) {
+                return 'cpf';
+            } else {
+                return 'unknown';
+            }
+        }
+
+        async function testDetection() {
+            const input = document.getElementById('auto-input').value;
+            const resultDiv = document.getElementById('detection-result');
+            
+            if (!input) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '❌ Digite um email ou CPF para teste';
+                return;
+            }
+            
+            const tipo = detectarTipoInput(input);
+            log(`Detectando tipo de input: "${input}" -> ${tipo}`);
+            
+            resultDiv.className = 'result info';
+            resultDiv.innerHTML = `
+                🔍 <strong>Resultado da Detecção:</strong><br>
+                Input: <code>${input}</code><br>
+                Tipo detectado: <strong>${tipo}</strong><br>
+                ${tipo === 'email' ? '📧 Email válido detectado' : 
+                  tipo === 'cpf' ? '🆔 CPF detectado' : 
+                  '❓ Formato não reconhecido'}
+            `;
+        }
+
+        async function testEmailLogin() {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('email-password').value;
+            const resultDiv = document.getElementById('email-result');
+            
+            resultDiv.className = 'result info';
+            resultDiv.innerHTML = '🔄 Testando login com email...';
+            log(`Tentando login com email: ${email}`);
+            
+            try {
+                const api = await getCurrentApi();
+                
+                // Simula a conversão email -> CPF (em produção isso seria feito pelo backend)
+                const cpfForTest = '12345678900'; // CPF de teste
+                
+                const response = await fetch(`${api}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cpf: cpfForTest,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        ✅ <strong>Login com Email Bem-sucedido!</strong><br>
+                        Email convertido para CPF: ${cpfForTest}<br>
+                        Token recebido: ${data.access_token ? '✅' : '❌'}<br>
+                        Usuário: ${data.user?.name || 'N/A'}
+                    `;
+                    log(`✅ Login com email bem-sucedido`, 'success');
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Falha no login: ${data.detail || 'Erro desconhecido'}`;
+                    log(`❌ Falha no login com email: ${data.detail}`, 'error');
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Erro na requisição: ${error.message}`;
+                log(`❌ Erro na requisição de login com email: ${error.message}`, 'error');
+            }
+        }
+
+        async function testCpfLogin() {
+            const cpf = document.getElementById('cpf-input').value;
+            const password = document.getElementById('cpf-password').value;
+            const resultDiv = document.getElementById('cpf-result');
+            
+            resultDiv.className = 'result info';
+            resultDiv.innerHTML = '🔄 Testando login com CPF...';
+            log(`Tentando login com CPF: ${cpf}`);
+            
+            try {
+                const api = await getCurrentApi();
+                
+                const response = await fetch(`${api}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cpf: cpf.replace(/\D/g, ''),
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        ✅ <strong>Login com CPF Bem-sucedido!</strong><br>
+                        CPF: ${cpf}<br>
+                        Token recebido: ${data.access_token ? '✅' : '❌'}<br>
+                        Usuário: ${data.user?.name || 'N/A'}
+                    `;
+                    log(`✅ Login com CPF bem-sucedido`, 'success');
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Falha no login: ${data.detail || 'Erro desconhecido'}`;
+                    log(`❌ Falha no login com CPF: ${data.detail}`, 'error');
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Erro na requisição: ${error.message}`;
+                log(`❌ Erro na requisição de login com CPF: ${error.message}`, 'error');
+            }
+        }
+
+        // Testa conexão automaticamente quando a página carrega
+        window.onload = function() {
+            log('🚀 Sistema de teste de autenticação híbrida iniciado');
+            testConnection();
+        };
+    </script>
+</body>
+</html>

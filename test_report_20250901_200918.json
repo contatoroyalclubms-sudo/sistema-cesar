@@ -1,0 +1,70 @@
+{
+  "start_time": "2025-09-01T20:09:13.055886",
+  "tests": {
+    "infraestrutura": {
+      "description": "Testes básicos de infraestrutura e conectividade",
+      "start_time": "2025-09-01T20:09:13.055886",
+      "tests": [
+        {
+          "name": "Conexão Database",
+          "start_time": "2025-09-01T20:09:13.055886",
+          "status": "passed",
+          "duration": 0.59,
+          "message": "Conexão com banco estabelecida",
+          "details": {
+            "result": 1
+          },
+          "error": null
+        },
+        {
+          "name": "Importação FastAPI",
+          "start_time": "2025-09-01T20:09:13.645945",
+          "status": "passed",
+          "duration": 4.871,
+          "message": "FastAPI app importada com sucesso",
+          "details": {
+            "title": "Sistema de Gestão de Eventos",
+            "version": "1.0.0"
+          },
+          "error": null
+        },
+        {
+          "name": "Importação Modelos",
+          "start_time": "2025-09-01T20:09:18.517700",
+          "status": "passed",
+          "duration": 0.0,
+          "message": "Modelos importados: 62 classes",
+          "details": {
+            "models": [
+              "AnalyticsMEEP",
+              "Base",
+              "Boolean",
+              "CaixaEvento",
+              "CaixaPDV",
+              "CategoriaProduto",
+              "Checkin",
+              "ClienteEvento",
+              "Column",
+              "Comanda"
+            ]
+          },
+          "error": null
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "end_time": "2025-09-01T20:09:18.517700"
+    }
+  },
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "errors": []
+  },
+  "end_time": "2025-09-01T20:09:18.518232"
+}

@@ -1,0 +1,123 @@
+{
+  "module_name": "gamificacao",
+  "module_info": {
+    "name": "Sistema de Gamificacao",
+    "description": "Rankings, conquistas, pontuacao",
+    "endpoints": [
+      "/api/gamificacao",
+      "/api/gamificacao/ranking"
+    ],
+    "status": "ready_for_specs",
+    "priority": "low"
+  },
+  "specification": {
+    "version": "1.0",
+    "timestamp": "2025-09-03T20:15:40.679275",
+    "status": "pending_user_input",
+    "requirements": {
+      "functional": {
+        "description": "Descreva as funcionalidades especificas que deseja para este modulo",
+        "features": [
+          "ADICIONE AQUI: Lista de funcionalidades desejadas",
+          "EXEMPLO: Criar novo usuario com validacao de CPF",
+          "EXEMPLO: Login com autenticacao JWT"
+        ],
+        "business_rules": [
+          "ADICIONE AQUI: Regras de negocio especificas",
+          "EXEMPLO: Usuario admin pode criar outros usuarios",
+          "EXEMPLO: CPF deve ser unico no sistema"
+        ]
+      },
+      "technical": {
+        "database_changes": [
+          "ADICIONE AQUI: Mudancas necessarias no banco de dados",
+          "EXEMPLO: Adicionar tabela user_permissions",
+          "EXEMPLO: Modificar tabela usuarios adicionar campo 'ativo'"
+        ],
+        "api_endpoints": [
+          "ADICIONE AQUI: Endpoints que devem ser criados/modificados",
+          "EXEMPLO: POST /api/auth/register - registrar novo usuario",
+          "EXEMPLO: GET /api/usuarios/{id} - buscar usuario por ID"
+        ],
+        "integrations": [
+          "ADICIONE AQUI: Integracoes necessarias com outros sistemas",
+          "EXEMPLO: Integracao com servico de email",
+          "EXEMPLO: Integracao com API de validacao de CPF"
+        ]
+      },
+      "ui_ux": {
+        "pages": [
+          "ADICIONE AQUI: Paginas que devem ser criadas/modificadas",
+          "EXEMPLO: Pagina de login responsiva",
+          "EXEMPLO: Dashboard de usuario com perfil"
+        ],
+        "components": [
+          "ADICIONE AQUI: Componentes de interface necessarios",
+          "EXEMPLO: Formulario de registro com validacao",
+          "EXEMPLO: Modal de confirmacao de acao"
+        ],
+        "design_requirements": [
+          "ADICIONE AQUI: Requisitos de design especificos",
+          "EXEMPLO: Seguir paleta de cores do sistema",
+          "EXEMPLO: Interface mobile-first"
+        ]
+      }
+    },
+    "acceptance_criteria": [
+      "ADICIONE AQUI: Criterios de aceitacao para considerar o modulo completo",
+      "EXEMPLO: Usuario deve conseguir fazer login com email e senha",
+      "EXEMPLO: Sistema deve validar CPF antes de criar usuario",
+      "EXEMPLO: Dashboard deve carregar em menos de 2 segundos"
+    ],
+    "testing_requirements": [
+      "ADICIONE AQUI: Tipos de teste necessarios",
+      "EXEMPLO: Testes unitarios para validacao de CPF",
+      "EXEMPLO: Testes de integracao para fluxo de login",
+      "EXEMPLO: Testes E2E para registro de usuario"
+    ]
+  },
+  "implementation_plan": {
+    "estimated_hours": "ADICIONE AQUI: Estimativa de horas para desenvolvimento",
+    "phases": [
+      {
+        "phase": "1 - Backend Development",
+        "description": "ADICIONE AQUI: Tarefas do backend",
+        "tasks": [
+          "EXEMPLO: Criar modelos de dados",
+          "EXEMPLO: Implementar endpoints da API",
+          "EXEMPLO: Adicionar validacoes"
+        ]
+      },
+      {
+        "phase": "2 - Frontend Development",
+        "description": "ADICIONE AQUI: Tarefas do frontend",
+        "tasks": [
+          "EXEMPLO: Criar componentes de interface",
+          "EXEMPLO: Implementar integracoes com API",
+          "EXEMPLO: Adicionar validacoes no frontend"
+        ]
+      },
+      {
+        "phase": "3 - Testing & Integration",
+        "description": "ADICIONE AQUI: Tarefas de teste e integracao",
+        "tasks": [
+          "EXEMPLO: Escrever testes unitarios",
+          "EXEMPLO: Testar integracoes",
+          "EXEMPLO: Validar criterios de aceitacao"
+        ]
+      }
+    ],
+    "dependencies": [
+      "ADICIONE AQUI: Dependencias de outros modulos",
+      "EXEMPLO: Modulo de autenticacao deve estar completo",
+      "EXEMPLO: Banco de dados deve estar configurado"
+    ]
+  },
+  "notes": [
+    "INSTRUCOES PARA O USUARIO:",
+    "1. Substitua todos os campos 'ADICIONE AQUI' com suas especificacoes",
+    "2. Remova os exemplos e adicione seus requisitos reais",
+    "3. Salve o arquivo quando terminar as especificacoes",
+    "4. O sistema automaticamente detectara as mudancas e iniciara a implementacao"
+  ]
+}

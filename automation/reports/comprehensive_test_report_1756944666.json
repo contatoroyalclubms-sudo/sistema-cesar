@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-09-03T20:11:02.690450",
+  "systems_tested": [
+    "MEEP Enterprise",
+    "PainelUniversal Backend",
+    "PainelUniversal Frontend"
+  ],
+  "total_tests": 5,
+  "passed_tests": 2,
+  "failed_tests": 3,
+  "errors": [],
+  "detailed_results": {
+    "system_availability": {
+      "MEEP Enterprise": {
+        "status": "ERROR",
+        "error": "HTTP 404",
+        "url": "http://localhost:3000"
+      },
+      "PainelUniversal Backend": {
+        "status": "ONLINE",
+        "response_time": 0.267299,
+        "url": "http://localhost:8000"
+      },
+      "PainelUniversal Frontend": {
+        "status": "ONLINE",
+        "response_time": 0.260188,
+        "url": "http://localhost:5173"
+      }
+    },
+    "meep_authentication": {
+      "login": "FAILED",
+      "error": "HTTP 400: {\"error\":\"Email and password required\"}"
+    },
+    "paineluniversal_authentication": {
+      "login": "ERROR",
+      "error": ""
+    },
+    "crud_operations": {}
+  },
+  "summary": {
+    "systems_online": "2/3",
+    "success_rate": "40.0%",
+    "meep_system": "OFFLINE",
+    "paineluniversal_backend": "ONLINE",
+    "paineluniversal_frontend": "ONLINE"
+  }
+}

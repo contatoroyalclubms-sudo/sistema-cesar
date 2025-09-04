@@ -1,0 +1,119 @@
+{
+  "timestamp": "2025-09-03T20:18:48.424168",
+  "health_check": {
+    "timestamp": "2025-09-03T20:18:35.860500",
+    "services": {
+      "backend": {
+        "status": "healthy",
+        "url": "http://localhost:8000",
+        "response_time": 0.278635
+      },
+      "frontend": {
+        "status": "healthy",
+        "url": "http://localhost:5173",
+        "response_time": 0.264139
+      }
+    },
+    "system": {
+      "cpu_percent": 38.0,
+      "memory_percent": 86.4,
+      "disk_percent": 45.6,
+      "processes": 375
+    },
+    "modules": {
+      "/api/health": {
+        "status": "ok",
+        "response_code": 200,
+        "response_time": 0.261689
+      },
+      "/api/docs": {
+        "status": "error",
+        "response_code": 405,
+        "response_time": 0.254228
+      },
+      "/api/usuarios": {
+        "status": "error",
+        "response_code": 405,
+        "response_time": 0.258335
+      },
+      "/api/eventos": {
+        "status": "error",
+        "response_code": 405,
+        "response_time": 0.255731
+      }
+    },
+    "errors": []
+  },
+  "module_mapping": {
+    "autenticacao": {
+      "endpoints": [
+        "/api/auth/login",
+        "/api/auth/register",
+        "/api/auth/me"
+      ],
+      "description": "Sistema de autenticacao e usuarios",
+      "status": "error",
+      "working_endpoints": 0,
+      "total_endpoints": 3
+    },
+    "eventos": {
+      "endpoints": [
+        "/api/eventos",
+        "/api/eventos/{id}"
+      ],
+      "description": "Gestao de eventos",
+      "status": "error",
+      "working_endpoints": 0,
+      "total_endpoints": 2
+    },
+    "checkin": {
+      "endpoints": [
+        "/api/checkin",
+        "/api/checkin/{id}"
+      ],
+      "description": "Sistema de check-in e QR Code",
+      "status": "error",
+      "working_endpoints": 0,
+      "total_endpoints": 2
+    },
+    "pdv": {
+      "endpoints": [
+        "/api/pdv",
+        "/api/pdv/vendas"
+      ],
+      "description": "Ponto de venda",
+      "status": "error",
+      "working_endpoints": 0,
+      "total_endpoints": 2
+    },
+    "financeiro": {
+      "endpoints": [
+        "/api/financeiro",
+        "/api/financeiro/transacoes"
+      ],
+      "description": "Sistema financeiro",
+      "status": "error",
+      "working_endpoints": 0,
+      "total_endpoints": 2
+    },
+    "gamificacao": {
+      "endpoints": [
+        "/api/gamificacao",
+        "/api/gamificacao/ranking"
+      ],
+      "description": "Sistema de gamificacao",
+      "status": "error",
+      "working_endpoints": 0,
+      "total_endpoints": 2
+    }
+  },
+  "auto_fixes": [
+    "Sistema ja esta saudavel"
+  ],
+  "overall_status": {
+    "backend": true,
+    "frontend": true,
+    "database": false,
+    "overall_health": "healthy"
+  }
+}
