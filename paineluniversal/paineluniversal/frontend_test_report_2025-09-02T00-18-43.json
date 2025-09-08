@@ -1,0 +1,1113 @@
+{
+  "timestamp": "2025-09-02T00:18:42.725Z",
+  "framework": "Frontend Test Framework",
+  "frontend_structure": {
+    "dependencies": {
+      "@fontsource/inter": "^5.2.6",
+      "@fontsource/poppins": "^5.2.6",
+      "@hookform/resolvers": "^5.2.1",
+      "@radix-ui/react-accordion": "^1.2.11",
+      "@radix-ui/react-alert-dialog": "^1.1.14",
+      "@radix-ui/react-aspect-ratio": "^1.1.7",
+      "@radix-ui/react-avatar": "^1.1.10",
+      "@radix-ui/react-checkbox": "^1.3.2",
+      "@radix-ui/react-collapsible": "^1.1.11",
+      "@radix-ui/react-context-menu": "^2.2.15",
+      "@radix-ui/react-dialog": "^1.1.14",
+      "@radix-ui/react-dropdown-menu": "^2.1.15",
+      "@radix-ui/react-hover-card": "^1.1.14",
+      "@radix-ui/react-label": "^2.1.7",
+      "@radix-ui/react-menubar": "^1.1.15",
+      "@radix-ui/react-navigation-menu": "^1.2.13",
+      "@radix-ui/react-popover": "^1.1.14",
+      "@radix-ui/react-progress": "^1.1.7",
+      "@radix-ui/react-radio-group": "^1.3.7",
+      "@radix-ui/react-scroll-area": "^1.2.9",
+      "@radix-ui/react-select": "^2.2.5",
+      "@radix-ui/react-separator": "^1.1.7",
+      "@radix-ui/react-slider": "^1.3.5",
+      "@radix-ui/react-slot": "^1.2.3",
+      "@radix-ui/react-switch": "^1.2.5",
+      "@radix-ui/react-tabs": "^1.1.12",
+      "@radix-ui/react-toast": "^1.2.14",
+      "@radix-ui/react-toggle": "^1.1.9",
+      "@radix-ui/react-toggle-group": "^1.1.10",
+      "@radix-ui/react-tooltip": "^1.2.7",
+      "@tanstack/react-table": "^8.21.3",
+      "@types/date-fns": "^2.5.3",
+      "@types/react-router-dom": "^5.3.3",
+      "axios": "^1.11.0",
+      "class-variance-authority": "^0.7.1",
+      "clsx": "^2.1.1",
+      "cmdk": "^1.1.1",
+      "date-fns": "^4.1.0",
+      "embla-carousel-react": "^8.6.0",
+      "framer-motion": "^12.23.12",
+      "input-otp": "^1.4.2",
+      "lucide-react": "^0.364.0",
+      "next-themes": "^0.4.6",
+      "react": "^18.3.1",
+      "react-day-picker": "^9.9.0",
+      "react-dom": "^18.3.1",
+      "react-hook-form": "^7.62.0",
+      "react-resizable-panels": "^3.0.4",
+      "react-router-dom": "^7.7.1",
+      "recharts": "^2.15.4",
+      "sonner": "^2.0.7",
+      "tailwind-merge": "^3.3.1",
+      "tailwindcss-animate": "^1.0.7",
+      "vaul": "^1.1.2",
+      "vite-plugin-pwa": "^1.0.2",
+      "workbox-window": "^7.3.0",
+      "yup": "^1.7.0",
+      "zod": "^4.0.15"
+    },
+    "devDependencies": {
+      "@eslint/js": "^9.15.0",
+      "@testing-library/jest-dom": "^6.6.4",
+      "@testing-library/react": "^16.3.0",
+      "@testing-library/user-event": "^14.6.1",
+      "@types/jest": "^30.0.0",
+      "@types/node": "^24.2.0",
+      "@types/react": "^18.3.12",
+      "@types/react-dom": "^18.3.1",
+      "@vitejs/plugin-react": "^4.3.4",
+      "autoprefixer": "^10.4.20",
+      "eslint": "^9.15.0",
+      "eslint-plugin-react-hooks": "^5.0.0",
+      "eslint-plugin-react-refresh": "^0.4.14",
+      "globals": "^15.12.0",
+      "jest-environment-jsdom": "^30.0.5",
+      "postcss": "^8.4.49",
+      "tailwindcss": "^3.4.16",
+      "typescript": "~5.6.2",
+      "typescript-eslint": "^8.15.0",
+      "vite": "^6.0.1"
+    },
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "build-with-types": "tsc -b && vite build",
+      "lint": "eslint .",
+      "start": "vite preview",
+      "preview": "vite preview"
+    },
+    "component_directories": [
+      "auth",
+      "cadastros",
+      "checkin",
+      "clientes",
+      "comandas",
+      "common",
+      "dashboard",
+      "debugging",
+      "desenvolvimento",
+      "diagnostic",
+      "estoque",
+      "eventos",
+      "financeiro",
+      "landing",
+      "layout",
+      "listas",
+      "meep",
+      "mobile",
+      "operadores",
+      "pdv",
+      "produtos",
+      "ranking",
+      "sales",
+      "shared",
+      "theme",
+      "ui",
+      "usuarios"
+    ],
+    "directories": {
+      "contexts": 3,
+      "hooks": 4,
+      "services": 11,
+      "utils": 2,
+      "types": 3,
+      "pages": 3
+    },
+    "main_files": {
+      "App.tsx": {
+        "exists": true,
+        "size": 12123,
+        "modified": "2025-08-30T09:57:30.140Z"
+      },
+      "main.tsx": {
+        "exists": true,
+        "size": 1008,
+        "modified": "2025-08-27T03:44:20.421Z"
+      },
+      "index.html": {
+        "exists": true,
+        "size": 370,
+        "modified": "2025-08-27T03:44:20.036Z"
+      }
+    }
+  },
+  "component_tests": {
+    "auth": {
+      "files_found": 4,
+      "files_tested": 4,
+      "files_passed": 4,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "cadastros": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "checkin": {
+      "files_found": 2,
+      "files_tested": 2,
+      "files_passed": 2,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "clientes": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "comandas": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "common": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "dashboard": {
+      "files_found": 3,
+      "files_tested": 3,
+      "files_passed": 3,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "debugging": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 0,
+      "files_failed": 1,
+      "errors": [
+        {
+          "file": "ConnectionDebugger.tsx",
+          "issues": [
+            "React não importado mas JSX presente"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "desenvolvimento": {
+      "files_found": 2,
+      "files_tested": 2,
+      "files_passed": 2,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "diagnostic": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "estoque": {
+      "files_found": 16,
+      "files_tested": 16,
+      "files_passed": 1,
+      "files_failed": 15,
+      "errors": [
+        {
+          "file": "ExportModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "ImportExportDashboard.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "ImportModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "ManageReasonsModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "ManageReasonsModal_clean.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "MovementHistoryModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "MovementHistoryModal_clean.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "StockEntryModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "StockEntryModal_clean.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "StockExitModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "StockExitModal_clean.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "StockPositionModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "TestModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "TransferModal.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "TransferModal_clean.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "eventos": {
+      "files_found": 5,
+      "files_tested": 5,
+      "files_passed": 4,
+      "files_failed": 1,
+      "errors": [
+        {
+          "file": "EventosModule.test.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "financeiro": {
+      "files_found": 3,
+      "files_tested": 3,
+      "files_passed": 3,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "landing": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "layout": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "listas": {
+      "files_found": 5,
+      "files_tested": 5,
+      "files_passed": 5,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "meep": {
+      "files_found": 4,
+      "files_tested": 4,
+      "files_passed": 4,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "mobile": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "operadores": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "pdv": {
+      "files_found": 2,
+      "files_tested": 2,
+      "files_passed": 2,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "produtos": {
+      "files_found": 14,
+      "files_tested": 14,
+      "files_passed": 13,
+      "files_failed": 1,
+      "errors": [
+        {
+          "file": "BulkActions.tsx",
+          "issues": [
+            "Estrutura de componente não identificada"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "ranking": {
+      "files_found": 3,
+      "files_tested": 3,
+      "files_passed": 3,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "sales": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 1,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "shared": {
+      "files_found": 3,
+      "files_tested": 3,
+      "files_passed": 0,
+      "files_failed": 3,
+      "errors": [
+        {
+          "file": "ActionButton.tsx",
+          "issues": [
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "DataTable.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "StatusToggle.tsx",
+          "issues": [
+            "Estrutura de componente não identificada"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "theme": {
+      "files_found": 1,
+      "files_tested": 1,
+      "files_passed": 0,
+      "files_failed": 1,
+      "errors": [
+        {
+          "file": "ThemeToggle.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "ui": {
+      "files_found": 48,
+      "files_tested": 48,
+      "files_passed": 1,
+      "files_failed": 47,
+      "errors": [
+        {
+          "file": "accordion.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "alert-dialog.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "alert.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "aspect-ratio.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "avatar.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "badge.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "breadcrumb.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "button.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "calendar.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "card.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "carousel.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "checkbox.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "collapsible.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "command.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "context-menu.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "dialog.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "drawer.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "dropdown-menu.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "form.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "hover-card.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "input-otp.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "input.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "label.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "menubar.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "navigation-menu.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "pagination.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "popover.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "progress.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "radio-group.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "resizable.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "scroll-area.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "select.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "separator.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "sheet.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "sidebar.tsx",
+          "issues": [
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "skeleton.tsx",
+          "issues": [
+            "React não importado mas JSX presente",
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "slider.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "sonner.tsx",
+          "issues": [
+            "React não importado mas JSX presente",
+            "Componente sem export default"
+          ]
+        },
+        {
+          "file": "switch.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "table.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "tabs.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "textarea.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "toast.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "toaster.tsx",
+          "issues": [
+            "React não importado mas JSX presente",
+            "Componente sem export default",
+            "Props sem tipagem TypeScript"
+          ]
+        },
+        {
+          "file": "toggle-group.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "toggle.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada"
+          ]
+        },
+        {
+          "file": "tooltip.tsx",
+          "issues": [
+            "Componente sem export default",
+            "Estrutura de componente não identificada",
+            "Props sem tipagem TypeScript"
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    "usuarios": {
+      "files_found": 3,
+      "files_tested": 3,
+      "files_passed": 3,
+      "files_failed": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "App": {
+      "router_configured": true,
+      "routes_configured": true,
+      "providers_configured": true,
+      "protected_routes": true,
+      "theme_provider": true,
+      "auth_provider": true
+    }
+  },
+  "route_tests": {},
+  "context_tests": {
+    "files_found": 3,
+    "contexts_analyzed": {
+      "AuthContext": {
+        "hasCreateContext": true,
+        "hasProvider": true,
+        "hasUseContext": true,
+        "hasCustomHook": true,
+        "hasTypeScript": true
+      },
+      "EventoContext": {
+        "hasCreateContext": true,
+        "hasProvider": true,
+        "hasUseContext": true,
+        "hasCustomHook": true,
+        "hasTypeScript": true
+      },
+      "ThemeContext": {
+        "hasCreateContext": true,
+        "hasProvider": true,
+        "hasUseContext": true,
+        "hasCustomHook": true,
+        "hasTypeScript": true
+      }
+    },
+    "issues": []
+  },
+  "api_integration_tests": {
+    "files_found": 11,
+    "services_analyzed": {
+      "api-new": {
+        "hasAxiosImport": true,
+        "hasFetchCalls": false,
+        "hasErrorHandling": false,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 21
+      },
+      "api": {
+        "hasAxiosImport": true,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 37
+      },
+      "categoria": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 0
+      },
+      "clientesService": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": false,
+        "hasExports": true,
+        "endpoints_found": 2
+      },
+      "comandasService": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 1
+      },
+      "diagnostic": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 6
+      },
+      "formasPagamentoService": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 0
+      },
+      "index": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 23
+      },
+      "inventory": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 0
+      },
+      "operadoresService": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 1
+      },
+      "websocket": {
+        "hasAxiosImport": false,
+        "hasFetchCalls": false,
+        "hasErrorHandling": true,
+        "hasTypeScript": true,
+        "hasExports": true,
+        "endpoints_found": 0
+      }
+    },
+    "api_endpoints_found": [
+      "'/api/auth/login'",
+      "'/api/usuarios/'",
+      "'/api/auth/me'",
+      "'/api/usuarios/'",
+      "'/api/usuarios/'",
+      "'/api/empresas/'",
+      "'/api/empresas/'",
+      "'/api/eventos/'",
+      "'/api/eventos/'",
+      "'/api/dashboard/avancado'",
+      "'/api/eventos/'",
+      "'/api/dashboard/avancado'",
+      "'/api/checkins/'",
+      "'/api/listas/'",
+      "'/api/listas/'",
+      "'/api/gamificacao/ranking'",
+      "'/api/gamificacao/dashboard'",
+      "'/api/gamificacao/conquistas'",
+      "'/api/financeiro/dashboard'",
+      "'/api/financeiro/movimentacoes'",
+      "'/api/financeiro/movimentacoes'",
+      "'/api/auth/login'",
+      "'/api/auth/register'",
+      "'/api/auth/me'",
+      "'/api/usuarios/'",
+      "'/api/usuarios/'",
+      "'/api/usuarios/'",
+      "'/api/empresas/'",
+      "'/api/empresas/'",
+      "'/api/eventos/'",
+      "'/api/eventos/'",
+      "'/api/dashboard/avancado'",
+      "'/api/eventos/'",
+      "'/api/dashboard/avancado'",
+      "'/api/checkins/'",
+      "'/api/listas/'",
+      "'/api/listas/'",
+      "'/api/gamificacao/ranking'",
+      "'/api/gamificacao/dashboard'",
+      "'/api/gamificacao/conquistas'",
+      "'/api/financeiro/dashboard'",
+      "'/api/financeiro/movimentacoes'",
+      "'/api/financeiro/movimentacoes'",
+      "'/api/transacoes/'",
+      "'/api/transacoes/'",
+      "'/api/auth/register'",
+      "'/api/cors-test'",
+      "'/api/pdv/'",
+      "'/api/pdv/'",
+      "'/api/pdv/vendas/'",
+      "'/api/pdv/vendas/'",
+      "'/api/pdv/dashboard'",
+      "'/api/produtos/categorias/'",
+      "'/api/produtos/categorias/'",
+      "'/api/produtos/'",
+      "'/api/produtos/'",
+      "'/api/produtos/import'",
+      "'/api/produtos/import/template'",
+      "'/api/meep/clientes'",
+      "'/api/meep/clientes'",
+      "'/api/comandas'",
+      "'/api/cors-test'",
+      "'/api/auth/me'",
+      "'/api/dashboard/avancado'",
+      "'/api/eventos/'",
+      "'/api/usuarios/'",
+      "'/api/auth/me'",
+      "'/api/usuarios/buscar-por-email'",
+      "'/api/auth/login'",
+      "'/api/auth/register'",
+      "'/api/auth/me'",
+      "'/api/usuarios/'",
+      "'/api/usuarios/'",
+      "'/api/eventos/'",
+      "'/api/eventos/'",
+      "'/api/eventos/?proximos=true'",
+      "'/api/produtos/'",
+      "'/api/produtos/'",
+      "'/api/produtos/categorias'",
+      "'/api/vendas/'",
+      "'/api/vendas/'",
+      "'/api/vendas/relatorio'",
+      "'/api/checkins/'",
+      "'/api/listas/'",
+      "'/api/listas/'",
+      "'/api/dashboard/avancado'",
+      "'/api/dashboard/avancado'",
+      "'/api/dashboard/avancado'",
+      "'/api/upload/image'",
+      "'/api/upload/file'",
+      "'/api/usuarios'"
+    ],
+    "issues": []
+  },
+  "build_tests": {
+    "build_exists": true,
+    "build_size": 1.72,
+    "build_files": 13,
+    "npm_scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "build-with-types": "tsc -b && vite build",
+      "lint": "eslint .",
+      "start": "vite preview",
+      "preview": "vite preview"
+    },
+    "dependencies_ok": true
+  },
+  "critical_errors": [],
+  "warnings": [],
+  "fixes_applied": [
+    {
+      "category": "Componentes",
+      "issue": "69 componentes com problemas",
+      "fix": "Revisar imports, exports e tipagem TypeScript dos componentes",
+      "priority": "MEDIUM"
+    }
+  ],
+  "components_tested": 129,
+  "components_passed": 60,
+  "components_failed": 69,
+  "zero_breaking_changes": true,
+  "execution_time": 0
+}

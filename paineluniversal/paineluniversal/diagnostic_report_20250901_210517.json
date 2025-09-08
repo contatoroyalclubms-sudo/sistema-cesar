@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-09-01T21:05:07.325911",
+  "system_health": {},
+  "backend_status": {
+    "status": "offline",
+    "message": "Backend nao esta rodando"
+  },
+  "frontend_status": {
+    "status": "ready",
+    "message": "Build do frontend completo",
+    "file_count": 100,
+    "size_mb": 3.04736328125
+  },
+  "database_status": {
+    "status": "connected",
+    "message": "Database conectado e funcional",
+    "table_count": 35,
+    "user_count": 5,
+    "tables": [
+      "produtos_categorias",
+      "empresas",
+      "usuarios",
+      "conquistas",
+      "clientes_eventos",
+      "eventos",
+      "templates_importacao",
+      "listas",
+      "promoter_eventos",
+      "categorias_produtos",
+      "comandas",
+      "operacoes_import_export",
+      "caixa_pdv",
+      "logs_auditoria",
+      "movimentacoes_financeiras",
+      "caixas_eventos",
+      "promoter_conquistas",
+      "metricas_promoters",
+      "validacoes_acesso",
+      "equipamentos_eventos",
+      "previsoes_ia",
+      "analytics_meep",
+      "logs_seguranca_meep",
+      "transacoes",
+      "produtos_old",
+      "vendas_pdv",
+      "recargas_comanda",
+      "validacoes_importacao",
+      "sessoes_operadores",
+      "checkins",
+      "itens_venda_pdv",
+      "pagamentos_pdv",
+      "movimentos_estoque",
+      "produtos",
+      "formas_pagamento"
+    ]
+  },
+  "critical_errors": [
+    "Backend nao esta rodando",
+    "Traceback (most recent call last):",
+    "Nao foi possivel verificar configuracao CORS",
+    "Scripts de migracao encontrados: 12 - podem precisar execucao"
+  ],
+  "fixes_applied": [],
+  "recommendations": [
+    "1. Iniciar backend: cd backend && python server.py",
+    "5. Executar migracoes: cd backend && python apply_migration.py",
+    "6. Reiniciar sistema apos aplicar correcoes",
+    "7. Verificar logs para detalhes: backend/server.log"
+  ],
+  "environment": {
+    "status": "configured",
+    "message": "35 variaveis encontradas",
+    "variable_count": 35,
+    "missing_critical": []
+  },
+  "execution_time": 10.28
+}

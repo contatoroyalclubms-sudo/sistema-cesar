@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-09-05T07:07:01.974414",
+  "summary": {
+    "total": 3,
+    "successes": 2,
+    "errors": 1
+  },
+  "successes": [
+    {
+      "timestamp": "2025-09-05T07:06:53.788275",
+      "module": "API",
+      "message": "API is running and docs are accessible"
+    },
+    {
+      "timestamp": "2025-09-05T07:06:55.827491",
+      "module": "Frontend",
+      "message": "Frontend is running and accessible"
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": "2025-09-05T07:07:01.972904",
+      "module": "Login",
+      "error": "Login failed with status 500",
+      "details": "{\"error\":\"Internal Server Error\",\"message\":\"Error 10061 connecting to localhost:6379. Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente.\",\"timestamp\":\"2025-09-05T07:07:01.972904\"}"
+    }
+  ]
+}

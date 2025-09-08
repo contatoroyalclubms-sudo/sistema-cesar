@@ -1,0 +1,14 @@
+[phases.setup]
+nixPkgs = ['nodejs_18', 'npm-9_x']
+
+[phases.install]
+cmds = ['npm ci']
+
+[phases.build]
+cmds = ['npm run build']
+
+[start]
+cmd = 'npm run start -- --host 0.0.0.0'
+
+[variables]
+VITE_API_URL = "https://backend-painel-universal-production.up.railway.app"

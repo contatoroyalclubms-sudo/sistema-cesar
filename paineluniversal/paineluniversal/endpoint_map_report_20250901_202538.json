@@ -1,0 +1,5296 @@
+{
+  "timestamp": "2025-09-01T20:25:38.418355",
+  "routers": {
+    "auth": {
+      "file": "backend/app/routers\\auth.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/login",
+          "full_path": "/login"
+        },
+        {
+          "method": "GET",
+          "path": "/me",
+          "full_path": "/me"
+        },
+        {
+          "method": "GET",
+          "path": "/me-debug",
+          "full_path": "/me-debug"
+        },
+        {
+          "method": "POST",
+          "path": "/register",
+          "full_path": "/register"
+        },
+        {
+          "method": "GET",
+          "path": "/me",
+          "full_path": "/me"
+        },
+        {
+          "method": "POST",
+          "path": "/logout",
+          "full_path": "/logout"
+        },
+        {
+          "method": "POST",
+          "path": "/forgot-password",
+          "full_path": "/forgot-password"
+        },
+        {
+          "method": "POST",
+          "path": "/setup-inicial",
+          "full_path": "/setup-inicial"
+        },
+        {
+          "method": "POST",
+          "path": "/login",
+          "full_path": "/login"
+        },
+        {
+          "method": "GET",
+          "path": "/me",
+          "full_path": "/me"
+        },
+        {
+          "method": "GET",
+          "path": "/me-debug",
+          "full_path": "/me-debug"
+        },
+        {
+          "method": "POST",
+          "path": "/register",
+          "full_path": "/register"
+        },
+        {
+          "method": "GET",
+          "path": "/me",
+          "full_path": "/me"
+        },
+        {
+          "method": "POST",
+          "path": "/logout",
+          "full_path": "/logout"
+        },
+        {
+          "method": "POST",
+          "path": "/forgot-password",
+          "full_path": "/forgot-password"
+        },
+        {
+          "method": "POST",
+          "path": "/setup-inicial",
+          "full_path": "/setup-inicial"
+        }
+      ],
+      "errors": []
+    },
+    "checkins": {
+      "file": "backend/app/routers\\checkins.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/evento/{evento_id}",
+          "full_path": "/evento/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/cpf/{cpf}",
+          "full_path": "/cpf/{cpf}"
+        },
+        {
+          "method": "POST",
+          "path": "/qr",
+          "full_path": "/qr"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/dashboard/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/evento/{evento_id}",
+          "full_path": "/evento/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/cpf/{cpf}",
+          "full_path": "/cpf/{cpf}"
+        },
+        {
+          "method": "POST",
+          "path": "/qr",
+          "full_path": "/qr"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/dashboard/{evento_id}"
+        }
+      ],
+      "errors": []
+    },
+    "cupons": {
+      "file": "backend/app/routers\\cupons.py",
+      "prefix": "/cupons",
+      "tags": [
+        "Cupons"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/cupons/"
+        },
+        {
+          "method": "POST",
+          "path": "/validar/{codigo}",
+          "full_path": "/cupons/validar/{codigo}"
+        },
+        {
+          "method": "POST",
+          "path": "/usar/{codigo}",
+          "full_path": "/cupons/usar/{codigo}"
+        },
+        {
+          "method": "GET",
+          "path": "/evento/{evento_id}",
+          "full_path": "/cupons/evento/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/cupons/"
+        },
+        {
+          "method": "POST",
+          "path": "/validar/{codigo}",
+          "full_path": "/cupons/validar/{codigo}"
+        },
+        {
+          "method": "POST",
+          "path": "/usar/{codigo}",
+          "full_path": "/cupons/usar/{codigo}"
+        },
+        {
+          "method": "GET",
+          "path": "/evento/{evento_id}",
+          "full_path": "/cupons/evento/{evento_id}"
+        }
+      ],
+      "errors": []
+    },
+    "dashboard": {
+      "file": "backend/app/routers\\dashboard.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/resumo",
+          "full_path": "/resumo"
+        },
+        {
+          "method": "GET",
+          "path": "/ranking-promoters",
+          "full_path": "/ranking-promoters"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas-tempo-real",
+          "full_path": "/vendas-tempo-real"
+        },
+        {
+          "method": "GET",
+          "path": "/aniversariantes",
+          "full_path": "/aniversariantes"
+        },
+        {
+          "method": "GET",
+          "path": "/tempo-real/{evento_id}",
+          "full_path": "/tempo-real/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/avancado",
+          "full_path": "/avancado"
+        },
+        {
+          "method": "GET",
+          "path": "/graficos/vendas-tempo",
+          "full_path": "/graficos/vendas-tempo"
+        },
+        {
+          "method": "GET",
+          "path": "/graficos/vendas-lista",
+          "full_path": "/graficos/vendas-lista"
+        },
+        {
+          "method": "GET",
+          "path": "/ranking-promoters-avancado",
+          "full_path": "/ranking-promoters-avancado"
+        },
+        {
+          "method": "GET",
+          "path": "/resumo",
+          "full_path": "/resumo"
+        },
+        {
+          "method": "GET",
+          "path": "/ranking-promoters",
+          "full_path": "/ranking-promoters"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas-tempo-real",
+          "full_path": "/vendas-tempo-real"
+        },
+        {
+          "method": "GET",
+          "path": "/aniversariantes",
+          "full_path": "/aniversariantes"
+        },
+        {
+          "method": "GET",
+          "path": "/tempo-real/{evento_id}",
+          "full_path": "/tempo-real/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/avancado",
+          "full_path": "/avancado"
+        },
+        {
+          "method": "GET",
+          "path": "/graficos/vendas-tempo",
+          "full_path": "/graficos/vendas-tempo"
+        },
+        {
+          "method": "GET",
+          "path": "/graficos/vendas-lista",
+          "full_path": "/graficos/vendas-lista"
+        },
+        {
+          "method": "GET",
+          "path": "/ranking-promoters-avancado",
+          "full_path": "/ranking-promoters-avancado"
+        }
+      ],
+      "errors": []
+    },
+    "empresas": {
+      "file": "backend/app/routers\\empresas.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{empresa_id}",
+          "full_path": "/{empresa_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{empresa_id}",
+          "full_path": "/{empresa_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{empresa_id}",
+          "full_path": "/{empresa_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{empresa_id}",
+          "full_path": "/{empresa_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{empresa_id}",
+          "full_path": "/{empresa_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{empresa_id}",
+          "full_path": "/{empresa_id}"
+        }
+      ],
+      "errors": []
+    },
+    "estoque": {
+      "file": "backend/app/routers\\estoque.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [],
+      "errors": []
+    },
+    "eventos": {
+      "file": "backend/app/routers\\eventos.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/test",
+          "full_path": "/test"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/buscar",
+          "full_path": "/buscar"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}",
+          "full_path": "/{evento_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{evento_id}",
+          "full_path": "/{evento_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{evento_id}",
+          "full_path": "/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/detalhado/{evento_id}",
+          "full_path": "/detalhado/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/{evento_id}/promoters",
+          "full_path": "/{evento_id}/promoters"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{evento_id}/promoters/{promoter_id}",
+          "full_path": "/{evento_id}/promoters/{promoter_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}/financeiro",
+          "full_path": "/{evento_id}/financeiro"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}/export/csv",
+          "full_path": "/{evento_id}/export/csv"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}/export/pdf",
+          "full_path": "/{evento_id}/export/pdf"
+        },
+        {
+          "method": "POST",
+          "path": "/test",
+          "full_path": "/test"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/buscar",
+          "full_path": "/buscar"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}",
+          "full_path": "/{evento_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{evento_id}",
+          "full_path": "/{evento_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{evento_id}",
+          "full_path": "/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/detalhado/{evento_id}",
+          "full_path": "/detalhado/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/{evento_id}/promoters",
+          "full_path": "/{evento_id}/promoters"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{evento_id}/promoters/{promoter_id}",
+          "full_path": "/{evento_id}/promoters/{promoter_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}/financeiro",
+          "full_path": "/{evento_id}/financeiro"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}/export/csv",
+          "full_path": "/{evento_id}/export/csv"
+        },
+        {
+          "method": "GET",
+          "path": "/{evento_id}/export/pdf",
+          "full_path": "/{evento_id}/export/pdf"
+        }
+      ],
+      "errors": []
+    },
+    "financeiro": {
+      "file": "backend/app/routers\\financeiro.py",
+      "prefix": "/financeiro",
+      "tags": [
+        "Financeiro"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/movimentacoes",
+          "full_path": "/financeiro/movimentacoes"
+        },
+        {
+          "method": "GET",
+          "path": "/movimentacoes/{evento_id}",
+          "full_path": "/financeiro/movimentacoes/{evento_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/movimentacoes/{movimentacao_id}",
+          "full_path": "/financeiro/movimentacoes/{movimentacao_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/movimentacoes/{movimentacao_id}/comprovante",
+          "full_path": "/financeiro/movimentacoes/{movimentacao_id}/comprovante"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/financeiro/dashboard/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/relatorio/{evento_id}/export/{formato}",
+          "full_path": "/financeiro/relatorio/{evento_id}/export/{formato}"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/abrir",
+          "full_path": "/financeiro/caixa/abrir"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/{caixa_id}/fechar",
+          "full_path": "/financeiro/caixa/{caixa_id}/fechar"
+        },
+        {
+          "method": "POST",
+          "path": "/movimentacoes",
+          "full_path": "/financeiro/movimentacoes"
+        },
+        {
+          "method": "GET",
+          "path": "/movimentacoes/{evento_id}",
+          "full_path": "/financeiro/movimentacoes/{evento_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/movimentacoes/{movimentacao_id}",
+          "full_path": "/financeiro/movimentacoes/{movimentacao_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/movimentacoes/{movimentacao_id}/comprovante",
+          "full_path": "/financeiro/movimentacoes/{movimentacao_id}/comprovante"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/financeiro/dashboard/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/relatorio/{evento_id}/export/{formato}",
+          "full_path": "/financeiro/relatorio/{evento_id}/export/{formato}"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/abrir",
+          "full_path": "/financeiro/caixa/abrir"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/{caixa_id}/fechar",
+          "full_path": "/financeiro/caixa/{caixa_id}/fechar"
+        }
+      ],
+      "errors": []
+    },
+    "formas_pagamento": {
+      "file": "backend/app/routers\\formas_pagamento.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{forma_pagamento_id}",
+          "full_path": "/{forma_pagamento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/{forma_pagamento_id}",
+          "full_path": "/{forma_pagamento_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{forma_pagamento_id}",
+          "full_path": "/{forma_pagamento_id}"
+        },
+        {
+          "method": "PATCH",
+          "path": "/{forma_pagamento_id}/toggle-status",
+          "full_path": "/{forma_pagamento_id}/toggle-status"
+        },
+        {
+          "method": "GET",
+          "path": "/tipos/opcoes",
+          "full_path": "/tipos/opcoes"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{forma_pagamento_id}",
+          "full_path": "/{forma_pagamento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "PUT",
+          "path": "/{forma_pagamento_id}",
+          "full_path": "/{forma_pagamento_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{forma_pagamento_id}",
+          "full_path": "/{forma_pagamento_id}"
+        },
+        {
+          "method": "PATCH",
+          "path": "/{forma_pagamento_id}/toggle-status",
+          "full_path": "/{forma_pagamento_id}/toggle-status"
+        },
+        {
+          "method": "GET",
+          "path": "/tipos/opcoes",
+          "full_path": "/tipos/opcoes"
+        }
+      ],
+      "errors": []
+    },
+    "gamificacao": {
+      "file": "backend/app/routers\\gamificacao.py",
+      "prefix": "/gamificacao",
+      "tags": [
+        "Gamificação"
+      ],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/ranking",
+          "full_path": "/gamificacao/ranking"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard",
+          "full_path": "/gamificacao/dashboard"
+        },
+        {
+          "method": "POST",
+          "path": "/conquistas",
+          "full_path": "/gamificacao/conquistas"
+        },
+        {
+          "method": "POST",
+          "path": "/verificar-conquistas/{promoter_id}",
+          "full_path": "/gamificacao/verificar-conquistas/{promoter_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/export/ranking/{formato}",
+          "full_path": "/gamificacao/export/ranking/{formato}"
+        },
+        {
+          "method": "GET",
+          "path": "/ranking",
+          "full_path": "/gamificacao/ranking"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard",
+          "full_path": "/gamificacao/dashboard"
+        },
+        {
+          "method": "POST",
+          "path": "/conquistas",
+          "full_path": "/gamificacao/conquistas"
+        },
+        {
+          "method": "POST",
+          "path": "/verificar-conquistas/{promoter_id}",
+          "full_path": "/gamificacao/verificar-conquistas/{promoter_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/export/ranking/{formato}",
+          "full_path": "/gamificacao/export/ranking/{formato}"
+        }
+      ],
+      "errors": []
+    },
+    "import_export": {
+      "file": "backend/app/routers\\import_export.py",
+      "prefix": "/api/estoque",
+      "tags": [
+        "import-export"
+      ],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/import/options",
+          "full_path": "/api/estoque/import/options"
+        },
+        {
+          "method": "POST",
+          "path": "/upload",
+          "full_path": "/api/estoque/upload"
+        },
+        {
+          "method": "POST",
+          "path": "/validate/{operacao_id}",
+          "full_path": "/api/estoque/validate/{operacao_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/import/{operacao_id}",
+          "full_path": "/api/estoque/import/{operacao_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/import/{operacao_id}/status",
+          "full_path": "/api/estoque/import/{operacao_id}/status"
+        },
+        {
+          "method": "POST",
+          "path": "/export/preview",
+          "full_path": "/api/estoque/export/preview"
+        },
+        {
+          "method": "POST",
+          "path": "/export",
+          "full_path": "/api/estoque/export"
+        },
+        {
+          "method": "GET",
+          "path": "/export/formats",
+          "full_path": "/api/estoque/export/formats"
+        },
+        {
+          "method": "GET",
+          "path": "/templates",
+          "full_path": "/api/estoque/templates"
+        },
+        {
+          "method": "POST",
+          "path": "/templates",
+          "full_path": "/api/estoque/templates"
+        },
+        {
+          "method": "GET",
+          "path": "/templates/{format}/download",
+          "full_path": "/api/estoque/templates/{format}/download"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/stats",
+          "full_path": "/api/estoque/dashboard/stats"
+        },
+        {
+          "method": "GET",
+          "path": "/jobs",
+          "full_path": "/api/estoque/jobs"
+        },
+        {
+          "method": "DELETE",
+          "path": "/jobs/{job_id}",
+          "full_path": "/api/estoque/jobs/{job_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/reports/giro",
+          "full_path": "/api/estoque/reports/giro"
+        },
+        {
+          "method": "GET",
+          "path": "/reports/abc",
+          "full_path": "/api/estoque/reports/abc"
+        },
+        {
+          "method": "GET",
+          "path": "/reports/perdas",
+          "full_path": "/api/estoque/reports/perdas"
+        },
+        {
+          "method": "GET",
+          "path": "/health",
+          "full_path": "/api/estoque/health"
+        },
+        {
+          "method": "GET",
+          "path": "/import/options",
+          "full_path": "/api/estoque/import/options"
+        },
+        {
+          "method": "POST",
+          "path": "/upload",
+          "full_path": "/api/estoque/upload"
+        },
+        {
+          "method": "POST",
+          "path": "/validate/{operacao_id}",
+          "full_path": "/api/estoque/validate/{operacao_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/import/{operacao_id}",
+          "full_path": "/api/estoque/import/{operacao_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/import/{operacao_id}/status",
+          "full_path": "/api/estoque/import/{operacao_id}/status"
+        },
+        {
+          "method": "POST",
+          "path": "/export/preview",
+          "full_path": "/api/estoque/export/preview"
+        },
+        {
+          "method": "POST",
+          "path": "/export",
+          "full_path": "/api/estoque/export"
+        },
+        {
+          "method": "GET",
+          "path": "/export/formats",
+          "full_path": "/api/estoque/export/formats"
+        },
+        {
+          "method": "GET",
+          "path": "/templates",
+          "full_path": "/api/estoque/templates"
+        },
+        {
+          "method": "POST",
+          "path": "/templates",
+          "full_path": "/api/estoque/templates"
+        },
+        {
+          "method": "GET",
+          "path": "/templates/{format}/download",
+          "full_path": "/api/estoque/templates/{format}/download"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/stats",
+          "full_path": "/api/estoque/dashboard/stats"
+        },
+        {
+          "method": "GET",
+          "path": "/jobs",
+          "full_path": "/api/estoque/jobs"
+        },
+        {
+          "method": "DELETE",
+          "path": "/jobs/{job_id}",
+          "full_path": "/api/estoque/jobs/{job_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/reports/giro",
+          "full_path": "/api/estoque/reports/giro"
+        },
+        {
+          "method": "GET",
+          "path": "/reports/abc",
+          "full_path": "/api/estoque/reports/abc"
+        },
+        {
+          "method": "GET",
+          "path": "/reports/perdas",
+          "full_path": "/api/estoque/reports/perdas"
+        },
+        {
+          "method": "GET",
+          "path": "/health",
+          "full_path": "/api/estoque/health"
+        }
+      ],
+      "errors": []
+    },
+    "listas": {
+      "file": "backend/app/routers\\listas.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/evento/{evento_id}",
+          "full_path": "/evento/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/promoter/{promoter_id}",
+          "full_path": "/promoter/{promoter_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{lista_id}",
+          "full_path": "/{lista_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{lista_id}",
+          "full_path": "/{lista_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/detalhada/{lista_id}",
+          "full_path": "/detalhada/{lista_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/{lista_id}/convidados/import",
+          "full_path": "/{lista_id}/convidados/import"
+        },
+        {
+          "method": "GET",
+          "path": "/{lista_id}/convidados/export/{formato}",
+          "full_path": "/{lista_id}/convidados/export/{formato}"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/dashboard/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/evento/{evento_id}",
+          "full_path": "/evento/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/promoter/{promoter_id}",
+          "full_path": "/promoter/{promoter_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{lista_id}",
+          "full_path": "/{lista_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{lista_id}",
+          "full_path": "/{lista_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/detalhada/{lista_id}",
+          "full_path": "/detalhada/{lista_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/{lista_id}/convidados/import",
+          "full_path": "/{lista_id}/convidados/import"
+        },
+        {
+          "method": "GET",
+          "path": "/{lista_id}/convidados/export/{formato}",
+          "full_path": "/{lista_id}/convidados/export/{formato}"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/dashboard/{evento_id}"
+        }
+      ],
+      "errors": []
+    },
+    "meep": {
+      "file": "backend/app/routers\\meep.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/analytics/dashboard/{evento_id}",
+          "full_path": "/analytics/dashboard/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/validacoes/{evento_id}",
+          "full_path": "/validacoes/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/equipamentos/{evento_id}",
+          "full_path": "/equipamentos/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/equipamentos",
+          "full_path": "/equipamentos"
+        },
+        {
+          "method": "GET",
+          "path": "/previsoes/{evento_id}",
+          "full_path": "/previsoes/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/logs-seguranca/{evento_id}",
+          "full_path": "/logs-seguranca/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/logs-seguranca",
+          "full_path": "/logs-seguranca"
+        },
+        {
+          "method": "GET",
+          "path": "/stats/{evento_id}",
+          "full_path": "/stats/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/clientes",
+          "full_path": "/clientes"
+        },
+        {
+          "method": "GET",
+          "path": "/clientes/{cpf}",
+          "full_path": "/clientes/{cpf}"
+        },
+        {
+          "method": "POST",
+          "path": "/clientes",
+          "full_path": "/clientes"
+        },
+        {
+          "method": "GET",
+          "path": "/analytics/dashboard/{evento_id}",
+          "full_path": "/analytics/dashboard/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/validacoes/{evento_id}",
+          "full_path": "/validacoes/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/equipamentos/{evento_id}",
+          "full_path": "/equipamentos/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/equipamentos",
+          "full_path": "/equipamentos"
+        },
+        {
+          "method": "GET",
+          "path": "/previsoes/{evento_id}",
+          "full_path": "/previsoes/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/logs-seguranca/{evento_id}",
+          "full_path": "/logs-seguranca/{evento_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/logs-seguranca",
+          "full_path": "/logs-seguranca"
+        },
+        {
+          "method": "GET",
+          "path": "/stats/{evento_id}",
+          "full_path": "/stats/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/clientes",
+          "full_path": "/clientes"
+        },
+        {
+          "method": "GET",
+          "path": "/clientes/{cpf}",
+          "full_path": "/clientes/{cpf}"
+        },
+        {
+          "method": "POST",
+          "path": "/clientes",
+          "full_path": "/clientes"
+        }
+      ],
+      "errors": []
+    },
+    "n8n": {
+      "file": "backend/app/routers\\n8n.py",
+      "prefix": "/n8n",
+      "tags": [
+        "N8N Automações"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/webhook/meta-ads",
+          "full_path": "/n8n/webhook/meta-ads"
+        },
+        {
+          "method": "POST",
+          "path": "/webhook/crm",
+          "full_path": "/n8n/webhook/crm"
+        },
+        {
+          "method": "POST",
+          "path": "/trigger/evento-criado",
+          "full_path": "/n8n/trigger/evento-criado"
+        },
+        {
+          "method": "POST",
+          "path": "/trigger/venda-realizada",
+          "full_path": "/n8n/trigger/venda-realizada"
+        },
+        {
+          "method": "POST",
+          "path": "/webhook/meta-ads",
+          "full_path": "/n8n/webhook/meta-ads"
+        },
+        {
+          "method": "POST",
+          "path": "/webhook/crm",
+          "full_path": "/n8n/webhook/crm"
+        },
+        {
+          "method": "POST",
+          "path": "/trigger/evento-criado",
+          "full_path": "/n8n/trigger/evento-criado"
+        },
+        {
+          "method": "POST",
+          "path": "/trigger/venda-realizada",
+          "full_path": "/n8n/trigger/venda-realizada"
+        }
+      ],
+      "errors": []
+    },
+    "pdv": {
+      "file": "backend/app/routers\\pdv.py",
+      "prefix": "/pdv",
+      "tags": [
+        "PDV"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/produtos",
+          "full_path": "/pdv/produtos"
+        },
+        {
+          "method": "GET",
+          "path": "/produtos",
+          "full_path": "/pdv/produtos"
+        },
+        {
+          "method": "GET",
+          "path": "/produtos/{produto_id}",
+          "full_path": "/pdv/produtos/{produto_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/produtos/{produto_id}",
+          "full_path": "/pdv/produtos/{produto_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/comandas",
+          "full_path": "/pdv/comandas"
+        },
+        {
+          "method": "GET",
+          "path": "/comandas",
+          "full_path": "/pdv/comandas"
+        },
+        {
+          "method": "POST",
+          "path": "/comandas/{comanda_id}/recarga",
+          "full_path": "/pdv/comandas/{comanda_id}/recarga"
+        },
+        {
+          "method": "POST",
+          "path": "/vendas",
+          "full_path": "/pdv/vendas"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas",
+          "full_path": "/pdv/vendas"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/abrir",
+          "full_path": "/pdv/caixa/abrir"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/{caixa_id}/fechar",
+          "full_path": "/pdv/caixa/{caixa_id}/fechar"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/pdv/dashboard/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/relatorios/x/{caixa_id}",
+          "full_path": "/pdv/relatorios/x/{caixa_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/relatorios/z/{caixa_id}",
+          "full_path": "/pdv/relatorios/z/{caixa_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/produtos",
+          "full_path": "/pdv/produtos"
+        },
+        {
+          "method": "GET",
+          "path": "/produtos",
+          "full_path": "/pdv/produtos"
+        },
+        {
+          "method": "GET",
+          "path": "/produtos/{produto_id}",
+          "full_path": "/pdv/produtos/{produto_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/produtos/{produto_id}",
+          "full_path": "/pdv/produtos/{produto_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/comandas",
+          "full_path": "/pdv/comandas"
+        },
+        {
+          "method": "GET",
+          "path": "/comandas",
+          "full_path": "/pdv/comandas"
+        },
+        {
+          "method": "POST",
+          "path": "/comandas/{comanda_id}/recarga",
+          "full_path": "/pdv/comandas/{comanda_id}/recarga"
+        },
+        {
+          "method": "POST",
+          "path": "/vendas",
+          "full_path": "/pdv/vendas"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas",
+          "full_path": "/pdv/vendas"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/abrir",
+          "full_path": "/pdv/caixa/abrir"
+        },
+        {
+          "method": "POST",
+          "path": "/caixa/{caixa_id}/fechar",
+          "full_path": "/pdv/caixa/{caixa_id}/fechar"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/{evento_id}",
+          "full_path": "/pdv/dashboard/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/relatorios/x/{caixa_id}",
+          "full_path": "/pdv/relatorios/x/{caixa_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/relatorios/z/{caixa_id}",
+          "full_path": "/pdv/relatorios/z/{caixa_id}"
+        }
+      ],
+      "errors": []
+    },
+    "produtos": {
+      "file": "backend/app/routers\\produtos.py",
+      "prefix": "/produtos",
+      "tags": [
+        "produtos"
+      ],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "GET",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/import",
+          "full_path": "/produtos/import"
+        },
+        {
+          "method": "GET",
+          "path": "/import/template",
+          "full_path": "/produtos/import/template"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "GET",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/import",
+          "full_path": "/produtos/import"
+        },
+        {
+          "method": "GET",
+          "path": "/import/template",
+          "full_path": "/produtos/import/template"
+        }
+      ],
+      "errors": []
+    },
+    "produtos_debug": {
+      "file": "backend/app/routers\\produtos_debug.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [],
+      "errors": []
+    },
+    "produtos_final": {
+      "file": "backend/app/routers\\produtos_final.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [],
+      "errors": []
+    },
+    "produtos_public": {
+      "file": "backend/app/routers\\produtos_public.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [],
+      "errors": []
+    },
+    "produtos_simple": {
+      "file": "backend/app/routers\\produtos_simple.py",
+      "prefix": "/produtos",
+      "tags": [
+        "produtos"
+      ],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "GET",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/produtos/"
+        },
+        {
+          "method": "GET",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{produto_id}",
+          "full_path": "/produtos/{produto_id}"
+        }
+      ],
+      "errors": []
+    },
+    "produtos_simples": {
+      "file": "backend/app/routers\\produtos_simples.py",
+      "prefix": "/produtos",
+      "tags": [
+        "produtos"
+      ],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/categorias/",
+          "full_path": "/produtos/categorias/"
+        },
+        {
+          "method": "POST",
+          "path": "/categorias/",
+          "full_path": "/produtos/categorias/"
+        },
+        {
+          "method": "GET",
+          "path": "/categorias/{categoria_id}",
+          "full_path": "/produtos/categorias/{categoria_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/categorias/{categoria_id}",
+          "full_path": "/produtos/categorias/{categoria_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/categorias/{categoria_id}",
+          "full_path": "/produtos/categorias/{categoria_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/categorias/",
+          "full_path": "/produtos/categorias/"
+        },
+        {
+          "method": "POST",
+          "path": "/categorias/",
+          "full_path": "/produtos/categorias/"
+        },
+        {
+          "method": "GET",
+          "path": "/categorias/{categoria_id}",
+          "full_path": "/produtos/categorias/{categoria_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/categorias/{categoria_id}",
+          "full_path": "/produtos/categorias/{categoria_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/categorias/{categoria_id}",
+          "full_path": "/produtos/categorias/{categoria_id}"
+        }
+      ],
+      "errors": []
+    },
+    "produtos_v2": {
+      "file": "backend/app/routers\\produtos_v2.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [],
+      "errors": []
+    },
+    "relatorios": {
+      "file": "backend/app/routers\\relatorios.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/vendas/{evento_id}",
+          "full_path": "/vendas/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas/{evento_id}/csv",
+          "full_path": "/vendas/{evento_id}/csv"
+        },
+        {
+          "method": "GET",
+          "path": "/checkins/{evento_id}/csv",
+          "full_path": "/checkins/{evento_id}/csv"
+        },
+        {
+          "method": "GET",
+          "path": "/auditoria",
+          "full_path": "/auditoria"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas/{evento_id}/excel",
+          "full_path": "/vendas/{evento_id}/excel"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/export/{formato}",
+          "full_path": "/dashboard/export/{formato}"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas/{evento_id}",
+          "full_path": "/vendas/{evento_id}"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas/{evento_id}/csv",
+          "full_path": "/vendas/{evento_id}/csv"
+        },
+        {
+          "method": "GET",
+          "path": "/checkins/{evento_id}/csv",
+          "full_path": "/checkins/{evento_id}/csv"
+        },
+        {
+          "method": "GET",
+          "path": "/auditoria",
+          "full_path": "/auditoria"
+        },
+        {
+          "method": "GET",
+          "path": "/vendas/{evento_id}/excel",
+          "full_path": "/vendas/{evento_id}/excel"
+        },
+        {
+          "method": "GET",
+          "path": "/dashboard/export/{formato}",
+          "full_path": "/dashboard/export/{formato}"
+        }
+      ],
+      "errors": []
+    },
+    "transacoes": {
+      "file": "backend/app/routers\\transacoes.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{transacao_id}",
+          "full_path": "/{transacao_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{transacao_id}/status",
+          "full_path": "/{transacao_id}/status"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{transacao_id}",
+          "full_path": "/{transacao_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{transacao_id}/status",
+          "full_path": "/{transacao_id}/status"
+        }
+      ],
+      "errors": []
+    },
+    "usuarios": {
+      "file": "backend/app/routers\\usuarios.py",
+      "prefix": null,
+      "tags": [],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{usuario_id}",
+          "full_path": "/{usuario_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{usuario_id}",
+          "full_path": "/{usuario_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{usuario_id}",
+          "full_path": "/{usuario_id}"
+        },
+        {
+          "method": "POST",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/",
+          "full_path": "/"
+        },
+        {
+          "method": "GET",
+          "path": "/{usuario_id}",
+          "full_path": "/{usuario_id}"
+        },
+        {
+          "method": "PUT",
+          "path": "/{usuario_id}",
+          "full_path": "/{usuario_id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{usuario_id}",
+          "full_path": "/{usuario_id}"
+        }
+      ],
+      "errors": []
+    },
+    "whatsapp": {
+      "file": "backend/app/routers\\whatsapp.py",
+      "prefix": "/whatsapp",
+      "tags": [
+        "WhatsApp"
+      ],
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/init",
+          "full_path": "/whatsapp/init"
+        },
+        {
+          "method": "GET",
+          "path": "/status",
+          "full_path": "/whatsapp/status"
+        },
+        {
+          "method": "POST",
+          "path": "/send-invite",
+          "full_path": "/whatsapp/send-invite"
+        },
+        {
+          "method": "POST",
+          "path": "/send-bulk",
+          "full_path": "/whatsapp/send-bulk"
+        },
+        {
+          "method": "POST",
+          "path": "/webhook",
+          "full_path": "/whatsapp/webhook"
+        },
+        {
+          "method": "GET",
+          "path": "/eventos/{evento_id}/invites",
+          "full_path": "/whatsapp/eventos/{evento_id}/invites"
+        },
+        {
+          "method": "POST",
+          "path": "/init",
+          "full_path": "/whatsapp/init"
+        },
+        {
+          "method": "GET",
+          "path": "/status",
+          "full_path": "/whatsapp/status"
+        },
+        {
+          "method": "POST",
+          "path": "/send-invite",
+          "full_path": "/whatsapp/send-invite"
+        },
+        {
+          "method": "POST",
+          "path": "/send-bulk",
+          "full_path": "/whatsapp/send-bulk"
+        },
+        {
+          "method": "POST",
+          "path": "/webhook",
+          "full_path": "/whatsapp/webhook"
+        },
+        {
+          "method": "GET",
+          "path": "/eventos/{evento_id}/invites",
+          "full_path": "/whatsapp/eventos/{evento_id}/invites"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "main_includes": {
+    "includes": [
+      {
+        "router_name": "auth",
+        "prefix": "/api/auth",
+        "tags": [
+          "Autenticação"
+        ],
+        "raw": "auth.router, prefix=\"/api/auth\", tags=[\"Autenticação\"]"
+      },
+      {
+        "router_name": "empresas",
+        "prefix": "/api/empresas",
+        "tags": [
+          "Empresas"
+        ],
+        "raw": "empresas.router, prefix=\"/api/empresas\", tags=[\"Empresas\"]"
+      },
+      {
+        "router_name": "usuarios",
+        "prefix": "/api/usuarios",
+        "tags": [
+          "Usuários"
+        ],
+        "raw": "usuarios.router, prefix=\"/api/usuarios\", tags=[\"Usuários\"]"
+      },
+      {
+        "router_name": "eventos",
+        "prefix": "/api/eventos",
+        "tags": [
+          "Eventos"
+        ],
+        "raw": "eventos.router, prefix=\"/api/eventos\", tags=[\"Eventos\"]"
+      },
+      {
+        "router_name": "listas",
+        "prefix": "/api/listas",
+        "tags": [
+          "Listas"
+        ],
+        "raw": "listas.router, prefix=\"/api/listas\", tags=[\"Listas\"]"
+      },
+      {
+        "router_name": "transacoes",
+        "prefix": "/api/transacoes",
+        "tags": [
+          "Transações"
+        ],
+        "raw": "transacoes.router, prefix=\"/api/transacoes\", tags=[\"Transações\"]"
+      },
+      {
+        "router_name": "checkins",
+        "prefix": "/api/checkins",
+        "tags": [
+          "Check-ins"
+        ],
+        "raw": "checkins.router, prefix=\"/api/checkins\", tags=[\"Check-ins\"]"
+      },
+      {
+        "router_name": "dashboard",
+        "prefix": "/api/dashboard",
+        "tags": [
+          "Dashboard"
+        ],
+        "raw": "dashboard.router, prefix=\"/api/dashboard\", tags=[\"Dashboard\"]"
+      },
+      {
+        "router_name": "relatorios",
+        "prefix": "/api/relatorios",
+        "tags": [
+          "Relatórios"
+        ],
+        "raw": "relatorios.router, prefix=\"/api/relatorios\", tags=[\"Relatórios\"]"
+      },
+      {
+        "router_name": "whatsapp",
+        "prefix": "/api/whatsapp",
+        "tags": [
+          "WhatsApp"
+        ],
+        "raw": "whatsapp.router, prefix=\"/api/whatsapp\", tags=[\"WhatsApp\"]"
+      },
+      {
+        "router_name": "cupons",
+        "prefix": "/api/cupons",
+        "tags": [
+          "Cupons"
+        ],
+        "raw": "cupons.router, prefix=\"/api/cupons\", tags=[\"Cupons\"]"
+      },
+      {
+        "router_name": "n8n",
+        "prefix": "/api/n8n",
+        "tags": [
+          "N8N"
+        ],
+        "raw": "n8n.router, prefix=\"/api/n8n\", tags=[\"N8N\"]"
+      },
+      {
+        "router_name": "pdv",
+        "prefix": "/api",
+        "tags": [],
+        "raw": "pdv.router, prefix=\"/api\""
+      },
+      {
+        "router_name": "financeiro",
+        "prefix": "/api/financeiro",
+        "tags": [
+          "Financeiro"
+        ],
+        "raw": "financeiro.router, prefix=\"/api/financeiro\", tags=[\"Financeiro\"]"
+      },
+      {
+        "router_name": "gamificacao",
+        "prefix": "/api",
+        "tags": [],
+        "raw": "gamificacao.router, prefix=\"/api\""
+      },
+      {
+        "router_name": "produtos",
+        "prefix": "/api",
+        "tags": [],
+        "raw": "produtos.router, prefix=\"/api\""
+      },
+      {
+        "router_name": "formas_pagamento",
+        "prefix": "/api/formas-pagamento",
+        "tags": [
+          "Formas de Pagamento"
+        ],
+        "raw": "formas_pagamento.router, prefix=\"/api/formas-pagamento\", tags=[\"Formas de Pagamento\"]"
+      },
+      {
+        "router_name": "import_export",
+        "prefix": null,
+        "tags": [
+          "Import-Export"
+        ],
+        "raw": "import_export.router, tags=[\"Import-Export\"]"
+      },
+      {
+        "router_name": "meep",
+        "prefix": "/api/meep",
+        "tags": [
+          "MEEP Integration"
+        ],
+        "raw": "meep.router, prefix=\"/api/meep\", tags=[\"MEEP Integration\"]"
+      },
+      {
+        "router_name": "financeiro",
+        "prefix": "/api/financeiro",
+        "tags": [
+          "Financeiro"
+        ],
+        "raw": "financeiro.router, prefix=\"/api/financeiro\", tags=[\"Financeiro\"]"
+      }
+    ]
+  },
+  "endpoint_summary": [
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/login",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/login",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "GET",
+      "router_path": "/me",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/me",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "GET",
+      "router_path": "/me-debug",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/me-debug",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/register",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/register",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "GET",
+      "router_path": "/me",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/me",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/logout",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/logout",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/forgot-password",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/forgot-password",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/setup-inicial",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/setup-inicial",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/login",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/login",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "GET",
+      "router_path": "/me",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/me",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "GET",
+      "router_path": "/me-debug",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/me-debug",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/register",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/register",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "GET",
+      "router_path": "/me",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/me",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/logout",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/logout",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/forgot-password",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/forgot-password",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "auth",
+      "method": "POST",
+      "router_path": "/setup-inicial",
+      "router_prefix": "",
+      "main_prefix": "/api/auth",
+      "full_url": "/api/auth/setup-inicial",
+      "tags": [
+        "Autenticação"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "GET",
+      "router_path": "/{empresa_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/{empresa_id}",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "PUT",
+      "router_path": "/{empresa_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/{empresa_id}",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "DELETE",
+      "router_path": "/{empresa_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/{empresa_id}",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "GET",
+      "router_path": "/{empresa_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/{empresa_id}",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "PUT",
+      "router_path": "/{empresa_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/{empresa_id}",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "empresas",
+      "method": "DELETE",
+      "router_path": "/{empresa_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/empresas",
+      "full_url": "/api/empresas/{empresa_id}",
+      "tags": [
+        "Empresas"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "GET",
+      "router_path": "/{usuario_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/{usuario_id}",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "PUT",
+      "router_path": "/{usuario_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/{usuario_id}",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "DELETE",
+      "router_path": "/{usuario_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/{usuario_id}",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "GET",
+      "router_path": "/{usuario_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/{usuario_id}",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "PUT",
+      "router_path": "/{usuario_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/{usuario_id}",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "usuarios",
+      "method": "DELETE",
+      "router_path": "/{usuario_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/usuarios",
+      "full_url": "/api/usuarios/{usuario_id}",
+      "tags": [
+        "Usuários"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "POST",
+      "router_path": "/test",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/test",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/buscar",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/buscar",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "PUT",
+      "router_path": "/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "DELETE",
+      "router_path": "/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/detalhado/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/detalhado/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "POST",
+      "router_path": "/{evento_id}/promoters",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/promoters",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "DELETE",
+      "router_path": "/{evento_id}/promoters/{promoter_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/promoters/{promoter_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}/financeiro",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/financeiro",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}/export/csv",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/export/csv",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}/export/pdf",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/export/pdf",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "POST",
+      "router_path": "/test",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/test",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/buscar",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/buscar",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "PUT",
+      "router_path": "/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "DELETE",
+      "router_path": "/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/detalhado/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/detalhado/{evento_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "POST",
+      "router_path": "/{evento_id}/promoters",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/promoters",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "DELETE",
+      "router_path": "/{evento_id}/promoters/{promoter_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/promoters/{promoter_id}",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}/financeiro",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/financeiro",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}/export/csv",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/export/csv",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "eventos",
+      "method": "GET",
+      "router_path": "/{evento_id}/export/pdf",
+      "router_prefix": "",
+      "main_prefix": "/api/eventos",
+      "full_url": "/api/eventos/{evento_id}/export/pdf",
+      "tags": [
+        "Eventos"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/evento/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/evento/{evento_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/promoter/{promoter_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/promoter/{promoter_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "PUT",
+      "router_path": "/{lista_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "DELETE",
+      "router_path": "/{lista_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/detalhada/{lista_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/detalhada/{lista_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "POST",
+      "router_path": "/{lista_id}/convidados/import",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}/convidados/import",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/{lista_id}/convidados/export/{formato}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}/convidados/export/{formato}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/dashboard/{evento_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/evento/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/evento/{evento_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/promoter/{promoter_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/promoter/{promoter_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "PUT",
+      "router_path": "/{lista_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "DELETE",
+      "router_path": "/{lista_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/detalhada/{lista_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/detalhada/{lista_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "POST",
+      "router_path": "/{lista_id}/convidados/import",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}/convidados/import",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/{lista_id}/convidados/export/{formato}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/{lista_id}/convidados/export/{formato}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "listas",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/listas",
+      "full_url": "/api/listas/dashboard/{evento_id}",
+      "tags": [
+        "Listas"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "GET",
+      "router_path": "/{transacao_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/{transacao_id}",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "PUT",
+      "router_path": "/{transacao_id}/status",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/{transacao_id}/status",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "GET",
+      "router_path": "/{transacao_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/{transacao_id}",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "transacoes",
+      "method": "PUT",
+      "router_path": "/{transacao_id}/status",
+      "router_prefix": "",
+      "main_prefix": "/api/transacoes",
+      "full_url": "/api/transacoes/{transacao_id}/status",
+      "tags": [
+        "Transações"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "GET",
+      "router_path": "/evento/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/evento/{evento_id}",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "GET",
+      "router_path": "/cpf/{cpf}",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/cpf/{cpf}",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "POST",
+      "router_path": "/qr",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/qr",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/dashboard/{evento_id}",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "GET",
+      "router_path": "/evento/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/evento/{evento_id}",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "GET",
+      "router_path": "/cpf/{cpf}",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/cpf/{cpf}",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "POST",
+      "router_path": "/qr",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/qr",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "checkins",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/checkins",
+      "full_url": "/api/checkins/dashboard/{evento_id}",
+      "tags": [
+        "Check-ins"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/resumo",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/resumo",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/ranking-promoters",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/ranking-promoters",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/vendas-tempo-real",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/vendas-tempo-real",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/aniversariantes",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/aniversariantes",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/tempo-real/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/tempo-real/{evento_id}",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/avancado",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/avancado",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/graficos/vendas-tempo",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/graficos/vendas-tempo",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/graficos/vendas-lista",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/graficos/vendas-lista",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/ranking-promoters-avancado",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/ranking-promoters-avancado",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/resumo",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/resumo",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/ranking-promoters",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/ranking-promoters",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/vendas-tempo-real",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/vendas-tempo-real",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/aniversariantes",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/aniversariantes",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/tempo-real/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/tempo-real/{evento_id}",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/avancado",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/avancado",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/graficos/vendas-tempo",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/graficos/vendas-tempo",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/graficos/vendas-lista",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/graficos/vendas-lista",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "dashboard",
+      "method": "GET",
+      "router_path": "/ranking-promoters-avancado",
+      "router_prefix": "",
+      "main_prefix": "/api/dashboard",
+      "full_url": "/api/dashboard/ranking-promoters-avancado",
+      "tags": [
+        "Dashboard"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/vendas/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/vendas/{evento_id}",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/vendas/{evento_id}/csv",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/vendas/{evento_id}/csv",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/checkins/{evento_id}/csv",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/checkins/{evento_id}/csv",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/auditoria",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/auditoria",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/vendas/{evento_id}/excel",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/vendas/{evento_id}/excel",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/dashboard/export/{formato}",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/dashboard/export/{formato}",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/vendas/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/vendas/{evento_id}",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/vendas/{evento_id}/csv",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/vendas/{evento_id}/csv",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/checkins/{evento_id}/csv",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/checkins/{evento_id}/csv",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/auditoria",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/auditoria",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/vendas/{evento_id}/excel",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/vendas/{evento_id}/excel",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "relatorios",
+      "method": "GET",
+      "router_path": "/dashboard/export/{formato}",
+      "router_prefix": "",
+      "main_prefix": "/api/relatorios",
+      "full_url": "/api/relatorios/dashboard/export/{formato}",
+      "tags": [
+        "Relatórios"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/init",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/init",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "GET",
+      "router_path": "/status",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/status",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/send-invite",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/send-invite",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/send-bulk",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/send-bulk",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/webhook",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/webhook",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "GET",
+      "router_path": "/eventos/{evento_id}/invites",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/eventos/{evento_id}/invites",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/init",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/init",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "GET",
+      "router_path": "/status",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/status",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/send-invite",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/send-invite",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/send-bulk",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/send-bulk",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "POST",
+      "router_path": "/webhook",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/webhook",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "whatsapp",
+      "method": "GET",
+      "router_path": "/eventos/{evento_id}/invites",
+      "router_prefix": "/whatsapp",
+      "main_prefix": "/api/whatsapp",
+      "full_url": "/api/whatsapp/whatsapp/eventos/{evento_id}/invites",
+      "tags": [
+        "WhatsApp"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "POST",
+      "router_path": "/validar/{codigo}",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/validar/{codigo}",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "POST",
+      "router_path": "/usar/{codigo}",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/usar/{codigo}",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "GET",
+      "router_path": "/evento/{evento_id}",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/evento/{evento_id}",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "POST",
+      "router_path": "/validar/{codigo}",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/validar/{codigo}",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "POST",
+      "router_path": "/usar/{codigo}",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/usar/{codigo}",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "cupons",
+      "method": "GET",
+      "router_path": "/evento/{evento_id}",
+      "router_prefix": "/cupons",
+      "main_prefix": "/api/cupons",
+      "full_url": "/api/cupons/cupons/evento/{evento_id}",
+      "tags": [
+        "Cupons"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/webhook/meta-ads",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/webhook/meta-ads",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/webhook/crm",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/webhook/crm",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/trigger/evento-criado",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/trigger/evento-criado",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/trigger/venda-realizada",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/trigger/venda-realizada",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/webhook/meta-ads",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/webhook/meta-ads",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/webhook/crm",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/webhook/crm",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/trigger/evento-criado",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/trigger/evento-criado",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "n8n",
+      "method": "POST",
+      "router_path": "/trigger/venda-realizada",
+      "router_prefix": "/n8n",
+      "main_prefix": "/api/n8n",
+      "full_url": "/api/n8n/n8n/trigger/venda-realizada",
+      "tags": [
+        "N8N"
+      ]
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/produtos",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/produtos",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/produtos/{produto_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "PUT",
+      "router_path": "/produtos/{produto_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/comandas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/comandas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/comandas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/comandas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/comandas/{comanda_id}/recarga",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/comandas/{comanda_id}/recarga",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/vendas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/vendas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/vendas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/vendas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/caixa/abrir",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/caixa/abrir",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/caixa/{caixa_id}/fechar",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/caixa/{caixa_id}/fechar",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/dashboard/{evento_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/relatorios/x/{caixa_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/relatorios/x/{caixa_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/relatorios/z/{caixa_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/relatorios/z/{caixa_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/produtos",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/produtos",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/produtos/{produto_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "PUT",
+      "router_path": "/produtos/{produto_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/comandas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/comandas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/comandas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/comandas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/comandas/{comanda_id}/recarga",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/comandas/{comanda_id}/recarga",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/vendas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/vendas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/vendas",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/vendas",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/caixa/abrir",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/caixa/abrir",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "POST",
+      "router_path": "/caixa/{caixa_id}/fechar",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/caixa/{caixa_id}/fechar",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/dashboard/{evento_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/relatorios/x/{caixa_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/relatorios/x/{caixa_id}",
+      "tags": []
+    },
+    {
+      "router": "pdv",
+      "method": "GET",
+      "router_path": "/relatorios/z/{caixa_id}",
+      "router_prefix": "/pdv",
+      "main_prefix": "/api",
+      "full_url": "/api/pdv/relatorios/z/{caixa_id}",
+      "tags": []
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/movimentacoes/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "PUT",
+      "router_path": "/movimentacoes/{movimentacao_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes/{movimentacao_id}/comprovante",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}/comprovante",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/dashboard/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/relatorio/{evento_id}/export/{formato}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/relatorio/{evento_id}/export/{formato}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/abrir",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/abrir",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/{caixa_id}/fechar",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/{caixa_id}/fechar",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/movimentacoes/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "PUT",
+      "router_path": "/movimentacoes/{movimentacao_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes/{movimentacao_id}/comprovante",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}/comprovante",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/dashboard/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/relatorio/{evento_id}/export/{formato}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/relatorio/{evento_id}/export/{formato}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/abrir",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/abrir",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/{caixa_id}/fechar",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/{caixa_id}/fechar",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "gamificacao",
+      "method": "GET",
+      "router_path": "/ranking",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/ranking",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "GET",
+      "router_path": "/dashboard",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/dashboard",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "POST",
+      "router_path": "/conquistas",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/conquistas",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "POST",
+      "router_path": "/verificar-conquistas/{promoter_id}",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/verificar-conquistas/{promoter_id}",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "GET",
+      "router_path": "/export/ranking/{formato}",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/export/ranking/{formato}",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "GET",
+      "router_path": "/ranking",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/ranking",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "GET",
+      "router_path": "/dashboard",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/dashboard",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "POST",
+      "router_path": "/conquistas",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/conquistas",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "POST",
+      "router_path": "/verificar-conquistas/{promoter_id}",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/verificar-conquistas/{promoter_id}",
+      "tags": []
+    },
+    {
+      "router": "gamificacao",
+      "method": "GET",
+      "router_path": "/export/ranking/{formato}",
+      "router_prefix": "/gamificacao",
+      "main_prefix": "/api",
+      "full_url": "/api/gamificacao/export/ranking/{formato}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "GET",
+      "router_path": "/{produto_id}",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "PUT",
+      "router_path": "/{produto_id}",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "DELETE",
+      "router_path": "/{produto_id}",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "POST",
+      "router_path": "/import",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/import",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "GET",
+      "router_path": "/import/template",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/import/template",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "GET",
+      "router_path": "/{produto_id}",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "PUT",
+      "router_path": "/{produto_id}",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "DELETE",
+      "router_path": "/{produto_id}",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/{produto_id}",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "POST",
+      "router_path": "/import",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/import",
+      "tags": []
+    },
+    {
+      "router": "produtos",
+      "method": "GET",
+      "router_path": "/import/template",
+      "router_prefix": "/produtos",
+      "main_prefix": "/api",
+      "full_url": "/api/produtos/import/template",
+      "tags": []
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "GET",
+      "router_path": "/{forma_pagamento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "PUT",
+      "router_path": "/{forma_pagamento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "DELETE",
+      "router_path": "/{forma_pagamento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "PATCH",
+      "router_path": "/{forma_pagamento_id}/toggle-status",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}/toggle-status",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "GET",
+      "router_path": "/tipos/opcoes",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/tipos/opcoes",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "GET",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "GET",
+      "router_path": "/{forma_pagamento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "POST",
+      "router_path": "/",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "PUT",
+      "router_path": "/{forma_pagamento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "DELETE",
+      "router_path": "/{forma_pagamento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "PATCH",
+      "router_path": "/{forma_pagamento_id}/toggle-status",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/{forma_pagamento_id}/toggle-status",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "formas_pagamento",
+      "method": "GET",
+      "router_path": "/tipos/opcoes",
+      "router_prefix": "",
+      "main_prefix": "/api/formas-pagamento",
+      "full_url": "/api/formas-pagamento/tipos/opcoes",
+      "tags": [
+        "Formas de Pagamento"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/import/options",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/import/options",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/upload",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/upload",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/validate/{operacao_id}",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/validate/{operacao_id}",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/import/{operacao_id}",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/import/{operacao_id}",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/import/{operacao_id}/status",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/import/{operacao_id}/status",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/export/preview",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/export/preview",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/export",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/export",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/export/formats",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/export/formats",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/templates",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/templates",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/templates",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/templates",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/templates/{format}/download",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/templates/{format}/download",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/dashboard/stats",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/dashboard/stats",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/jobs",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/jobs",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "DELETE",
+      "router_path": "/jobs/{job_id}",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/jobs/{job_id}",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/reports/giro",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/reports/giro",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/reports/abc",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/reports/abc",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/reports/perdas",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/reports/perdas",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/health",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/health",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/import/options",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/import/options",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/upload",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/upload",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/validate/{operacao_id}",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/validate/{operacao_id}",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/import/{operacao_id}",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/import/{operacao_id}",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/import/{operacao_id}/status",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/import/{operacao_id}/status",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/export/preview",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/export/preview",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/export",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/export",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/export/formats",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/export/formats",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/templates",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/templates",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "POST",
+      "router_path": "/templates",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/templates",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/templates/{format}/download",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/templates/{format}/download",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/dashboard/stats",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/dashboard/stats",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/jobs",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/jobs",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "DELETE",
+      "router_path": "/jobs/{job_id}",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/jobs/{job_id}",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/reports/giro",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/reports/giro",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/reports/abc",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/reports/abc",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/reports/perdas",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/reports/perdas",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "import_export",
+      "method": "GET",
+      "router_path": "/health",
+      "router_prefix": "/api/estoque",
+      "main_prefix": "",
+      "full_url": "/api/estoque/health",
+      "tags": [
+        "Import-Export"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/analytics/dashboard/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/analytics/dashboard/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/validacoes/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/validacoes/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/equipamentos/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/equipamentos/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "POST",
+      "router_path": "/equipamentos",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/equipamentos",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/previsoes/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/previsoes/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/logs-seguranca/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/logs-seguranca/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "POST",
+      "router_path": "/logs-seguranca",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/logs-seguranca",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/stats/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/stats/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/clientes",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/clientes",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/clientes/{cpf}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/clientes/{cpf}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "POST",
+      "router_path": "/clientes",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/clientes",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/analytics/dashboard/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/analytics/dashboard/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/validacoes/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/validacoes/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/equipamentos/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/equipamentos/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "POST",
+      "router_path": "/equipamentos",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/equipamentos",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/previsoes/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/previsoes/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/logs-seguranca/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/logs-seguranca/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "POST",
+      "router_path": "/logs-seguranca",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/logs-seguranca",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/stats/{evento_id}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/stats/{evento_id}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/clientes",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/clientes",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "GET",
+      "router_path": "/clientes/{cpf}",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/clientes/{cpf}",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "meep",
+      "method": "POST",
+      "router_path": "/clientes",
+      "router_prefix": "",
+      "main_prefix": "/api/meep",
+      "full_url": "/api/meep/clientes",
+      "tags": [
+        "MEEP Integration"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/movimentacoes/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "PUT",
+      "router_path": "/movimentacoes/{movimentacao_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes/{movimentacao_id}/comprovante",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}/comprovante",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/dashboard/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/relatorio/{evento_id}/export/{formato}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/relatorio/{evento_id}/export/{formato}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/abrir",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/abrir",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/{caixa_id}/fechar",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/{caixa_id}/fechar",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/movimentacoes/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "PUT",
+      "router_path": "/movimentacoes/{movimentacao_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/movimentacoes/{movimentacao_id}/comprovante",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/movimentacoes/{movimentacao_id}/comprovante",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/dashboard/{evento_id}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/dashboard/{evento_id}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "GET",
+      "router_path": "/relatorio/{evento_id}/export/{formato}",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/relatorio/{evento_id}/export/{formato}",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/abrir",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/abrir",
+      "tags": [
+        "Financeiro"
+      ]
+    },
+    {
+      "router": "financeiro",
+      "method": "POST",
+      "router_path": "/caixa/{caixa_id}/fechar",
+      "router_prefix": "/financeiro",
+      "main_prefix": "/api/financeiro",
+      "full_url": "/api/financeiro/financeiro/caixa/{caixa_id}/fechar",
+      "tags": [
+        "Financeiro"
+      ]
+    }
+  ]
+}
