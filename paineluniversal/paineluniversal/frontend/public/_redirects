@@ -1,0 +1,6 @@
+# 🔥 REDIRECTS PARA CONTORNAR CORS COMPLETAMENTE
+# Todas as chamadas /api/* são redirecionadas para o backend
+/api/* https://backend-painel-universal-production.up.railway.app/api/:splat 200
+
+# SPA fallback - todas as outras rotas servem o index.html
+/* /index.html 200

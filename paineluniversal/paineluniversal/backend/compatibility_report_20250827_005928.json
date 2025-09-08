@@ -1,0 +1,5494 @@
+{
+  "timestamp": "2025-08-27T00:59:28.735127",
+  "summary": {
+    "database_tables": 33,
+    "backend_models": 6,
+    "frontend_interfaces": 18,
+    "incompatibilities_found": 0,
+    "fixes_available": 0,
+    "issues": 1,
+    "warnings": 18
+  },
+  "database_schema": {
+    "analytics_meep": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "metrica",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor",
+          "type": "NUMERIC(15, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_anterior",
+          "type": "NUMERIC(15, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "percentual_mudanca",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "periodo",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "timestamp_coleta",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "dados_detalhados",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "alertas",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_analytics_meep_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "caixa_pdv": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "numero_caixa",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_operador_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_abertura",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_vendas",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_sangrias",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_fechamento",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_abertura",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "data_fechamento",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_operador_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_caixa_pdv_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "caixas_eventos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_abertura",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "data_fechamento",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "saldo_inicial",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_entradas",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_saidas",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_vendas_pdv",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_vendas_listas",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "saldo_final",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_abertura_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_fechamento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes_abertura",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes_fechamento",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_abertura_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_fechamento_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_caixas_eventos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "categorias_produtos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cor",
+          "type": "VARCHAR(7)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_categorias_produtos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        },
+        {
+          "name": "ix_categorias_produtos_nome",
+          "column_names": [
+            "nome"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "checkins": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "cpf",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "transacao_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "metodo_checkin",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "validacao_cpf",
+          "type": "VARCHAR(3)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_origem",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "checkin_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "transacao_id"
+          ],
+          "referred_table": "transacoes",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_checkins_cpf",
+          "column_names": [
+            "cpf"
+          ],
+          "unique": 0
+        },
+        {
+          "name": "ix_checkins_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "clientes_eventos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "cpf",
+          "type": "VARCHAR(11)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_completo",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_social",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_nascimento",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_mae",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "telefone",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "ix_clientes_eventos_cpf",
+          "column_names": [
+            "cpf"
+          ],
+          "unique": 1
+        },
+        {
+          "name": "ix_clientes_eventos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "comandas": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "numero_comanda",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cpf_cliente",
+          "type": "VARCHAR(14)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_cliente",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(7)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_rfid",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "qr_code",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "saldo_atual",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "saldo_bloqueado",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(9)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_comandas_cpf_cliente",
+          "column_names": [
+            "cpf_cliente"
+          ],
+          "unique": 0
+        },
+        {
+          "name": "ix_comandas_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "conquistas": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(11)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criterio_valor",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "badge_nivel",
+          "type": "VARCHAR(8)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "icone",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativa",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "ix_conquistas_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "empresas": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cnpj",
+          "type": "VARCHAR(18)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "telefone",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "endereco",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativa",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "ix_empresas_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "equipamentos_eventos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_address",
+          "type": "VARCHAR(45)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "mac_address",
+          "type": "VARCHAR(17)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ultima_atividade",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "configuracao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "localizacao",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "responsavel_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "heartbeat_interval",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "responsavel_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_equipamentos_eventos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "eventos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_evento",
+          "type": "DATETIME",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "local",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "endereco",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "limite_idade",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "capacidade_maxima",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(9)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criador_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "criador_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_eventos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "itens_venda_pdv": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "venda_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "produto_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "quantidade",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "preco_unitario",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "preco_total",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "desconto_aplicado",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "venda_id"
+          ],
+          "referred_table": "vendas_pdv",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "produto_id"
+          ],
+          "referred_table": "produtos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_itens_venda_pdv_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "listas": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(11)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "preco",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "limite_vendas",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "vendas_realizadas",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativa",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_cupom",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "desconto_percentual",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_listas_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "logs_auditoria": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "cpf_usuario",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "acao",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tabela_afetada",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "registro_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "dados_anteriores",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "dados_novos",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_origem",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "user_agent",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "detalhes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_logs_auditoria_cpf_usuario",
+          "column_names": [
+            "cpf_usuario"
+          ],
+          "unique": 0
+        },
+        {
+          "name": "ix_logs_auditoria_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "logs_seguranca_meep": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_evento",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "gravidade",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_address",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "user_agent",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "dados_evento",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "resolvido",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "timestamp_evento",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_logs_seguranca_meep_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "metricas_promoters": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "periodo_inicio",
+          "type": "DATE",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "periodo_fim",
+          "type": "DATE",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_vendas",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "receita_gerada",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_convidados",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_presentes",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "taxa_presenca",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "taxa_conversao",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "crescimento_vendas",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "posicao_vendas",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "posicao_presenca",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "posicao_geral",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "badge_atual",
+          "type": "VARCHAR(8)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_metricas_promoters_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "movimentacoes_financeiras": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(16)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "categoria",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(9)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_responsavel_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "comprovante_url",
+          "type": "VARCHAR(500)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "numero_documento",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_vencimento",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_pagamento",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "metodo_pagamento",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_responsavel_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_movimentacoes_financeiras_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "movimentos_estoque": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "produto_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_movimento",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "quantidade",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "estoque_anterior",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "estoque_atual",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "motivo",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "venda_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "produto_id"
+          ],
+          "referred_table": "produtos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "venda_id"
+          ],
+          "referred_table": "vendas_pdv",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_movimentos_estoque_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "operacoes_import_export": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "tipo_operacao",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_arquivo",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "formato_arquivo",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tamanho_arquivo",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(11)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "total_registros",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "registros_processados",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "registros_sucesso",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "registros_erro",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "registros_aviso",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "mapeamento_campos",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "filtros_aplicados",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "campos_personalizados",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "inicio_processamento",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "fim_processamento",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "log_detalhado",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "url_arquivo_resultado",
+          "type": "VARCHAR(500)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "resumo_operacao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_operacoes_import_export_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "pagamentos_pdv": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "venda_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_pagamento",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_transacao",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "comissao_percentual",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_comissao",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "detalhes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "venda_id"
+          ],
+          "referred_table": "vendas_pdv",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_pagamentos_pdv_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "previsoes_ia": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_previsao",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "dados_entrada",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "resultado_previsao",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "confiabilidade",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "timestamp_previsao",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "aplicada",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "feedback_real",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "precisao_real",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_previsoes_ia_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "produtos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(8)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "preco",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_barras",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_interno",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "estoque_atual",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "estoque_minimo",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "estoque_maximo",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "controla_estoque",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(8)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "categoria",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "categoria_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "imagem_url",
+          "type": "VARCHAR(500)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "marca",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "fornecedor",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "preco_custo",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "margem_lucro",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "unidade_medida",
+          "type": "VARCHAR(10)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "volume",
+          "type": "NUMERIC(8, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "teor_alcoolico",
+          "type": "NUMERIC(4, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "temperatura_ideal",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "validade_dias",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ncm",
+          "type": "VARCHAR(8)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "icms",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ipi",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "destaque",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "promocional",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "categoria_id"
+          ],
+          "referred_table": "categorias_produtos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_produtos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "produtos_categorias": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cor",
+          "type": "VARCHAR(7)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_produtos_categorias_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "promoter_conquistas": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "conquista_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_alcancado",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "data_conquista",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "notificado",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "conquista_id"
+          ],
+          "referred_table": "conquistas",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_promoter_conquistas_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "promoter_eventos": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "meta_vendas",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "vendas_realizadas",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "comissao_percentual",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_promoter_eventos_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "recargas_comanda": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "comanda_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_pagamento",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_transacao",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "comanda_id"
+          ],
+          "referred_table": "comandas",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_recargas_comanda_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "sessoes_operadores": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "equipamento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "token_sessao",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_address",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "inicio_sessao",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "fim_sessao",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "configuracoes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "equipamento_id"
+          ],
+          "referred_table": "equipamentos_eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_sessoes_operadores_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "templates_importacao": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "formato",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "mapeamento_padrao",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "campos_obrigatorios",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "validacoes_personalizadas",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_criador_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "usuario_criador_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_templates_importacao_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "transacoes": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "cpf_comprador",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_comprador",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "email_comprador",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "telefone_comprador",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(9)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "metodo_pagamento",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "codigo_transacao",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "qr_code_ticket",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "lista_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_origem",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "lista_id"
+          ],
+          "referred_table": "listas",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_transacoes_cpf_comprador",
+          "column_names": [
+            "cpf_comprador"
+          ],
+          "unique": 0
+        },
+        {
+          "name": "ix_transacoes_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "usuarios": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "cpf",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "telefone",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "senha_hash",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(8)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ativo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ultimo_login",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "ix_usuarios_cpf",
+          "column_names": [
+            "cpf"
+          ],
+          "unique": 1
+        },
+        {
+          "name": "ix_usuarios_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "validacoes_acesso": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cliente_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cpf_hash",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "qr_code_data",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cpf_digits",
+          "type": "VARCHAR(3)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_address",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "user_agent",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "timestamp_validacao",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "sucesso",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "motivo_falha",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "latitude",
+          "type": "NUMERIC(10, 8)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "longitude",
+          "type": "NUMERIC(11, 8)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "device_info",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "cliente_id"
+          ],
+          "referred_table": "clientes_eventos",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_validacoes_acesso_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "validacoes_importacao": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "operacao_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "linha_arquivo",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "campo",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_validacao",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(12)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "mensagem",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_original",
+          "type": "VARCHAR(500)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_sugerido",
+          "type": "VARCHAR(500)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "corrigido",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "operacao_id"
+          ],
+          "referred_table": "operacoes_import_export",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_validacoes_importacao_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    },
+    "vendas_pdv": {
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 1
+        },
+        {
+          "name": "numero_venda",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cpf_cliente",
+          "type": "VARCHAR(14)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "nome_cliente",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_total",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_desconto",
+          "type": "NUMERIC(10, 2)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "valor_final",
+          "type": "NUMERIC(10, 2)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "tipo_pagamento",
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(9)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "comanda_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "evento_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "empresa_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "usuario_vendedor_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "promoter_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "cupom_codigo",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "observacoes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "ip_origem",
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        },
+        {
+          "name": "criado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "primary_key": 0
+        },
+        {
+          "name": "atualizado_em",
+          "type": "DATETIME",
+          "nullable": true,
+          "default": null,
+          "primary_key": 0
+        }
+      ],
+      "foreign_keys": [
+        {
+          "constrained_columns": [
+            "comanda_id"
+          ],
+          "referred_table": "comandas",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "evento_id"
+          ],
+          "referred_table": "eventos",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "empresa_id"
+          ],
+          "referred_table": "empresas",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "usuario_vendedor_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        },
+        {
+          "constrained_columns": [
+            "promoter_id"
+          ],
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ]
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_vendas_pdv_cpf_cliente",
+          "column_names": [
+            "cpf_cliente"
+          ],
+          "unique": 0
+        },
+        {
+          "name": "ix_vendas_pdv_id",
+          "column_names": [
+            "id"
+          ],
+          "unique": 0
+        }
+      ]
+    }
+  },
+  "backend_models": {
+    "PromoterEvento": {
+      "table_name": "promoter_eventos",
+      "columns": {
+        "ativo": {
+          "type": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(True)"
+        },
+        "comissao_percentual": {
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(0)"
+        },
+        "criado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "evento_id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": false,
+          "default": null
+        },
+        "meta_vendas": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(0)"
+        },
+        "promoter_id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "vendas_realizadas": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(0)"
+        }
+      },
+      "relationships": {
+        "evento": {
+          "target_class": "Evento",
+          "back_populates": "promoters"
+        },
+        "promoter": {
+          "target_class": "Usuario",
+          "back_populates": "promocoes"
+        }
+      }
+    },
+    "CategoriaProduto": {
+      "table_name": "categorias_produtos",
+      "columns": {
+        "ativo": {
+          "type": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(True)"
+        },
+        "atualizado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "cor": {
+          "type": "VARCHAR(7)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault('#3b82f6')"
+        },
+        "criado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "descricao": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "empresa_id": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "evento_id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": false,
+          "default": null
+        },
+        "nome": {
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        }
+      },
+      "relationships": {
+        "empresa": {
+          "target_class": "Empresa",
+          "back_populates": null
+        },
+        "evento": {
+          "target_class": "Evento",
+          "back_populates": null
+        }
+      }
+    },
+    "ClienteEvento": {
+      "table_name": "clientes_eventos",
+      "columns": {
+        "atualizado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "cpf": {
+          "type": "VARCHAR(11)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "criado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "data_nascimento": {
+          "type": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "email": {
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": false,
+          "default": null
+        },
+        "nome_completo": {
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "nome_mae": {
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "nome_social": {
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "status": {
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault('ativo')"
+        },
+        "telefone": {
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        }
+      },
+      "relationships": {}
+    },
+    "EquipamentoEvento": {
+      "table_name": "equipamentos_eventos",
+      "columns": {
+        "atualizado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "configuracao": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "criado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "evento_id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "heartbeat_interval": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(30)"
+        },
+        "id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": false,
+          "default": null
+        },
+        "ip_address": {
+          "type": "VARCHAR(45)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "localizacao": {
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "mac_address": {
+          "type": "VARCHAR(17)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "nome": {
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "responsavel_id": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "status": {
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault('offline')"
+        },
+        "tipo": {
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "ultima_atividade": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        }
+      },
+      "relationships": {
+        "evento": {
+          "target_class": "Evento",
+          "back_populates": null
+        },
+        "responsavel": {
+          "target_class": "Usuario",
+          "back_populates": null
+        }
+      }
+    },
+    "SessaoOperador": {
+      "table_name": "sessoes_operadores",
+      "columns": {
+        "ativo": {
+          "type": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault(True)"
+        },
+        "configuracoes": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "criado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "equipamento_id": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "evento_id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "fim_sessao": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": false,
+          "default": null
+        },
+        "inicio_sessao": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "ip_address": {
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "token_sessao": {
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "usuario_id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        }
+      },
+      "relationships": {
+        "equipamento": {
+          "target_class": "EquipamentoEvento",
+          "back_populates": null
+        },
+        "evento": {
+          "target_class": "Evento",
+          "back_populates": null
+        },
+        "usuario": {
+          "target_class": "Usuario",
+          "back_populates": null
+        }
+      }
+    },
+    "LogAuditoria": {
+      "table_name": "logs_auditoria",
+      "columns": {
+        "acao": {
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "cpf_usuario": {
+          "type": "VARCHAR(14)",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "criado_em": {
+          "type": "DATETIME",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "dados_anteriores": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "dados_novos": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "detalhes": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "evento_id": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "id": {
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": false,
+          "default": null
+        },
+        "ip_origem": {
+          "type": "VARCHAR(45)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "promoter_id": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": true,
+          "default": null
+        },
+        "registro_id": {
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "status": {
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": "ScalarElementColumnDefault('sucesso')"
+        },
+        "tabela_afetada": {
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        },
+        "user_agent": {
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": false,
+          "default": null
+        }
+      },
+      "relationships": {
+        "evento": {
+          "target_class": "Evento",
+          "back_populates": null
+        },
+        "promoter": {
+          "target_class": "Usuario",
+          "back_populates": null
+        }
+      }
+    }
+  },
+  "frontend_types": {
+    "LoginRequest": {
+      "file": "src\\services\\api-new.ts",
+      "properties": {
+        "cpf": {
+          "type": "string",
+          "optional": false
+        },
+        "senha": {
+          "type": "string",
+          "optional": false
+        },
+        "codigo_verificacao": {
+          "type": "string",
+          "optional": true
+        }
+      }
+    },
+    "Usuario": {
+      "file": "src\\components\\usuarios\\UsuariosModule.tsx",
+      "properties": {
+        "id": {
+          "type": "number",
+          "optional": true
+        },
+        "cpf": {
+          "type": "string",
+          "optional": false
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "email": {
+          "type": "string",
+          "optional": false
+        },
+        "telefone": {
+          "type": "string",
+          "optional": false
+        },
+        "tipo": {
+          "type": "'admin' | 'promoter' | 'cliente'",
+          "optional": false
+        },
+        "empresa_id": {
+          "type": "number",
+          "optional": false
+        },
+        "empresa": {
+          "type": "{\n    id: number",
+          "optional": true
+        }
+      }
+    },
+    "Token": {
+      "file": "src\\services\\api-new.ts",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "optional": false
+        },
+        "token_type": {
+          "type": "string",
+          "optional": false
+        },
+        "usuario": {
+          "type": "Usuario",
+          "optional": false
+        }
+      }
+    },
+    "Empresa": {
+      "file": "src\\services\\api-new.ts",
+      "properties": {
+        "id": {
+          "type": "number",
+          "optional": true
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "cnpj": {
+          "type": "string",
+          "optional": false
+        },
+        "email": {
+          "type": "string",
+          "optional": false
+        },
+        "telefone": {
+          "type": "string",
+          "optional": true
+        },
+        "endereco": {
+          "type": "string",
+          "optional": true
+        },
+        "ativa": {
+          "type": "boolean",
+          "optional": true
+        }
+      }
+    },
+    "Evento": {
+      "file": "src\\services\\api-new.ts",
+      "properties": {
+        "id": {
+          "type": "number",
+          "optional": true
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "descricao": {
+          "type": "string",
+          "optional": true
+        },
+        "data_evento": {
+          "type": "string",
+          "optional": false
+        },
+        "local": {
+          "type": "string",
+          "optional": false
+        },
+        "endereco": {
+          "type": "string",
+          "optional": true
+        },
+        "limite_idade": {
+          "type": "number",
+          "optional": true
+        },
+        "capacidade_maxima": {
+          "type": "number",
+          "optional": true
+        },
+        "status": {
+          "type": "string",
+          "optional": true
+        },
+        "empresa_id": {
+          "type": "number",
+          "optional": false
+        },
+        "criador_id": {
+          "type": "number",
+          "optional": true
+        }
+      }
+    },
+    "EventoCreate": {
+      "file": "src\\services\\api.ts",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "descricao": {
+          "type": "string",
+          "optional": true
+        },
+        "data_evento": {
+          "type": "string",
+          "optional": false
+        },
+        "local": {
+          "type": "string",
+          "optional": false
+        },
+        "endereco": {
+          "type": "string",
+          "optional": true
+        },
+        "limite_idade": {
+          "type": "number",
+          "optional": false
+        },
+        "capacidade_maxima": {
+          "type": "number",
+          "optional": true
+        },
+        "empresa_id": {
+          "type": "number",
+          "optional": true
+        }
+      }
+    },
+    "Transacao": {
+      "file": "src\\services\\api.ts",
+      "properties": {
+        "id": {
+          "type": "number",
+          "optional": true
+        },
+        "evento_id": {
+          "type": "number",
+          "optional": false
+        },
+        "lista_id": {
+          "type": "number",
+          "optional": false
+        },
+        "usuario_id": {
+          "type": "number",
+          "optional": false
+        },
+        "valor": {
+          "type": "number",
+          "optional": false
+        },
+        "status": {
+          "type": "'pendente' | 'aprovada' | 'cancelada'",
+          "optional": false
+        },
+        "created_at": {
+          "type": "string",
+          "optional": true
+        }
+      }
+    },
+    "Lista": {
+      "file": "src\\services\\api.ts",
+      "properties": {
+        "id": {
+          "type": "number",
+          "optional": true
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "tipo": {
+          "type": "string",
+          "optional": false
+        },
+        "preco": {
+          "type": "number",
+          "optional": false
+        },
+        "limite_vendas": {
+          "type": "number",
+          "optional": true
+        },
+        "vendas_realizadas": {
+          "type": "number",
+          "optional": true
+        },
+        "evento_id": {
+          "type": "number",
+          "optional": false
+        },
+        "ativa": {
+          "type": "boolean",
+          "optional": true
+        }
+      }
+    },
+    "Categoria": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "id": {
+          "type": "string",
+          "optional": false
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "mostrar_dashboard": {
+          "type": "boolean",
+          "optional": false
+        },
+        "mostrar_pos": {
+          "type": "boolean",
+          "optional": false
+        },
+        "maximo_composicao": {
+          "type": "number",
+          "optional": true
+        },
+        "minimo_composicao": {
+          "type": "number",
+          "optional": true
+        },
+        "cor": {
+          "type": "string",
+          "optional": true
+        },
+        "icone": {
+          "type": "string",
+          "optional": true
+        },
+        "ordem": {
+          "type": "number",
+          "optional": false
+        },
+        "produtos_count": {
+          "type": "number",
+          "optional": true
+        },
+        "created_at": {
+          "type": "Date",
+          "optional": false
+        },
+        "updated_at": {
+          "type": "Date",
+          "optional": false
+        }
+      }
+    },
+    "CategoriaCreate": {
+      "file": "src\\services\\api.ts",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "descricao": {
+          "type": "string",
+          "optional": true
+        },
+        "cor": {
+          "type": "string",
+          "optional": true
+        },
+        "evento_id": {
+          "type": "number",
+          "optional": true
+        }
+      }
+    },
+    "Produto": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "id": {
+          "type": "string",
+          "optional": true
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "codigo_interno": {
+          "type": "string",
+          "optional": true
+        },
+        "categoria": {
+          "type": "string",
+          "optional": true
+        },
+        "tipo": {
+          "type": "'BEBIDA' | 'COMIDA' | 'INGRESSO' | 'FICHA' | 'COMBO' | 'VOUCHER'",
+          "optional": false
+        },
+        "preco": {
+          "type": "number",
+          "optional": false
+        },
+        "descricao": {
+          "type": "string",
+          "optional": true
+        },
+        "estoque_atual": {
+          "type": "number",
+          "optional": true
+        },
+        "estoque_minimo": {
+          "type": "number",
+          "optional": true
+        },
+        "estoque_maximo": {
+          "type": "number",
+          "optional": true
+        },
+        "controla_estoque": {
+          "type": "boolean",
+          "optional": true
+        },
+        "status": {
+          "type": "'ATIVO' | 'INATIVO' | 'ESGOTADO'",
+          "optional": true
+        },
+        "imagem_url": {
+          "type": "string",
+          "optional": true
+        },
+        "empresa_id": {
+          "type": "string",
+          "optional": true
+        },
+        "criado_em": {
+          "type": "Date",
+          "optional": true
+        },
+        "atualizado_em": {
+          "type": "Date",
+          "optional": true
+        },
+        "codigo": {
+          "type": "string",
+          "optional": true
+        },
+        "categoria_id": {
+          "type": "string",
+          "optional": true
+        },
+        "valor": {
+          "type": "number",
+          "optional": true
+        },
+        "estoque": {
+          "type": "number",
+          "optional": true
+        },
+        "imagem": {
+          "type": "string",
+          "optional": true
+        },
+        "created_at": {
+          "type": "Date",
+          "optional": true
+        },
+        "updated_at": {
+          "type": "Date",
+          "optional": true
+        }
+      }
+    },
+    "ProdutoCreate": {
+      "file": "src\\services\\api.ts",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "descricao": {
+          "type": "string",
+          "optional": true
+        },
+        "tipo": {
+          "type": "'BEBIDA' | 'COMIDA' | 'INGRESSO' | 'FICHA' | 'COMBO' | 'VOUCHER'",
+          "optional": false
+        },
+        "preco": {
+          "type": "number",
+          "optional": false
+        },
+        "categoria": {
+          "type": "string",
+          "optional": true
+        },
+        "codigo_interno": {
+          "type": "string",
+          "optional": true
+        },
+        "estoque_atual": {
+          "type": "number",
+          "optional": true
+        },
+        "estoque_minimo": {
+          "type": "number",
+          "optional": true
+        },
+        "estoque_maximo": {
+          "type": "number",
+          "optional": true
+        },
+        "controla_estoque": {
+          "type": "boolean",
+          "optional": true
+        },
+        "status": {
+          "type": "'ATIVO' | 'INATIVO' | 'ESGOTADO'",
+          "optional": true
+        },
+        "imagem_url": {
+          "type": "string",
+          "optional": true
+        }
+      }
+    },
+    "AgendamentoProduto": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "id": {
+          "type": "string",
+          "optional": false
+        },
+        "nome": {
+          "type": "string",
+          "optional": false
+        },
+        "regra": {
+          "type": "string",
+          "optional": false
+        },
+        "periodo": {
+          "type": "{\n    inicio: Date",
+          "optional": false
+        },
+        "fim": {
+          "type": "Date",
+          "optional": false
+        }
+      }
+    },
+    "ProdutoFilter": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "optional": true
+        },
+        "categoria": {
+          "type": "string",
+          "optional": true
+        },
+        "tipo": {
+          "type": "string",
+          "optional": true
+        },
+        "habilitado": {
+          "type": "'all' | 'true' | 'false'",
+          "optional": true
+        },
+        "destaque": {
+          "type": "'true' | 'false'",
+          "optional": true
+        },
+        "marca": {
+          "type": "string",
+          "optional": true
+        },
+        "fornecedor": {
+          "type": "string",
+          "optional": true
+        }
+      }
+    },
+    "CategoriaFilter": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "optional": true
+        },
+        "mostrar_dashboard": {
+          "type": "boolean",
+          "optional": true
+        },
+        "mostrar_pos": {
+          "type": "boolean",
+          "optional": true
+        }
+      }
+    },
+    "AgendamentoFilter": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "optional": true
+        },
+        "tipo": {
+          "type": "'promocao' | 'sazonal' | 'evento'",
+          "optional": true
+        },
+        "ativo": {
+          "type": "boolean",
+          "optional": true
+        }
+      }
+    },
+    "ImportOperation": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "id": {
+          "type": "string",
+          "optional": false
+        },
+        "tipo_operacao": {
+          "type": "'IMPORTACAO' | 'EXPORTACAO'",
+          "optional": false
+        },
+        "nome_arquivo": {
+          "type": "string",
+          "optional": false
+        },
+        "formato_arquivo": {
+          "type": "'csv' | 'xlsx' | 'json' | 'xml'",
+          "optional": false
+        },
+        "tamanho_arquivo": {
+          "type": "number",
+          "optional": true
+        },
+        "status": {
+          "type": "'PENDENTE' | 'PROCESSANDO' | 'CONCLUIDA' | 'ERRO' | 'CANCELADA'",
+          "optional": false
+        },
+        "total_registros": {
+          "type": "number",
+          "optional": false
+        },
+        "registros_processados": {
+          "type": "number",
+          "optional": false
+        },
+        "registros_sucesso": {
+          "type": "number",
+          "optional": false
+        },
+        "registros_erro": {
+          "type": "number",
+          "optional": false
+        },
+        "registros_aviso": {
+          "type": "number",
+          "optional": false
+        },
+        "mapeamento_campos": {
+          "type": "Record<string, string>",
+          "optional": true
+        },
+        "filtros_aplicados": {
+          "type": "Record<string, any>",
+          "optional": true
+        },
+        "inicio_processamento": {
+          "type": "Date",
+          "optional": true
+        },
+        "fim_processamento": {
+          "type": "Date",
+          "optional": true
+        },
+        "log_detalhado": {
+          "type": "string",
+          "optional": true
+        },
+        "url_arquivo_resultado": {
+          "type": "string",
+          "optional": true
+        },
+        "resumo_operacao": {
+          "type": "string",
+          "optional": true
+        },
+        "created_at": {
+          "type": "Date",
+          "optional": false
+        }
+      }
+    },
+    "ValidationError": {
+      "file": "src\\types\\produto.ts",
+      "properties": {
+        "field": {
+          "type": "string",
+          "optional": false
+        },
+        "type": {
+          "type": "'required' | 'unique' | 'pattern' | 'range' | 'type'",
+          "optional": false
+        },
+        "message": {
+          "type": "string",
+          "optional": false
+        },
+        "severity": {
+          "type": "'critical' | 'warning'",
+          "optional": false
+        },
+        "linha_arquivo": {
+          "type": "number",
+          "optional": true
+        },
+        "valor_original": {
+          "type": "string",
+          "optional": true
+        },
+        "valor_sugerido": {
+          "type": "string",
+          "optional": true
+        }
+      }
+    }
+  },
+  "incompatibilities": [],
+  "routes_info": {
+    "included_routers": [
+      "auth",
+      "empresas",
+      "usuarios",
+      "eventos",
+      "listas",
+      "transacoes",
+      "checkins",
+      "dashboard",
+      "relatorios",
+      "whatsapp",
+      "cupons",
+      "n8n",
+      "pdv",
+      "financeiro",
+      "gamificacao",
+      "produtos",
+      "import_export",
+      "meep"
+    ],
+    "commented_routers": [
+      "financeiro",
+      "import_export",
+      "meep"
+    ],
+    "missing_routers": []
+  },
+  "fixes": [],
+  "issues": [
+    {
+      "category": "routes",
+      "description": "Router MEEP está comentado",
+      "severity": "medium",
+      "timestamp": "2025-08-27T00:59:28.730292"
+    }
+  ],
+  "warnings": [
+    {
+      "description": "Erro ao analisar modelo Usuario: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.319229"
+    },
+    {
+      "description": "Erro ao analisar modelo Empresa: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.319229"
+    },
+    {
+      "description": "Erro ao analisar modelo Evento: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.319865"
+    },
+    {
+      "description": "Erro ao analisar modelo Lista: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.320498"
+    },
+    {
+      "description": "Erro ao analisar modelo Transacao: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.320498"
+    },
+    {
+      "description": "Erro ao analisar modelo Checkin: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.320498"
+    },
+    {
+      "description": "Erro ao analisar modelo Produto: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.718410"
+    },
+    {
+      "description": "Erro ao analisar modelo Comanda: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.719028"
+    },
+    {
+      "description": "Erro ao analisar modelo VendaPDV: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.719640"
+    },
+    {
+      "description": "Erro ao analisar modelo Usuario: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.731515"
+    },
+    {
+      "description": "Erro ao analisar modelo Empresa: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.731515"
+    },
+    {
+      "description": "Erro ao analisar modelo Evento: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.732126"
+    },
+    {
+      "description": "Erro ao analisar modelo Lista: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.732126"
+    },
+    {
+      "description": "Erro ao analisar modelo Transacao: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.732126"
+    },
+    {
+      "description": "Erro ao analisar modelo Checkin: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.732126"
+    },
+    {
+      "description": "Erro ao analisar modelo Produto: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.732715"
+    },
+    {
+      "description": "Erro ao analisar modelo Comanda: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.733292"
+    },
+    {
+      "description": "Erro ao analisar modelo VendaPDV: __tablename__",
+      "timestamp": "2025-08-27T00:59:28.733292"
+    }
+  ],
+  "typescript_interfaces": "// 🤖 GERADO AUTOMATICAMENTE - NÃO EDITAR MANUALMENTE\n// Interfaces TypeScript sincronizadas com os modelos do backend\n// Gerado em: 2025-08-27T00:59:28.730912\n\nexport type UserRole = 'admin' | 'promoter' | 'cliente' | 'operador';\nexport type StatusEvento = 'ATIVO' | 'INATIVO' | 'CANCELADO' | 'FINALIZADO';\nexport type TipoLista = 'VIP' | 'PREMIUM' | 'COMUM' | 'PROMOTER' | 'FREE';\nexport type StatusTransacao = 'PENDENTE' | 'APROVADA' | 'CANCELADA' | 'ESTORNADA';\nexport type TipoProduto = 'BEBIDA' | 'COMIDA' | 'INGRESSO' | 'FICHA' | 'COMBO' | 'VOUCHER';\n\n\n// Interfaces de resposta da API\nexport interface ApiResponse<T = any> {\n  success: boolean;\n  data?: T;\n  message?: string;\n  errors?: string[];\n}\n\nexport interface PaginatedResponse<T = any> {\n  items: T[];\n  total: number;\n  page: number;\n  limit: number;\n  has_next: boolean;\n  has_prev: boolean;\n}\n\nexport interface LoginRequest {\n  cpf: string;\n  senha: string;\n  codigo_verificacao?: string;\n}\n\nexport interface Token {\n  access_token: string;\n  token_type: string;\n  usuario: Usuario;\n}\n",
+  "migration_script": "#!/usr/bin/env python3\n\"\"\"\n🔄 SCRIPT DE MIGRAÇÃO AUTOMÁTICA\nGerado em: 2025-08-27T00:59:28.730912\n\nEste script aplica correções de compatibilidade de forma segura,\nmantendo funcionalidades existentes.\n\"\"\"\n\nimport os\nimport shutil\nfrom datetime import datetime\nfrom pathlib import Path\n\ndef backup_files():\n    \"\"\"Cria backup dos arquivos que serão modificados\"\"\"\n    backup_dir = Path(\"backup_compatibility_\" + datetime.now().strftime(\"%Y%m%d_%H%M%S\"))\n    backup_dir.mkdir(exist_ok=True)\n    \n    # Backup do frontend\n    frontend_src = Path(\"../frontend/src\")\n    if frontend_src.exists():\n        shutil.copytree(frontend_src, backup_dir / \"frontend_src\")\n    \n    print(f\"✅ Backup criado em: {backup_dir}\")\n    return backup_dir\n\ndef apply_typescript_fixes():\n    \"\"\"Aplica correções nos tipos TypeScript\"\"\"\n    frontend_types_dir = Path(\"../frontend/src/types\")\n    frontend_types_dir.mkdir(exist_ok=True)\n    \n    # Criar arquivo de tipos corretos\n    types_content = '''// 🤖 GERADO AUTOMATICAMENTE - NÃO EDITAR MANUALMENTE\n// Interfaces TypeScript sincronizadas com os modelos do backend\n// Gerado em: 2025-08-27T00:59:28.735127\n\nexport type UserRole = 'admin' | 'promoter' | 'cliente' | 'operador';\nexport type StatusEvento = 'ATIVO' | 'INATIVO' | 'CANCELADO' | 'FINALIZADO';\nexport type TipoLista = 'VIP' | 'PREMIUM' | 'COMUM' | 'PROMOTER' | 'FREE';\nexport type StatusTransacao = 'PENDENTE' | 'APROVADA' | 'CANCELADA' | 'ESTORNADA';\nexport type TipoProduto = 'BEBIDA' | 'COMIDA' | 'INGRESSO' | 'FICHA' | 'COMBO' | 'VOUCHER';\n\n\n// Interfaces de resposta da API\nexport interface ApiResponse<T = any> {\n  success: boolean;\n  data?: T;\n  message?: string;\n  errors?: string[];\n}\n\nexport interface PaginatedResponse<T = any> {\n  items: T[];\n  total: number;\n  page: number;\n  limit: number;\n  has_next: boolean;\n  has_prev: boolean;\n}\n\nexport interface LoginRequest {\n  cpf: string;\n  senha: string;\n  codigo_verificacao?: string;\n}\n\nexport interface Token {\n  access_token: string;\n  token_type: string;\n  usuario: Usuario;\n}\n'''\n    \n    with open(frontend_types_dir / \"database.ts\", \"w\", encoding=\"utf-8\") as f:\n        f.write(types_content)\n    \n    print(\"✅ Tipos TypeScript atualizados\")\n\ndef main():\n    \"\"\"Executa migração completa\"\"\"\n    print(\"🚀 Iniciando migração de compatibilidade...\")\n    \n    # 1. Backup\n    backup_dir = backup_files()\n    \n    # 2. Aplicar correções\n    apply_typescript_fixes()\n    \n    print(\"✅ Migração concluída com sucesso!\")\n    print(f\"📁 Backup disponível em: {backup_dir}\")\n\nif __name__ == \"__main__\":\n    main()\n"
+}

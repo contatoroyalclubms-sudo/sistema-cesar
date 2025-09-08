@@ -1,0 +1,102 @@
+{
+  "https://backend-painel-universal-production.up.railway.app": {
+    "/": {
+      "status": 200,
+      "success": true,
+      "response_size": 277,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/health": {
+      "status": 405,
+      "success": false,
+      "response_size": 31,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/api/auth/me": {
+      "status": 403,
+      "success": false,
+      "response_size": 30,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/api/dashboard/resumo": {
+      "status": 403,
+      "success": false,
+      "response_size": 30,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/api/eventos": {
+      "status": 405,
+      "success": false,
+      "response_size": 31,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/api/eventos/1": {
+      "status": 403,
+      "success": false,
+      "response_size": 30,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/api/produtos": {
+      "status": 405,
+      "success": false,
+      "response_size": 31,
+      "content_type": "application/json",
+      "error": null
+    },
+    "/api/pdv": {
+      "status": 405,
+      "success": false,
+      "response_size": 31,
+      "content_type": "application/json",
+      "error": null
+    }
+  },
+  "http://localhost:8000": {
+    "/": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/health": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/api/auth/me": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/api/dashboard/resumo": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/api/eventos": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/api/eventos/1": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/api/produtos": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    },
+    "/api/pdv": {
+      "status": 0,
+      "success": false,
+      "error": "Connection Error"
+    }
+  }
+}

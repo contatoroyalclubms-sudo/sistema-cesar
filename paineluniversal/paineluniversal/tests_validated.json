@@ -1,0 +1,36 @@
+{
+  "validated_tests": [
+    {
+      "id": "health_endpoints",
+      "description": "Endpoints /healthz e /api/health retornam 200",
+      "validated_at": "2025-09-03T00:00:00Z",
+      "notes": "Manual verification assumed"
+    }
+  ],
+  "test_plan": {
+    "credentials": {
+      "cpf": "06601206154",
+      "senha": "101112"
+    },
+    "urls": {
+      "backend": "http://localhost:8000",
+      "frontend": "http://localhost:3000"
+    },
+    "test_categories": [
+      "authentication",
+      "usuarios_crud",
+      "eventos_crud", 
+      "listas_crud",
+      "transacoes_crud",
+      "checkins_crud",
+      "pdv_crud",
+      "dashboard_views",
+      "relatorios"
+    ]
+  },
+  "current_session": {
+    "started_at": "2025-09-03T12:00:00Z",
+    "backend_status": "starting",
+    "frontend_status": "not_started"
+  }
+}
