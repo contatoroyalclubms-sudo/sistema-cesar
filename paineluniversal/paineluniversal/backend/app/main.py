@@ -19,11 +19,14 @@ from .routers import (
     auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, 
     relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, 
     # meep, financeiro, printer, pdv_mobile, cashless, mesa_kds, import_export, estoque,  # COMENTADO - ESTOQUE
-    categorias_clientes, pesquisa_satisfacao, fidelidade,
-    automacao, business_intelligence, integracoes, solucoes_online, tickets, colaboradores,
+    # categorias_clientes, pesquisa_satisfacao, fidelidade, analytics,  # TEMPORARIAMENTE DESABILITADO PARA TESTES
+    # automacao, business_intelligence, integracoes, solucoes_online, tickets, colaboradores,  # TEMPORARIAMENTE DESABILITADO PARA TESTES 
     # multi_cardapio,  # COMENTADO - DUPLICAÇÃO DE TABELA
     # permissoes,  # COMENTADO - SCHEMA FALTANDO
-    kds, mesas, impressoras, cashless_avancado, cardapios_digitais, dashboard_financeiro, estoque_controle, fornecedores, compras, fidelidade_expandida, permissoes_expandido, comunicacao_expandido, relatorios_avancados
+    # cashless_avancado,  # COMENTADO - SCHEMAS INCOMPLETOS
+    # cardapios_digitais,  # COMENTADO - IMPORTAÇÕES INCORRETAS
+    # kds, mesas, impressoras, dashboard_financeiro, fidelidade_expandida, permissoes_expandido, comunicacao_expandido, relatorios_avancados  # TEMPORARIAMENTE DESABILITADO PARA TESTES
+    # estoque_controle, fornecedores, compras,  # TEMPORARIAMENTE DESABILITADO - TABELA DUPLICADA
 )
 from .middleware import LoggingMiddleware
 from .auth_functions import verificar_permissao_admin
@@ -55,9 +58,8 @@ def run_startup_migrations():
         is_railway = os.getenv("RAILWAY_ENVIRONMENT") is not None
         database_url = os.getenv("DATABASE_URL")
         
-        # TEMPORARIAMENTE DESABILITADO - Schema já migrado
-        logger.info("🔧 Migrações automáticas temporariamente desabilitadas")
-        return
+        # AUTO-MIGRATIONS HABILITADAS
+        logger.info("🔧 Migrações automáticas habilitadas")
         
         if is_railway and database_url:
             logger.info("🔄 Ambiente Railway detectado - Executando migrações automáticas...")
@@ -146,16 +148,17 @@ class UltimateCORSMiddleware(BaseHTTPMiddleware):
             "https://www.paineluniversal.com"
         ]
         
-        # Em desenvolvimento ou para máxima compatibilidade
-        # TEMPORÁRIO: CORS ultra-permissivo sempre ativo para resolver problemas de autenticação
-        logger.info("🔥 CORS Ultra-Permissivo SEMPRE ativado para debug")
-        return ["*"]
+        # Em produção, usar lista específica; em dev, permitir tudo
+        if not os.getenv("RAILWAY_ENVIRONMENT") or os.getenv("CORS_DEVELOPMENT", "false").lower() == "true":
+            logger.info("🔧 CORS Permissivo ativado (Desenvolvimento)")
+            return ["*"]
         
-        # if not os.getenv("RAILWAY_ENVIRONMENT") or os.getenv("CORS_ULTRA_PERMISSIVE", "false").lower() == "true":
-        #     logger.info("CORS Ultra-Permissivo ativado")
-        #     return ["*"]
+        # Adicionar origens do ambiente se configuradas
+        env_origins = os.getenv("CORS_ORIGINS", "").split(",")
+        if env_origins and env_origins[0]:
+            base_origins.extend([origin.strip() for origin in env_origins])
         
-        logger.info(f"CORS Restritivo ativado com {len(base_origins)} origens permitidas")
+        logger.info(f"🔒 CORS Restritivo ativado com {len(base_origins)} origens permitidas")
         return base_origins
     
     def _create_cors_response(self, request: Request, status_code: int = 200, content: str = ""):
@@ -333,9 +336,9 @@ app.include_router(formas_pagamento.router, prefix="/api/formas-pagamento", tags
 # app.include_router(cashless.router, prefix="/api/cashless", tags=["Sistema Cashless"])  # COMENTADO - NÃO IMPORTADO
 # app.include_router(mesa_kds.router, tags=["Sistema Mesas + KDS"])  # COMENTADO - NÃO IMPORTADO
 # app.include_router(estoque.router)  # Router de estoque - TEMPORARIAMENTE COMENTADO
-app.include_router(estoque_controle.router, prefix="/api/estoque-controle", tags=["Controle de Estoque"])
-app.include_router(fornecedores.router, prefix="/api/fornecedores", tags=["Fornecedores"])
-app.include_router(compras.router, prefix="/api/compras", tags=["Compras"])
+# app.include_router(estoque_controle.router, prefix="/api/estoque-controle", tags=["Controle de Estoque"])  # TEMPORARIAMENTE DESABILITADO - TABELA DUPLICADA
+# app.include_router(fornecedores.router, prefix="/api/fornecedores", tags=["Fornecedores"])  # TEMPORARIAMENTE DESABILITADO
+# app.include_router(compras.router, prefix="/api/compras", tags=["Compras"])  # TEMPORARIAMENTE DESABILITADO
 app.include_router(fidelidade_expandida.router, prefix="/api/fidelidade", tags=["Fidelidade Expandida"])
 app.include_router(permissoes_expandido.router, prefix="/api/permissoes", tags=["Permissões e Roles"])
 app.include_router(comunicacao_expandido.router, prefix="/api/comunicacao", tags=["Comunicação e Notificações"])
@@ -349,6 +352,7 @@ app.include_router(pesquisa_satisfacao.router)
 app.include_router(fidelidade.router)
 app.include_router(automacao.router)
 app.include_router(business_intelligence.router)
+app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(integracoes.router)
 app.include_router(solucoes_online.router)
 app.include_router(tickets.router)
@@ -360,10 +364,10 @@ app.include_router(mesas.router, prefix="/api/mesas")
 app.include_router(impressoras.router)  # Sistema de impressoras
 
 # Sistema Cashless Avançado - Baseado na engenharia reversa MEEP
-app.include_router(cashless_avancado.router)
+# app.include_router(cashless_avancado.router)  # COMENTADO - SCHEMAS INCOMPLETOS
 
 # Sistema de Cardápios Digitais com QR Code
-app.include_router(cardapios_digitais.router)
+# app.include_router(cardapios_digitais.router)  # COMENTADO - IMPORTAÇÕES INCORRETAS
 
 # Dashboard Financeiro Expandido
 app.include_router(dashboard_financeiro.router)

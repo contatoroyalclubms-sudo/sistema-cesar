@@ -1,0 +1,26 @@
+# Configuração Railway para o projeto raiz
+# Este arquivo define como deployar cada serviço
+
+# Frontend Service
+[services.frontend]
+build.command = "cd frontend && npm ci && npm run build"
+build.dockerfile = "frontend/Dockerfile"
+start.command = "cd frontend && npm start"
+
+# Backend Service  
+[services.backend]
+build.dockerfile = "backend/Dockerfile"
+start.command = "python railway_auto_deploy.py"
+
+# MEEP Service
+[services.meep-service]
+build.dockerfile = "meep-service/Dockerfile"
+start.command = "cd meep-service && npm start"
+
+# Build configuration for Railway
+[build]
+builder = "dockerfile"
+
+# Environment
+[deploy]
+replicas = 1

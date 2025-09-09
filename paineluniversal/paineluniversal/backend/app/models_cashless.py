@@ -535,9 +535,9 @@ class ProdutoCardapioDigital(Base):
 # MODELOS CASHLESS AVANÇADOS - BASEADO NA ANÁLISE MEEP
 # ================================================================================
 
-class RecargaCashless(Base):
-    """Modelo para controle de recargas do sistema cashless"""
-    __tablename__ = "recargas_cashless"
+class RecargaCashlessAvancado(Base):
+    """Modelo avançado para controle de recargas do sistema cashless"""
+    __tablename__ = "recargas_cashless_avancado"
     
     id = Column(Integer, primary_key=True, index=True)
     numero_recarga = Column(String(50), unique=True, nullable=False, index=True)

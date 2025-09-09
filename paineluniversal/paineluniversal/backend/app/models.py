@@ -1441,6 +1441,352 @@ except ImportError:
     # Mobile module is optional, ignore if not available
     pass
 
+# ====== MODELOS AVANÇADOS KDS E WORKFLOW ======
+
+class FilaKDS(Base):
+    __tablename__ = "filas_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    estacao_id = Column(Integer, ForeignKey("estacoes_kds.id"))
+    nome = Column(String(100), nullable=False)
+    cor = Column(String(7), default="#3B82F6")  # Hex color
+    ordem = Column(Integer, default=0)
+    tempo_maximo_minutos = Column(Integer, default=30)
+    auto_mover = Column(Boolean, default=True)
+    notificar_atraso = Column(Boolean, default=True)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class FluxoKDS(Base):
+    __tablename__ = "fluxos_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    tipo = Column(String(50))  # sequencial, paralelo, condicional
+    estacoes = Column(Text)  # JSON array de estação IDs
+    regras = Column(Text)  # JSON com regras do fluxo
+    tempo_estimado_total = Column(Integer)  # minutos
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class EtapaFluxoKDS(Base):
+    __tablename__ = "etapas_fluxo_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    fluxo_id = Column(Integer, ForeignKey("fluxos_kds.id"))
+    pedido_id = Column(Integer, ForeignKey("pedidos_kds.id"))
+    estacao_id = Column(Integer, ForeignKey("estacoes_kds.id"))
+    ordem = Column(Integer)
+    status = Column(String(20))  # pendente, em_preparo, concluida, pulada
+    tempo_estimado = Column(Integer)  # minutos
+    tempo_real = Column(Integer)  # minutos calculados
+    observacoes = Column(Text)
+    iniciado_em = Column(DateTime(timezone=True))
+    concluido_em = Column(DateTime(timezone=True))
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+class NotificacaoKDS(Base):
+    __tablename__ = "notificacoes_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    tipo = Column(String(50))  # atraso, erro, alerta, info
+    titulo = Column(String(200), nullable=False)
+    mensagem = Column(Text)
+    estacao_id = Column(Integer, ForeignKey("estacoes_kds.id"))
+    pedido_id = Column(Integer, ForeignKey("pedidos_kds.id"), nullable=True)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    lida = Column(Boolean, default=False)
+    urgente = Column(Boolean, default=False)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    lida_em = Column(DateTime(timezone=True))
+
+class TemplateFluxoKDS(Base):
+    __tablename__ = "templates_fluxo_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    categoria = Column(String(50))  # bebidas, comidas, sobremesas, etc.
+    fluxo_config = Column(Text)  # JSON com configuração do template
+    tempo_estimado = Column(Integer)
+    complexidade = Column(String(20))  # simples, medio, complexo
+    tags = Column(Text)  # JSON array de tags
+    uso_count = Column(Integer, default=0)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+    criado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+
+class MetricaKDS(Base):
+    __tablename__ = "metricas_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    estacao_id = Column(Integer, ForeignKey("estacoes_kds.id"))
+    data_coleta = Column(Date, nullable=False)
+    total_pedidos = Column(Integer, default=0)
+    pedidos_concluidos = Column(Integer, default=0)
+    tempo_medio_preparo = Column(Float)  # minutos
+    tempo_maximo_preparo = Column(Float)  # minutos
+    tempo_minimo_preparo = Column(Float)  # minutos
+    taxa_atraso = Column(Float)  # porcentagem
+    picos_demanda = Column(Text)  # JSON com horários de pico
+    eficiencia = Column(Float)  # porcentagem
+    satisfacao = Column(Float)  # pontuação média
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class AlertaKDS(Base):
+    __tablename__ = "alertas_kds"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    tipo = Column(String(50))  # tempo_excedido, fila_cheia, equipamento_offline
+    severidade = Column(String(20))  # baixa, media, alta, critica
+    titulo = Column(String(200), nullable=False)
+    descricao = Column(Text)
+    estacao_id = Column(Integer, ForeignKey("estacoes_kds.id"))
+    pedido_id = Column(Integer, ForeignKey("pedidos_kds.id"), nullable=True)
+    regra_config = Column(Text)  # JSON com configuração que gerou o alerta
+    resolvido = Column(Boolean, default=False)
+    resolvido_por_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    resolvido_em = Column(DateTime(timezone=True))
+    notas_resolucao = Column(Text)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+# ====== SISTEMA DE SPLIT PAYMENTS AVANÇADO ======
+
+class SplitConfiguration(Base):
+    __tablename__ = "split_configurations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    tipo = Column(String(50))  # percentual, fixo, variavel, condicional
+    configuracao = Column(Text)  # JSON com regras de split
+    ativo = Column(Boolean, default=True)
+    aplicar_automatico = Column(Boolean, default=False)
+    condicoes_aplicacao = Column(Text)  # JSON com condições para aplicar
+    taxa_plataforma = Column(Float, default=0.0)  # Taxa da plataforma
+    taxa_gateway = Column(Float, default=0.0)  # Taxa do gateway
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+    criado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+
+class SplitRecipient(Base):
+    __tablename__ = "split_recipients"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    split_config_id = Column(Integer, ForeignKey("split_configurations.id"))
+    nome = Column(String(100), nullable=False)
+    documento = Column(String(20))  # CPF/CNPJ
+    email = Column(String(255))
+    telefone = Column(String(20))
+    banco_codigo = Column(String(10))
+    agencia = Column(String(10))
+    conta = Column(String(20))
+    tipo_conta = Column(String(20))  # corrente, poupanca
+    percentual = Column(Float)  # Se tipo for percentual
+    valor_fixo = Column(Float)  # Se tipo for fixo
+    ordem_prioridade = Column(Integer, default=0)
+    ativo = Column(Boolean, default=True)
+    gateway_recipient_id = Column(String(100))  # ID no gateway (Stripe, Pagar.me, etc)
+    metadata = Column(Text)  # JSON com dados adicionais
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class SplitTransaction(Base):
+    __tablename__ = "split_transactions"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    transacao_principal_id = Column(Integer, ForeignKey("transacoes.id"))
+    split_config_id = Column(Integer, ForeignKey("split_configurations.id"))
+    venda_pdv_id = Column(Integer, ForeignKey("vendas_pdv.id"), nullable=True)
+    valor_total = Column(Float, nullable=False)
+    valor_liquido = Column(Float, nullable=False)  # Após taxas
+    taxa_total = Column(Float, default=0.0)
+    status = Column(String(30))  # pendente, processando, concluido, erro, cancelado
+    gateway_transaction_id = Column(String(100))
+    processado_em = Column(DateTime(timezone=True))
+    erro_detalhes = Column(Text)
+    metadata = Column(Text)  # JSON com dados do processamento
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class SplitParcela(Base):
+    __tablename__ = "split_parcelas"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    split_transaction_id = Column(Integer, ForeignKey("split_transactions.id"))
+    recipient_id = Column(Integer, ForeignKey("split_recipients.id"))
+    valor_bruto = Column(Float, nullable=False)
+    valor_liquido = Column(Float, nullable=False)
+    percentual_aplicado = Column(Float)
+    taxa_aplicada = Column(Float, default=0.0)
+    status = Column(String(30))  # pendente, processado, transferido, erro
+    gateway_split_id = Column(String(100))
+    data_transferencia = Column(DateTime(timezone=True))
+    comprovante_transferencia = Column(String(255))
+    erro_detalhes = Column(Text)
+    tentativas_processamento = Column(Integer, default=0)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class SplitEscrow(Base):
+    __tablename__ = "split_escrow"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    split_transaction_id = Column(Integer, ForeignKey("split_transactions.id"))
+    recipient_id = Column(Integer, ForeignKey("split_recipients.id"))
+    valor_retido = Column(Float, nullable=False)
+    motivo_retencao = Column(String(50))  # garantia, disputa, analise, manual
+    data_retencao = Column(DateTime(timezone=True), default=datetime.now)
+    data_liberacao_prevista = Column(DateTime(timezone=True))
+    data_liberacao_efetiva = Column(DateTime(timezone=True))
+    status = Column(String(30))  # retido, liberado, perdido, devolvido
+    observacoes = Column(Text)
+    liberado_por_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class SplitDisputa(Base):
+    __tablename__ = "split_disputas"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    split_transaction_id = Column(Integer, ForeignKey("split_transactions.id"))
+    tipo_disputa = Column(String(50))  # chargeback, contestacao, erro_split, fraude
+    valor_disputado = Column(Float, nullable=False)
+    data_inicio = Column(DateTime(timezone=True), default=datetime.now)
+    data_resolucao = Column(DateTime(timezone=True))
+    status = Column(String(30))  # aberta, em_analise, resolvida_favoravel, resolvida_desfavoravel
+    descricao = Column(Text)
+    evidencias = Column(Text)  # JSON com evidências
+    decisao = Column(Text)
+    impacto_recipients = Column(Text)  # JSON com impacto em cada recipient
+    gateway_dispute_id = Column(String(100))
+    resolvido_por_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class SplitAuditoria(Base):
+    __tablename__ = "split_auditoria"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    split_transaction_id = Column(Integer, ForeignKey("split_transactions.id"))
+    acao = Column(String(50), nullable=False)  # criacao, processamento, transferencia, erro, cancelamento
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    dados_anteriores = Column(Text)  # JSON com estado anterior
+    dados_posteriores = Column(Text)  # JSON com estado posterior
+    ip_origem = Column(String(45))
+    user_agent = Column(String(255))
+    observacoes = Column(Text)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
+class SplitReconciliacao(Base):
+    __tablename__ = "split_reconciliacoes"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    data_reconciliacao = Column(Date, nullable=False)
+    total_transacoes = Column(Integer, default=0)
+    valor_total_bruto = Column(Float, default=0.0)
+    valor_total_liquido = Column(Float, default=0.0)
+    total_taxas = Column(Float, default=0.0)
+    total_disputes = Column(Integer, default=0)
+    valor_disputes = Column(Float, default=0.0)
+    total_chargebacks = Column(Integer, default=0)
+    valor_chargebacks = Column(Float, default=0.0)
+    status = Column(String(30))  # pendente, processando, concluido, com_divergencias
+    arquivo_reconciliacao = Column(String(255))
+    divergencias = Column(Text)  # JSON com divergências encontradas
+    processado_por_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class SplitRelatorio(Base):
+    __tablename__ = "split_relatorios"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    tipo_relatorio = Column(String(50), nullable=False)  # financeiro, operacional, compliance
+    periodo_inicio = Column(Date, nullable=False)
+    periodo_fim = Column(Date, nullable=False)
+    filtros = Column(Text)  # JSON com filtros aplicados
+    dados_relatorio = Column(Text)  # JSON com dados do relatório
+    arquivo_gerado = Column(String(255))
+    formato = Column(String(10))  # pdf, xlsx, csv
+    status = Column(String(30))  # gerando, concluido, erro
+    solicitado_por_id = Column(Integer, ForeignKey("usuarios.id"))
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    finalizado_em = Column(DateTime(timezone=True))
+
+# ====== SISTEMA DE CREDENCIAMENTO AVANÇADO ======
+
+class TipoCredencial(Base):
+    __tablename__ = "tipos_credencial"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    categoria = Column(String(50))  # participante, staff, vip, imprensa, fornecedor
+    cor_identificacao = Column(String(7))  # Hex color
+    icone = Column(String(50))
+    template_design = Column(Text)  # JSON com template do design
+    permissoes_acesso = Column(Text)  # JSON com áreas/recursos permitidos
+    validade_padrao_dias = Column(Integer, default=1)
+    permite_reimpressao = Column(Boolean, default=True)
+    requer_aprovacao = Column(Boolean, default=False)
+    limite_emissao = Column(Integer)  # null = ilimitado
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class CredencialEmitida(Base):
+    __tablename__ = "credenciais_emitidas"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    codigo_credencial = Column(String(50), unique=True, nullable=False)
+    tipo_credencial_id = Column(Integer, ForeignKey("tipos_credencial.id"))
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    cliente_evento_id = Column(Integer, ForeignKey("clientes_eventos.id"), nullable=True)
+    nome_portador = Column(String(200), nullable=False)
+    documento_portador = Column(String(20))
+    email_portador = Column(String(255))
+    telefone_portador = Column(String(20))
+    empresa_portador = Column(String(200))
+    cargo_portador = Column(String(100))
+    foto_portador = Column(String(255))  # URL da foto
+    qr_code_data = Column(Text)  # Dados para gerar QR Code
+    data_emissao = Column(DateTime(timezone=True), default=datetime.now)
+    data_validade = Column(DateTime(timezone=True))
+    status = Column(String(30))  # ativa, suspensa, revogada, expirada
+    motivo_status = Column(Text)
+    total_impressoes = Column(Integer, default=0)
+    ultimo_acesso = Column(DateTime(timezone=True))
+    metadata_acesso = Column(Text)  # JSON com dados de acesso
+    observacoes = Column(Text)
+    emitida_por_id = Column(Integer, ForeignKey("usuarios.id"))
+    aprovada_por_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+    atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
+
+class LogAcessoCredencial(Base):
+    __tablename__ = "logs_acesso_credencial"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    credencial_id = Column(Integer, ForeignKey("credenciais_emitidas.id"))
+    tipo_acesso = Column(String(30))  # entrada, saida, tentativa_negada
+    local_acesso = Column(String(100))  # Nome do local/porta
+    equipamento_id = Column(String(100))  # ID do equipamento de leitura
+    ip_equipamento = Column(String(45))
+    sucesso = Column(Boolean, default=True)
+    motivo_negacao = Column(String(100))
+    dados_biometricos = Column(Text)  # JSON se aplicável
+    temperatura_corporal = Column(Float)  # Se equipamento suportar
+    foto_acesso = Column(String(255))  # URL da foto capturada
+    latitude = Column(Float)
+    longitude = Column(Float)
+    criado_em = Column(DateTime(timezone=True), default=datetime.now)
+
 # ====== MODELOS ADICIONAIS FALTANTES ======
 
 class FluxoTrabalho(Base):
@@ -1939,4 +2285,631 @@ class OperadorPDV(Base):
     evento = relationship("Evento")
     empresa = relationship("Empresa")
     equipamentos = relationship("EquipamentoPDV", back_populates="operador")
+
+class LeitorQRCode(Base):
+    """Leitores QR Code e equipamentos de captura"""
+    __tablename__ = "leitores_qrcode"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    codigo_equipamento = Column(String(20), unique=True, nullable=False)
+    nome = Column(String(100), nullable=False)
+    
+    # Tipo e configuração
+    tipo_leitor = Column(String(50))  # fixo, mobile, totem, handheld, camera
+    marca = Column(String(50))  # Zebra, Honeywell, Datalogic, etc.
+    modelo = Column(String(50))
+    numero_serie = Column(String(100))
+    
+    # Conectividade
+    tipo_conexao = Column(String(50))  # usb, bluetooth, wifi, ethernet, serial
+    endereco_ip = Column(String(45))  # Para leitores em rede
+    porta_comunicacao = Column(Integer)  # Porta TCP/UDP
+    endereco_mac = Column(String(17))  # Endereço MAC para Bluetooth/WiFi
+    
+    # Configurações de leitura
+    sensibilidade = Column(Integer, default=3)  # 1-5 (baixa-alta)
+    timeout_leitura = Column(Integer, default=5000)  # Em milissegundos
+    formato_suportado = Column(String(200))  # QR, DataMatrix, PDF417, Code128, etc.
+    modo_operacao = Column(String(20), default="continuo")  # continuo, trigger, auto
+    
+    # Calibração e qualidade
+    resolucao_minima = Column(Integer, default=640)  # Pixels
+    qualidade_imagem = Column(Integer, default=80)  # 1-100
+    zoom_automatico = Column(Boolean, default=True)
+    foco_automatico = Column(Boolean, default=True)
+    compensacao_luz = Column(Boolean, default=True)
+    
+    # Status operacional
+    status = Column(String(20), default="inativo")  # ativo, inativo, manutencao, erro
+    ultimo_heartbeat = Column(DateTime(timezone=True))
+    versao_firmware = Column(String(20))
+    temperatura_operacao = Column(Float)  # Celsius
+    nivel_bateria = Column(Integer)  # 0-100% para equipamentos móveis
+    
+    # Localização e evento
+    localizacao = Column(String(100))  # Descrição da localização física
+    ponto_acesso_id = Column(Integer, ForeignKey("pontos_acesso.id"))  # FK para ponto de acesso
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    empresa_id = Column(Integer, ForeignKey("empresas.id"))
+    
+    # Estatísticas
+    total_leituras = Column(Integer, default=0)
+    leituras_sucesso = Column(Integer, default=0)
+    leituras_erro = Column(Integer, default=0)
+    tempo_medio_leitura = Column(Float, default=0)  # Em milissegundos
+    
+    # Configurações avançadas
+    filtro_duplicatas = Column(Boolean, default=True)  # Evita leituras duplicadas
+    tempo_filtro_duplicata = Column(Integer, default=3000)  # Em milissegundos
+    validacao_formato = Column(Boolean, default=True)
+    log_detalhado = Column(Boolean, default=False)
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    ponto_acesso = relationship("PontoAcesso", back_populates="leitores")
+    evento = relationship("Evento")
+    empresa = relationship("Empresa")
+    criador = relationship("Usuario", foreign_keys=[criado_por])
+    leituras = relationship("HistoricoLeituraQR", back_populates="leitor")
+
+class PontoAcesso(Base):
+    """Pontos de acesso/entrada para eventos"""
+    __tablename__ = "pontos_acesso"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    codigo = Column(String(20), unique=True, nullable=False)
+    
+    # Tipo e configuração
+    tipo_ponto = Column(String(50))  # entrada, saida, bidirecional, vip, staff
+    descricao = Column(Text)
+    capacidade_maxima = Column(Integer)  # Pessoas simultâneas
+    
+    # Localização física
+    localizacao_descricao = Column(String(200))
+    coordenadas_gps = Column(String(50))  # lat,lng
+    andar = Column(String(10))
+    setor = Column(String(50))
+    
+    # Configurações operacionais
+    ativo = Column(Boolean, default=True)
+    requer_validacao = Column(Boolean, default=True)
+    permite_reentrada = Column(Boolean, default=False)
+    horario_abertura = Column(Time)
+    horario_fechamento = Column(Time)
+    
+    # Controle de fluxo
+    contagem_atual = Column(Integer, default=0)  # Pessoas no local atualmente
+    total_entradas = Column(Integer, default=0)
+    total_saidas = Column(Integer, default=0)
+    
+    # Configurações de segurança
+    nivel_seguranca = Column(String(20), default="normal")  # baixo, normal, alto, critico
+    log_todas_tentativas = Column(Boolean, default=True)
+    alerta_capacidade = Column(Boolean, default=True)
+    percentual_alerta = Column(Integer, default=90)  # % da capacidade para alerta
+    
+    # Relacionamento com evento
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    empresa_id = Column(Integer, ForeignKey("empresas.id"))
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Relacionamentos
+    evento = relationship("Evento")
+    empresa = relationship("Empresa")
+    leitores = relationship("LeitorQRCode", back_populates="ponto_acesso")
+    movimentacoes = relationship("MovimentacaoAcesso", back_populates="ponto_acesso")
+
+class HistoricoLeituraQR(Base):
+    """Histórico de todas as leituras de QR Code"""
+    __tablename__ = "historico_leitura_qr"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Dados da leitura
+    codigo_lido = Column(Text, nullable=False)  # Conteúdo do QR Code lido
+    codigo_decodificado = Column(Text)  # Versão processada/limpa do código
+    formato_codigo = Column(String(50))  # QR, DataMatrix, etc.
+    qualidade_leitura = Column(Integer)  # 1-100
+    
+    # Resultado da validação
+    valido = Column(Boolean, default=False)
+    tipo_validacao = Column(String(50))  # ingresso, credencial, produto, etc.
+    resultado_validacao = Column(String(20))  # aprovado, negado, pendente, erro
+    motivo_rejeicao = Column(String(200))  # Motivo se rejeitado
+    
+    # Contexto da leitura
+    leitor_id = Column(Integer, ForeignKey("leitores_qrcode.id"), nullable=False)
+    ponto_acesso_id = Column(Integer, ForeignKey("pontos_acesso.id"))
+    operador_id = Column(Integer, ForeignKey("usuarios.id"))  # Quem estava operando
+    
+    # Dados do participante (se identificado)
+    participante_cpf = Column(String(14))
+    participante_nome = Column(String(100))
+    participante_tipo = Column(String(50))  # vip, staff, convidado, etc.
+    
+    # Dados do ingresso/credencial (se aplicável)
+    ingresso_id = Column(Integer)  # Referência ao ingresso
+    credencial_id = Column(Integer)  # Referência à credencial
+    lista_id = Column(Integer)  # Referência à lista (se convidado)
+    
+    # Metadados técnicos
+    tempo_leitura = Column(Integer)  # Tempo em milissegundos
+    tentativas = Column(Integer, default=1)  # Quantas tentativas foram necessárias
+    posicao_qr_imagem = Column(String(50))  # Posição do QR na imagem (se detectado)
+    
+    # Informações do dispositivo
+    endereco_ip = Column(String(45))
+    user_agent = Column(String(500))  # Para leituras web
+    sessao_id = Column(String(100))
+    
+    # Dados de geolocalização
+    latitude = Column(Float)
+    longitude = Column(Float)
+    precisao_localizacao = Column(Float)  # Em metros
+    
+    # Auditoria e rastreabilidade
+    timestamp_leitura = Column(DateTime(timezone=True), server_default=func.now())
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    empresa_id = Column(Integer, ForeignKey("empresas.id"))
+    
+    # Relacionamentos
+    leitor = relationship("LeitorQRCode", back_populates="leituras")
+    ponto_acesso = relationship("PontoAcesso", back_populates="movimentacoes")
+    operador = relationship("Usuario")
+    evento = relationship("Evento")
+    empresa = relationship("Empresa")
+
+class MovimentacaoAcesso(Base):
+    """Movimentações de entrada/saída em pontos de acesso"""
+    __tablename__ = "movimentacoes_acesso"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Dados da movimentação
+    tipo_movimento = Column(String(20), nullable=False)  # entrada, saida
+    data_hora = Column(DateTime(timezone=True), server_default=func.now())
+    
+    # Participante
+    cpf_participante = Column(String(14), nullable=False)
+    nome_participante = Column(String(100))
+    tipo_participante = Column(String(50))  # vip, staff, convidado, pagante, etc.
+    
+    # Contexto
+    ponto_acesso_id = Column(Integer, ForeignKey("pontos_acesso.id"), nullable=False)
+    leitura_qr_id = Column(Integer, ForeignKey("historico_leitura_qr.id"))  # Leitura que gerou a movimentação
+    
+    # Dados do acesso
+    credencial_utilizada = Column(String(50))  # tipo de credencial usada
+    primeira_entrada = Column(Boolean, default=False)  # Se é a primeira vez no evento
+    tempo_permanencia = Column(Integer)  # Em minutos (para saídas)
+    
+    # Validação e segurança
+    validacao_adicional = Column(String(100))  # Validações extras realizadas
+    nivel_confianca = Column(Integer, default=100)  # 0-100
+    sinalizadores = Column(Text)  # JSON com flags especiais
+    
+    # Auditoria
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    empresa_id = Column(Integer, ForeignKey("empresas.id"))
+    
+    # Relacionamentos
+    ponto_acesso = relationship("PontoAcesso", back_populates="movimentacoes")
+    leitura_origem = relationship("HistoricoLeituraQR")
+    evento = relationship("Evento")
+    empresa = relationship("Empresa")
+
+class ConfiguracaoEquipamento(Base):
+    """Configurações específicas por tipo de equipamento"""
+    __tablename__ = "configuracoes_equipamento"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Identificação
+    tipo_equipamento = Column(String(50), nullable=False)  # leitor_qr, impressora, pdv, etc.
+    nome_configuracao = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    
+    # Configuração (JSON flexível)
+    parametros_json = Column(Text)  # Configurações específicas em JSON
+    template_configuracao = Column(Text)  # Template base para o tipo
+    
+    # Aplicabilidade
+    marca_equipamento = Column(String(50))  # Para qual marca se aplica
+    modelo_equipamento = Column(String(50))  # Para qual modelo se aplica
+    versao_firmware_min = Column(String(20))  # Versão mínima do firmware
+    versao_firmware_max = Column(String(20))  # Versão máxima do firmware
+    
+    # Status
+    ativo = Column(Boolean, default=True)
+    configuracao_padrao = Column(Boolean, default=False)  # Se é a config padrão do tipo
+    
+    # Versionamento
+    versao = Column(String(10), default="1.0")
+    configuracao_pai_id = Column(Integer, ForeignKey("configuracoes_equipamento.id"))  # Para herança
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    empresa_id = Column(Integer, ForeignKey("empresas.id"))
+    
+    # Relacionamentos
+    configuracao_pai = relationship("ConfiguracaoEquipamento", remote_side=[id])
+    criador = relationship("Usuario", foreign_keys=[criado_por])
+    evento = relationship("Evento")
+    empresa = relationship("Empresa")
+
+# ==================== MODELOS CRM E MARKETING ====================
+
+class LeadCRM(Base):
+    """Leads e prospects no sistema CRM"""
+    __tablename__ = "leads_crm"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Dados pessoais
+    nome = Column(String(100), nullable=False)
+    email = Column(String(100), nullable=False)
+    telefone = Column(String(20))
+    cpf = Column(String(14))
+    empresa = Column(String(100))
+    cargo = Column(String(100))
+    
+    # Origem do lead
+    origem = Column(String(50))  # site, evento, indicacao, campanha, etc.
+    campanha_origem = Column(String(100))  # ID/nome da campanha que gerou o lead
+    evento_origem_id = Column(Integer, ForeignKey("eventos.id"))  # Evento que gerou o lead
+    
+    # Score e classificação
+    score_lead = Column(Integer, default=0)  # 0-100
+    temperatura = Column(String(20), default="frio")  # frio, morno, quente
+    estagio_funil = Column(String(50), default="lead")  # lead, mql, sql, oportunidade, cliente
+    probabilidade_conversao = Column(Integer, default=0)  # 0-100%
+    
+    # Informações do negócio
+    valor_potencial = Column(Numeric(10, 2), default=0)
+    tipo_evento_interesse = Column(String(100))  # Tipo de evento que tem interesse
+    orcamento_estimado = Column(Numeric(10, 2))
+    data_evento_desejada = Column(Date)
+    numero_participantes_estimado = Column(Integer)
+    
+    # Status e acompanhamento
+    status = Column(String(20), default="novo")  # novo, contatado, qualificado, perdido, convertido
+    responsavel_id = Column(Integer, ForeignKey("usuarios.id"))
+    data_ultimo_contato = Column(DateTime(timezone=True))
+    proximo_followup = Column(DateTime(timezone=True))
+    
+    # Dados comportamentais
+    total_emails_enviados = Column(Integer, default=0)
+    total_emails_abertos = Column(Integer, default=0)
+    total_clicks = Column(Integer, default=0)
+    paginas_visitadas = Column(Text)  # JSON com páginas visitadas
+    eventos_participados = Column(Text)  # JSON com histórico de eventos
+    
+    # Segmentação
+    tags = Column(Text)  # JSON com tags para segmentação
+    segmento_mercado = Column(String(50))  # corporativo, educacional, saude, tecnologia, etc.
+    porte_empresa = Column(String(20))  # micro, pequena, media, grande
+    regiao = Column(String(50))
+    
+    # Observações e notas
+    observacoes = Column(Text)
+    motivo_perda = Column(String(200))  # Se status = perdido
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    evento_origem = relationship("Evento", foreign_keys=[evento_origem_id])
+    responsavel = relationship("Usuario", foreign_keys=[responsavel_id])
+    criador = relationship("Usuario", foreign_keys=[criado_por])
+    atividades = relationship("AtividadeCRM", back_populates="lead")
+    campanhas_relacionadas = relationship("LeadCampanha", back_populates="lead")
+
+class CampanhaCRM(Base):
+    """Campanhas de marketing e comunicação"""
+    __tablename__ = "campanhas_crm"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Informações básicas
+    nome = Column(String(200), nullable=False)
+    descricao = Column(Text)
+    tipo_campanha = Column(String(50))  # email, whatsapp, sms, social, evento
+    status = Column(String(20), default="rascunho")  # rascunho, ativa, pausada, finalizada
+    
+    # Configurações da campanha
+    data_inicio = Column(DateTime(timezone=True))
+    data_fim = Column(DateTime(timezone=True))
+    fuso_horario = Column(String(50), default="America/Sao_Paulo")
+    
+    # Conteúdo
+    assunto = Column(String(200))  # Para emails
+    conteudo_html = Column(Text)  # Template HTML
+    conteudo_texto = Column(Text)  # Versão texto simples
+    anexos = Column(Text)  # JSON com lista de anexos
+    
+    # Segmentação e público-alvo
+    publico_alvo = Column(Text)  # JSON com critérios de segmentação
+    total_destinatarios = Column(Integer, default=0)
+    filtros_aplicados = Column(Text)  # JSON com filtros usados
+    
+    # Configurações de envio
+    remetente_nome = Column(String(100))
+    remetente_email = Column(String(100))
+    envio_programado = Column(Boolean, default=False)
+    frequencia_envio = Column(String(50))  # unico, diario, semanal, mensal
+    
+    # Métricas e resultados
+    total_enviados = Column(Integer, default=0)
+    total_entregues = Column(Integer, default=0)
+    total_abertos = Column(Integer, default=0)
+    total_clicks = Column(Integer, default=0)
+    total_conversoes = Column(Integer, default=0)
+    total_descadastros = Column(Integer, default=0)
+    total_bounces = Column(Integer, default=0)
+    total_spam = Column(Integer, default=0)
+    
+    # Custos e ROI
+    custo_campanha = Column(Numeric(10, 2), default=0)
+    receita_gerada = Column(Numeric(10, 2), default=0)
+    roi_calculado = Column(Numeric(5, 2), default=0)
+    
+    # A/B Testing
+    teste_ab_ativo = Column(Boolean, default=False)
+    variante_a_assunto = Column(String(200))
+    variante_b_assunto = Column(String(200))
+    percentual_teste = Column(Integer, default=10)  # % do público para teste
+    
+    # Integração e automação
+    trigger_evento = Column(String(100))  # Evento que dispara a campanha
+    fluxo_automacao_id = Column(Integer, ForeignKey("fluxos_automacao.id"))
+    webhook_callback = Column(String(500))
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    criador = relationship("Usuario")
+    fluxo_automacao = relationship("FluxoAutomacao", back_populates="campanhas")
+    envios = relationship("EnvioCampanha", back_populates="campanha")
+    leads_relacionados = relationship("LeadCampanha", back_populates="campanha")
+
+class EnvioCampanha(Base):
+    """Registro de envios individuais de campanha"""
+    __tablename__ = "envios_campanha"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    campanha_id = Column(Integer, ForeignKey("campanhas_crm.id"), nullable=False)
+    lead_id = Column(Integer, ForeignKey("leads_crm.id"))
+    
+    # Dados do envio
+    destinatario_nome = Column(String(100))
+    destinatario_email = Column(String(100))
+    destinatario_telefone = Column(String(20))
+    
+    # Status do envio
+    status_envio = Column(String(20), default="pendente")  # pendente, enviado, entregue, falha
+    data_envio = Column(DateTime(timezone=True))
+    data_entrega = Column(DateTime(timezone=True))
+    mensagem_erro = Column(String(500))
+    
+    # Engagement
+    aberto = Column(Boolean, default=False)
+    data_abertura = Column(DateTime(timezone=True))
+    total_aberturas = Column(Integer, default=0)
+    
+    clicou = Column(Boolean, default=False)
+    data_primeiro_click = Column(DateTime(timezone=True))
+    total_clicks = Column(Integer, default=0)
+    urls_clicadas = Column(Text)  # JSON
+    
+    respondeu = Column(Boolean, default=False)
+    data_resposta = Column(DateTime(timezone=True))
+    
+    converteu = Column(Boolean, default=False)
+    data_conversao = Column(DateTime(timezone=True))
+    valor_conversao = Column(Numeric(10, 2))
+    
+    # Dados técnicos
+    user_agent = Column(String(500))
+    ip_endereco = Column(String(45))
+    dispositivo = Column(String(50))
+    localizacao = Column(String(100))
+    
+    # Relacionamentos
+    campanha = relationship("CampanhaCRM", back_populates="envios")
+    lead = relationship("LeadCRM")
+
+class AtividadeCRM(Base):
+    """Atividades e interações com leads"""
+    __tablename__ = "atividades_crm"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    lead_id = Column(Integer, ForeignKey("leads_crm.id"), nullable=False)
+    
+    # Tipo e detalhes da atividade
+    tipo_atividade = Column(String(50), nullable=False)  # email, call, meeting, note, task
+    titulo = Column(String(200), nullable=False)
+    descricao = Column(Text)
+    resultado = Column(String(100))  # interessado, não interessado, agendar, etc.
+    
+    # Agendamento
+    data_agendada = Column(DateTime(timezone=True))
+    data_realizada = Column(DateTime(timezone=True))
+    duracao_minutos = Column(Integer)
+    
+    # Status
+    status = Column(String(20), default="pendente")  # pendente, concluida, cancelada
+    prioridade = Column(String(20), default="media")  # baixa, media, alta, critica
+    
+    # Participantes
+    responsavel_id = Column(Integer, ForeignKey("usuarios.id"))
+    participantes = Column(Text)  # JSON com lista de participantes
+    
+    # Resultado da atividade
+    pontuacao_lead = Column(Integer)  # Pontos adicionados/removidos do lead
+    proximo_passo = Column(String(200))
+    data_proximo_followup = Column(DateTime(timezone=True))
+    
+    # Anexos e referências
+    anexos = Column(Text)  # JSON
+    campanha_relacionada_id = Column(Integer, ForeignKey("campanhas_crm.id"))
+    evento_relacionado_id = Column(Integer, ForeignKey("eventos.id"))
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    lead = relationship("LeadCRM", back_populates="atividades")
+    responsavel = relationship("Usuario", foreign_keys=[responsavel_id])
+    criador = relationship("Usuario", foreign_keys=[criado_por])
+    campanha_relacionada = relationship("CampanhaCRM")
+    evento_relacionado = relationship("Evento")
+
+class FluxoAutomacao(Base):
+    """Fluxos de automação de marketing"""
+    __tablename__ = "fluxos_automacao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Configurações básicas
+    nome = Column(String(200), nullable=False)
+    descricao = Column(Text)
+    ativo = Column(Boolean, default=False)
+    
+    # Trigger do fluxo
+    trigger_tipo = Column(String(50), nullable=False)  # evento, data, acao, score
+    trigger_configuracao = Column(Text)  # JSON com configuração do trigger
+    
+    # Configurações do fluxo
+    etapas_fluxo = Column(Text)  # JSON com definição das etapas
+    condicoes_saida = Column(Text)  # JSON com condições para sair do fluxo
+    limite_execucoes = Column(Integer)  # Limite de vezes que pode executar por lead
+    
+    # Métricas
+    total_leads_entraram = Column(Integer, default=0)
+    total_leads_completaram = Column(Integer, default=0)
+    total_leads_sairam = Column(Integer, default=0)
+    taxa_conversao = Column(Numeric(5, 2), default=0)
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    criador = relationship("Usuario")
+    campanhas = relationship("CampanhaCRM", back_populates="fluxo_automacao")
+    execucoes = relationship("ExecucaoFluxo", back_populates="fluxo")
+
+class ExecucaoFluxo(Base):
+    """Execuções individuais de fluxos de automação"""
+    __tablename__ = "execucoes_fluxo"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    fluxo_id = Column(Integer, ForeignKey("fluxos_automacao.id"), nullable=False)
+    lead_id = Column(Integer, ForeignKey("leads_crm.id"), nullable=False)
+    
+    # Estado da execução
+    status = Column(String(20), default="ativa")  # ativa, pausada, concluida, cancelada
+    etapa_atual = Column(Integer, default=1)
+    data_inicio = Column(DateTime(timezone=True), server_default=func.now())
+    data_fim = Column(DateTime(timezone=True))
+    
+    # Dados da execução
+    etapas_completadas = Column(Text)  # JSON com histórico das etapas
+    variaveis_contexto = Column(Text)  # JSON com variáveis do contexto
+    
+    # Relacionamentos
+    fluxo = relationship("FluxoAutomacao", back_populates="execucoes")
+    lead = relationship("LeadCRM")
+
+class SegmentoCRM(Base):
+    """Segmentos de leads para campanhas direcionadas"""
+    __tablename__ = "segmentos_crm"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    nome = Column(String(100), nullable=False)
+    descricao = Column(Text)
+    
+    # Critérios de segmentação
+    criterios_filtro = Column(Text)  # JSON com critérios de filtro
+    query_sql = Column(Text)  # Query SQL para filtros avançados
+    
+    # Configurações
+    dinamico = Column(Boolean, default=True)  # Se atualiza automaticamente
+    data_ultima_atualizacao = Column(DateTime(timezone=True))
+    total_leads = Column(Integer, default=0)
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    criador = relationship("Usuario")
+
+class LeadCampanha(Base):
+    """Relacionamento entre leads e campanhas"""
+    __tablename__ = "leads_campanhas"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    lead_id = Column(Integer, ForeignKey("leads_crm.id"))
+    campanha_id = Column(Integer, ForeignKey("campanhas_crm.id"))
+    
+    # Dados da relação
+    adicionado_em = Column(DateTime(timezone=True), server_default=func.now())
+    origem_adicao = Column(String(50))  # manual, automatica, segmento
+    
+    # Relacionamentos
+    lead = relationship("LeadCRM", back_populates="campanhas_relacionadas")
+    campanha = relationship("CampanhaCRM", back_populates="leads_relacionados")
+
+class TemplateComunicacao(Base):
+    """Templates para emails, WhatsApp, SMS"""
+    __tablename__ = "templates_comunicacao"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    nome = Column(String(100), nullable=False)
+    tipo = Column(String(20), nullable=False)  # email, whatsapp, sms
+    categoria = Column(String(50))  # boas-vindas, followup, promocional, transacional
+    
+    # Conteúdo
+    assunto = Column(String(200))  # Para emails
+    conteudo_html = Column(Text)
+    conteudo_texto = Column(Text)
+    variaveis_disponiveis = Column(Text)  # JSON com variáveis que podem ser usadas
+    
+    # Configurações
+    ativo = Column(Boolean, default=True)
+    publico = Column(Boolean, default=False)  # Se outros usuários podem usar
+    
+    # Auditoria
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_por = Column(Integer, ForeignKey("usuarios.id"))
+    
+    # Relacionamentos
+    criador = relationship("Usuario")
 

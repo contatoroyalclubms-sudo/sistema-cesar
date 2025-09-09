@@ -11,9 +11,9 @@ from datetime import datetime, date, timedelta
 from decimal import Decimal
 
 from ..database import get_db
-from ..models import VendaPDV, ItemVendaPDV, Produto, Usuario, Categoria
+from ..models import VendaPDV, ItemVendaPDV, Produto, Usuario, CategoriaProduto as Categoria
 from ..models_cashless import CartaoCashless
-from ..utils.security import get_current_user
+from ..auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/dashboard-financeiro", tags=["Dashboard Financeiro"])
 

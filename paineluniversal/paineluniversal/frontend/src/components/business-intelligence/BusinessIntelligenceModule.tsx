@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { BarChart3, LineChart, PieChart, TrendingUp, TrendingDown, Download, Filter, Calendar, RefreshCw, Target, Brain } from 'lucide-react';
+import DashboardBI from '../bi/DashboardBI';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -59,7 +61,7 @@ interface AnalisePreditiva {
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
-export default function BusinessIntelligenceModule() {
+function BusinessIntelligenceMain() {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [relatorios, setRelatorios] = useState<Relatorio[]>([]);
   const [analisesPreditivas, setAnalisesPreditivas] = useState<AnalisePreditiva[]>([]);
@@ -71,6 +73,7 @@ export default function BusinessIntelligenceModule() {
     from: undefined,
     to: undefined
   });
+  const navigate = useNavigate();
 
   const [novoRelatorio, setNovoRelatorio] = useState({
     nome: '',
@@ -300,6 +303,10 @@ export default function BusinessIntelligenceModule() {
           <p className="text-muted-foreground">Análises, dashboards e insights do seu negócio</p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline" onClick={() => navigate('/app/bi/dashboard')}>
+            <BarChart3 className="mr-2 h-4 w-4" />
+            Dashboard Avançado
+          </Button>
           <Button variant="outline" onClick={() => carregarDados()}>
             <RefreshCw className="mr-2 h-4 w-4" />
             Atualizar
@@ -625,5 +632,14 @@ export default function BusinessIntelligenceModule() {
         </TabsContent>
       </Tabs>
     </div>
+  );
+}
+
+export default function BusinessIntelligenceModule() {
+  return (
+    <Routes>
+      <Route path="/" element={<BusinessIntelligenceMain />} />
+      <Route path="/dashboard" element={<DashboardBI />} />
+    </Routes>
   );
 }

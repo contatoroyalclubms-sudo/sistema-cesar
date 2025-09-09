@@ -72,9 +72,9 @@ export default defineConfig({
     // 🔥 PROXY PARA CONTORNAR CORS EM DESENVOLVIMENTO
     proxy: {
       '/api': {
-        target: 'https://backend-painel-universal-production.up.railway.app',
+        target: 'http://localhost:8001',
         changeOrigin: true,
-        secure: true,
+        secure: false,
         configure: (proxy, options) => {
           proxy.on('error', (err, req, res) => {
             console.log('proxy error', err);

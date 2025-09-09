@@ -24,10 +24,13 @@ from ..models_cashless import (
 )
 from ..models import Usuario, Evento, Empresa
 from ..schemas_cashless import (
-    RecargaCashlessCreate, RecargaCashlessUpdate, RecargaCashlessResponse,
+    RecargaCashlessCreate, RecargaCashlessResponse,
+    # RecargaCashlessUpdate,  # TODO: Adicionar ao schemas_cashless
     MovimentacaoCashlessCreate, MovimentacaoCashlessResponse,
-    ConfiguracaoCashlessCreate, ConfiguracaoCashlessUpdate, ConfiguracaoCashlessResponse,
-    TerminalPagamentoCreate, TerminalPagamentoUpdate, TerminalPagamentoResponse,
+    ConfiguracaoCashlessCreate, ConfiguracaoCashlessResponse,
+    # ConfiguracaoCashlessUpdate,  # TODO: Adicionar ao schemas_cashless
+    TerminalPagamentoCreate, TerminalPagamentoResponse,
+    # TerminalPagamentoUpdate,  # TODO: Adicionar ao schemas_cashless
     ComandaDigitalCreate, ComandaDigitalUpdate, ComandaDigitalResponse,
     PedidoComandaDigitalCreate, PedidoComandaDigitalUpdate, PedidoComandaDigitalResponse,
     DashboardCashlessResponse, FiltroRelatorioAvancado, RelatorioAvancadoResponse

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu Debug Test</title>
+</head>
+<body>
+    <h1>Teste de Debug do Menu</h1>
+    <div id="output"></div>
+    
+    <script>
+        // Simular os itens do menu
+        const menuItems = [
+            { label: 'Dashboard', roles: ['admin', 'promoter', 'operador'] },
+            { label: 'Eventos', roles: ['admin', 'promoter'] },
+            { label: 'Vendas', roles: ['admin', 'promoter', 'operador'] },
+            { label: 'Check-in Inteligente', roles: ['admin', 'promoter', 'operador'] },
+            { label: 'Check-in Mobile', roles: ['admin', 'promoter', 'operador'] },
+            { label: 'PDV', roles: ['admin', 'promoter'] },
+            { label: 'Listas & Convidados', roles: ['admin', 'promoter'] },
+            { label: 'Produtos', roles: ['admin', 'promoter'] }
+        ];
+
+        // Simular filtro sem usuário
+        const basicItems = ['Dashboard', 'Eventos', 'Vendas', 'PDV', 'Produtos'];
+        const filteredMenuItems = menuItems.filter(item => basicItems.includes(item.label));
+        
+        const output = document.getElementById('output');
+        output.innerHTML = `
+            <h3>Items Originais (${menuItems.length}):</h3>
+            <ul>${menuItems.map(item => `<li>${item.label}</li>`).join('')}</ul>
+            
+            <h3>Items Básicos Permitidos:</h3>
+            <ul>${basicItems.map(item => `<li>${item}</li>`).join('')}</ul>
+            
+            <h3>Items Filtrados (${filteredMenuItems.length}):</h3>
+            <ul>${filteredMenuItems.map(item => `<li>${item.label}</li>`).join('')}</ul>
+            
+            <h3>Debug Individual:</h3>
+            <ul>
+                ${menuItems.map(item => 
+                    `<li>${item.label}: ${basicItems.includes(item.label) ? '✅ INCLUÍDO' : '❌ EXCLUÍDO'}</li>`
+                ).join('')}
+            </ul>
+        `;
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - generic [ref=e10]: Sistema Universal
+        - generic [ref=e11]:
+          - link "Entrar" [ref=e12] [cursor=pointer]:
+            - /url: /login
+            - button "Entrar" [ref=e13] [cursor=pointer]
+          - link "Começar Grátis" [ref=e14] [cursor=pointer]:
+            - /url: /register
+            - button "Começar Grátis" [ref=e15] [cursor=pointer]
+    - generic [ref=e18]:
+      - heading "O Futuro da Gestão de Eventos" [level=1] [ref=e19]:
+        - text: O Futuro da
+        - generic [ref=e20]: Gestão de Eventos
+      - paragraph [ref=e21]: Plataforma completa para organizar eventos, gerenciar vendas, controlar check-ins e acompanhar resultados em tempo real. Tudo em um só lugar.
+      - generic [ref=e22]:
+        - link "Começar Gratuitamente" [ref=e23] [cursor=pointer]:
+          - /url: /register
+          - button "Começar Gratuitamente" [ref=e24] [cursor=pointer]:
+            - text: Começar Gratuitamente
+            - img
+        - link "Já tenho conta" [ref=e25] [cursor=pointer]:
+          - /url: /login
+          - button "Já tenho conta" [ref=e26] [cursor=pointer]
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: 10k+
+          - generic [ref=e30]: Eventos Realizados
+        - generic [ref=e31]:
+          - generic [ref=e32]: 500k+
+          - generic [ref=e33]: Participantes
+        - generic [ref=e34]:
+          - generic [ref=e35]: 99.9%
+          - generic [ref=e36]: Uptime
+        - generic [ref=e37]:
+          - generic [ref=e38]: 24/7
+          - generic [ref=e39]: Suporte
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - heading "Recursos Poderosos" [level=2] [ref=e43]
+        - paragraph [ref=e44]: Tudo que você precisa para organizar eventos de sucesso
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - generic [ref=e48] [cursor=pointer]:
+            - img [ref=e50] [cursor=pointer]
+            - generic [ref=e52] [cursor=pointer]:
+              - heading "Gestão de Eventos" [level=3] [ref=e53] [cursor=pointer]
+              - paragraph [ref=e54] [cursor=pointer]: Crie e gerencie eventos com facilidade, configure listas de convidados e controle vendas em tempo real.
+              - list [ref=e55] [cursor=pointer]:
+                - listitem [ref=e56] [cursor=pointer]:
+                  - img [ref=e57] [cursor=pointer]
+                  - text: Criação rápida de eventos
+                - listitem [ref=e60] [cursor=pointer]:
+                  - img [ref=e61] [cursor=pointer]
+                  - text: Múltiplos tipos de lista
+                - listitem [ref=e64] [cursor=pointer]:
+                  - img [ref=e65] [cursor=pointer]
+                  - text: Controle de capacidade
+          - generic [ref=e69] [cursor=pointer]:
+            - img [ref=e71] [cursor=pointer]
+            - generic [ref=e76] [cursor=pointer]:
+              - heading "Check-in Inteligente" [level=3] [ref=e77] [cursor=pointer]
+              - paragraph [ref=e78] [cursor=pointer]: Sistema de check-in otimizado com QR Code e busca rápida para uma experiência sem filas.
+          - generic [ref=e80] [cursor=pointer]:
+            - img [ref=e82] [cursor=pointer]
+            - generic [ref=e83] [cursor=pointer]:
+              - heading "PDV Integrado" [level=3] [ref=e84] [cursor=pointer]
+              - paragraph [ref=e85] [cursor=pointer]: Sistema de ponto de venda completo com controle de estoque e relatórios financeiros.
+          - generic [ref=e87] [cursor=pointer]:
+            - img [ref=e89] [cursor=pointer]
+            - generic [ref=e92] [cursor=pointer]:
+              - heading "Analytics Avançado" [level=3] [ref=e93] [cursor=pointer]
+              - paragraph [ref=e94] [cursor=pointer]: Dashboards completos com métricas detalhadas e insights para otimizar seus eventos.
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - img [ref=e98]
+            - heading "Gestão de Eventos" [level=3] [ref=e100]
+            - paragraph [ref=e101]: Crie e gerencie eventos com facilidade, configure listas de convidados e controle vendas em tempo real.
+          - generic [ref=e102]:
+            - generic [ref=e103]:
+              - img [ref=e104]
+              - generic [ref=e106]: Rápido
+            - generic [ref=e107]:
+              - img [ref=e108]
+              - generic [ref=e110]: Seguro
+            - generic [ref=e111]:
+              - img [ref=e112]
+              - generic [ref=e114]: Mobile
+            - generic [ref=e115]:
+              - img [ref=e116]
+              - generic [ref=e119]: Online
+    - generic [ref=e121]:
+      - heading "O que nossos clientes dizem" [level=2] [ref=e123]
+      - generic [ref=e124]:
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - img [ref=e129]
+            - img [ref=e131]
+            - img [ref=e133]
+            - img [ref=e135]
+            - img [ref=e137]
+          - paragraph [ref=e139]: "\"O Sistema Universal revolucionou a forma como organizo meus eventos. Tudo ficou mais simples e profissional.\""
+          - generic [ref=e140]:
+            - generic [ref=e141]: Maria Silva
+            - generic [ref=e142]: Organizadora de Eventos
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - img [ref=e147]
+            - img [ref=e149]
+            - img [ref=e151]
+            - img [ref=e153]
+            - img [ref=e155]
+          - paragraph [ref=e157]: "\"A funcionalidade de ranking e gamificação aumentou muito a motivação da minha equipe de promoters.\""
+          - generic [ref=e158]:
+            - generic [ref=e159]: João Santos
+            - generic [ref=e160]: Promoter
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - img [ref=e165]
+            - img [ref=e167]
+            - img [ref=e169]
+            - img [ref=e171]
+            - img [ref=e173]
+          - paragraph [ref=e175]: "\"Conseguimos reduzir o tempo de check-in em 80% e eliminar completamente as filas nos nossos eventos.\""
+          - generic [ref=e176]:
+            - generic [ref=e177]: Ana Costa
+            - generic [ref=e178]: Empresa de Eventos
+    - generic [ref=e181]:
+      - heading "Pronto para revolucionar seus eventos?" [level=2] [ref=e182]
+      - paragraph [ref=e183]: Junte-se a milhares de organizadores que já transformaram seus eventos com nossa plataforma.
+      - link "Começar Gratuitamente" [ref=e184] [cursor=pointer]:
+        - /url: /register
+        - button "Começar Gratuitamente" [ref=e185] [cursor=pointer]:
+          - text: Começar Gratuitamente
+          - img
+    - contentinfo [ref=e186]:
+      - generic [ref=e187]:
+        - generic [ref=e188]:
+          - generic [ref=e189]:
+            - generic [ref=e190]:
+              - img [ref=e192]
+              - generic [ref=e194]: Sistema Universal
+            - paragraph [ref=e195]: A plataforma completa para gestão de eventos.
+          - generic [ref=e196]:
+            - heading "Recursos" [level=3] [ref=e197]
+            - list [ref=e198]:
+              - listitem [ref=e199]: Gestão de Eventos
+              - listitem [ref=e200]: Check-in Inteligente
+              - listitem [ref=e201]: PDV Integrado
+              - listitem [ref=e202]: Analytics
+          - generic [ref=e203]:
+            - heading "Empresa" [level=3] [ref=e204]
+            - list [ref=e205]:
+              - listitem [ref=e206]: Sobre
+              - listitem [ref=e207]: Blog
+              - listitem [ref=e208]: Carreiras
+              - listitem [ref=e209]: Contato
+          - generic [ref=e210]:
+            - heading "Suporte" [level=3] [ref=e211]
+            - list [ref=e212]:
+              - listitem [ref=e213]: Central de Ajuda
+              - listitem [ref=e214]: Documentação
+              - listitem [ref=e215]: Status
+              - listitem [ref=e216]: Contato
+        - paragraph [ref=e218]: © 2025 Sistema Universal. Todos os direitos reservados.
+  - region "Notifications (F8)":
+    - list
+```

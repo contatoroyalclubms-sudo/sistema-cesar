@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de CORS</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Teste de CORS - Sistema Universal</h1>
+        
+        <div>
+            <h3>URLs de Teste:</h3>
+            <p><strong>Local:</strong> http://localhost:8000</p>
+            <p><strong>Produção:</strong> https://backend-painel-universal-production.up.railway.app</p>
+        </div>
+
+        <div>
+            <button onclick="testCORS('http://localhost:8000')">Testar Local</button>
+            <button onclick="testCORS('https://backend-painel-universal-production.up.railway.app')">Testar Produção</button>
+            <button onclick="testLogin('http://localhost:8000')">Testar Login Local</button>
+            <button onclick="testLogin('https://backend-painel-universal-production.up.railway.app')">Testar Login Produção</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(message, isSuccess = true) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${isSuccess ? 'success' : 'error'}`;
+            resultDiv.innerHTML = message;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        async function testCORS(baseUrl) {
+            clearResults();
+            addResult(`🚀 Testando CORS para: ${baseUrl}`);
+
+            try {
+                // Teste 1: Health check básico
+                const healthResponse = await fetch(`${baseUrl}/healthz`);
+                const healthData = await healthResponse.json();
+                addResult(`✅ Health Check: ${healthData.status} - ${healthData.mensagem}`);
+
+                // Teste 2: API Health check
+                const apiHealthResponse = await fetch(`${baseUrl}/api/health`);
+                const apiHealthData = await apiHealthResponse.json();
+                addResult(`✅ API Health: ${apiHealthData.status} - CORS: ${apiHealthData.cors}`);
+
+                // Teste 3: Preflight request (OPTIONS)
+                const optionsResponse = await fetch(`${baseUrl}/api/auth/login`, {
+                    method: 'OPTIONS',
+                    headers: {
+                        'Origin': window.location.origin,
+                        'Access-Control-Request-Method': 'POST',
+                        'Access-Control-Request-Headers': 'Content-Type'
+                    }
+                });
+                addResult(`✅ Preflight (OPTIONS): ${optionsResponse.status} - ${optionsResponse.statusText}`);
+
+                addResult(`🎉 <strong>CORS está funcionando corretamente!</strong>`);
+
+            } catch (error) {
+                addResult(`❌ Erro de CORS: ${error.message}`, false);
+                console.error('Erro detalhado:', error);
+            }
+        }
+
+        async function testLogin(baseUrl) {
+            addResult(`🔐 Testando Login para: ${baseUrl}`);
+
+            try {
+                const loginData = {
+                    cpf: "00000000000",
+                    senha: "0000"
+                };
+
+                const response = await fetch(`${baseUrl}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                if (response.status === 202) {
+                    const data = await response.json();
+                    addResult(`✅ Login - Código de verificação solicitado: ${data.detail.substring(0, 100)}...`);
+                } else if (response.status === 200) {
+                    const data = await response.json();
+                    addResult(`✅ Login bem-sucedido: ${data.usuario.nome}`);
+                } else {
+                    const errorData = await response.json();
+                    addResult(`⚠️ Status ${response.status}: ${errorData.detail || 'Erro desconhecido'}`, false);
+                }
+
+            } catch (error) {
+                addResult(`❌ Erro no login: ${error.message}`, false);
+                console.error('Erro detalhado:', error);
+            }
+        }
+
+        // Teste automático ao carregar a página
+        window.onload = () => {
+            addResult('📋 Página carregada. Clique nos botões para testar CORS.');
+        };
+    </script>
+</body>
+</html>

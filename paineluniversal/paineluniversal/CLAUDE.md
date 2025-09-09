@@ -4,10 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Full-stack event management system "Sistema de Gestão de Eventos" with multiple services:
+Full-stack event management system "Sistema de Gestão de Eventos" with CPF-based authentication and multiple services:
 - **Backend**: FastAPI (Python 3.12+) with PostgreSQL/SQLite 
-- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
+- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS + Radix UI
+- **Authentication**: JWT-based with CPF (Brazilian tax ID) as primary identifier
 - **Additional Services**: MEEP analytics (Node.js), Landing page, Mobile app (React Native), PDV mobile
+
+## Critical Notes for Future Sessions
+
+### Authentication System
+- **NO GOOGLE AUTH**: The system uses CPF-based authentication exclusively
+- Login component: `LoginFormFixed.tsx` (NOT the old `LoginForm.tsx`)
+- Test credentials available in `auth_server.py` or backend test files
+- Default test admin: CPF "00000000000", password "admin123"
+
+### Import Dependencies Issue
+If you encounter "Failed to resolve import" errors for `@/lib/utils` or `@/lib/api`:
+1. Check if `frontend/src/lib/utils.ts` and `frontend/src/lib/api.ts` exist
+2. If missing, create them using the template versions from other working directories
+3. Restart Vite dev server with fresh cache to resolve import errors
+4. The `@/` alias maps to `src/` directory in `vite.config.ts`
 
 ## Development Commands
 
@@ -30,10 +46,15 @@ python run_server.py        # Or: python start_backend.py
 ```bash
 cd frontend
 npm install                 # Install dependencies
-npm run dev                 # Start dev server (port 5173)
+npm run dev                 # Start dev server (port 5173, auto-switches if occupied)
 npm run build               # Production build
+npm run build-with-types    # Build with TypeScript checking
 npm run lint                # Run ESLint
 npm run preview             # Preview production build
+
+# If Vite cache issues occur:
+rm -rf node_modules/.vite   # Clear Vite cache
+npm run dev                 # Restart fresh
 ```
 
 ### Additional Services
@@ -80,6 +101,7 @@ cd pdv-mobile-limpo && npm install && npm start
 - **Key Modules**: Dashboard, Eventos, PDV, Checkin, Estoque, Financeiro, Listas, Ranking, Cashless, KDS, Fidelidade
 - **PWA**: Service worker via Vite PWA plugin with offline support
 - **Forms**: React Hook Form with Yup/Zod validation
+- **Path Aliases**: `@/` maps to `src/` directory
 
 ### Key Features
 - **CPF Security**: Brazilian tax ID for all user operations
@@ -117,6 +139,7 @@ The backend includes an auto-migration system that runs on Railway deployment:
 cd backend
 poetry run pytest                               # All tests
 poetry run pytest tests/test_eventos.py -v      # Specific test
+poetry run pytest tests/test_integration_complete.py -v  # Integration tests
 poetry run pytest --cov=app --cov-report=html   # Coverage report
 ```
 
@@ -136,18 +159,31 @@ npx playwright test --ui                        # Interactive UI mode
 - WebSockets: `/api/pdv/ws/{evento_id}`, `/api/checkin/ws/{evento_id}`
 
 ## Environment Configuration
+
+### Required Environment Variables
 - **DATABASE_URL**: PostgreSQL connection string (production)
 - **SECRET_KEY**: JWT secret key
 - **FRONTEND_URL**: For CORS configuration
 - **RAILWAY_ENVIRONMENT**: Indicates Railway deployment
+
+### Optional Environment Variables
+- **REDIS_URL**: Redis connection for caching
+- **EMAIL_HOST**, **EMAIL_USER**, **EMAIL_PASSWORD**: Email service configuration
+- **WHATSAPP_TOKEN**: WhatsApp integration
+- **N8N_WEBHOOK_URL**: n8n automation webhook
+- **CORS_ORIGINS**: Allowed CORS origins (comma-separated)
+
+### Development Notes
 - Development uses SQLite by default (`eventos.db`)
-- Frontend proxies `/api` to Railway backend: `https://backend-painel-universal-production.up.railway.app`
+- Frontend dev server proxies `/api` to Railway backend: `https://backend-painel-universal-production.up.railway.app`
+- Proxy configuration in `frontend/vite.config.ts`
 
 ## Build Optimization
 - Frontend uses manual chunk splitting: vendor, radix, charts, router, forms, ui
 - TypeScript strict mode enabled
 - PWA with offline support via Vite PWA plugin
 - Vite optimized dependencies with custom rollup configuration
+- Chunk size warning limit: 1000kb
 
 ## Common Tasks
 
@@ -175,11 +211,38 @@ python railway_auto_deploy.py                   # Python deployment script
 
 ### Debug & Testing Tools
 ```bash
+cd backend
 python test_complete_authenticated.py           # Full API test suite
 python debug_login.py                          # Debug authentication issues
 python system_diagnostic.py                    # System health check
 python performance_validator.py                # Performance testing
+python auth_server.py                          # Simple auth server for testing
+
+# API Testing
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"cpf":"00000000000","senha":"admin123"}'
 ```
+
+### Quick Start Troubleshooting
+
+#### Backend Not Starting
+1. Check if port 8000 is already in use
+2. Verify Python virtual environment is activated
+3. Check `pyproject.toml` dependencies installed via Poetry
+4. Try alternative startup scripts: `auth_server.py` or `complete_server.py`
+
+#### Frontend Import Errors
+1. Verify `src/lib/utils.ts` and `src/lib/api.ts` exist
+2. Check `vite.config.ts` for `@/` path alias configuration  
+3. Clear Vite cache and restart dev server
+4. Install missing dependencies: `clsx`, `tailwind-merge`, `axios`
+
+#### Authentication Issues
+1. Use test credentials: CPF "00000000000", password "admin123"  
+2. Verify backend auth server is running on port 8000
+3. Check browser network tab for API call responses
+4. Ensure `LoginFormFixed.tsx` is being used (not `LoginForm.tsx`)
 
 ## Project Structure
 ```
@@ -208,12 +271,23 @@ python performance_validator.py                # Performance testing
 ├── landing-unique/            # Marketing landing page
 ├── mobile-app/                # React Native mobile app
 ├── pdv-mobile-limpo/          # PDV mobile app
-└── tests/                     # E2E tests
+├── e2e/                       # E2E tests
+└── tests/                     # Additional test suites
 ```
 
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+
 ## Important Notes
-- CORS is currently set to ultra-permissive mode (`*`) for debugging
-- Some modules are temporarily commented in `main.py` to avoid conflicts (estoque, multi_cardapio, permissoes)
-- Auto-migrations are temporarily disabled in production (line 49 in `main.py`)
-- The system uses CPF (Brazilian tax ID) as primary identifier for all user operations
-- WebSocket connections require proper authentication tokens
+- **Authentication**: System uses CPF-based JWT authentication exclusively (NO Google OAuth)
+- **Import Resolution**: The `@/lib/utils` and `@/lib/api` files are commonly missing and need to be recreated
+- **Vite Dev Server**: May auto-switch ports if 5173 is occupied (check terminal output)
+- **CORS**: Currently set to ultra-permissive mode (`*`) for debugging
+- **Auto-migrations**: Temporarily disabled in production (line 49 in `main.py`)
+- **CPF Primary Key**: Brazilian tax ID used as primary identifier for all user operations
+- **WebSockets**: Require proper authentication tokens for connections
+- **Build Output**: Frontend builds to `frontend/dist/`, backend serves static files in production
+- **Multiple Directories**: Project has multiple similar directory structures - ensure you're working in the correct one

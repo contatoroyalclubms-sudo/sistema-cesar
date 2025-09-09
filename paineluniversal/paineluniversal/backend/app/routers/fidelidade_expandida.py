@@ -14,7 +14,7 @@ import string
 
 from ..database import get_db
 from ..auth import get_current_user
-from ..models import Usuario, Produto, Empresa, Cliente
+from ..models import Usuario, Produto, Empresa, ClienteEvento as Cliente
 from ..models_fidelidade import (
     NivelFidelidade, TipoNivelFidelidade,
     PontuacaoCliente, TipoMovimentacaoPonto,
