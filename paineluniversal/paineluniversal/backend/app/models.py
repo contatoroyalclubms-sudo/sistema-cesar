@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Numeric, Enum, Date, Float, JSON
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Numeric, Enum, Date, Float, JSON, Time
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .database import Base
@@ -1592,7 +1592,7 @@ class SplitRecipient(Base):
     ordem_prioridade = Column(Integer, default=0)
     ativo = Column(Boolean, default=True)
     gateway_recipient_id = Column(String(100))  # ID no gateway (Stripe, Pagar.me, etc)
-    metadata = Column(Text)  # JSON com dados adicionais
+    meta_data = Column(Text)  # JSON com dados adicionais
     criado_em = Column(DateTime(timezone=True), default=datetime.now)
     atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
 
@@ -1610,7 +1610,7 @@ class SplitTransaction(Base):
     gateway_transaction_id = Column(String(100))
     processado_em = Column(DateTime(timezone=True))
     erro_detalhes = Column(Text)
-    metadata = Column(Text)  # JSON com dados do processamento
+    meta_data = Column(Text)  # JSON com dados do processamento
     criado_em = Column(DateTime(timezone=True), default=datetime.now)
     atualizado_em = Column(DateTime(timezone=True), onupdate=datetime.now)
 
