@@ -39,7 +39,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import { toast } from 'sonner';
-import api from '../../lib/api';
+import { api } from '../../lib/api';
 
 interface PesquisaSatisfacao {
   id: number;

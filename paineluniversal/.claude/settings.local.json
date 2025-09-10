@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(poetry --version)",
+      "Bash(pip --version)",
+      "Bash(poetry show:*)",
+      "Bash(poetry run python:*)",
+      "Bash(poetry install:*)",
+      "Bash(poetry lock:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(python:*)",
+      "Bash(pip show:*)",
+      "Bash(pip install:*)",
+      "Read(//c/Users/User/OneDrive/Desktop//**)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(playwright install:*)",
+      "Bash(cut:*)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

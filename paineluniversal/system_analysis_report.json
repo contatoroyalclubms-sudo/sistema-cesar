@@ -1,0 +1,224 @@
+{
+  "timestamp": "2025-09-10T01:47:46.573194",
+  "system_version": "v6",
+  "analysis_results": {
+    "python_env": {
+      "python_version": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]",
+      "poetry_available": true,
+      "pip_available": false,
+      "virtual_env": false,
+      "dependencies_status": {},
+      "poetry_version": "Poetry (version 2.1.4)"
+    },
+    "node_env": {
+      "node_version": "v22.19.0",
+      "npm_version": null,
+      "yarn_available": false,
+      "node_modules_exists": false
+    },
+    "backend": {
+      "exists": false,
+      "main_files": {},
+      "routers": [],
+      "services": [],
+      "models_count": 0,
+      "endpoints_estimate": 0,
+      "database": {
+        "sqlite_exists": false,
+        "postgresql_configured": false
+      }
+    },
+    "frontend": {
+      "exists": false,
+      "main_files": {},
+      "components": [],
+      "contexts": [],
+      "build_exists": false,
+      "dist_exists": false,
+      "dependencies_count": 0
+    },
+    "missing_features": {
+      "critical": [
+        {
+          "name": "2FA Authentication",
+          "description": "Two-factor authentication not implemented",
+          "estimated_days": 3,
+          "priority": "HIGH",
+          "files_to_modify": [
+            "app/auth.py",
+            "app/models.py",
+            "app/schemas.py"
+          ]
+        },
+        {
+          "name": "Automated Backup",
+          "description": "No automated PostgreSQL backup system",
+          "estimated_days": 2,
+          "priority": "CRITICAL",
+          "files_to_create": [
+            "scripts/backup.sh",
+            "app/services/backup.py"
+          ]
+        },
+        {
+          "name": "CI/CD Pipeline",
+          "description": "No GitHub Actions workflow",
+          "estimated_days": 3,
+          "priority": "HIGH",
+          "files_to_create": [
+            ".github/workflows/ci.yml",
+            ".github/workflows/deploy.yml"
+          ]
+        }
+      ],
+      "important": [
+        {
+          "name": "Message Queue System",
+          "description": "RabbitMQ/Kafka not configured, Celery missing",
+          "estimated_days": 2,
+          "priority": "MEDIUM",
+          "files_to_create": [
+            "app/celery.py",
+            "app/tasks.py"
+          ]
+        },
+        {
+          "name": "APM Monitoring",
+          "description": "No New Relic/Datadog integration",
+          "estimated_days": 2,
+          "priority": "MEDIUM",
+          "files_to_modify": [
+            "app/main.py"
+          ]
+        },
+        {
+          "name": "Test Coverage",
+          "description": "Coverage below 50%, missing integration tests",
+          "estimated_days": 5,
+          "priority": "MEDIUM",
+          "files_to_create": [
+            "tests/test_integration/",
+            "tests/test_load/"
+          ]
+        },
+        {
+          "name": "Advanced Caching",
+          "description": "Redis underutilized, no query cache",
+          "estimated_days": 2,
+          "priority": "MEDIUM",
+          "files_to_modify": [
+            "app/database.py",
+            "app/cache.py"
+          ]
+        }
+      ],
+      "features": [
+        {
+          "name": "PIX Integration",
+          "description": "Manual only, no dynamic QR codes",
+          "estimated_days": 3,
+          "priority": "HIGH",
+          "files_to_create": [
+            "app/services/pix.py",
+            "app/routers/pix.py"
+          ]
+        },
+        {
+          "name": "i18n Support",
+          "description": "Portuguese only, no localization",
+          "estimated_days": 3,
+          "priority": "LOW",
+          "files_to_create": [
+            "locales/",
+            "app/i18n.py"
+          ]
+        },
+        {
+          "name": "Webhooks System",
+          "description": "Not configurable via UI",
+          "estimated_days": 2,
+          "priority": "LOW",
+          "files_to_create": [
+            "app/webhooks.py",
+            "app/routers/webhooks.py"
+          ]
+        },
+        {
+          "name": "Audit Trail",
+          "description": "Basic logging only, no compliance features",
+          "estimated_days": 2,
+          "priority": "MEDIUM",
+          "files_to_create": [
+            "app/audit.py",
+            "app/models/audit.py"
+          ]
+        },
+        {
+          "name": "CDN Integration",
+          "description": "Assets served locally, no image optimization",
+          "estimated_days": 1,
+          "priority": "LOW",
+          "files_to_modify": [
+            "vite.config.ts",
+            "nginx.conf"
+          ]
+        }
+      ]
+    },
+    "security": {
+      "env_files_exposed": [
+        "paineluniversal\\backend\\.env",
+        "paineluniversal\\frontend\\.env.production"
+      ],
+      "default_credentials": [
+        {
+          "file": "system_analysis_complete.py",
+          "credentials": "admin:admin123"
+        },
+        {
+          "file": "system_analysis_complete.py",
+          "credentials": "00000000000:admin123"
+        },
+        {
+          "file": "system_analysis_complete.py",
+          "credentials": "test:test123"
+        },
+        {
+          "file": "paineluniversal\\authenticated_api_tester.py",
+          "credentials": "admin:admin123"
+        },
+        {
+          "file": "paineluniversal\\debug_auth_complete.py",
+          "credentials": "admin:admin123"
+        },
+        {
+          "file": "paineluniversal\\debug_auth_complete.py",
+          "credentials": "00000000000:admin123"
+        },
+        {
+          "file": "paineluniversal\\debug_auth_endpoint.py",
+          "credentials": "admin:admin123"
+        },
+        {
+          "file": "paineluniversal\\debug_auth_endpoint.py",
+          "credentials": "00000000000:admin123"
+        },
+        {
+          "file": "paineluniversal\\final_system_validation.py",
+          "credentials": "admin:admin123"
+        }
+      ],
+      "missing_security_headers": true,
+      "cors_too_permissive": false,
+      "jwt_expiry_too_long": false
+    },
+    "completion": {
+      "overall_percentage": 76.0,
+      "backend_ready": false,
+      "frontend_ready": false,
+      "database_ready": false,
+      "production_ready": false,
+      "estimated_days_to_complete": 30
+    }
+  }
+}

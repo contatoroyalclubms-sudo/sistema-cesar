@@ -17,7 +17,11 @@ from .database import engine, get_db
 from .models import Base
 from .routers import (
     auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, 
-    relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento, 
+    relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento,
+    # Novos routers MEEP completos
+    dashboard_analytics, comandas_cashless, equipe_completo,
+    cardapio_completo, pdv_completo, relatorios_completo,
+    marketing_automation, estoque_completo, financeiro_completo, clientes_completo,
     # meep, financeiro, printer, pdv_mobile, cashless, mesa_kds, import_export, estoque,  # COMENTADO - ESTOQUE
     # categorias_clientes, pesquisa_satisfacao, fidelidade, analytics,  # TEMPORARIAMENTE DESABILITADO PARA TESTES
     # automacao, business_intelligence, integracoes, solucoes_online, tickets, colaboradores,  # TEMPORARIAMENTE DESABILITADO PARA TESTES 
@@ -371,6 +375,37 @@ app.include_router(impressoras.router)  # Sistema de impressoras
 
 # Dashboard Financeiro Expandido
 app.include_router(dashboard_financeiro.router)
+
+# 🚀 NOVOS ROUTERS MEEP COMPLETOS - Sistema Universal v6
+# Dashboard e Analytics
+app.include_router(dashboard_analytics.router)
+
+# Sistema de Comandas e Cashless  
+app.include_router(comandas_cashless.router)
+
+# Sistema de Equipe e Permissões
+app.include_router(equipe_completo.router)
+
+# Sistema de Cardápio Digital
+app.include_router(cardapio_completo.router)
+
+# Sistema de PDV Completo
+app.include_router(pdv_completo.router)
+
+# Sistema de Relatórios Avançados
+app.include_router(relatorios_completo.router)
+
+# Sistema de Marketing e Automação
+app.include_router(marketing_automation.router)
+
+# Sistema de Estoque Avançado
+app.include_router(estoque_completo.router)
+
+# Sistema Financeiro Completo
+app.include_router(financeiro_completo.router)
+
+# Sistema de CRM e Clientes
+app.include_router(clientes_completo.router)
 
 # 🔌 WEBSOCKETS COM CORS
 @app.websocket("/api/pdv/ws/{evento_id}")

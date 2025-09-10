@@ -2818,11 +2818,11 @@ class FluxoAutomacao(Base):
     # Relacionamentos
     criador = relationship("Usuario")
     campanhas = relationship("CampanhaCRM", back_populates="fluxo_automacao")
-    execucoes = relationship("ExecucaoFluxo", back_populates="fluxo")
+    execucoes = relationship("ExecucaoFluxoAutomacao", back_populates="fluxo")
 
-class ExecucaoFluxo(Base):
+class ExecucaoFluxoAutomacao(Base):
     """Execuções individuais de fluxos de automação"""
-    __tablename__ = "execucoes_fluxo"
+    __tablename__ = "execucoes_fluxo_automacao"
     
     id = Column(Integer, primary_key=True, index=True)
     
@@ -2913,3 +2913,13 @@ class TemplateComunicacao(Base):
     # Relacionamentos
     criador = relationship("Usuario")
 
+
+
+# ==================== IMPORTAR MODELOS MEEP COMPLETOS ====================
+# Import all additional MEEP models to make them available through main models module
+from .models_meep_complete import *
+
+
+# ==================== IMPORTAR MODELOS MEEP COMPLETOS ====================
+# Import all additional MEEP models to make them available through main models module
+from .models_meep_complete import *
