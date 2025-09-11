@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste API</title>
+</head>
+<body>
+    <h1>Teste de Conexão API</h1>
+    <button onclick="testarAPI()">Testar API</button>
+    <div id="resultado"></div>
+
+    <script>
+        async function testarAPI() {
+            const resultado = document.getElementById('resultado');
+            
+            try {
+                // Testar healthcheck
+                const healthResponse = await fetch('http://localhost:8000/healthz');
+                const healthData = await healthResponse.json();
+                resultado.innerHTML += `<p>✅ Healthcheck: ${JSON.stringify(healthData)}</p>`;
+                
+                // Testar login
+                const loginResponse = await fetch('http://localhost:8000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cpf: '00000000000',
+                        senha: '0000'
+                    })
+                });
+                
+                if (loginResponse.status === 202) {
+                    const loginData = await loginResponse.json();
+                    resultado.innerHTML += `<p>🔐 Login (needs verification): ${JSON.stringify(loginData)}</p>`;
+                } else {
+                    const loginData = await loginResponse.json();
+                    resultado.innerHTML += `<p>🔐 Login response: ${JSON.stringify(loginData)}</p>`;
+                }
+                
+            } catch (error) {
+                resultado.innerHTML += `<p>❌ Erro: ${error.message}</p>`;
+                console.error('Erro:', error);
+            }
+        }
+    </script>
+</body>
+</html>

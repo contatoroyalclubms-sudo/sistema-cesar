@@ -1,0 +1,9 @@
+{
+  "framework": "vite",
+  "buildCommand": "cd paineluniversal/frontend && npm run build",
+  "outputDirectory": "paineluniversal/frontend/dist",
+  "installCommand": "cd paineluniversal/frontend && npm install",
+  "env": {
+    "VITE_API_URL": "@railway_backend_url"
+  }
+}

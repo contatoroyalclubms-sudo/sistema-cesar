@@ -1,0 +1,49 @@
+{
+  "name": "painel-universal-e2e",
+  "version": "1.0.0",
+  "description": "Testes E2E com Playwright para o Painel Universal",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:codegen": "playwright codegen http://localhost:5173",
+    "test:ci": "playwright test --reporter=html",
+    "test:parallel": "playwright test --workers=4",
+    "test:sequential": "playwright test --workers=1",
+    "test:chrome": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:safari": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project=mobile",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:critical": "playwright test --grep @critical",
+    "test:auth": "playwright test tests/auth.spec.ts",
+    "test:eventos": "playwright test tests/eventos.spec.ts",
+    "test:pdv": "playwright test tests/pdv.spec.ts",
+    "test:checkin": "playwright test tests/checkin.spec.ts",
+    "test:full": "playwright test tests/full-flow.spec.ts",
+    "setup": "ts-node scripts/setup-test-data.ts setup",
+    "cleanup": "ts-node scripts/setup-test-data.ts cleanup",
+    "health": "ts-node scripts/setup-test-data.ts health",
+    "pretest": "npm run health && npm run setup",
+    "posttest": "npm run test:report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "dotenv": "^16.3.1",
+    "typescript": "^5.3.0",
+    "@faker-js/faker": "^8.3.1",
+    "axios": "^1.6.2",
+    "ts-node": "^10.9.1"
+  },
+  "keywords": [
+    "e2e",
+    "testing",
+    "playwright",
+    "automation"
+  ],
+  "author": "Painel Universal Team",
+  "license": "MIT"
+}

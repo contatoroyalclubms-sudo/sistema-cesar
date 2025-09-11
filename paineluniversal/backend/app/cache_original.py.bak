@@ -1,0 +1,487 @@
+"""
+🚀 SISTEMA DE CACHE COM REDIS
+Cache de alta performance para validações e dados frequentes
+Última atualização: 05/01/2025
+"""
+
+import redis
+import json
+import hashlib
+import pickle
+from typing import Optional, Any, Callable, Union
+from datetime import timedelta
+from functools import wraps
+import os
+import logging
+from contextlib import contextmanager
+
+logger = logging.getLogger(__name__)
+
+# ===== CONFIGURAÇÃO DO REDIS =====
+
+class RedisCache:
+    """Cliente Redis com fallback para memória em desenvolvimento"""
+    
+    def __init__(self):
+        self.redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+        self.connected = False
+        self.client: Optional[redis.Redis] = None
+        self.memory_cache: dict = {}  # Fallback para desenvolvimento
+        self._connect()
+    
+    def _connect(self):
+        """Conecta ao Redis com fallback para cache em memória"""
+        try:
+            # Desabilitar Redis temporariamente para evitar erros
+            if os.getenv("DISABLE_REDIS", "true").lower() == "true":
+                raise redis.ConnectionError("Redis desabilitado via DISABLE_REDIS=true")
+                
+            self.client = redis.from_url(
+                self.redis_url,
+                decode_responses=True,
+                socket_connect_timeout=1,  # Reduzir timeout
+                socket_timeout=1,
+                retry_on_timeout=False,  # Não tentar novamente
+                health_check_interval=30
+            )
+            # Testa conexão
+            self.client.ping()
+            self.connected = True
+            logger.info(f"✅ Redis conectado: {self.redis_url}")
+        except (redis.ConnectionError, redis.TimeoutError, Exception) as e:
+            logger.info(f"ℹ️ Redis não disponível. Usando cache em memória para desenvolvimento.")
+            self.connected = False
+    
+    def _make_key(self, namespace: str, key: str) -> str:
+        """Gera chave com namespace"""
+        return f"{namespace}:{key}"
+    
+    def get(self, key: str, namespace: str = "default") -> Optional[Any]:
+        """Recupera valor do cache"""
+        full_key = self._make_key(namespace, key)
+        
+        if self.connected and self.client:
+            try:
+                value = self.client.get(full_key)
+                if value:
+                    return json.loads(value) if value.startswith('{') else value
+            except Exception as e:
+                logger.error(f"Erro ao buscar do Redis: {e}")
+        
+        # Fallback para memória
+        return self.memory_cache.get(full_key)
+    
+    def set(self, key: str, value: Any, ttl: int = 3600, namespace: str = "default") -> bool:
+        """Armazena valor no cache"""
+        full_key = self._make_key(namespace, key)
+        
+        # Serializa valor
+        if isinstance(value, (dict, list)):
+            value = json.dumps(value)
+        else:
+            value = str(value)
+        
+        if self.connected and self.client:
+            try:
+                return self.client.setex(full_key, ttl, value)
+            except Exception as e:
+                logger.error(f"Erro ao salvar no Redis: {e}")
+        
+        # Fallback para memória
+        self.memory_cache[full_key] = value
+        return True
+    
+    def delete(self, key: str, namespace: str = "default") -> bool:
+        """Remove valor do cache"""
+        full_key = self._make_key(namespace, key)
+        
+        if self.connected and self.client:
+            try:
+                return bool(self.client.delete(full_key))
+            except Exception as e:
+                logger.error(f"Erro ao deletar do Redis: {e}")
+        
+        # Fallback para memória
+        if full_key in self.memory_cache:
+            del self.memory_cache[full_key]
+            return True
+        return False
+    
+    def exists(self, key: str, namespace: str = "default") -> bool:
+        """Verifica se chave existe"""
+        full_key = self._make_key(namespace, key)
+        
+        if self.connected and self.client:
+            try:
+                return bool(self.client.exists(full_key))
+            except Exception as e:
+                logger.error(f"Erro ao verificar existência no Redis: {e}")
+        
+        return full_key in self.memory_cache
+    
+    def flush(self, namespace: Optional[str] = None) -> int:
+        """Limpa cache (todo ou namespace específico)"""
+        count = 0
+        
+        if namespace:
+            pattern = f"{namespace}:*"
+            if self.connected and self.client:
+                try:
+                    for key in self.client.scan_iter(pattern):
+                        self.client.delete(key)
+                        count += 1
+                except Exception as e:
+                    logger.error(f"Erro ao limpar namespace {namespace}: {e}")
+            
+            # Limpa memória
+            keys_to_delete = [k for k in self.memory_cache if k.startswith(f"{namespace}:")]
+            for key in keys_to_delete:
+                del self.memory_cache[key]
+                count += 1
+        else:
+            if self.connected and self.client:
+                try:
+                    count = self.client.flushdb()
+                except Exception as e:
+                    logger.error(f"Erro ao limpar todo cache: {e}")
+            
+            # Limpa toda memória
+            count = len(self.memory_cache)
+            self.memory_cache.clear()
+        
+        return count
+    
+    def increment(self, key: str, amount: int = 1, namespace: str = "counters") -> int:
+        """Incrementa contador"""
+        full_key = self._make_key(namespace, key)
+        
+        if self.connected and self.client:
+            try:
+                return self.client.incr(full_key, amount)
+            except Exception as e:
+                logger.error(f"Erro ao incrementar contador: {e}")
+        
+        # Fallback para memória
+        current = self.memory_cache.get(full_key, 0)
+        if isinstance(current, str):
+            current = int(current)
+        self.memory_cache[full_key] = current + amount
+        return self.memory_cache[full_key]
+    
+    def get_ttl(self, key: str, namespace: str = "default") -> int:
+        """Retorna TTL restante em segundos"""
+        full_key = self._make_key(namespace, key)
+        
+        if self.connected and self.client:
+            try:
+                ttl = self.client.ttl(full_key)
+                return ttl if ttl > 0 else 0
+            except Exception as e:
+                logger.error(f"Erro ao buscar TTL: {e}")
+        
+        return 0  # Sem TTL em cache de memória
+    
+    @contextmanager
+    def lock(self, key: str, timeout: int = 10, namespace: str = "locks"):
+        """Context manager para lock distribuído"""
+        full_key = self._make_key(namespace, key)
+        lock = None
+        
+        if self.connected and self.client:
+            lock = self.client.lock(full_key, timeout=timeout)
+            try:
+                if lock.acquire(blocking=True, blocking_timeout=timeout):
+                    yield
+                else:
+                    raise TimeoutError(f"Não foi possível adquirir lock: {key}")
+            finally:
+                if lock and lock.owned():
+                    lock.release()
+        else:
+            # Sem lock em modo memória
+            yield
+
+# Instância global do cache
+cache = RedisCache()
+
+# ===== DECORATORS PARA CACHE =====
+
+def cached(
+    ttl: Union[int, timedelta] = 3600,
+    namespace: str = "default",
+    key_prefix: Optional[str] = None,
+    unless: Optional[Callable] = None
+):
+    """
+    Decorator para cache de funções
+    
+    Args:
+        ttl: Tempo de vida em segundos ou timedelta
+        namespace: Namespace do cache
+        key_prefix: Prefixo customizado para chave
+        unless: Função que retorna True para pular cache
+    """
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # Verifica condição para pular cache
+            if unless and unless(*args, **kwargs):
+                return func(*args, **kwargs)
+            
+            # Gera chave do cache
+            cache_key = _generate_cache_key(func, args, kwargs, key_prefix)
+            
+            # Busca no cache
+            cached_value = cache.get(cache_key, namespace)
+            if cached_value is not None:
+                logger.debug(f"Cache hit: {namespace}:{cache_key}")
+                return cached_value
+            
+            # Executa função
+            result = func(*args, **kwargs)
+            
+            # Armazena no cache
+            ttl_seconds = ttl.total_seconds() if isinstance(ttl, timedelta) else ttl
+            cache.set(cache_key, result, int(ttl_seconds), namespace)
+            logger.debug(f"Cache set: {namespace}:{cache_key}")
+            
+            return result
+        
+        # Adiciona método para limpar cache
+        def clear_cache():
+            pattern = f"{key_prefix or func.__name__}:*"
+            cache.flush(namespace)
+        
+        wrapper.clear_cache = clear_cache
+        return wrapper
+    
+    return decorator
+
+def _generate_cache_key(func: Callable, args: tuple, kwargs: dict, prefix: Optional[str] = None) -> str:
+    """Gera chave única para função e argumentos"""
+    # Usa prefixo customizado ou nome da função
+    base = prefix or func.__name__
+    
+    # Cria hash dos argumentos
+    key_parts = []
+    
+    # Adiciona argumentos posicionais
+    for arg in args:
+        if hasattr(arg, '__dict__'):
+            # Objeto: usa seus atributos
+            key_parts.append(str(sorted(arg.__dict__.items())))
+        else:
+            key_parts.append(str(arg))
+    
+    # Adiciona argumentos nomeados
+    for k, v in sorted(kwargs.items()):
+        key_parts.append(f"{k}={v}")
+    
+    # Gera hash MD5 dos argumentos
+    key_str = ":".join(key_parts)
+    key_hash = hashlib.md5(key_str.encode()).hexdigest()[:8]
+    
+    return f"{base}:{key_hash}"
+
+# ===== CACHE ESPECÍFICO PARA VALIDAÇÕES =====
+
+class ValidationCache:
+    """Cache especializado para validações de CPF/CNPJ"""
+    
+    NAMESPACE = "validations"
+    TTL_SUCCESS = 86400  # 24 horas para validações bem-sucedidas
+    TTL_FAILURE = 3600   # 1 hora para validações falhas
+    
+    @classmethod
+    def cache_cpf(cls, cpf: str, valid: bool, formatted: Optional[str] = None):
+        """Armazena resultado de validação de CPF"""
+        key = f"cpf:{cpf.replace('.', '').replace('-', '')}"
+        value = {
+            "valid": valid,
+            "formatted": formatted,
+            "validated_at": datetime.now().isoformat()
+        }
+        ttl = cls.TTL_SUCCESS if valid else cls.TTL_FAILURE
+        cache.set(key, value, ttl, cls.NAMESPACE)
+    
+    @classmethod
+    def get_cpf(cls, cpf: str) -> Optional[dict]:
+        """Recupera validação de CPF do cache"""
+        key = f"cpf:{cpf.replace('.', '').replace('-', '')}"
+        return cache.get(key, cls.NAMESPACE)
+    
+    @classmethod
+    def cache_cnpj(cls, cnpj: str, valid: bool, formatted: Optional[str] = None):
+        """Armazena resultado de validação de CNPJ"""
+        key = f"cnpj:{cnpj.replace('.', '').replace('-', '').replace('/', '')}"
+        value = {
+            "valid": valid,
+            "formatted": formatted,
+            "validated_at": datetime.now().isoformat()
+        }
+        ttl = cls.TTL_SUCCESS if valid else cls.TTL_FAILURE
+        cache.set(key, value, ttl, cls.NAMESPACE)
+    
+    @classmethod
+    def get_cnpj(cls, cnpj: str) -> Optional[dict]:
+        """Recupera validação de CNPJ do cache"""
+        key = f"cnpj:{cnpj.replace('.', '').replace('-', '').replace('/', '')}"
+        return cache.get(key, cls.NAMESPACE)
+    
+    @classmethod
+    def invalidate_cpf(cls, cpf: str):
+        """Invalida cache de CPF"""
+        key = f"cpf:{cpf.replace('.', '').replace('-', '')}"
+        cache.delete(key, cls.NAMESPACE)
+    
+    @classmethod
+    def invalidate_cnpj(cls, cnpj: str):
+        """Invalida cache de CNPJ"""
+        key = f"cnpj:{cnpj.replace('.', '').replace('-', '').replace('/', '')}"
+        cache.delete(key, cls.NAMESPACE)
+    
+    @classmethod
+    def get_stats(cls) -> dict:
+        """Retorna estatísticas de cache"""
+        return {
+            "cpf_cached": cache.client.keys(f"{cls.NAMESPACE}:cpf:*") if cache.connected else [],
+            "cnpj_cached": cache.client.keys(f"{cls.NAMESPACE}:cnpj:*") if cache.connected else [],
+            "total_validations": cache.increment("validation_count", 0, "stats"),
+            "cache_hits": cache.increment("cache_hits", 0, "stats"),
+            "cache_misses": cache.increment("cache_misses", 0, "stats")
+        }
+
+# ===== CACHE PARA QUERIES DE BANCO =====
+
+class QueryCache:
+    """Cache para queries frequentes do banco"""
+    
+    NAMESPACE = "queries"
+    
+    @classmethod
+    @cached(ttl=300, namespace="queries")  # 5 minutos
+    def get_evento(cls, evento_id: int):
+        """Cache para busca de evento por ID"""
+        # Será sobrescrito no uso real
+        pass
+    
+    @classmethod
+    @cached(ttl=60, namespace="queries")  # 1 minuto
+    def count_checkins(cls, evento_id: int):
+        """Cache para contagem de check-ins"""
+        # Será sobrescrito no uso real
+        pass
+    
+    @classmethod
+    @cached(ttl=600, namespace="queries")  # 10 minutos
+    def get_user_by_cpf(cls, cpf: str):
+        """Cache para busca de usuário por CPF"""
+        # Será sobrescrito no uso real
+        pass
+    
+    @classmethod
+    def invalidate_evento(cls, evento_id: int):
+        """Invalida cache de evento"""
+        cache.delete(f"get_evento:{evento_id}", cls.NAMESPACE)
+        cache.delete(f"count_checkins:{evento_id}", cls.NAMESPACE)
+    
+    @classmethod
+    def invalidate_user(cls, cpf: str):
+        """Invalida cache de usuário"""
+        cache.delete(f"get_user_by_cpf:{cpf}", cls.NAMESPACE)
+
+# ===== CACHE PARA SESSÕES =====
+
+class SessionCache:
+    """Cache para sessões de usuário"""
+    
+    NAMESPACE = "sessions"
+    TTL = 7200  # 2 horas
+    
+    @classmethod
+    def set_session(cls, token: str, user_data: dict):
+        """Armazena sessão de usuário"""
+        cache.set(token, user_data, cls.TTL, cls.NAMESPACE)
+    
+    @classmethod
+    def get_session(cls, token: str) -> Optional[dict]:
+        """Recupera sessão de usuário"""
+        return cache.get(token, cls.NAMESPACE)
+    
+    @classmethod
+    def refresh_session(cls, token: str):
+        """Renova TTL da sessão"""
+        user_data = cls.get_session(token)
+        if user_data:
+            cls.set_session(token, user_data)
+    
+    @classmethod
+    def invalidate_session(cls, token: str):
+        """Invalida sessão"""
+        cache.delete(token, cls.NAMESPACE)
+
+# ===== WARMUP DO CACHE =====
+
+def warmup_cache():
+    """Pré-carrega dados frequentes no cache"""
+    try:
+        logger.info("♨️ Aquecendo cache...")
+        
+        # Testa conexão
+        if not cache.connected:
+            logger.warning("Cache Redis não disponível, usando memória")
+            return
+        
+        # Aqui você pode pré-carregar dados frequentes
+        # Exemplo: eventos ativos, configurações, etc.
+        
+        logger.info("✅ Cache aquecido com sucesso")
+        
+    except Exception as e:
+        logger.error(f"Erro ao aquecer cache: {e}")
+
+# ===== MONITORAMENTO DO CACHE =====
+
+def get_cache_metrics() -> dict:
+    """Retorna métricas do cache"""
+    if not cache.connected:
+        return {
+            "status": "memory_only",
+            "connected": False,
+            "memory_keys": len(cache.memory_cache)
+        }
+    
+    try:
+        info = cache.client.info()
+        return {
+            "status": "connected",
+            "connected": True,
+            "used_memory": info.get("used_memory_human"),
+            "total_keys": cache.client.dbsize(),
+            "hits": info.get("keyspace_hits", 0),
+            "misses": info.get("keyspace_misses", 0),
+            "hit_rate": _calculate_hit_rate(info.get("keyspace_hits", 0), info.get("keyspace_misses", 0)),
+            "evicted_keys": info.get("evicted_keys", 0),
+            "connected_clients": info.get("connected_clients", 0)
+        }
+    except Exception as e:
+        logger.error(f"Erro ao buscar métricas: {e}")
+        return {"status": "error", "error": str(e)}
+
+def _calculate_hit_rate(hits: int, misses: int) -> float:
+    """Calcula taxa de acerto do cache"""
+    total = hits + misses
+    return round((hits / total * 100), 2) if total > 0 else 0.0
+
+# Importações necessárias
+from datetime import datetime
+
+__all__ = [
+    'cache',
+    'cached',
+    'ValidationCache',
+    'QueryCache',
+    'SessionCache',
+    'warmup_cache',
+    'get_cache_metrics'
+]

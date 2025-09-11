@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Conectividade - Painel Universal</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: #fff; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #1a5e1a; border: 1px solid #4caf50; }
+        .error { background: #5e1a1a; border: 1px solid #f44336; }
+        .info { background: #1a3a5e; border: 1px solid #2196f3; }
+        .loading { background: #5e4d1a; border: 1px solid #ff9800; }
+        pre { background: #333; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        button { background: #2196f3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #1976d2; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Teste de Conectividade - Painel Universal</h1>
+    
+    <div id="results"></div>
+    
+    <button onclick="testBackend()">🧪 Testar Backend</button>
+    <button onclick="testFrontendAPI()">🌐 Testar API Frontend</button>
+    <button onclick="clearResults()">🗑️ Limpar</button>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            results.appendChild(div);
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function clearResults() {
+            results.innerHTML = '';
+        }
+
+        async function testBackend() {
+            log('🚀 Iniciando teste do backend...', 'info');
+            
+            const tests = [
+                { name: 'Health Check', url: 'https://backend-painel-universal-production.up.railway.app/healthz' },
+                { name: 'Documentação', url: 'https://backend-painel-universal-production.up.railway.app/docs' },
+                { name: 'Auth (sem token)', url: 'https://backend-painel-universal-production.up.railway.app/api/auth/me' }
+            ];
+
+            for (const test of tests) {
+                try {
+                    log(`⏳ Testando ${test.name}...`, 'loading');
+                    const response = await fetch(test.url);
+                    
+                    if (response.ok) {
+                        const data = await response.text();
+                        log(`✅ ${test.name}: OK (${response.status})`, 'success');
+                        if (data.length < 200) {
+                            log(`📄 Resposta: ${data}`, 'info');
+                        }
+                    } else {
+                        log(`⚠️ ${test.name}: ${response.status} ${response.statusText}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ ${test.name}: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        async function testFrontendAPI() {
+            log('🌐 Testando configuração da API do frontend...', 'info');
+            
+            // Simular configuração do frontend
+            const isProd = window.location.hostname.includes('railway.app');
+            const apiBase = isProd ? 'https://backend-painel-universal-production.up.railway.app' : '';
+            
+            log(`🔍 Ambiente detectado: ${isProd ? 'Produção' : 'Desenvolvimento'}`, 'info');
+            log(`🔗 URL Base da API: ${apiBase || 'proxy local'}`, 'info');
+            
+            if (isProd) {
+                try {
+                    log('⏳ Testando conexão com API configurada...', 'loading');
+                    const response = await fetch(`${apiBase}/healthz`);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        log(`✅ API conectada com sucesso!`, 'success');
+                        log(`📊 Dados: ${JSON.stringify(data, null, 2)}`, 'info');
+                    } else {
+                        log(`❌ Erro na API: ${response.status}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ Erro de conexão: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        // Testar automaticamente ao carregar
+        window.onload = () => {
+            log('📱 Página carregada - Railway Painel Universal', 'info');
+            testBackend();
+        };
+    </script>
+</body>
+</html>

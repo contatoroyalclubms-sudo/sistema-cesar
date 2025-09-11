@@ -1,0 +1,755 @@
+{
+  "timestamp": "2025-09-10T11:31:41.126Z",
+  "testSummary": {
+    "total": 3,
+    "passed": 3,
+    "partial": 0,
+    "failed": 0
+  },
+  "systemInfo": {
+    "frontend": "http://localhost:5177",
+    "backend": "http://localhost:8001",
+    "credentials": {
+      "cpf": "00000000000",
+      "password": "0000"
+    }
+  },
+  "detailedResults": [
+    {
+      "test": "API - Compatibilidade Frontend-Backend",
+      "status": "PASSED",
+      "details": {
+        "totalCalls": 39,
+        "successful": 4,
+        "failed": 3,
+        "corsErrors": 0,
+        "failedCallDetails": [
+          {
+            "url": "http://localhost:8002/api/dashboard/avancado",
+            "method": "GET",
+            "status": 404
+          },
+          {
+            "url": "http://localhost:5177/api/checkins/dashboard/1",
+            "method": "GET",
+            "status": 404
+          },
+          {
+            "url": "http://localhost:5177/api/checkins/evento/1",
+            "method": "GET",
+            "status": 404
+          }
+        ]
+      },
+      "timestamp": "2025-09-10T11:31:33.845Z"
+    },
+    {
+      "test": "Responsividade - Multi-device",
+      "status": "PASSED",
+      "details": [
+        {
+          "viewport": "Desktop",
+          "size": "1920x1080",
+          "hamburgerMenu": false,
+          "sidebar": false,
+          "contentOverflow": false,
+          "status": "GOOD"
+        },
+        {
+          "viewport": "Tablet",
+          "size": "768x1024",
+          "hamburgerMenu": false,
+          "sidebar": false,
+          "contentOverflow": false,
+          "status": "GOOD"
+        },
+        {
+          "viewport": "Mobile",
+          "size": "375x667",
+          "hamburgerMenu": false,
+          "sidebar": false,
+          "contentOverflow": false,
+          "status": "GOOD"
+        }
+      ],
+      "timestamp": "2025-09-10T11:31:38.720Z"
+    },
+    {
+      "test": "Performance - Carregamento",
+      "status": "PASSED",
+      "score": "75/100",
+      "details": {
+        "initialLoad": {
+          "loadTime": 1032,
+          "networkIdleTime": 1821,
+          "domContentLoaded": 0,
+          "firstContentfulPaint": 1076,
+          "resourcesLoaded": 223
+        }
+      },
+      "timestamp": "2025-09-10T11:31:40.876Z"
+    }
+  ],
+  "networkAnalysis": {
+    "totalRequests": 1164,
+    "apiCalls": 47,
+    "failedRequests": 3
+  },
+  "errors": [
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.155Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.155Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.156Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      },
+      "timestamp": "2025-09-10T11:31:25.156Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.161Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.161Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.164Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      },
+      "timestamp": "2025-09-10T11:31:25.164Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.165Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.165Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.172Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      },
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.173Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      },
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:8002/api/dashboard/avancado",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:25.177Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      },
+      "timestamp": "2025-09-10T11:31:25.178Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:5177/api/checkins/dashboard/1",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:31.629Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/dashboard/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:31.629Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "WebSocket connection to 'ws://localhost:8002/api/checkin/ws/1' failed: Error during WebSocket handshake: Unexpected response code: 403",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 64,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:31.928Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Erro WebSocket check-in: Event",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 86,
+        "columnNumber": 14
+      },
+      "timestamp": "2025-09-10T11:31:31.929Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:5177/api/checkins/evento/1",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:31.931Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/evento/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:31.931Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:5177/api/checkins/dashboard/1",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:31.932Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/dashboard/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:31.932Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "WebSocket connection to 'ws://localhost:8002/api/checkin/ws/1' failed: Error during WebSocket handshake: Unexpected response code: 403",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 64,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:31.942Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Erro WebSocket check-in: Event",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 86,
+        "columnNumber": 14
+      },
+      "timestamp": "2025-09-10T11:31:31.943Z"
+    },
+    {
+      "type": "Network Error",
+      "url": "http://localhost:5177/api/checkins/evento/1",
+      "status": 404,
+      "statusText": "Not Found",
+      "timestamp": "2025-09-10T11:31:32.249Z"
+    },
+    {
+      "type": "Console Error",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/evento/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      },
+      "timestamp": "2025-09-10T11:31:32.249Z"
+    }
+  ],
+  "consoleMessages": [
+    {
+      "timestamp": "2025-09-10T11:31:25.155Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.156Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.156Z",
+      "type": "error",
+      "text": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.161Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.163Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.164Z",
+      "type": "error",
+      "text": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.165Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.172Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.173Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.173Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.173Z",
+      "type": "error",
+      "text": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.173Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.173Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.177Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.177Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.177Z",
+      "type": "error",
+      "text": "Erro ao carregar dados do dashboard: AxiosError",
+      "location": {
+        "url": "http://localhost:5177/src/components/dashboard/Dashboard.tsx",
+        "lineNumber": 123,
+        "columnNumber": 14
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.177Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.177Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.177Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:8002/api/dashboard/avancado",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:25.178Z",
+      "type": "error",
+      "text": "❌ API Error Details: {status: 404, statusText: Not Found, url: /api/dashboard/avancado, baseURL: http://localhost:8002, method: GET}",
+      "location": {
+        "url": "http://localhost:5177/src/services/api.ts",
+        "lineNumber": 122,
+        "columnNumber": 12
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.629Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/dashboard/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.928Z",
+      "type": "error",
+      "text": "WebSocket connection to 'ws://localhost:8002/api/checkin/ws/1' failed: Error during WebSocket handshake: Unexpected response code: 403",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 64,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.929Z",
+      "type": "error",
+      "text": "Erro WebSocket check-in: Event",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 86,
+        "columnNumber": 14
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.931Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/evento/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.932Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/dashboard/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.942Z",
+      "type": "error",
+      "text": "WebSocket connection to 'ws://localhost:8002/api/checkin/ws/1' failed: Error during WebSocket handshake: Unexpected response code: 403",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 64,
+        "columnNumber": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:31.943Z",
+      "type": "error",
+      "text": "Erro WebSocket check-in: Event",
+      "location": {
+        "url": "http://localhost:5177/src/components/checkin/CheckinInteligente.tsx",
+        "lineNumber": 86,
+        "columnNumber": 14
+      }
+    },
+    {
+      "timestamp": "2025-09-10T11:31:32.249Z",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://localhost:5177/api/checkins/evento/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "recommendations": [
+    "Fix CORS configuration between frontend and backend",
+    "Implement proper error handling in frontend components",
+    "Add loading states for better UX",
+    "Optimize bundle size and lazy loading",
+    "Add proper form validation",
+    "Implement comprehensive test coverage",
+    "Add proper authentication token management"
+  ]
+}

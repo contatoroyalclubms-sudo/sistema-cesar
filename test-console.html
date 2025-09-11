@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Console Errors</title>
+</head>
+<body>
+    <h1>Testando Erros do Console</h1>
+    <div id="errors"></div>
+    <button onclick="testApp()">Testar App</button>
+    
+    <script>
+        const errorsDiv = document.getElementById('errors');
+        let errors = [];
+        
+        // Capturar erros do console
+        const originalError = console.error;
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            errors.push(args.join(' '));
+            updateErrors();
+        };
+        
+        window.addEventListener('error', (event) => {
+            errors.push(`ERROR: ${event.message} at ${event.filename}:${event.lineno}:${event.colno}`);
+            updateErrors();
+        });
+        
+        function updateErrors() {
+            errorsDiv.innerHTML = '<h2>Erros Capturados:</h2>' + 
+                errors.map(e => `<pre style="color: red">${e}</pre>`).join('');
+        }
+        
+        async function testApp() {
+            try {
+                const response = await fetch('http://localhost:5174');
+                const html = await response.text();
+                
+                // Criar iframe para testar
+                const iframe = document.createElement('iframe');
+                iframe.src = 'http://localhost:5174';
+                iframe.style.width = '100%';
+                iframe.style.height = '600px';
+                iframe.style.border = '2px solid #ccc';
+                document.body.appendChild(iframe);
+                
+                // Monitorar erros do iframe
+                iframe.onload = function() {
+                    try {
+                        // Tentar acessar o console do iframe
+                        const iframeWindow = iframe.contentWindow;
+                        if (iframeWindow) {
+                            iframeWindow.addEventListener('error', (event) => {
+                                errors.push(`IFRAME ERROR: ${event.message}`);
+                                updateErrors();
+                            });
+                        }
+                    } catch (e) {
+                        console.log('Cannot access iframe due to CORS');
+                    }
+                };
+                
+            } catch (error) {
+                errors.push(`FETCH ERROR: ${error.message}`);
+                updateErrors();
+            }
+        }
+        
+        // Auto-testar
+        setTimeout(testApp, 1000);
+    </script>
+</body>
+</html>

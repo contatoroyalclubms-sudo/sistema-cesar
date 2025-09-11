@@ -1,0 +1,557 @@
+"""
+🚦 SISTEMA DE RATE LIMITING
+Controle de taxa de requisições por endpoint
+Última atualização: 05/01/2025
+"""
+
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+from fastapi import Request, Response, HTTPException, status
+from fastapi.responses import JSONResponse
+from typing import Optional, Callable, Dict, Any
+from datetime import datetime, timedelta
+import logging
+import hashlib
+from functools import wraps
+
+# Import cache se disponível
+try:
+    from app.cache import cache
+    CACHE_ENABLED = True
+except ImportError:
+    CACHE_ENABLED = False
+    
+logger = logging.getLogger(__name__)
+
+# ===== CONFIGURAÇÃO DO LIMITER =====
+
+def get_user_identifier(request: Request) -> str:
+    """
+    Identifica o usuário para rate limiting
+    Prioridade: user_id (se autenticado) > IP > forwarded IP
+    """
+    # Tentar pegar user_id do token JWT
+    if hasattr(request.state, "user") and request.state.user:
+        return f"user:{request.state.user.get('id', 'unknown')}"
+    
+    # Usar IP do cliente
+    client_ip = get_remote_address(request)
+    
+    # Considerar headers de proxy
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for:
+        client_ip = forwarded_for.split(",")[0].strip()
+    
+    real_ip = request.headers.get("X-Real-IP")
+    if real_ip:
+        client_ip = real_ip
+    
+    return f"ip:{client_ip}"
+
+# Criar instância global do limiter
+limiter = Limiter(
+    key_func=get_user_identifier,
+    default_limits=["1000 per hour"],  # Limite global padrão
+    storage_uri=cache.redis_url if CACHE_ENABLED and hasattr(cache, 'redis_url') else "memory://",
+    strategy="fixed-window",  # Ou "moving-window" para mais precisão
+    headers_enabled=True,  # Adiciona headers de rate limit nas respostas
+    swallow_errors=False  # Não silenciar erros de rate limiting
+)
+
+# ===== HANDLERS DE ERRO =====
+
+async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
+    """
+    Handler customizado para quando o rate limit é excedido
+    """
+    # Extrair informações do erro
+    response = JSONResponse(
+        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        content={
+            "error": "Limite de requisições excedido",
+            "code": "RATE_LIMIT_EXCEEDED",
+            "message": str(exc.detail),
+            "retry_after": _get_retry_after(request),
+            "timestamp": datetime.now().isoformat()
+        }
+    )
+    
+    # Adicionar headers informativos
+    response.headers["Retry-After"] = str(_get_retry_after(request))
+    response.headers["X-RateLimit-Limit"] = request.state.view_rate_limit
+    
+    # Log do evento
+    logger.warning(
+        f"Rate limit exceeded for {get_user_identifier(request)} on {request.url.path}",
+        extra={
+            "identifier": get_user_identifier(request),
+            "path": request.url.path,
+            "method": request.method
+        }
+    )
+    
+    return response
+
+def _get_retry_after(request: Request) -> int:
+    """Calcula tempo até poder tentar novamente (em segundos)"""
+    # Por padrão, 60 segundos
+    return 60
+
+# ===== DECORATORS DE RATE LIMITING =====
+
+class RateLimits:
+    """Configurações de rate limit por tipo de endpoint"""
+    
+    # Autenticação - mais restritivo
+    AUTH_LOGIN = "5 per minute"
+    AUTH_REGISTER = "3 per minute"
+    AUTH_PASSWORD_RESET = "3 per hour"
+    
+    # APIs públicas - moderado
+    PUBLIC_READ = "100 per minute"
+    PUBLIC_SEARCH = "30 per minute"
+    
+    # APIs autenticadas - mais permissivo
+    USER_READ = "200 per minute"
+    USER_WRITE = "50 per minute"
+    USER_DELETE = "10 per minute"
+    
+    # Operações pesadas - muito restritivo
+    IMPORT_EXPORT = "5 per hour"
+    REPORT_GENERATION = "10 per hour"
+    BULK_OPERATION = "3 per hour"
+    
+    # WebSocket
+    WEBSOCKET_CONNECT = "10 per minute"
+    WEBSOCKET_MESSAGE = "100 per minute"
+    
+    # Admin - sem limite ou muito alto
+    ADMIN_OPERATION = "1000 per minute"
+
+def dynamic_limit(get_limit: Callable[[Request], str]):
+    """
+    Decorator para rate limit dinâmico baseado no contexto
+    
+    Exemplo:
+        @dynamic_limit(lambda req: "10 per minute" if is_free_user(req) else "100 per minute")
+    """
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        async def wrapper(request: Request, *args, **kwargs):
+            limit = get_limit(request)
+            # Aplicar limite dinamicamente
+            return await limiter.limit(limit)(func)(request, *args, **kwargs)
+        return wrapper
+    return decorator
+
+# ===== RATE LIMITING POR GRUPO DE USUÁRIO =====
+
+def get_user_tier(request: Request) -> str:
+    """Determina o tier/plano do usuário"""
+    if not hasattr(request.state, "user") or not request.state.user:
+        return "anonymous"
+    
+    user = request.state.user
+    role = user.get("role", "cliente")
+    
+    if role == "admin":
+        return "admin"
+    elif role == "promoter":
+        return "premium"
+    elif role == "cliente":
+        return "basic"
+    else:
+        return "basic"
+
+def tier_based_limit(
+    anonymous: str = "10 per minute",
+    basic: str = "50 per minute", 
+    premium: str = "200 per minute",
+    admin: str = "1000 per minute"
+) -> Callable:
+    """
+    Rate limiting baseado no tier do usuário
+    """
+    limits = {
+        "anonymous": anonymous,
+        "basic": basic,
+        "premium": premium,
+        "admin": admin
+    }
+    
+    def get_limit(request: Request) -> str:
+        tier = get_user_tier(request)
+        return limits.get(tier, basic)
+    
+    return dynamic_limit(get_limit)
+
+# ===== RATE LIMITING COM CUSTO =====
+
+class CostBasedLimiter:
+    """
+    Rate limiting baseado em "custo" da operação
+    Operações mais pesadas consomem mais do limite
+    """
+    
+    def __init__(self, total_points: int = 100, window: int = 60):
+        self.total_points = total_points
+        self.window = window  # segundos
+        
+    def check_and_consume(self, identifier: str, cost: int) -> bool:
+        """
+        Verifica se tem pontos disponíveis e consome
+        
+        Args:
+            identifier: Identificador do usuário
+            cost: Custo em pontos da operação
+            
+        Returns:
+            True se permitido, False se limite excedido
+        """
+        if not CACHE_ENABLED:
+            return True  # Sem cache, permitir tudo
+        
+        key = f"rate_limit:cost:{identifier}"
+        current = cache.get(key, namespace="rate_limit") or 0
+        
+        if isinstance(current, str):
+            current = int(current)
+        
+        if current + cost > self.total_points:
+            return False
+        
+        # Incrementar e definir TTL
+        new_value = current + cost
+        cache.set(key, new_value, ttl=self.window, namespace="rate_limit")
+        
+        return True
+    
+    def get_remaining(self, identifier: str) -> int:
+        """Retorna pontos restantes"""
+        if not CACHE_ENABLED:
+            return self.total_points
+        
+        key = f"rate_limit:cost:{identifier}"
+        current = cache.get(key, namespace="rate_limit") or 0
+        
+        if isinstance(current, str):
+            current = int(current)
+        
+        return max(0, self.total_points - current)
+
+# Instância global do cost-based limiter
+cost_limiter = CostBasedLimiter(total_points=1000, window=3600)
+
+def cost_limit(cost: int):
+    """
+    Decorator para rate limiting baseado em custo
+    
+    Exemplo:
+        @cost_limit(cost=10)  # Operação custa 10 pontos
+        async def expensive_operation():
+            ...
+    """
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        async def wrapper(request: Request, *args, **kwargs):
+            identifier = get_user_identifier(request)
+            
+            if not cost_limiter.check_and_consume(identifier, cost):
+                remaining = cost_limiter.get_remaining(identifier)
+                raise HTTPException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    detail={
+                        "error": "Cota de operações excedida",
+                        "code": "COST_LIMIT_EXCEEDED",
+                        "cost_required": cost,
+                        "points_remaining": remaining,
+                        "reset_in": cost_limiter.window
+                    }
+                )
+            
+            # Adicionar informações no header da resposta
+            response = await func(request, *args, **kwargs)
+            if isinstance(response, Response):
+                response.headers["X-RateLimit-Cost"] = str(cost)
+                response.headers["X-RateLimit-Remaining"] = str(
+                    cost_limiter.get_remaining(identifier)
+                )
+            
+            return response
+        
+        return wrapper
+    return decorator
+
+# ===== RATE LIMITING ADAPTATIVO =====
+
+class AdaptiveRateLimiter:
+    """
+    Rate limiter que se adapta baseado no comportamento do usuário
+    Usuários com bom histórico ganham limites maiores
+    """
+    
+    def __init__(self):
+        self.base_limit = 100
+        self.max_multiplier = 5.0
+        self.min_multiplier = 0.5
+    
+    def get_user_score(self, identifier: str) -> float:
+        """
+        Calcula score do usuário baseado em:
+        - Taxa de erro nas requisições
+        - Frequência de rate limit hits
+        - Tempo desde última violação
+        """
+        if not CACHE_ENABLED:
+            return 1.0
+        
+        # Buscar estatísticas do usuário
+        stats_key = f"user_stats:{identifier}"
+        stats = cache.get(stats_key, namespace="adaptive") or {}
+        
+        if not stats:
+            return 1.0  # Novo usuário, score neutro
+        
+        # Calcular score baseado nas métricas
+        total_requests = stats.get("total_requests", 1)
+        error_requests = stats.get("error_requests", 0)
+        rate_limit_hits = stats.get("rate_limit_hits", 0)
+        
+        error_rate = error_requests / total_requests
+        limit_hit_rate = rate_limit_hits / total_requests
+        
+        # Score base
+        score = 1.0
+        
+        # Penalizar por erros
+        if error_rate > 0.1:  # Mais de 10% de erro
+            score *= (1 - error_rate)
+        
+        # Penalizar por hits no rate limit
+        if limit_hit_rate > 0.05:  # Mais de 5% de hits
+            score *= (1 - limit_hit_rate * 2)
+        
+        # Bonus por bom comportamento prolongado
+        last_violation = stats.get("last_violation")
+        if last_violation:
+            hours_since = (datetime.now() - datetime.fromisoformat(last_violation)).total_seconds() / 3600
+            if hours_since > 24:
+                score *= 1.1  # 10% bonus por dia sem violação
+            if hours_since > 168:  # 1 semana
+                score *= 1.25
+        
+        return max(self.min_multiplier, min(score, self.max_multiplier))
+    
+    def get_adaptive_limit(self, identifier: str, base: str = "100 per minute") -> str:
+        """Retorna limite adaptado para o usuário"""
+        score = self.get_user_score(identifier)
+        
+        # Parsear limite base
+        parts = base.split()
+        count = int(parts[0])
+        unit = " ".join(parts[1:])
+        
+        # Aplicar multiplicador
+        adapted_count = int(count * score)
+        
+        return f"{adapted_count} {unit}"
+    
+    def record_request(self, identifier: str, is_error: bool = False, is_rate_limited: bool = False):
+        """Registra estatísticas da requisição"""
+        if not CACHE_ENABLED:
+            return
+        
+        stats_key = f"user_stats:{identifier}"
+        stats = cache.get(stats_key, namespace="adaptive") or {
+            "total_requests": 0,
+            "error_requests": 0,
+            "rate_limit_hits": 0
+        }
+        
+        stats["total_requests"] += 1
+        
+        if is_error:
+            stats["error_requests"] += 1
+        
+        if is_rate_limited:
+            stats["rate_limit_hits"] += 1
+            stats["last_violation"] = datetime.now().isoformat()
+        
+        # Salvar com TTL de 30 dias
+        cache.set(stats_key, stats, ttl=2592000, namespace="adaptive")
+
+# Instância global do adaptive limiter
+adaptive_limiter = AdaptiveRateLimiter()
+
+def adaptive_limit(base_limit: str = "100 per minute"):
+    """
+    Decorator para rate limiting adaptativo
+    """
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        async def wrapper(request: Request, *args, **kwargs):
+            identifier = get_user_identifier(request)
+            
+            # Obter limite adaptado
+            limit = adaptive_limiter.get_adaptive_limit(identifier, base_limit)
+            
+            # Aplicar limite
+            try:
+                result = await limiter.limit(limit)(func)(request, *args, **kwargs)
+                
+                # Registrar sucesso
+                adaptive_limiter.record_request(identifier, is_error=False)
+                
+                return result
+                
+            except RateLimitExceeded:
+                # Registrar violação
+                adaptive_limiter.record_request(identifier, is_rate_limited=True)
+                raise
+                
+            except HTTPException as e:
+                # Registrar erro
+                if e.status_code >= 400:
+                    adaptive_limiter.record_request(identifier, is_error=True)
+                raise
+        
+        return wrapper
+    return decorator
+
+# ===== BYPASS PARA TESTES E ADMIN =====
+
+def bypass_rate_limit(request: Request) -> bool:
+    """
+    Verifica se deve pular rate limiting
+    """
+    # Admin sempre bypassa
+    if hasattr(request.state, "user") and request.state.user:
+        if request.state.user.get("role") == "admin":
+            return True
+    
+    # IPs na whitelist
+    whitelist = ["127.0.0.1", "localhost", "::1"]
+    client_ip = get_remote_address(request)
+    if client_ip in whitelist:
+        return True
+    
+    # Header especial para testes
+    if request.headers.get("X-RateLimit-Bypass") == "test-key-2025":
+        return True
+    
+    return False
+
+# ===== MIDDLEWARE DE RATE LIMITING =====
+
+class RateLimitMiddleware:
+    """
+    Middleware global para aplicar rate limiting e logging
+    """
+    
+    def __init__(self, app):
+        self.app = app
+    
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+        
+        request = Request(scope, receive=receive)
+        identifier = get_user_identifier(request)
+        
+        # Log da requisição
+        logger.debug(
+            f"Request from {identifier} to {request.url.path}",
+            extra={
+                "identifier": identifier,
+                "path": request.url.path,
+                "method": request.method
+            }
+        )
+        
+        # Verificar bypass
+        if bypass_rate_limit(request):
+            logger.debug(f"Rate limit bypassed for {identifier}")
+            await self.app(scope, receive, send)
+            return
+        
+        # Aplicar rate limiting global
+        await self.app(scope, receive, send)
+
+# ===== CONFIGURAÇÃO PARA FASTAPI =====
+
+def setup_rate_limiting(app):
+    """
+    Configura rate limiting no app FastAPI
+    
+    Args:
+        app: Instância do FastAPI
+    """
+    # Adicionar handler de erro
+    app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)
+    
+    # Adicionar middleware (se necessário além do SlowAPI)
+    app.add_middleware(RateLimitMiddleware)
+    
+    # Adicionar state do limiter ao app
+    app.state.limiter = limiter
+    
+    logger.info("✅ Rate limiting configurado com sucesso")
+
+# ===== EXEMPLOS DE USO =====
+
+"""
+EXEMPLOS DE USO NOS ROUTERS:
+
+from app.rate_limiter import limiter, RateLimits, tier_based_limit, cost_limit
+
+# 1. Rate limit simples
+@router.post("/login")
+@limiter.limit(RateLimits.AUTH_LOGIN)
+async def login(request: Request, ...):
+    ...
+
+# 2. Rate limit por tier de usuário
+@router.get("/api/data")
+@tier_based_limit(
+    anonymous="10 per minute",
+    basic="50 per minute",
+    premium="200 per minute"
+)
+async def get_data(request: Request, ...):
+    ...
+
+# 3. Rate limit baseado em custo
+@router.post("/api/report")
+@cost_limit(cost=50)  # Consome 50 pontos
+async def generate_report(request: Request, ...):
+    ...
+
+# 4. Rate limit adaptativo
+@router.get("/api/search")
+@adaptive_limit("30 per minute")
+async def search(request: Request, ...):
+    ...
+
+# 5. Múltiplos limiters
+@router.post("/api/expensive")
+@limiter.limit("5 per hour")
+@cost_limit(cost=100)
+async def expensive_operation(request: Request, ...):
+    ...
+"""
+
+# Exportar principais componentes
+__all__ = [
+    'limiter',
+    'RateLimits',
+    'get_user_identifier',
+    'tier_based_limit',
+    'cost_limit',
+    'adaptive_limit',
+    'setup_rate_limiting',
+    'cost_limiter',
+    'adaptive_limiter'
+]

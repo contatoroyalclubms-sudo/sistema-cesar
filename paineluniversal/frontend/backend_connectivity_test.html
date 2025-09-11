@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Teste de Conectividade Backend - Railway</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .backend-test {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        .status-online { background: #28a745; }
+        .status-offline { background: #dc3545; }
+        .status-testing { background: #ffc107; }
+        .status-unknown { background: #6c757d; }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        button {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .log-container {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .success { color: #50fa7b; }
+        .error { color: #ff5555; }
+        .warning { color: #f1fa8c; }
+        .info { color: #8be9fd; }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .response-time {
+            font-size: 12px;
+            color: #666;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 Diagnóstico de Conectividade Backend</h1>
+        <p>Teste completo de conectividade com backends Railway</p>
+    </div>
+
+    <div class="container">
+        <h2>📊 Status dos Backends</h2>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="online-count">0</div>
+                <div>Online</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="offline-count">0</div>
+                <div>Offline</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avg-response">--</div>
+                <div>Tempo Médio (ms)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="best-backend">--</div>
+                <div>Melhor Backend</div>
+            </div>
+        </div>
+        
+        <button onclick="testAllBackends()" id="test-btn">🔄 Testar Todos os Backends</button>
+        <button onclick="testRecommendedUrls()">🎯 Testar URLs Recomendadas</button>
+        <button onclick="clearResults()">🗑️ Limpar Resultados</button>
+        
+        <div id="backend-results"></div>
+    </div>
+
+    <div class="container">
+        <h2>🔧 Configuração de API</h2>
+        <div>
+            <label>
+                <strong>URL de Teste Customizada:</strong><br>
+                <input type="url" id="custom-url" 
+                       placeholder="https://seu-backend.railway.app" 
+                       style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
+            </label>
+            <button onclick="testCustomUrl()">🧪 Testar URL Customizada</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>📝 Log de Atividades</h2>
+        <button onclick="enableVerboseLogging()">🔍 Log Detalhado</button>
+        <button onclick="exportLogs()">💾 Exportar Logs</button>
+        <div id="log-output" class="log-container">Aguardando testes...\n</div>
+    </div>
+
+    <script>
+        // Lista de backends para testar baseado na configuração do projeto
+        const BACKEND_URLS = [
+            // URLs atuais da configuração
+            'https://backend-painel-universal-production.up.railway.app',
+            'https://paineluniversal-backend.up.railway.app', 
+            'https://backend-paineluniversal.up.railway.app',
+            
+            // URLs alternativas baseadas nos nomes dos serviços Railway
+            'https://paineluniversal-backend-production.up.railway.app',
+            'https://backend-painel-universal.up.railway.app',
+            'https://paineluniversal-api.up.railway.app',
+            'https://api-paineluniversal.up.railway.app',
+            
+            // URLs com sufixo /api
+            'https://backend-painel-universal-production.up.railway.app/api',
+            'https://paineluniversal-backend.up.railway.app/api',
+            'https://backend-paineluniversal.up.railway.app/api',
+        ];
+
+        const RECOMMENDED_URLS = [
+            // Baseado nos nomes vistos no Railway
+            'https://paineluniversal-backend-production.up.railway.app',
+            'https://backend-paineluniversal-production.up.railway.app',
+            'https://painel-universal-backend.up.railway.app',
+        ];
+
+        let testResults = {};
+        let verboseLogging = false;
+
+        function log(message, type = 'info') {
+            const logOutput = document.getElementById('log-output');
+            const timestamp = new Date().toLocaleTimeString();
+            const typeClass = type;
+            
+            logOutput.innerHTML += `<span class="${typeClass}">[${timestamp}] ${message}</span>\n`;
+            logOutput.scrollTop = logOutput.scrollHeight;
+        }
+
+        function enableVerboseLogging() {
+            verboseLogging = !verboseLogging;
+            log(`🔍 Log detalhado ${verboseLogging ? 'ATIVADO' : 'DESATIVADO'}`, 'info');
+        }
+
+        function clearResults() {
+            document.getElementById('backend-results').innerHTML = '';
+            document.getElementById('log-output').innerHTML = 'Log limpo.\n';
+            testResults = {};
+            updateStats();
+        }
+
+        function exportLogs() {
+            const logContent = document.getElementById('log-output').textContent;
+            const blob = new Blob([logContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backend-test-${new Date().toISOString().slice(0,19)}.log`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        async function testBackend(url, label = '') {
+            const testId = `test-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+            log(`🧪 Testando ${label || url}...`, 'info');
+            
+            const result = {
+                url,
+                label: label || url,
+                status: 'testing',
+                responseTime: null,
+                error: null,
+                details: {}
+            };
+
+            try {
+                const startTime = Date.now();
+                
+                // Tentar múltiplos endpoints
+                const endpoints = [
+                    '',
+                    '/health',
+                    '/api/health',
+                    '/healthz',
+                    '/api/healthz',
+                    '/ping',
+                    '/status'
+                ];
+
+                let bestResult = null;
+                
+                for (const endpoint of endpoints) {
+                    try {
+                        const testUrl = `${url}${endpoint}`;
+                        if (verboseLogging) {
+                            log(`   🎯 Testando endpoint: ${endpoint}`, 'info');
+                        }
+                        
+                        const response = await fetch(testUrl, {
+                            method: 'GET',
+                            mode: 'cors',
+                            cache: 'no-cache',
+                            signal: AbortSignal.timeout(15000)
+                        });
+
+                        const responseTime = Date.now() - startTime;
+                        
+                        if (response.ok) {
+                            let responseData;
+                            try {
+                                responseData = await response.text();
+                                if (responseData.startsWith('{') || responseData.startsWith('[')) {
+                                    responseData = JSON.parse(responseData);
+                                }
+                            } catch {
+                                responseData = 'Response received';
+                            }
+
+                            bestResult = {
+                                ...result,
+                                status: 'online',
+                                responseTime,
+                                details: {
+                                    status: response.status,
+                                    statusText: response.statusText,
+                                    endpoint,
+                                    data: responseData,
+                                    headers: Object.fromEntries(response.headers.entries())
+                                }
+                            };
+                            
+                            log(`✅ ${label || url} respondeu em ${responseTime}ms (${endpoint})`, 'success');
+                            break; // Encontrou um endpoint funcionando
+                        } else {
+                            if (verboseLogging) {
+                                log(`   ❌ ${endpoint}: HTTP ${response.status}`, 'warning');
+                            }
+                        }
+                    } catch (endpointError) {
+                        if (verboseLogging) {
+                            log(`   ❌ ${endpoint}: ${endpointError.message}`, 'warning');
+                        }
+                    }
+                }
+
+                if (!bestResult) {
+                    throw new Error('Nenhum endpoint respondeu com sucesso');
+                }
+
+                result.status = bestResult.status;
+                result.responseTime = bestResult.responseTime;
+                result.details = bestResult.details;
+
+            } catch (error) {
+                const responseTime = Date.now() - startTime;
+                result.status = 'offline';
+                result.responseTime = responseTime;
+                result.error = error.message;
+                result.details = {
+                    errorType: error.name,
+                    message: error.message,
+                    isTimeout: error.name === 'AbortError',
+                    isCors: error.message.includes('CORS') || error.message.includes('cors'),
+                    isNetwork: !error.message.includes('HTTP')
+                };
+
+                log(`❌ ${label || url} falhou: ${error.message}`, 'error');
+            }
+
+            testResults[testId] = result;
+            displayResult(result, testId);
+            updateStats();
+            return result;
+        }
+
+        function displayResult(result, testId) {
+            const resultsContainer = document.getElementById('backend-results');
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'backend-test';
+            resultDiv.id = testId;
+            
+            const statusClass = `status-${result.status}`;
+            const responseTimeDisplay = result.responseTime ? 
+                `<span class="response-time">${result.responseTime}ms</span>` : '';
+            
+            let detailsHtml = '';
+            if (result.status === 'online' && result.details) {
+                detailsHtml = `
+                    <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                        ✅ Status: ${result.details.status} ${result.details.statusText}<br>
+                        🎯 Endpoint: ${result.details.endpoint}<br>
+                        📊 Headers: ${Object.keys(result.details.headers).length} headers recebidos
+                    </div>
+                `;
+            } else if (result.status === 'offline' && result.details) {
+                detailsHtml = `
+                    <div style="margin-top: 10px; font-size: 12px; color: #dc3545;">
+                        ❌ Erro: ${result.details.message}<br>
+                        🔍 Tipo: ${result.details.isTimeout ? 'Timeout' : 
+                                    result.details.isCors ? 'CORS' : 
+                                    result.details.isNetwork ? 'Rede' : 'HTTP'}<br>
+                        ⏱️ Tempo: ${result.responseTime}ms
+                    </div>
+                `;
+            }
+            
+            resultDiv.innerHTML = `
+                <div>
+                    <span class="status-indicator ${statusClass}"></span>
+                    <strong>${result.label}</strong>
+                    ${responseTimeDisplay}
+                    <button onclick="retestBackend('${testId}')" style="float: right; padding: 4px 8px; font-size: 12px;">
+                        🔄 Retry
+                    </button>
+                </div>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                    ${result.url}
+                </div>
+                ${detailsHtml}
+            `;
+            
+            resultsContainer.appendChild(resultDiv);
+        }
+
+        async function retestBackend(testId) {
+            const oldResult = testResults[testId];
+            if (oldResult) {
+                document.getElementById(testId).remove();
+                delete testResults[testId];
+                await testBackend(oldResult.url, oldResult.label);
+            }
+        }
+
+        function updateStats() {
+            const results = Object.values(testResults);
+            const onlineCount = results.filter(r => r.status === 'online').length;
+            const offlineCount = results.filter(r => r.status === 'offline').length;
+            
+            const onlineResults = results.filter(r => r.status === 'online' && r.responseTime);
+            const avgResponse = onlineResults.length > 0 ? 
+                Math.round(onlineResults.reduce((sum, r) => sum + r.responseTime, 0) / onlineResults.length) : 0;
+            
+            const bestBackend = onlineResults.length > 0 ?
+                onlineResults.reduce((best, current) => 
+                    current.responseTime < best.responseTime ? current : best
+                ).label.split('//')[1]?.split('.')[0] || '--' : '--';
+
+            document.getElementById('online-count').textContent = onlineCount;
+            document.getElementById('offline-count').textContent = offlineCount;
+            document.getElementById('avg-response').textContent = avgResponse || '--';
+            document.getElementById('best-backend').textContent = bestBackend;
+        }
+
+        async function testAllBackends() {
+            log('🚀 Iniciando teste de todos os backends...', 'info');
+            const testBtn = document.getElementById('test-btn');
+            testBtn.disabled = true;
+            testBtn.textContent = '🔄 Testando...';
+
+            document.getElementById('backend-results').innerHTML = '';
+            testResults = {};
+
+            const promises = BACKEND_URLS.map((url, index) => 
+                testBackend(url, `Backend ${index + 1}`)
+            );
+
+            await Promise.all(promises);
+
+            testBtn.disabled = false;
+            testBtn.textContent = '🔄 Testar Todos os Backends';
+            
+            log('✅ Teste completo finalizado!', 'success');
+            
+            // Mostrar recomendação
+            const onlineBackends = Object.values(testResults)
+                .filter(r => r.status === 'online')
+                .sort((a, b) => a.responseTime - b.responseTime);
+            
+            if (onlineBackends.length > 0) {
+                log(`🎯 RECOMENDAÇÃO: Use ${onlineBackends[0].url} (${onlineBackends[0].responseTime}ms)`, 'success');
+            } else {
+                log('⚠️ ATENÇÃO: Nenhum backend está respondendo!', 'error');
+            }
+        }
+
+        async function testRecommendedUrls() {
+            log('🎯 Testando URLs recomendadas baseadas nos serviços Railway...', 'info');
+            
+            for (const url of RECOMMENDED_URLS) {
+                await testBackend(url, `🎯 ${url}`);
+            }
+        }
+
+        async function testCustomUrl() {
+            const customUrl = document.getElementById('custom-url').value.trim();
+            if (!customUrl) {
+                alert('Por favor, digite uma URL para testar');
+                return;
+            }
+            
+            await testBackend(customUrl, `Custom: ${customUrl}`);
+        }
+
+        // Executar teste automático ao carregar
+        window.onload = function() {
+            log('🔍 Sistema de diagnóstico de backend iniciado', 'info');
+            log('💡 Dica: Use o botão "🎯 Testar URLs Recomendadas" primeiro', 'info');
+        };
+    </script>
+</body>
+</html>

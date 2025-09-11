@@ -1,0 +1,105 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile.production"
+buildCommand = "echo 'Building Sistema Universal V6 - Production Backend'"
+
+[deploy]
+numReplicas = 3
+sleepApplication = false
+restartPolicyType = "always"
+startCommand = "/app/start.production.sh"
+
+# Resource allocation for 50k+ users
+[resources]
+memoryLimitMB = 2048
+vcpuLimit = 2.0
+
+# Health checks otimizados
+[healthcheck]
+path = "/healthz"
+intervalSeconds = 15
+timeoutSeconds = 10
+retries = 5
+
+# Environment variables para produção
+[env]
+PYTHONDONTWRITEBYTECODE = "1"
+PYTHONUNBUFFERED = "1" 
+PYTHONPATH = "/app"
+WORKERS = "8"
+MAX_CONNECTIONS = "1000"
+POOL_SIZE = "20"
+POOL_OVERFLOW = "30"
+POOL_PRE_PING = "true"
+POOL_RECYCLE = "3600"
+
+# Database connection optimization
+DB_ECHO = "false"
+DB_POOL_SIZE = "20"
+DB_MAX_OVERFLOW = "30"
+DB_POOL_RECYCLE = "3600"
+DB_POOL_PRE_PING = "true"
+
+# Redis optimization
+REDIS_POOL_SIZE = "50"
+REDIS_HEALTH_CHECK_INTERVAL = "30"
+
+# Performance settings
+GUNICORN_WORKERS = "8"
+GUNICORN_WORKER_CLASS = "uvicorn.workers.UvicornWorker"
+GUNICORN_WORKER_CONNECTIONS = "1000"
+GUNICORN_MAX_REQUESTS = "1000"
+GUNICORN_MAX_REQUESTS_JITTER = "50"
+GUNICORN_PRELOAD_APP = "true"
+GUNICORN_TIMEOUT = "120"
+GUNICORN_KEEPALIVE = "5"
+
+# Logging
+LOG_LEVEL = "INFO"
+ACCESS_LOG = "true"
+ERROR_LOG = "true"
+
+# Security
+SECURE_HEADERS = "true"
+CORS_ENABLED = "true"
+
+# Feature flags
+ENABLE_METRICS = "true"
+ENABLE_TRACING = "true"
+ENABLE_PROFILING = "false"
+
+[networking]
+# Custom domain configuration
+domains = [
+    "api.sistema-universal-v6.com",
+    "backend.sistema-universal-v6.com"
+]
+
+# TCP proxy para WebSocket
+tcpProxies = [
+    { from = 443, to = 8000 }
+]
+
+[monitoring]
+# Auto-scaling configuration
+enabled = true
+minReplicas = 2
+maxReplicas = 10
+targetCPUUtilizationPercentage = 70
+targetMemoryUtilizationPercentage = 80
+
+[cron]
+# Cleanup tasks
+[cron.cleanup]
+schedule = "0 2 * * *"
+command = "python /app/scripts/cleanup.py"
+
+[cron.metrics]
+schedule = "*/5 * * * *"
+command = "python /app/scripts/collect_metrics.py"
+
+[volumes]
+# Persistent storage para logs
+[volumes.logs]
+mountPath = "/app/logs"
+size = "5GB"

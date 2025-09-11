@@ -1,0 +1,87 @@
+# Prometheus configuration for Sistema Universal V6
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    system: 'sistema-universal-v6'
+    environment: 'production'
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # FastAPI Backend instances
+  - job_name: 'fastapi-backend'
+    static_configs:
+      - targets: 
+        - 'fastapi-backend-1:8000'
+        - 'fastapi-backend-2:8000'
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # MEEP Service instances  
+  - job_name: 'meep-service'
+    static_configs:
+      - targets:
+        - 'meep-service-1:3001'
+        - 'meep-service-2:3001'
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # PostgreSQL database
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres_exporter:9187']
+    scrape_interval: 15s
+
+  # Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis_exporter:9121']
+    scrape_interval: 15s
+
+  # Nginx load balancer
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:8080']
+    metrics_path: '/nginx_status'
+    scrape_interval: 30s
+
+  # Node Exporter (system metrics)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+
+  # cAdvisor (container metrics)
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 15s
+
+  # Application-specific metrics
+  - job_name: 'sistema-v6-app'
+    static_configs:
+      - targets: 
+        - 'fastapi-backend-1:8000'
+        - 'fastapi-backend-2:8000'
+    metrics_path: '/app-metrics'
+    scrape_interval: 30s
+    params:
+      format: ['prometheus']
+
+# Remote write configuration for long-term storage
+# remote_write:
+#   - url: "https://prometheus-prod.sistema-universal-v6.com/api/v1/write"

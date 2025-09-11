@@ -1,0 +1,113 @@
+# Multi-stage build para produção otimizada
+FROM python:3.11-slim as builder
+
+# Build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir --user -r requirements.txt
+
+# Production stage
+FROM python:3.11-slim as production
+
+# Runtime dependencies only
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    postgresql-client \
+    curl \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Copy Python dependencies from builder
+COPY --from=builder /root/.local /root/.local
+
+# Set environment variables para produção
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    PATH=/root/.local/bin:$PATH \
+    WORKERS=8 \
+    MAX_CONNECTIONS=1000
+
+# Create app directory
+WORKDIR /app
+
+# Create non-root user para segurança
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# Copy application files
+COPY --chown=appuser:appuser . .
+
+# Copy production migration scripts
+COPY --chown=appuser:appuser ../migrate_production_railway.py /app/
+COPY --chown=appuser:appuser ../railway_auto_deploy.py /app/
+
+# Create production startup script
+RUN cat > /app/start.production.sh << 'EOF'
+#!/bin/bash
+set -e
+
+# Wait for database
+echo "Waiting for database..."
+while ! pg_isready -h ${DATABASE_HOST:-postgres} -p ${DATABASE_PORT:-5432} -U ${DATABASE_USER:-painel_user}; do
+  sleep 1
+done
+
+# Run migrations
+echo "Running database migrations..."
+python -m alembic upgrade head
+
+# Collect static files if needed
+echo "Preparing application..."
+
+# Start application with Gunicorn para produção
+echo "Starting Sistema Universal V6 Backend - Production Mode"
+exec gunicorn app.main:app \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --workers ${WORKERS:-8} \
+    --worker-connections ${WORKER_CONNECTIONS:-1000} \
+    --max-requests ${MAX_REQUESTS:-1000} \
+    --max-requests-jitter ${MAX_REQUESTS_JITTER:-50} \
+    --timeout ${TIMEOUT:-120} \
+    --keep-alive ${KEEP_ALIVE:-5} \
+    --bind 0.0.0.0:8000 \
+    --preload \
+    --access-logfile - \
+    --error-logfile - \
+    --log-level ${LOG_LEVEL:-info} \
+    --capture-output \
+    --enable-stdio-inheritance
+EOF
+
+# Make scripts executable
+RUN chmod +x /app/start.production.sh && \
+    chmod +x /app/migrate_production_railway.py && \
+    chmod +x /app/railway_auto_deploy.py
+
+# Create logs directory
+RUN mkdir -p /app/logs && chown -R appuser:appuser /app/logs
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 8000
+
+# Health check otimizado para produção
+HEALTHCHECK --interval=15s --timeout=10s --start-period=30s --retries=5 \
+  CMD curl -f http://localhost:8000/healthz || exit 1
+
+# Run production startup script
+CMD ["/app/start.production.sh"]
+
+# Labels para metadata
+LABEL maintainer="Sistema Universal V6 Team" \
+      version="1.0.0" \
+      environment="production" \
+      service="backend-api"
