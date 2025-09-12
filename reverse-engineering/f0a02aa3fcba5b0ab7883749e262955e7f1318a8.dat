@@ -1,0 +1,234 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/estoque/StockPositionModal.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+export function StockPositionModal({ isOpen, onClose, onRefresh }) {
+  console.log("🧪 StockPositionModal renderizado com isOpen:", isOpen);
+  if (!isOpen) {
+    console.log("🧪 Modal não está aberto, não renderizando");
+    return null;
+  }
+  console.log("🧪 Modal está aberto, renderizando");
+  return /* @__PURE__ */ jsxDEV(
+    "div",
+    {
+      className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50",
+      onClick: (e) => {
+        if (e.target === e.currentTarget) {
+          console.log("🧪 Clique fora do modal, fechando");
+          onClose();
+        }
+      },
+      children: /* @__PURE__ */ jsxDEV("div", { className: "bg-white p-6 rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between items-center mb-4", children: [
+          /* @__PURE__ */ jsxDEV("h2", { className: "text-2xl font-bold", children: "📦 Posição de Estoque" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+            lineNumber: 50,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              onClick: () => {
+                console.log("🧪 Botão fechar clicado");
+                onClose();
+              },
+              className: "text-gray-500 hover:text-gray-700 text-2xl font-bold",
+              children: "×"
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+              lineNumber: 51,
+              columnNumber: 11
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+          lineNumber: 49,
+          columnNumber: 9
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxDEV("p", { className: "text-gray-600", children: "Este modal está funcionando corretamente! 🎉" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+            lineNumber: 63,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "border rounded-lg p-4", children: [
+            /* @__PURE__ */ jsxDEV("h3", { className: "font-semibold mb-2", children: "Posições de Estoque (Mock)" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+              lineNumber: 68,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "border rounded p-3", children: [
+                /* @__PURE__ */ jsxDEV("h4", { className: "font-medium", children: "Produto A" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 71,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-600", children: "Local: Depósito Principal" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 72,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { className: "text-lg font-bold text-green-600", children: "150 unidades" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 73,
+                  columnNumber: 17
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                lineNumber: 70,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "border rounded p-3", children: [
+                /* @__PURE__ */ jsxDEV("h4", { className: "font-medium", children: "Produto B" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 76,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-600", children: "Local: Bar Principal" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 77,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { className: "text-lg font-bold text-yellow-600", children: "5 unidades" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 78,
+                  columnNumber: 17
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                lineNumber: 75,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "border rounded p-3", children: [
+                /* @__PURE__ */ jsxDEV("h4", { className: "font-medium", children: "Produto C" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 81,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-gray-600", children: "Local: Cozinha" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 82,
+                  columnNumber: 17
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { className: "text-lg font-bold text-red-600", children: "0 unidades" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                  lineNumber: 83,
+                  columnNumber: 17
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                lineNumber: 80,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+              lineNumber: 69,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+            lineNumber: 67,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "flex gap-2 justify-end", children: [
+            /* @__PURE__ */ jsxDEV(
+              "button",
+              {
+                onClick: () => {
+                  console.log("🧪 Botão refresh clicado");
+                  onRefresh?.();
+                },
+                className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600",
+                children: "🔄 Atualizar"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                lineNumber: 89,
+                columnNumber: 13
+              },
+              this
+            ),
+            /* @__PURE__ */ jsxDEV(
+              "button",
+              {
+                onClick: () => {
+                  console.log("🧪 Botão fechar footer clicado");
+                  onClose();
+                },
+                className: "px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600",
+                children: "Fechar"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+                lineNumber: 98,
+                columnNumber: 13
+              },
+              this
+            )
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+            lineNumber: 88,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+          lineNumber: 62,
+          columnNumber: 9
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+        lineNumber: 48,
+        columnNumber: 7
+      }, this)
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx",
+      lineNumber: 39,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_c = StockPositionModal;
+var _c;
+$RefreshReg$(_c, "StockPositionModal");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/StockPositionModal.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LGlCQW1CQTtBQUFBLFVBRUEsdUJBQUMsU0FBSSxXQUFVLDBCQUNiO0FBQUE7QUFBQSxjQUFDO0FBQUE7QUFBQSxnQkFDQyxTQUFTLE1BQU07QUFDYkUsMEJBQVFDLElBQUksMEJBQTBCO0FBQ3RDRiw4QkFBWTtBQUFBLGdCQUNkO0FBQUEsZ0JBQ0EsV0FBVTtBQUFBLGdCQUE0RDtBQUFBO0FBQUEsY0FMeEU7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLFlBUUE7QUFBQSxZQUNBO0FBQUEsY0FBQztBQUFBO0FBQUEsZ0JBQ0MsU0FBUyxNQUFNO0FBQ2JDLDBCQUFRQyxJQUFJLGdDQUFnQztBQUM1Q0gsMEJBQVE7QUFBQSxnQkFDVjtBQUFBLGdCQUNBLFdBQVU7QUFBQSxnQkFBNEQ7QUFBQTtBQUFBLGNBTHhFO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxZQVFBO0FBQUEsZUFsQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFtQkE7QUFBQSxhQTdDRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBOENBO0FBQUEsV0E1REY7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQTZEQTtBQUFBO0FBQUEsSUF0RUY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLEVBdUVBO0FBRUo7QUFBQ08sS0FwRmVUO0FBQWtCLElBQUFTO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJTdG9ja1Bvc2l0aW9uTW9kYWwiLCJpc09wZW4iLCJvbkNsb3NlIiwib25SZWZyZXNoIiwiY29uc29sZSIsImxvZyIsImUiLCJ0YXJnZXQiLCJjdXJyZW50VGFyZ2V0IiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiU3RvY2tQb3NpdGlvbk1vZGFsLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgdXNlU3RhdGUsIHVzZUVmZmVjdCB9IGZyb20gJ3JlYWN0JztcclxuXHJcbmludGVyZmFjZSBTdG9ja1Bvc2l0aW9uTW9kYWxQcm9wcyB7XHJcbiAgaXNPcGVuOiBib29sZWFuO1xyXG4gIG9uQ2xvc2U6ICgpID0+IHZvaWQ7XHJcbiAgb25SZWZyZXNoPzogKCkgPT4gdm9pZDtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIFN0b2NrUG9zaXRpb25Nb2RhbCh7IGlzT3Blbiwgb25DbG9zZSwgb25SZWZyZXNoIH06IFN0b2NrUG9zaXRpb25Nb2RhbFByb3BzKSB7XHJcbiAgY29uc29sZS5sb2coJ/Cfp6ogU3RvY2tQb3NpdGlvbk1vZGFsIHJlbmRlcml6YWRvIGNvbSBpc09wZW46JywgaXNPcGVuKTtcclxuXHJcbiAgaWYgKCFpc09wZW4pIHtcclxuICAgIGNvbnNvbGUubG9nKCfwn6eqIE1vZGFsIG7Do28gZXN0w6EgYWJlcnRvLCBuw6NvIHJlbmRlcml6YW5kbycpO1xyXG4gICAgcmV0dXJuIG51bGw7XHJcbiAgfVxyXG5cclxuICBjb25zb2xlLmxvZygn8J+nqiBNb2RhbCBlc3TDoSBhYmVydG8sIHJlbmRlcml6YW5kbycpO1xyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPGRpdiBcclxuICAgICAgY2xhc3NOYW1lPVwiZml4ZWQgaW5zZXQtMCB6LTUwIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGJnLWJsYWNrIGJnLW9wYWNpdHktNTBcIlxyXG4gICAgICBvbkNsaWNrPXsoZSkgPT4ge1xyXG4gICAgICAgIGlmIChlLnRhcmdldCA9PT0gZS5jdXJyZW50VGFyZ2V0KSB7XHJcbiAgICAgICAgICBjb25zb2xlLmxvZygn8J+nqiBDbGlxdWUgZm9yYSBkbyBtb2RhbCwgZmVjaGFuZG8nKTtcclxuICAgICAgICAgIG9uQ2xvc2UoKTtcclxuICAgICAgICB9XHJcbiAgICAgIH19XHJcbiAgICA+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYmctd2hpdGUgcC02IHJvdW5kZWQtbGcgc2hhZG93LXhsIG1heC13LTR4bCB3LWZ1bGwgbXgtNCBtYXgtaC1bOTB2aF0gb3ZlcmZsb3cteS1hdXRvXCI+XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGp1c3RpZnktYmV0d2VlbiBpdGVtcy1jZW50ZXIgbWItNFwiPlxyXG4gICAgICAgICAgPGgyIGNsYXNzTmFtZT1cInRleHQtMnhsIGZvbnQtYm9sZFwiPvCfk6YgUG9zacOnw6NvIGRlIEVzdG9xdWU8L2gyPlxyXG4gICAgICAgICAgPGJ1dHRvbiBcclxuICAgICAgICAgICAgb25DbGljaz17KCkgPT4ge1xyXG4gICAgICAgICAgICAgIGNvbnNvbGUubG9nKCfwn6eqIEJvdMOjbyBmZWNoYXIgY2xpY2FkbycpO1xyXG4gICAgICAgICAgICAgIG9uQ2xvc2UoKTtcclxuICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPVwidGV4dC1ncmF5LTUwMCBob3Zlcjp0ZXh0LWdyYXktNzAwIHRleHQtMnhsIGZvbnQtYm9sZFwiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIMOXXHJcbiAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgICBcclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktNFwiPlxyXG4gICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1ncmF5LTYwMFwiPlxyXG4gICAgICAgICAgICBFc3RlIG1vZGFsIGVzdMOhIGZ1bmNpb25hbmRvIGNvcnJldGFtZW50ZSEg8J+OiVxyXG4gICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgXHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJvcmRlciByb3VuZGVkLWxnIHAtNFwiPlxyXG4gICAgICAgICAgICA8aDMgY2xhc3NOYW1lPVwiZm9udC1zZW1pYm9sZCBtYi0yXCI+UG9zacOnw7VlcyBkZSBFc3RvcXVlIChNb2NrKTwvaDM+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBncmlkLWNvbHMtMSBtZDpncmlkLWNvbHMtMiBnYXAtNFwiPlxyXG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYm9yZGVyIHJvdW5kZWQgcC0zXCI+XHJcbiAgICAgICAgICAgICAgICA8aDQgY2xhc3NOYW1lPVwiZm9udC1tZWRpdW1cIj5Qcm9kdXRvIEE8L2g0PlxyXG4gICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1zbSB0ZXh0LWdyYXktNjAwXCI+TG9jYWw6IERlcMOzc2l0byBQcmluY2lwYWw8L3A+XHJcbiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LWxnIGZvbnQtYm9sZCB0ZXh0LWdyZWVuLTYwMFwiPjE1MCB1bmlkYWRlczwvcD5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJvcmRlciByb3VuZGVkIHAtM1wiPlxyXG4gICAgICAgICAgICAgICAgPGg0IGNsYXNzTmFtZT1cImZvbnQtbWVkaXVtXCI+UHJvZHV0byBCPC9oND5cclxuICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC1ncmF5LTYwMFwiPkxvY2FsOiBCYXIgUHJpbmNpcGFsPC9wPlxyXG4gICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1sZyBmb250LWJvbGQgdGV4dC15ZWxsb3ctNjAwXCI+NSB1bmlkYWRlczwvcD5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJvcmRlciByb3VuZGVkIHAtM1wiPlxyXG4gICAgICAgICAgICAgICAgPGg0IGNsYXNzTmFtZT1cImZvbnQtbWVkaXVtXCI+UHJvZHV0byBDPC9oND5cclxuICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC1ncmF5LTYwMFwiPkxvY2FsOiBDb3ppbmhhPC9wPlxyXG4gICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1sZyBmb250LWJvbGQgdGV4dC1yZWQtNjAwXCI+MCB1bmlkYWRlczwvcD5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIFxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGdhcC0yIGp1c3RpZnktZW5kXCI+XHJcbiAgICAgICAgICAgIDxidXR0b24gXHJcbiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4ge1xyXG4gICAgICAgICAgICAgICAgY29uc29sZS5sb2coJ/Cfp6ogQm90w6NvIHJlZnJlc2ggY2xpY2FkbycpO1xyXG4gICAgICAgICAgICAgICAgb25SZWZyZXNoPy4oKTtcclxuICAgICAgICAgICAgICB9fVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cInB4LTQgcHktMiBiZy1ibHVlLTUwMCB0ZXh0LXdoaXRlIHJvdW5kZWQgaG92ZXI6YmctYmx1ZS02MDBcIlxyXG4gICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAg8J+UhCBBdHVhbGl6YXJcclxuICAgICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgICAgIDxidXR0b24gXHJcbiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4ge1xyXG4gICAgICAgICAgICAgICAgY29uc29sZS5sb2coJ/Cfp6ogQm90w6NvIGZlY2hhciBmb290ZXIgY2xpY2FkbycpO1xyXG4gICAgICAgICAgICAgICAgb25DbG9zZSgpO1xyXG4gICAgICAgICAgICAgIH19XHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwicHgtNCBweS0yIGJnLWdyYXktNTAwIHRleHQtd2hpdGUgcm91bmRlZCBob3ZlcjpiZy1ncmF5LTYwMFwiXHJcbiAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICBGZWNoYXJcclxuICAgICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgPC9kaXY+XHJcbiAgICA8L2Rpdj5cclxuICApO1xyXG59XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL2VzdG9xdWUvU3RvY2tQb3NpdGlvbk1vZGFsLnRzeCJ9

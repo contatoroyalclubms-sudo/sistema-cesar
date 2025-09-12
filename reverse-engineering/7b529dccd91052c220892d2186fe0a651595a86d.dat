@@ -1,0 +1,58 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/comandas/ComandasModule.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/comandas/ComandasModule.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import CadastroModule from "/src/components/common/CadastroModule.tsx";
+import { comandasConfig } from "/src/config/modules/comandasConfig.js";
+import { comandasService } from "/src/services/comandasService.js";
+const ComandasModule = () => {
+  return /* @__PURE__ */ jsxDEV(
+    CadastroModule,
+    {
+      config: comandasConfig,
+      title: "Comandas",
+      description: "Gestão completa de comandas do sistema",
+      apiService: comandasService
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/comandas/ComandasModule.tsx",
+      lineNumber: 36,
+      columnNumber: 5
+    },
+    this
+  );
+};
+_c = ComandasModule;
+export default ComandasModule;
+var _c;
+$RefreshReg$(_c, "ComandasModule");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/comandas/ComandasModule.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/comandas/ComandasModule.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBZ0JJOzs7Ozs7Ozs7Ozs7Ozs7O0FBUkosT0FBT0Esb0JBQW9CO0FBQzNCLFNBQVNDLHNCQUFzQjtBQUMvQixTQUFTQyx1QkFBdUI7QUFJaEMsTUFBTUMsaUJBQWdEQSxNQUFNO0FBQzFELFNBQ0U7QUFBQSxJQUFDO0FBQUE7QUFBQSxNQUNDLFFBQVFGO0FBQUFBLE1BQ1IsT0FBTTtBQUFBLE1BQ04sYUFBWTtBQUFBLE1BQ1osWUFBWUM7QUFBQUE7QUFBQUEsSUFKZDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFJOEI7QUFHbEM7QUFBRUUsS0FUSUQ7QUFXTixlQUFlQTtBQUFlLElBQUFDO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJDYWRhc3Ryb01vZHVsZSIsImNvbWFuZGFzQ29uZmlnIiwiY29tYW5kYXNTZXJ2aWNlIiwiQ29tYW5kYXNNb2R1bGUiLCJfYyIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJDb21hbmRhc01vZHVsZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXHJcbiAqIE3Ds2R1bG8gZGUgQ29tYW5kYXNcclxuICogXHJcbiAqIENvbXBvbmVudGUgcXVlIGltcGxlbWVudGEgbyBzaXN0ZW1hIGRlIGNhZGFzdHJvIGRlIGNvbWFuZGFzXHJcbiAqIHV0aWxpemFuZG8gbyBDYWRhc3Ryb01vZHVsZSBnZW7DqXJpY28gY29tIGNvbmZpZ3VyYcOnw6NvIGVzcGVjw61maWNhLlxyXG4gKi9cclxuXHJcbmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XHJcbmltcG9ydCBDYWRhc3Ryb01vZHVsZSBmcm9tICcuLi9jb21tb24vQ2FkYXN0cm9Nb2R1bGUnO1xyXG5pbXBvcnQgeyBjb21hbmRhc0NvbmZpZyB9IGZyb20gJy4uLy4uL2NvbmZpZy9tb2R1bGVzL2NvbWFuZGFzQ29uZmlnJztcclxuaW1wb3J0IHsgY29tYW5kYXNTZXJ2aWNlIH0gZnJvbSAnLi4vLi4vc2VydmljZXMvY29tYW5kYXNTZXJ2aWNlJztcclxuXHJcbmludGVyZmFjZSBDb21hbmRhc01vZHVsZVByb3BzIHt9XHJcblxyXG5jb25zdCBDb21hbmRhc01vZHVsZTogUmVhY3QuRkM8Q29tYW5kYXNNb2R1bGVQcm9wcz4gPSAoKSA9PiB7XHJcbiAgcmV0dXJuIChcclxuICAgIDxDYWRhc3Ryb01vZHVsZVxyXG4gICAgICBjb25maWc9e2NvbWFuZGFzQ29uZmlnfVxyXG4gICAgICB0aXRsZT1cIkNvbWFuZGFzXCJcclxuICAgICAgZGVzY3JpcHRpb249XCJHZXN0w6NvIGNvbXBsZXRhIGRlIGNvbWFuZGFzIGRvIHNpc3RlbWFcIlxyXG4gICAgICBhcGlTZXJ2aWNlPXtjb21hbmRhc1NlcnZpY2V9XHJcbiAgICAvPlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBDb21hbmRhc01vZHVsZTtcclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvY29tYW5kYXMvQ29tYW5kYXNNb2R1bGUudHN4In0=

@@ -1,0 +1,113 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/tabs.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/tabs.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import * as TabsPrimitive from "/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=47dd5afa";
+import { cn } from "/src/lib/utils.ts";
+const Tabs = TabsPrimitive.Root;
+const TabsList = React.forwardRef(
+  _c = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    TabsPrimitive.List,
+    {
+      ref,
+      className: cn(
+        "inline-flex h-9 items-center justify-center rounded-lg bg-zinc-100 p-1 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/tabs.tsx",
+      lineNumber: 31,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c2 = TabsList;
+TabsList.displayName = TabsPrimitive.List.displayName;
+const TabsTrigger = React.forwardRef(
+  _c3 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    TabsPrimitive.Trigger,
+    {
+      ref,
+      className: cn(
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=active]:bg-zinc-950 dark:data-[state=active]:text-zinc-50",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/tabs.tsx",
+      lineNumber: 46,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c4 = TabsTrigger;
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
+const TabsContent = React.forwardRef(
+  _c5 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    TabsPrimitive.Content,
+    {
+      ref,
+      className: cn(
+        "mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/tabs.tsx",
+      lineNumber: 61,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c6 = TabsContent;
+TabsContent.displayName = TabsPrimitive.Content.displayName;
+export { Tabs, TabsList, TabsTrigger, TabsContent };
+var _c, _c2, _c3, _c4, _c5, _c6;
+$RefreshReg$(_c, "TabsList$React.forwardRef");
+$RefreshReg$(_c2, "TabsList");
+$RefreshReg$(_c3, "TabsTrigger$React.forwardRef");
+$RefreshReg$(_c4, "TabsTrigger");
+$RefreshReg$(_c5, "TabsContent$React.forwardRef");
+$RefreshReg$(_c6, "TabsContent");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/tabs.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/tabs.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBV0U7Ozs7Ozs7Ozs7Ozs7Ozs7QUFYRixZQUFZQSxXQUFXO0FBQ3ZCLFlBQVlDLG1CQUFtQjtBQUUvQixTQUFTQyxVQUFVO0FBRW5CLE1BQU1DLE9BQU9GLGNBQWNHO0FBRTNCLE1BQU1DLFdBQVdMLE1BQU1NO0FBQUFBLEVBR3RCQyxLQUFDQSxDQUFDLEVBQUVDLFdBQVcsR0FBR0MsTUFBTSxHQUFHQyxRQUMxQjtBQUFBLElBQUMsY0FBYztBQUFBLElBQWQ7QUFBQSxNQUNDO0FBQUEsTUFDQSxXQUFXUjtBQUFBQSxRQUNUO0FBQUEsUUFDQU07QUFBQUEsTUFDRjtBQUFBLE1BQ0EsR0FBSUM7QUFBQUE7QUFBQUEsSUFOTjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFNWTtBQUViO0FBQUNFLE1BWklOO0FBYU5BLFNBQVNPLGNBQWNYLGNBQWNZLEtBQUtEO0FBRTFDLE1BQU1FLGNBQWNkLE1BQU1NO0FBQUFBLEVBR3pCUyxNQUFDQSxDQUFDLEVBQUVQLFdBQVcsR0FBR0MsTUFBTSxHQUFHQyxRQUMxQjtBQUFBLElBQUMsY0FBYztBQUFBLElBQWQ7QUFBQSxNQUNDO0FBQUEsTUFDQSxXQUFXUjtBQUFBQSxRQUNUO0FBQUEsUUFDQU07QUFBQUEsTUFDRjtBQUFBLE1BQ0EsR0FBSUM7QUFBQUE7QUFBQUEsSUFOTjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFNWTtBQUViO0FBQUNPLE1BWklGO0FBYU5BLFlBQVlGLGNBQWNYLGNBQWNnQixRQUFRTDtBQUVoRCxNQUFNTSxjQUFjbEIsTUFBTU07QUFBQUEsRUFHekJhLE1BQUNBLENBQUMsRUFBRVgsV0FBVyxHQUFHQyxNQUFNLEdBQUdDLFFBQzFCO0FBQUEsSUFBQyxjQUFjO0FBQUEsSUFBZDtBQUFBLE1BQ0M7QUFBQSxNQUNBLFdBQVdSO0FBQUFBLFFBQ1Q7QUFBQSxRQUNBTTtBQUFBQSxNQUNGO0FBQUEsTUFDQSxHQUFJQztBQUFBQTtBQUFBQSxJQU5OO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxFQU1ZO0FBRWI7QUFBQ1csTUFaSUY7QUFhTkEsWUFBWU4sY0FBY1gsY0FBY29CLFFBQVFUO0FBRWhELFNBQVNULE1BQU1FLFVBQVVTLGFBQWFJO0FBQWEsSUFBQVgsSUFBQUksS0FBQUksS0FBQUMsS0FBQUcsS0FBQUM7QUFBQUUsYUFBQWYsSUFBQTtBQUFBZSxhQUFBWCxLQUFBO0FBQUFXLGFBQUFQLEtBQUE7QUFBQU8sYUFBQU4sS0FBQTtBQUFBTSxhQUFBSCxLQUFBO0FBQUFHLGFBQUFGLEtBQUEiLCJuYW1lcyI6WyJSZWFjdCIsIlRhYnNQcmltaXRpdmUiLCJjbiIsIlRhYnMiLCJSb290IiwiVGFic0xpc3QiLCJmb3J3YXJkUmVmIiwiX2MiLCJjbGFzc05hbWUiLCJwcm9wcyIsInJlZiIsIl9jMiIsImRpc3BsYXlOYW1lIiwiTGlzdCIsIlRhYnNUcmlnZ2VyIiwiX2MzIiwiX2M0IiwiVHJpZ2dlciIsIlRhYnNDb250ZW50IiwiX2M1IiwiX2M2IiwiQ29udGVudCIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJ0YWJzLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyBSZWFjdCBmcm9tIFwicmVhY3RcIlxyXG5pbXBvcnQgKiBhcyBUYWJzUHJpbWl0aXZlIGZyb20gXCJAcmFkaXgtdWkvcmVhY3QtdGFic1wiXHJcblxyXG5pbXBvcnQgeyBjbiB9IGZyb20gXCJAL2xpYi91dGlsc1wiXHJcblxyXG5jb25zdCBUYWJzID0gVGFic1ByaW1pdGl2ZS5Sb290XHJcblxyXG5jb25zdCBUYWJzTGlzdCA9IFJlYWN0LmZvcndhcmRSZWY8XHJcbiAgUmVhY3QuRWxlbWVudFJlZjx0eXBlb2YgVGFic1ByaW1pdGl2ZS5MaXN0PixcclxuICBSZWFjdC5Db21wb25lbnRQcm9wc1dpdGhvdXRSZWY8dHlwZW9mIFRhYnNQcmltaXRpdmUuTGlzdD5cclxuPigoeyBjbGFzc05hbWUsIC4uLnByb3BzIH0sIHJlZikgPT4gKFxyXG4gIDxUYWJzUHJpbWl0aXZlLkxpc3RcclxuICAgIHJlZj17cmVmfVxyXG4gICAgY2xhc3NOYW1lPXtjbihcclxuICAgICAgXCJpbmxpbmUtZmxleCBoLTkgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHJvdW5kZWQtbGcgYmctemluYy0xMDAgcC0xIHRleHQtemluYy01MDAgZGFyazpiZy16aW5jLTgwMCBkYXJrOnRleHQtemluYy00MDBcIixcclxuICAgICAgY2xhc3NOYW1lXHJcbiAgICApfVxyXG4gICAgey4uLnByb3BzfVxyXG4gIC8+XHJcbikpXHJcblRhYnNMaXN0LmRpc3BsYXlOYW1lID0gVGFic1ByaW1pdGl2ZS5MaXN0LmRpc3BsYXlOYW1lXHJcblxyXG5jb25zdCBUYWJzVHJpZ2dlciA9IFJlYWN0LmZvcndhcmRSZWY8XHJcbiAgUmVhY3QuRWxlbWVudFJlZjx0eXBlb2YgVGFic1ByaW1pdGl2ZS5UcmlnZ2VyPixcclxuICBSZWFjdC5Db21wb25lbnRQcm9wc1dpdGhvdXRSZWY8dHlwZW9mIFRhYnNQcmltaXRpdmUuVHJpZ2dlcj5cclxuPigoeyBjbGFzc05hbWUsIC4uLnByb3BzIH0sIHJlZikgPT4gKFxyXG4gIDxUYWJzUHJpbWl0aXZlLlRyaWdnZXJcclxuICAgIHJlZj17cmVmfVxyXG4gICAgY2xhc3NOYW1lPXtjbihcclxuICAgICAgXCJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgd2hpdGVzcGFjZS1ub3dyYXAgcm91bmRlZC1tZCBweC0zIHB5LTEgdGV4dC1zbSBmb250LW1lZGl1bSByaW5nLW9mZnNldC13aGl0ZSB0cmFuc2l0aW9uLWFsbCBmb2N1cy12aXNpYmxlOm91dGxpbmUtbm9uZSBmb2N1cy12aXNpYmxlOnJpbmctMiBmb2N1cy12aXNpYmxlOnJpbmctemluYy05NTAgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC0yIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBkYXRhLVtzdGF0ZT1hY3RpdmVdOmJnLXdoaXRlIGRhdGEtW3N0YXRlPWFjdGl2ZV06dGV4dC16aW5jLTk1MCBkYXRhLVtzdGF0ZT1hY3RpdmVdOnNoYWRvdyBkYXJrOnJpbmctb2Zmc2V0LXppbmMtOTUwIGRhcms6Zm9jdXMtdmlzaWJsZTpyaW5nLXppbmMtMzAwIGRhcms6ZGF0YS1bc3RhdGU9YWN0aXZlXTpiZy16aW5jLTk1MCBkYXJrOmRhdGEtW3N0YXRlPWFjdGl2ZV06dGV4dC16aW5jLTUwXCIsXHJcbiAgICAgIGNsYXNzTmFtZVxyXG4gICAgKX1cclxuICAgIHsuLi5wcm9wc31cclxuICAvPlxyXG4pKVxyXG5UYWJzVHJpZ2dlci5kaXNwbGF5TmFtZSA9IFRhYnNQcmltaXRpdmUuVHJpZ2dlci5kaXNwbGF5TmFtZVxyXG5cclxuY29uc3QgVGFic0NvbnRlbnQgPSBSZWFjdC5mb3J3YXJkUmVmPFxyXG4gIFJlYWN0LkVsZW1lbnRSZWY8dHlwZW9mIFRhYnNQcmltaXRpdmUuQ29udGVudD4sXHJcbiAgUmVhY3QuQ29tcG9uZW50UHJvcHNXaXRob3V0UmVmPHR5cGVvZiBUYWJzUHJpbWl0aXZlLkNvbnRlbnQ+XHJcbj4oKHsgY2xhc3NOYW1lLCAuLi5wcm9wcyB9LCByZWYpID0+IChcclxuICA8VGFic1ByaW1pdGl2ZS5Db250ZW50XHJcbiAgICByZWY9e3JlZn1cclxuICAgIGNsYXNzTmFtZT17Y24oXHJcbiAgICAgIFwibXQtMiByaW5nLW9mZnNldC13aGl0ZSBmb2N1cy12aXNpYmxlOm91dGxpbmUtbm9uZSBmb2N1cy12aXNpYmxlOnJpbmctMiBmb2N1cy12aXNpYmxlOnJpbmctemluYy05NTAgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC0yIGRhcms6cmluZy1vZmZzZXQtemluYy05NTAgZGFyazpmb2N1cy12aXNpYmxlOnJpbmctemluYy0zMDBcIixcclxuICAgICAgY2xhc3NOYW1lXHJcbiAgICApfVxyXG4gICAgey4uLnByb3BzfVxyXG4gIC8+XHJcbikpXHJcblRhYnNDb250ZW50LmRpc3BsYXlOYW1lID0gVGFic1ByaW1pdGl2ZS5Db250ZW50LmRpc3BsYXlOYW1lXHJcblxyXG5leHBvcnQgeyBUYWJzLCBUYWJzTGlzdCwgVGFic1RyaWdnZXIsIFRhYnNDb250ZW50IH1cclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvdWkvdGFicy50c3gifQ==

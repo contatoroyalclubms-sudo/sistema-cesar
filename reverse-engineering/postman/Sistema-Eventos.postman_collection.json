@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "Sistema de Eventos - Reverse Engineered",
+    "description": "Coleção gerada automaticamente por engenharia reversa",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Outros",
+      "item": [
+        {
+          "name": "GET /api/cors-test",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "key": "referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not=A?Brand\";v=\"24\", \"Chromium\";v=\"140\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "x-debug-mode",
+                "value": "true"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8003/api/cors-test",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "api",
+                "cors-test"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /api/cors-test",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "key": "referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Not=A?Brand\";v=\"24\", \"Chromium\";v=\"140\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "x-debug-mode",
+                "value": "true"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8003/api/cors-test",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "api",
+                "cors-test"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/label.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/label.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import * as LabelPrimitive from "/node_modules/.vite/deps/@radix-ui_react-label.js?v=47dd5afa";
+import { cva } from "/node_modules/.vite/deps/class-variance-authority.js?v=47dd5afa";
+import { cn } from "/src/lib/utils.ts";
+const labelVariants = cva(
+  "text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+);
+const Label = React.forwardRef(
+  _c = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    LabelPrimitive.Root,
+    {
+      ref,
+      className: cn(labelVariants(), className),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/label.tsx",
+      lineNumber: 35,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c2 = Label;
+Label.displayName = LabelPrimitive.Root.displayName;
+export { Label };
+var _c, _c2;
+$RefreshReg$(_c, "Label$React.forwardRef");
+$RefreshReg$(_c2, "Label");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/label.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/label.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBZUU7Ozs7Ozs7Ozs7Ozs7Ozs7QUFmRixZQUFZQSxXQUFXO0FBQ3ZCLFlBQVlDLG9CQUFvQjtBQUNoQyxTQUFTQyxXQUE4QjtBQUV2QyxTQUFTQyxVQUFVO0FBRW5CLE1BQU1DLGdCQUFnQkY7QUFBQUEsRUFDcEI7QUFDRjtBQUVBLE1BQU1HLFFBQVFMLE1BQU1NO0FBQUFBLEVBSW5CQyxLQUFDQSxDQUFDLEVBQUVDLFdBQVcsR0FBR0MsTUFBTSxHQUFHQyxRQUMxQjtBQUFBLElBQUMsZUFBZTtBQUFBLElBQWY7QUFBQSxNQUNDO0FBQUEsTUFDQSxXQUFXUCxHQUFHQyxjQUFjLEdBQUdJLFNBQVM7QUFBQSxNQUN4QyxHQUFJQztBQUFBQTtBQUFBQSxJQUhOO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxFQUdZO0FBRWI7QUFBQ0UsTUFWSU47QUFXTkEsTUFBTU8sY0FBY1gsZUFBZVksS0FBS0Q7QUFFeEMsU0FBU1A7QUFBTyxJQUFBRSxJQUFBSTtBQUFBRyxhQUFBUCxJQUFBO0FBQUFPLGFBQUFILEtBQUEiLCJuYW1lcyI6WyJSZWFjdCIsIkxhYmVsUHJpbWl0aXZlIiwiY3ZhIiwiY24iLCJsYWJlbFZhcmlhbnRzIiwiTGFiZWwiLCJmb3J3YXJkUmVmIiwiX2MiLCJjbGFzc05hbWUiLCJwcm9wcyIsInJlZiIsIl9jMiIsImRpc3BsYXlOYW1lIiwiUm9vdCIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJsYWJlbC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgUmVhY3QgZnJvbSBcInJlYWN0XCJcclxuaW1wb3J0ICogYXMgTGFiZWxQcmltaXRpdmUgZnJvbSBcIkByYWRpeC11aS9yZWFjdC1sYWJlbFwiXHJcbmltcG9ydCB7IGN2YSwgdHlwZSBWYXJpYW50UHJvcHMgfSBmcm9tIFwiY2xhc3MtdmFyaWFuY2UtYXV0aG9yaXR5XCJcclxuXHJcbmltcG9ydCB7IGNuIH0gZnJvbSBcIkAvbGliL3V0aWxzXCJcclxuXHJcbmNvbnN0IGxhYmVsVmFyaWFudHMgPSBjdmEoXHJcbiAgXCJ0ZXh0LXNtIGZvbnQtbWVkaXVtIGxlYWRpbmctbm9uZSB0ZXh0LWZvcmVncm91bmQgcGVlci1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgcGVlci1kaXNhYmxlZDpvcGFjaXR5LTcwXCJcclxuKVxyXG5cclxuY29uc3QgTGFiZWwgPSBSZWFjdC5mb3J3YXJkUmVmPFxyXG4gIFJlYWN0LkVsZW1lbnRSZWY8dHlwZW9mIExhYmVsUHJpbWl0aXZlLlJvb3Q+LFxyXG4gIFJlYWN0LkNvbXBvbmVudFByb3BzV2l0aG91dFJlZjx0eXBlb2YgTGFiZWxQcmltaXRpdmUuUm9vdD4gJlxyXG4gICAgVmFyaWFudFByb3BzPHR5cGVvZiBsYWJlbFZhcmlhbnRzPlxyXG4+KCh7IGNsYXNzTmFtZSwgLi4ucHJvcHMgfSwgcmVmKSA9PiAoXHJcbiAgPExhYmVsUHJpbWl0aXZlLlJvb3RcclxuICAgIHJlZj17cmVmfVxyXG4gICAgY2xhc3NOYW1lPXtjbihsYWJlbFZhcmlhbnRzKCksIGNsYXNzTmFtZSl9XHJcbiAgICB7Li4ucHJvcHN9XHJcbiAgLz5cclxuKSlcclxuTGFiZWwuZGlzcGxheU5hbWUgPSBMYWJlbFByaW1pdGl2ZS5Sb290LmRpc3BsYXlOYW1lXHJcblxyXG5leHBvcnQgeyBMYWJlbCB9XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL3VpL2xhYmVsLnRzeCJ9

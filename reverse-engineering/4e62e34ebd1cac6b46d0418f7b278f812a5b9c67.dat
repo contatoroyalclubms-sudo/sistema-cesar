@@ -1,0 +1,85 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/DiagnosticPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import DiagnosticComponent from "/src/components/diagnostic/DiagnosticComponent.tsx";
+const DiagnosticPage = () => {
+  return /* @__PURE__ */ jsxDEV("div", { className: "min-h-screen bg-background p-4", children: /* @__PURE__ */ jsxDEV("div", { className: "max-w-6xl mx-auto", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "mb-6", children: [
+      /* @__PURE__ */ jsxDEV("h1", { className: "text-3xl font-bold", children: "Diagnóstico do Sistema" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx",
+        lineNumber: 28,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "text-muted-foreground mt-2", children: "Use esta página para identificar e corrigir problemas de conectividade" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx",
+        lineNumber: 29,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx",
+      lineNumber: 27,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV(
+      DiagnosticComponent,
+      {
+        onComplete: (success) => {
+          if (success) {
+            console.log("✅ Sistema funcionando corretamente!");
+          } else {
+            console.log("⚠️ Problemas identificados no sistema");
+          }
+        }
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx",
+        lineNumber: 34,
+        columnNumber: 9
+      },
+      this
+    )
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx",
+    lineNumber: 26,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx",
+    lineNumber: 25,
+    columnNumber: 5
+  }, this);
+};
+_c = DiagnosticPage;
+export default DiagnosticPage;
+var _c;
+$RefreshReg$(_c, "DiagnosticPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/pages/DiagnosticPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBUVU7Ozs7Ozs7Ozs7Ozs7Ozs7QUFQVixPQUFPQSx5QkFBeUI7QUFFaEMsTUFBTUMsaUJBQTJCQSxNQUFNO0FBQ3JDLFNBQ0UsdUJBQUMsU0FBSSxXQUFVLGtDQUNiLGlDQUFDLFNBQUksV0FBVSxxQkFDYjtBQUFBLDJCQUFDLFNBQUksV0FBVSxRQUNiO0FBQUEsNkJBQUMsUUFBRyxXQUFVLHNCQUFxQixzQ0FBbkM7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUF5RDtBQUFBLE1BQ3pELHVCQUFDLE9BQUUsV0FBVSw4QkFBNkIsc0ZBQTFDO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFFQTtBQUFBLFNBSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUtBO0FBQUEsSUFFQTtBQUFBLE1BQUM7QUFBQTtBQUFBLFFBQ0MsWUFBWSxDQUFDQyxZQUFZO0FBQ3ZCLGNBQUlBLFNBQVM7QUFDWEMsb0JBQVFDLElBQUkscUNBQXFDO0FBQUEsVUFDbkQsT0FBTztBQUNMRCxvQkFBUUMsSUFBSSx1Q0FBdUM7QUFBQSxVQUNyRDtBQUFBLFFBQ0Y7QUFBQTtBQUFBLE1BUEY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLElBT0k7QUFBQSxPQWZOO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FpQkEsS0FsQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQW1CQTtBQUVKO0FBQUVDLEtBdkJJSjtBQXlCTixlQUFlQTtBQUFlLElBQUFJO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJEaWFnbm9zdGljQ29tcG9uZW50IiwiRGlhZ25vc3RpY1BhZ2UiLCJzdWNjZXNzIiwiY29uc29sZSIsImxvZyIsIl9jIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkRpYWdub3N0aWNQYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgRGlhZ25vc3RpY0NvbXBvbmVudCBmcm9tICcuLi9jb21wb25lbnRzL2RpYWdub3N0aWMvRGlhZ25vc3RpY0NvbXBvbmVudCc7XHJcblxyXG5jb25zdCBEaWFnbm9zdGljUGFnZTogUmVhY3QuRkMgPSAoKSA9PiB7XHJcbiAgcmV0dXJuIChcclxuICAgIDxkaXYgY2xhc3NOYW1lPVwibWluLWgtc2NyZWVuIGJnLWJhY2tncm91bmQgcC00XCI+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibWF4LXctNnhsIG14LWF1dG9cIj5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm1iLTZcIj5cclxuICAgICAgICAgIDxoMSBjbGFzc05hbWU9XCJ0ZXh0LTN4bCBmb250LWJvbGRcIj5EaWFnbsOzc3RpY28gZG8gU2lzdGVtYTwvaDE+XHJcbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LW11dGVkLWZvcmVncm91bmQgbXQtMlwiPlxyXG4gICAgICAgICAgICBVc2UgZXN0YSBww6FnaW5hIHBhcmEgaWRlbnRpZmljYXIgZSBjb3JyaWdpciBwcm9ibGVtYXMgZGUgY29uZWN0aXZpZGFkZVxyXG4gICAgICAgICAgPC9wPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICAgIFxyXG4gICAgICAgIDxEaWFnbm9zdGljQ29tcG9uZW50IFxyXG4gICAgICAgICAgb25Db21wbGV0ZT17KHN1Y2Nlc3MpID0+IHtcclxuICAgICAgICAgICAgaWYgKHN1Y2Nlc3MpIHtcclxuICAgICAgICAgICAgICBjb25zb2xlLmxvZygn4pyFIFNpc3RlbWEgZnVuY2lvbmFuZG8gY29ycmV0YW1lbnRlIScpO1xyXG4gICAgICAgICAgICB9IGVsc2Uge1xyXG4gICAgICAgICAgICAgIGNvbnNvbGUubG9nKCfimqDvuI8gUHJvYmxlbWFzIGlkZW50aWZpY2Fkb3Mgbm8gc2lzdGVtYScpO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICB9fVxyXG4gICAgICAgIC8+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IERpYWdub3N0aWNQYWdlO1xyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL1VzZXIvT25lRHJpdmUvRGVza3RvcC9zaXN0ZW1hLXY2LW5vdm8vcGFpbmVsdW5pdmVyc2FsL3BhaW5lbHVuaXZlcnNhbC9mcm9udGVuZC9zcmMvcGFnZXMvRGlhZ25vc3RpY1BhZ2UudHN4In0=

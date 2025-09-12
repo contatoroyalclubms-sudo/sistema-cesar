@@ -1,0 +1,93 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/toaster.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import { useToast } from "/src/hooks/use-toast.ts";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport
+} from "/src/components/ui/toast.tsx";
+export function Toaster() {
+  _s();
+  const { toasts } = useToast();
+  return /* @__PURE__ */ jsxDEV(ToastProvider, { children: [
+    toasts.map(function({ id, title, description, action, ...props }) {
+      return /* @__PURE__ */ jsxDEV(Toast, { ...props, children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "grid gap-1", children: [
+          title && /* @__PURE__ */ jsxDEV(ToastTitle, { children: title }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+            lineNumber: 39,
+            columnNumber: 25
+          }, this),
+          description && /* @__PURE__ */ jsxDEV(ToastDescription, { children: description }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+            lineNumber: 41,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+          lineNumber: 38,
+          columnNumber: 13
+        }, this),
+        action,
+        /* @__PURE__ */ jsxDEV(ToastClose, {}, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+          lineNumber: 45,
+          columnNumber: 13
+        }, this)
+      ] }, id, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+        lineNumber: 37,
+        columnNumber: 11
+      }, this);
+    }),
+    /* @__PURE__ */ jsxDEV(ToastViewport, {}, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+      lineNumber: 49,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx",
+    lineNumber: 34,
+    columnNumber: 5
+  }, this);
+}
+_s(Toaster, "1YTCnXrq2qRowe0H/LBWLjtXoYc=", false, function() {
+  return [useToast];
+});
+_c = Toaster;
+var _c;
+$RefreshReg$(_c, "Toaster");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/toaster.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBbUJ3Qjs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFuQnhCLFNBQVNBLGdCQUFnQjtBQUN6QjtBQUFBLEVBQ0VDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDO0FBQUFBLE9BQ0s7QUFFQSxnQkFBU0MsVUFBVTtBQUFBQyxLQUFBO0FBQ3hCLFFBQU0sRUFBRUMsT0FBTyxJQUFJVCxTQUFTO0FBRTVCLFNBQ0UsdUJBQUMsaUJBQ0VTO0FBQUFBLFdBQU9DLElBQUksU0FBVSxFQUFFQyxJQUFJQyxPQUFPQyxhQUFhQyxRQUFRLEdBQUdDLE1BQTRILEdBQUc7QUFDeEwsYUFDRSx1QkFBQyxTQUFlLEdBQUlBLE9BQ2xCO0FBQUEsK0JBQUMsU0FBSSxXQUFVLGNBQ1pIO0FBQUFBLG1CQUFTLHVCQUFDLGNBQVlBLG1CQUFiO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQW1CO0FBQUEsVUFDNUJDLGVBQ0MsdUJBQUMsb0JBQWtCQSx5QkFBbkI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBK0I7QUFBQSxhQUhuQztBQUFBO0FBQUE7QUFBQTtBQUFBLGVBS0E7QUFBQSxRQUNDQztBQUFBQSxRQUNELHVCQUFDLGdCQUFEO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBVztBQUFBLFdBUkRILElBQVo7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQVNBO0FBQUEsSUFFSixDQUFDO0FBQUEsSUFDRCx1QkFBQyxtQkFBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBQWM7QUFBQSxPQWZoQjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBZ0JBO0FBRUo7QUFBQ0gsR0F0QmVELFNBQU87QUFBQSxVQUNGUCxRQUFRO0FBQUE7QUFBQWdCLEtBRGJUO0FBQU8sSUFBQVM7QUFBQUMsYUFBQUQsSUFBQSIsIm5hbWVzIjpbInVzZVRvYXN0IiwiVG9hc3QiLCJUb2FzdENsb3NlIiwiVG9hc3REZXNjcmlwdGlvbiIsIlRvYXN0UHJvdmlkZXIiLCJUb2FzdFRpdGxlIiwiVG9hc3RWaWV3cG9ydCIsIlRvYXN0ZXIiLCJfcyIsInRvYXN0cyIsIm1hcCIsImlkIiwidGl0bGUiLCJkZXNjcmlwdGlvbiIsImFjdGlvbiIsInByb3BzIiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsidG9hc3Rlci50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlVG9hc3QgfSBmcm9tIFwiQC9ob29rcy91c2UtdG9hc3RcIlxyXG5pbXBvcnQge1xyXG4gIFRvYXN0LFxyXG4gIFRvYXN0Q2xvc2UsXHJcbiAgVG9hc3REZXNjcmlwdGlvbixcclxuICBUb2FzdFByb3ZpZGVyLFxyXG4gIFRvYXN0VGl0bGUsXHJcbiAgVG9hc3RWaWV3cG9ydCxcclxufSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3RvYXN0XCJcclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBUb2FzdGVyKCkge1xyXG4gIGNvbnN0IHsgdG9hc3RzIH0gPSB1c2VUb2FzdCgpXHJcblxyXG4gIHJldHVybiAoXHJcbiAgICA8VG9hc3RQcm92aWRlcj5cclxuICAgICAge3RvYXN0cy5tYXAoZnVuY3Rpb24gKHsgaWQsIHRpdGxlLCBkZXNjcmlwdGlvbiwgYWN0aW9uLCAuLi5wcm9wcyB9OiB7IGlkOiBzdHJpbmc7IHRpdGxlPzogUmVhY3QuUmVhY3ROb2RlOyBkZXNjcmlwdGlvbj86IFJlYWN0LlJlYWN0Tm9kZTsgYWN0aW9uPzogUmVhY3QuUmVhY3ROb2RlOyBba2V5OiBzdHJpbmddOiBhbnkgfSkge1xyXG4gICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICA8VG9hc3Qga2V5PXtpZH0gey4uLnByb3BzfT5cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIGdhcC0xXCI+XHJcbiAgICAgICAgICAgICAge3RpdGxlICYmIDxUb2FzdFRpdGxlPnt0aXRsZX08L1RvYXN0VGl0bGU+fVxyXG4gICAgICAgICAgICAgIHtkZXNjcmlwdGlvbiAmJiAoXHJcbiAgICAgICAgICAgICAgICA8VG9hc3REZXNjcmlwdGlvbj57ZGVzY3JpcHRpb259PC9Ub2FzdERlc2NyaXB0aW9uPlxyXG4gICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICB7YWN0aW9ufVxyXG4gICAgICAgICAgICA8VG9hc3RDbG9zZSAvPlxyXG4gICAgICAgICAgPC9Ub2FzdD5cclxuICAgICAgICApXHJcbiAgICAgIH0pfVxyXG4gICAgICA8VG9hc3RWaWV3cG9ydCAvPlxyXG4gICAgPC9Ub2FzdFByb3ZpZGVyPlxyXG4gIClcclxufVxyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL1VzZXIvT25lRHJpdmUvRGVza3RvcC9zaXN0ZW1hLXY2LW5vdm8vcGFpbmVsdW5pdmVyc2FsL3BhaW5lbHVuaXZlcnNhbC9mcm9udGVuZC9zcmMvY29tcG9uZW50cy91aS90b2FzdGVyLnRzeCJ9

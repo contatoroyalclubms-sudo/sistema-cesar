@@ -18,7 +18,7 @@ from .models import Base
 from .routers import (
     auth, eventos, usuarios, empresas, listas, transacoes, checkins, dashboard, 
     relatorios, whatsapp, cupons, n8n, pdv, gamificacao, produtos, formas_pagamento,
-    lista_convidados, evento_caixa,
+    lista_convidados,  # evento_caixa temporariamente removido
     # Novos routers MEEP completos - TEMPORARIAMENTE DESABILITADOS (conflito de modelos)
     # dashboard_analytics, comandas_cashless, equipe_completo,
     # cardapio_completo, pdv_completo, relatorios_completo,
@@ -53,7 +53,7 @@ AUDIT_ENABLED = False
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# 🚀 MIGRAÇÃO AUTOMÁTICA NO STARTUP (Railway Deploy)
+# MIGRACAO AUTOMATICA NO STARTUP (Railway Deploy)
 def run_startup_migrations():
     """Executa migrações automáticas no startup se for deployment Railway"""
     try:
@@ -79,7 +79,7 @@ def run_startup_migrations():
             if migration_success:
                 logger.info("✅ Migrações automáticas concluídas com sucesso")
             else:
-                logger.warning("⚠️ Algumas migrações falharam, mas aplicação continuará")
+                logger.warning("AVISO: Algumas migracoes falharam, mas aplicacao continuara")
         
         elif not database_url:
             logger.info("📝 DATABASE_URL não configurada - Pulando migrações automáticas")
@@ -104,7 +104,7 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# 🛡️ CORS DEFINITIVO - MÚLTIPLAS CAMADAS DE PROTEÇÃO
+# CORS DEFINITIVO - MULTIPLAS CAMADAS DE PROTECAO
 class UltimateCORSMiddleware(BaseHTTPMiddleware):
     """Middleware CORS ultra-robusto para eliminar todos os problemas possíveis"""
     
@@ -244,7 +244,7 @@ class UltimateCORSMiddleware(BaseHTTPMiddleware):
 # Aplicar middleware CORS customizado - TEMPORARIAMENTE DESABILITADO
 # app.add_middleware(UltimateCORSMiddleware)
 
-# 🛡️ CORS PADRÃO COMO BACKUP (camada dupla de segurança)
+# CORS PADRAO COMO BACKUP (camada dupla de seguranca)
 from fastapi.middleware.cors import CORSMiddleware
 
 # Configuração CORS otimizada para development
@@ -273,7 +273,7 @@ start_scheduler()
 @app.on_event("startup")
 async def startup_event():
     """Eventos executados no startup da aplicação"""
-    logger.info("🚀 Iniciando Sistema de Gestão de Eventos...")
+    logger.info("Iniciando Sistema de Gestao de Eventos...")
     
     # Log de informações do deploy
     deploy_monitor.log_startup_info()
@@ -289,13 +289,13 @@ async def startup_event():
     if migration_success:
         logger.info("✅ Migração automática concluída com sucesso")
     else:
-        logger.warning("⚠️ Migração automática falhou, aplicação continuará")
+        logger.warning("AVISO: Migracao automatica falhou, aplicacao continuara")
     
     # Recursos opcionais desabilitados para testes
     logger.info("Sistema iniciado em modo de teste (recursos opcionais desabilitados)")
     
     # Outras inicializações...
-    logger.info("🎉 Sistema iniciado com sucesso!")
+    logger.info("Sistema iniciado com sucesso!")
 
 @app.on_event("shutdown")
 async def shutdown_event():
@@ -324,7 +324,7 @@ app.include_router(empresas.router, prefix="/api/empresas", tags=["Empresas"])
 app.include_router(usuarios.router, prefix="/api/usuarios", tags=["Usuários"])
 app.include_router(eventos.router, prefix="/api/eventos", tags=["Eventos"])
 app.include_router(lista_convidados.router, tags=["Lista de Convidados"])
-app.include_router(evento_caixa.router, tags=["Evento Caixa"])
+# app.include_router(evento_caixa.router, tags=["Evento Caixa"])  # TEMPORARIAMENTE DESABILITADO - MODELOS FALTANDO
 app.include_router(listas.router, prefix="/api/listas", tags=["Listas"])
 app.include_router(transacoes.router, prefix="/api/transacoes", tags=["Transações"])
 app.include_router(checkins.router, prefix="/api/checkins", tags=["Check-ins"])
@@ -339,7 +339,11 @@ app.include_router(gamificacao.router, prefix="/api")
 # app.include_router(financeiro.router, prefix="/api/financeiro", tags=["Financeiro"])  # COMENTADO - NÃO IMPORTADO
 app.include_router(formas_pagamento.router, prefix="/api/formas-pagamento", tags=["Formas de Pagamento"])
 # app.include_router(import_export.router, tags=["Import-Export"])  # COMENTADO - NÃO IMPORTADO
-# app.include_router(meep.router, prefix="/api/meep", tags=["MEEP Integration"])  # COMENTADO - NÃO IMPORTADO
+
+# MEEP Integration Kit Legal - 100% sem código proprietário
+# MEEP Integration - Kit Legal
+from .routers import meep_router
+app.include_router(meep_router.router, tags=["MEEP Integration Legal Kit"])
 # app.include_router(cashless.router, prefix="/api/cashless", tags=["Sistema Cashless"])  # COMENTADO - NÃO IMPORTADO
 # app.include_router(mesa_kds.router, tags=["Sistema Mesas + KDS"])  # COMENTADO - NÃO IMPORTADO
 # app.include_router(estoque.router)  # Router de estoque - TEMPORARIAMENTE COMENTADO
@@ -379,7 +383,7 @@ app.include_router(formas_pagamento.router, prefix="/api/formas-pagamento", tags
 # Dashboard Financeiro Expandido
 # app.include_router(dashboard_financeiro.router)  # COMENTADO - NÃO IMPORTADO
 
-# 🚀 NOVOS ROUTERS MEEP COMPLETOS - Sistema Universal v6
+# NOVOS ROUTERS MEEP COMPLETOS - Sistema Universal v6
 # ROUTERS MEEP - TEMPORARIAMENTE DESABILITADOS (conflito de modelos)
 # # Dashboard e Analytics
 # app.include_router(dashboard_analytics.router)
@@ -531,7 +535,7 @@ async def cors_advanced_test(request: Request):
     
     return JSONResponse(content=response_data)
 
-# 🎯 CATCH-ALL PARA OPTIONS
+# CATCH-ALL PARA OPTIONS
 @app.options("/{full_path:path}")
 async def options_catch_all(request: Request, full_path: str):
     """Catch-all para requisições OPTIONS não capturadas"""
@@ -552,7 +556,7 @@ async def options_catch_all(request: Request, full_path: str):
         }
     )
 
-# 🏗️ SETUP INICIAL
+# SETUP INICIAL
 @app.post("/setup-inicial")
 async def setup_inicial_temp(db: Session = Depends(get_db)):
     from .models import Empresa, Usuario

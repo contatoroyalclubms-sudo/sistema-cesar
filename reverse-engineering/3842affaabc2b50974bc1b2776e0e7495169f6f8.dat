@@ -1,0 +1,78 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/switch.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/switch.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import * as SwitchPrimitives from "/node_modules/.vite/deps/@radix-ui_react-switch.js?v=47dd5afa";
+import { cn } from "/src/lib/utils.ts";
+const Switch = React.forwardRef(
+  _c = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    SwitchPrimitives.Root,
+    {
+      className: cn(
+        "peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-zinc-900 data-[state=unchecked]:bg-zinc-200 dark:focus-visible:ring-zinc-300 dark:focus-visible:ring-offset-zinc-950 dark:data-[state=checked]:bg-zinc-50 dark:data-[state=unchecked]:bg-zinc-800",
+        className
+      ),
+      ...props,
+      ref,
+      children: /* @__PURE__ */ jsxDEV(
+        SwitchPrimitives.Thumb,
+        {
+          className: cn(
+            "pointer-events-none block h-4 w-4 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 dark:bg-zinc-950"
+          )
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/switch.tsx",
+          lineNumber: 37,
+          columnNumber: 5
+        },
+        this
+      )
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/switch.tsx",
+      lineNumber: 29,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c2 = Switch;
+Switch.displayName = SwitchPrimitives.Root.displayName;
+export { Switch };
+var _c, _c2;
+$RefreshReg$(_c, "Switch$React.forwardRef");
+$RefreshReg$(_c2, "Switch");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/switch.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/switch.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBaUJJOzs7Ozs7Ozs7Ozs7Ozs7O0FBakJKLFlBQVlBLFdBQVc7QUFDdkIsWUFBWUMsc0JBQXNCO0FBRWxDLFNBQVNDLFVBQVU7QUFFbkIsTUFBTUMsU0FBU0gsTUFBTUk7QUFBQUEsRUFHcEJDLEtBQUNBLENBQUMsRUFBRUMsV0FBVyxHQUFHQyxNQUFNLEdBQUdDLFFBQzFCO0FBQUEsSUFBQyxpQkFBaUI7QUFBQSxJQUFqQjtBQUFBLE1BQ0MsV0FBV047QUFBQUEsUUFDVDtBQUFBLFFBQ0FJO0FBQUFBLE1BQ0Y7QUFBQSxNQUNBLEdBQUlDO0FBQUFBLE1BQ0o7QUFBQSxNQUVBO0FBQUEsUUFBQyxpQkFBaUI7QUFBQSxRQUFqQjtBQUFBLFVBQ0MsV0FBV0w7QUFBQUEsWUFDVDtBQUFBLFVBQ0Y7QUFBQTtBQUFBLFFBSEY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BR0k7QUFBQTtBQUFBLElBWE47QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLEVBYUE7QUFDRDtBQUFDTyxNQWxCSU47QUFtQk5BLE9BQU9PLGNBQWNULGlCQUFpQlUsS0FBS0Q7QUFFM0MsU0FBU1A7QUFBUSxJQUFBRSxJQUFBSTtBQUFBRyxhQUFBUCxJQUFBO0FBQUFPLGFBQUFILEtBQUEiLCJuYW1lcyI6WyJSZWFjdCIsIlN3aXRjaFByaW1pdGl2ZXMiLCJjbiIsIlN3aXRjaCIsImZvcndhcmRSZWYiLCJfYyIsImNsYXNzTmFtZSIsInByb3BzIiwicmVmIiwiX2MyIiwiZGlzcGxheU5hbWUiLCJSb290IiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbInN3aXRjaC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgUmVhY3QgZnJvbSBcInJlYWN0XCJcclxuaW1wb3J0ICogYXMgU3dpdGNoUHJpbWl0aXZlcyBmcm9tIFwiQHJhZGl4LXVpL3JlYWN0LXN3aXRjaFwiXHJcblxyXG5pbXBvcnQgeyBjbiB9IGZyb20gXCJAL2xpYi91dGlsc1wiXHJcblxyXG5jb25zdCBTd2l0Y2ggPSBSZWFjdC5mb3J3YXJkUmVmPFxyXG4gIFJlYWN0LkVsZW1lbnRSZWY8dHlwZW9mIFN3aXRjaFByaW1pdGl2ZXMuUm9vdD4sXHJcbiAgUmVhY3QuQ29tcG9uZW50UHJvcHNXaXRob3V0UmVmPHR5cGVvZiBTd2l0Y2hQcmltaXRpdmVzLlJvb3Q+XHJcbj4oKHsgY2xhc3NOYW1lLCAuLi5wcm9wcyB9LCByZWYpID0+IChcclxuICA8U3dpdGNoUHJpbWl0aXZlcy5Sb290XHJcbiAgICBjbGFzc05hbWU9e2NuKFxyXG4gICAgICBcInBlZXIgaW5saW5lLWZsZXggaC01IHctOSBzaHJpbmstMCBjdXJzb3ItcG9pbnRlciBpdGVtcy1jZW50ZXIgcm91bmRlZC1mdWxsIGJvcmRlci0yIGJvcmRlci10cmFuc3BhcmVudCBzaGFkb3ctc20gdHJhbnNpdGlvbi1jb2xvcnMgZm9jdXMtdmlzaWJsZTpvdXRsaW5lLW5vbmUgZm9jdXMtdmlzaWJsZTpyaW5nLTIgZm9jdXMtdmlzaWJsZTpyaW5nLXppbmMtOTUwIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMiBmb2N1cy12aXNpYmxlOnJpbmctb2Zmc2V0LXdoaXRlIGRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBkaXNhYmxlZDpvcGFjaXR5LTUwIGRhdGEtW3N0YXRlPWNoZWNrZWRdOmJnLXppbmMtOTAwIGRhdGEtW3N0YXRlPXVuY2hlY2tlZF06YmctemluYy0yMDAgZGFyazpmb2N1cy12aXNpYmxlOnJpbmctemluYy0zMDAgZGFyazpmb2N1cy12aXNpYmxlOnJpbmctb2Zmc2V0LXppbmMtOTUwIGRhcms6ZGF0YS1bc3RhdGU9Y2hlY2tlZF06YmctemluYy01MCBkYXJrOmRhdGEtW3N0YXRlPXVuY2hlY2tlZF06YmctemluYy04MDBcIixcclxuICAgICAgY2xhc3NOYW1lXHJcbiAgICApfVxyXG4gICAgey4uLnByb3BzfVxyXG4gICAgcmVmPXtyZWZ9XHJcbiAgPlxyXG4gICAgPFN3aXRjaFByaW1pdGl2ZXMuVGh1bWJcclxuICAgICAgY2xhc3NOYW1lPXtjbihcclxuICAgICAgICBcInBvaW50ZXItZXZlbnRzLW5vbmUgYmxvY2sgaC00IHctNCByb3VuZGVkLWZ1bGwgYmctd2hpdGUgc2hhZG93LWxnIHJpbmctMCB0cmFuc2l0aW9uLXRyYW5zZm9ybSBkYXRhLVtzdGF0ZT1jaGVja2VkXTp0cmFuc2xhdGUteC00IGRhdGEtW3N0YXRlPXVuY2hlY2tlZF06dHJhbnNsYXRlLXgtMCBkYXJrOmJnLXppbmMtOTUwXCJcclxuICAgICAgKX1cclxuICAgIC8+XHJcbiAgPC9Td2l0Y2hQcmltaXRpdmVzLlJvb3Q+XHJcbikpXHJcblN3aXRjaC5kaXNwbGF5TmFtZSA9IFN3aXRjaFByaW1pdGl2ZXMuUm9vdC5kaXNwbGF5TmFtZVxyXG5cclxuZXhwb3J0IHsgU3dpdGNoIH1cclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvdWkvc3dpdGNoLnRzeCJ9

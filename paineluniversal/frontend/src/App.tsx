@@ -4,7 +4,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { EventoProvider } from './contexts/EventoContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/layout/Layout';
-import LoginForm from './components/auth/LoginForm';
+import { LoginFormFixed } from './components/auth/LoginFormFixed';
 import Dashboard from './components/dashboard/Dashboard';
 import SalesModule from './components/sales/SalesModule';
 import CheckinModule from './components/checkin/CheckinModule';
@@ -26,6 +26,7 @@ import CategoriasList from './components/produtos/CategoriasList';
 import AgendamentosList from './components/produtos/AgendamentosList';
 import ImportExportModule from './components/produtos/ImportExportModule';
 import { MEEPDashboard, MEEPAnalytics, MEEPValidacaoCPF, MEEPEquipamentos } from './components/meep';
+import MEEPDashboardComplete from './components/meep/MEEPDashboardComplete';
 import ClientesModule from './components/clientes/ClientesModule';
 import OperadoresModule from './components/operadores/OperadoresModule';
 import ComandasModule from './components/comandas/ComandasModule';
@@ -59,7 +60,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Navigate to="/login" replace />} />
               <Route path="/landing" element={<LandingPage />} />
-              <Route path="/login" element={<LoginForm />} />
+              <Route path="/login" element={<LoginFormFixed />} />
               <Route path="/register" element={<PublicRegisterPage />} />
               <Route path="/diagnostic" element={<DiagnosticPage />} />
               <Route
@@ -178,7 +179,7 @@ function App() {
                       } />
                       <Route path="meep/dashboard" element={
                         <ProtectedRoute requiredRoles={['admin', 'promoter']}>
-                          <MEEPDashboard />
+                          <MEEPDashboardComplete />
                         </ProtectedRoute>
                       } />
                       <Route path="meep/analytics" element={

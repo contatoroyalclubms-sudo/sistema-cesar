@@ -1,0 +1,56 @@
+{
+  "titulo": "Mapa de Fluxos - Sistema de Eventos",
+  "timestamp": "2025-09-11T06:18:17.796Z",
+  "fluxos": [
+    {
+      "nome": "Autenticação",
+      "passos": [
+        "Acessar página inicial",
+        "Preencher CPF e senha",
+        "Submeter formulário",
+        "Receber token JWT",
+        "Armazenar em localStorage",
+        "Redirecionar para dashboard"
+      ]
+    },
+    {
+      "nome": "Criar Evento",
+      "passos": [
+        "Navegar para /eventos",
+        "Clicar em Novo Evento",
+        "Preencher formulário",
+        "POST /api/eventos",
+        "Receber ID do evento",
+        "Redirecionar para detalhes"
+      ]
+    },
+    {
+      "nome": "PDV - Venda",
+      "passos": [
+        "Selecionar evento",
+        "Adicionar produtos ao carrinho",
+        "Escolher forma de pagamento",
+        "POST /api/pdv/venda",
+        "Atualizar estoque via WebSocket",
+        "Gerar recibo"
+      ]
+    },
+    {
+      "nome": "Check-in",
+      "passos": [
+        "Selecionar evento",
+        "Escanear QR ou digitar CPF",
+        "POST /api/checkin",
+        "Atualizar contador em tempo real",
+        "Mostrar confirmação"
+      ]
+    }
+  ],
+  "websockets": [
+    {
+      "url": "ws://localhost:5173/?token=YcEIGgyTBvAY",
+      "proposito": "Desconhecido",
+      "mensagens": 2
+    }
+  ]
+}

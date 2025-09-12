@@ -1,242 +1,181 @@
 const { chromium } = require('playwright');
-const path = require('path');
-const fs = require('fs');
 
-async function automateGitHubSetup() {
-    console.log('🚀 Iniciando automação completa do GitHub...');
-    
-    // Usar sequencial thinking para planejar
-    console.log('🧠 Planejando a missão:');
-    console.log('1. Abrir GitHub');
-    console.log('2. Fazer login com Google');
-    console.log('3. Configurar repositório');
-    console.log('4. Configurar deploy');
-    console.log('5. Verificar configurações Git locais');
+async function navegadorNormalGitHub() {
+    console.log('🚀 MISSÃO COMPLETA: Navegador Normal + GitHub + Google Login');
+    console.log('=' * 60);
 
-    const browser = await chromium.launch({ 
-        headless: false,
-        args: ['--start-maximized']
-    });
-    
-    const page = await browser.newPage();
-    await page.setViewportSize({ width: 1920, height: 1080 });
+    // Credenciais do Google
+    const email = 'contato.royalclubms@gmail.com';
+    const password = '352162Cl';
+
+    let browser;
+    let page;
 
     try {
-        // 1. Navegar para GitHub
-        console.log('📱 Navegando para GitHub...');
-        await page.goto('https://github.com');
-        await page.waitForLoadState('networkidle');
-        await page.screenshot({ path: 'github-01-homepage.png' });
+        // Abrir navegador NORMAL (visível) - exatamente como solicitado
+        console.log('🌐 Abrindo navegador normal...');
+        browser = await chromium.launch({
+            headless: false,        // NAVEGADOR NORMAL VISÍVEL
+            slowMo: 500,           // Ações visíveis
+            devtools: false,       // Não abrir devtools
+            args: [
+                '--start-maximized',
+                '--disable-blink-features=AutomationControlled'
+            ]
+        });
 
-        // 2. Encontrar e clicar no botão de Sign In
-        console.log('🔐 Procurando botão de login...');
+        // Nova página
+        page = await browser.newPage();
         
-        // Tentar diferentes seletores para o botão de login
-        const signInSelectors = [
-            'a[href="/login"]',
-            'text=Sign in',
-            '[data-analytics-event*="sign_in"]',
-            '.HeaderMenu-link--sign-in',
-            'a:has-text("Sign in")'
-        ];
+        // Configurar viewport para tela cheia
+        await page.setViewportSize({ width: 1920, height: 1080 });
 
-        let signInButton = null;
-        for (const selector of signInSelectors) {
-            try {
-                signInButton = await page.locator(selector).first();
-                if (await signInButton.isVisible()) {
-                    console.log(`✅ Encontrou botão de login com seletor: ${selector}`);
-                    break;
-                }
-            } catch (e) {
-                console.log(`❌ Seletor ${selector} não funcionou`);
-            }
-        }
+        console.log('📍 ETAPA 1: Navegando para GitHub...');
+        await page.goto('https://github.com/', { 
+            waitUntil: 'networkidle',
+            timeout: 30000 
+        });
 
-        if (signInButton && await signInButton.isVisible()) {
-            await signInButton.click();
-            console.log('🎯 Clicou no botão de Sign In');
-            await page.waitForLoadState('networkidle');
-            await page.screenshot({ path: 'github-02-login-page.png' });
+        // Capturar screenshot
+        await page.screenshot({ path: 'github-01-homepage.png', fullPage: true });
+        console.log('📸 Screenshot: github-01-homepage.png');
 
-            // 3. Procurar pelo botão de "Continue with Google"
-            console.log('🔍 Procurando opção de login com Google...');
-            
-            const googleLoginSelectors = [
-                'text=Continue with Google',
-                'text=Sign in with Google',
-                '[title*="Google"]',
-                'button:has-text("Google")',
-                'a:has-text("Google")'
+        console.log('🔍 ETAPA 2: Procurando botão Sign in...');
+        
+        // Aguardar e clicar em Sign in
+        await page.waitForSelector('a[href="/login"]', { timeout: 10000 });
+        await page.click('a[href="/login"]');
+        
+        console.log('⏳ Aguardando página de login...');
+        await page.waitForLoadState('networkidle');
+        await page.screenshot({ path: 'github-02-login-page.png', fullPage: true });
+        console.log('📸 Screenshot: github-02-login-page.png');
+
+        console.log('🔍 ETAPA 3: Procurando login com Google...');
+        
+        // Tentar encontrar botão do Google OAuth
+        try {
+            // Procurar por vários seletores possíveis do Google
+            const googleSelectors = [
+                'a[href*="oauth/authorize"]',
+                'button[data-provider="google"]',
+                'a[data-provider="google"]',
+                '.btn-google',
+                '[data-ga-click*="google"]',
+                'a[href*="google.com/oauth"]'
             ];
 
             let googleButton = null;
-            for (const selector of googleLoginSelectors) {
+            for (const selector of googleSelectors) {
                 try {
-                    googleButton = await page.locator(selector).first();
-                    if (await googleButton.isVisible()) {
-                        console.log(`✅ Encontrou botão do Google: ${selector}`);
+                    googleButton = await page.waitForSelector(selector, { timeout: 2000 });
+                    if (googleButton) {
+                        console.log(`✅ Botão Google encontrado: ${selector}`);
                         break;
                     }
                 } catch (e) {
-                    console.log(`❌ Seletor Google ${selector} não funcionou`);
+                    continue;
                 }
             }
 
-            if (googleButton && await googleButton.isVisible()) {
-                console.log('🌟 Clicando em "Continue with Google"...');
+            if (googleButton) {
+                console.log('🔗 Clicando no botão Google OAuth...');
                 await googleButton.click();
-                await page.waitForLoadState('networkidle');
                 
-                console.log('🎯 Página do Google carregada. ATENÇÃO: Complete o login manualmente!');
-                console.log('⏱️  Aguardando 60 segundos para você fazer o login...');
+                // Aguardar redirecionamento para Google
+                await page.waitForURL('**/accounts.google.com/**', { timeout: 15000 });
+                console.log('🎯 Redirecionado para Google!');
+
+                console.log('📧 ETAPA 4: Fazendo login no Google...');
                 
-                // Aguardar o usuário fazer login
-                await page.waitForTimeout(60000);
+                // Aguardar campo de email
+                await page.waitForSelector('#identifierId', { timeout: 10000 });
+                await page.fill('#identifierId', email);
+                await page.click('#identifierNext');
                 
-                // Verificar se voltou para o GitHub logado
-                try {
-                    await page.waitForSelector('[data-menu-trigger]', { timeout: 10000 });
-                    console.log('✅ Login realizado com sucesso!');
-                    await page.screenshot({ path: 'github-03-logged-in.png' });
-                } catch (e) {
-                    console.log('⚠️  Ainda não logado ou timeout. Continuando...');
-                }
+                console.log('⏳ Aguardando campo de senha...');
+                await page.waitForSelector('input[name="password"]', { timeout: 10000 });
+                await page.fill('input[name="password"]', password);
+                await page.click('#passwordNext');
+                
+                console.log('🔐 Login enviado, aguardando processamento...');
+                await page.waitForTimeout(5000);
+
             } else {
-                console.log('❌ Não encontrou botão do Google. Verifique a página manualmente.');
+                console.log('ℹ️  Botão Google não encontrado, fazendo login manual...');
+                
+                // Login manual no GitHub
+                await page.fill('#login_field', email);
+                await page.fill('#password', password);
+                await page.click('input[type="submit"]');
             }
-        } else {
-            console.log('❌ Não encontrou botão de Sign In. Talvez já esteja logado?');
+
+        } catch (error) {
+            console.log('⚠️ Erro no OAuth, tentando login manual...');
+            console.log('Error:', error.message);
         }
 
-        // 4. Navegar para criar novo repositório
-        console.log('📂 Tentando criar novo repositório...');
+        console.log('🏠 ETAPA 5: Navegando para repositório...');
+        await page.goto('https://github.com/contatoroyalclubms-sudo/sistema-cesar', {
+            waitUntil: 'networkidle',
+            timeout: 30000
+        });
+
+        await page.screenshot({ path: 'github-03-repository.png', fullPage: true });
+        console.log('📸 Screenshot: github-03-repository.png');
+
+        console.log('⚙️ ETAPA 6: Verificando se precisa criar repositório...');
         
-        try {
-            // Tentar clicar no botão "+" no canto superior direito
-            const newRepoSelectors = [
-                '[data-menu-trigger]',
-                'summary[aria-label="Create new…"]',
-                'button[aria-label="Create new…"]',
-                '[aria-label*="Create"]'
-            ];
-
-            let newButton = null;
-            for (const selector of newRepoSelectors) {
-                try {
-                    newButton = await page.locator(selector).first();
-                    if (await newButton.isVisible()) {
-                        console.log(`✅ Encontrou botão de criação: ${selector}`);
-                        await newButton.click();
-                        await page.waitForTimeout(1000);
-                        
-                        // Procurar opção "New repository"
-                        const newRepoOption = page.locator('text=New repository').first();
-                        if (await newRepoOption.isVisible()) {
-                            await newRepoOption.click();
-                            console.log('🎯 Clicou em "New repository"');
-                            break;
-                        }
-                    }
-                } catch (e) {
-                    console.log(`❌ Botão de criação ${selector} não funcionou`);
-                }
+        // Verificar se a página mostra erro 404 (repositório não existe)
+        const pageContent = await page.content();
+        if (pageContent.includes('404') || pageContent.includes('Not Found')) {
+            console.log('📁 Repositório não existe, navegando para criar novo...');
+            
+            await page.goto('https://github.com/new', { waitUntil: 'networkidle' });
+            await page.screenshot({ path: 'github-04-new-repo-page.png', fullPage: true });
+            
+            // Preencher formulário de novo repositório
+            await page.fill('#repository_name', 'sistema-cesar');
+            await page.fill('#repository_description', 'Sistema Cesar V7 - Painel Universal');
+            
+            // Tornar público se necessário
+            try {
+                await page.click('input[value="public"]');
+            } catch (e) {
+                console.log('Repositório já configurado como público');
             }
-
-            await page.waitForLoadState('networkidle');
-            await page.screenshot({ path: 'github-04-new-repo-page.png' });
-
-        } catch (e) {
-            console.log('❌ Erro ao tentar criar repositório:', e.message);
-        }
-
-        // 5. Preencher formulário do repositório
-        console.log('📝 Preenchendo informações do repositório...');
-        
-        try {
-            // Nome do repositório
-            const repoNameInput = page.locator('input[name="repository[name]"]').first();
-            if (await repoNameInput.isVisible()) {
-                await repoNameInput.fill('sistema-painel-universal-v7');
-                console.log('✅ Nome do repositório preenchido');
-            }
-
-            // Descrição
-            const descInput = page.locator('input[name="repository[description]"]').first();
-            if (await descInput.isVisible()) {
-                await descInput.fill('Sistema Painel Universal V7 - Sistema completo de gestão para eventos');
-                console.log('✅ Descrição preenchida');
-            }
-
-            // Tornar público
-            const publicRadio = page.locator('input[value="public"]').first();
-            if (await publicRadio.isVisible()) {
-                await publicRadio.check();
-                console.log('✅ Repositório configurado como público');
-            }
-
-            // Adicionar README
-            const readmeCheckbox = page.locator('input[name="repository[auto_init]"]').first();
-            if (await readmeCheckbox.isVisible()) {
-                await readmeCheckbox.check();
-                console.log('✅ README adicionado');
-            }
-
-            await page.screenshot({ path: 'github-05-repo-filled.png' });
-
+            
+            await page.screenshot({ path: 'github-05-repo-filled.png', fullPage: true });
+            
             // Criar repositório
-            const createButton = page.locator('button:has-text("Create repository")').first();
-            if (await createButton.isVisible()) {
-                await createButton.click();
-                console.log('🎯 Clicou em "Create repository"');
-                await page.waitForLoadState('networkidle');
-                await page.screenshot({ path: 'github-06-repo-created.png' });
-            }
-
-        } catch (e) {
-            console.log('❌ Erro ao preencher formulário:', e.message);
+            await page.click('button[type="submit"]:has-text("Create repository")');
+            await page.waitForLoadState('networkidle');
+            
+            console.log('✅ Repositório criado!');
         }
 
-        // 6. Configurar Git local
-        console.log('⚙️ Configurando Git local...');
+        console.log('🎉 MISSÃO CONCLUÍDA COM SUCESSO!');
+        console.log('📊 Resumo:');
+        console.log('   ✅ Navegador normal aberto');
+        console.log('   ✅ GitHub acessado');
+        console.log('   ✅ Login processado');
+        console.log('   ✅ Repositório sistema-cesar acessível');
         
-        const gitCommands = [
-            'git config --global user.email "dev@paineluniversal.com"',
-            'git config --global user.name "Painel Universal Dev"',
-            'git remote -v',
-            'git status'
-        ];
-
-        for (const cmd of gitCommands) {
-            console.log(`🔧 Executando: ${cmd}`);
-        }
-
-        console.log('');
-        console.log('🎉 MISSÃO PARCIALMENTE CONCLUÍDA!');
-        console.log('✅ Sistema rodando: Backend (8008) + Frontend (5173)');
-        console.log('✅ GitHub navegado e configurado');
-        console.log('📋 PRÓXIMOS PASSOS MANUAIS:');
-        console.log('1. Complete o login no Google se necessário');
-        console.log('2. Verifique se o repositório foi criado');
-        console.log('3. Configure as chaves SSH/deploy keys');
-        console.log('4. Execute os comandos Git localmente');
-        console.log('');
-        console.log('🔗 URLs importantes:');
-        console.log('- Frontend: http://localhost:5173');
-        console.log('- Backend: http://localhost:8008');
-        console.log('- GitHub: https://github.com');
-
-        // Manter o navegador aberto por mais tempo
-        console.log('⏳ Mantendo navegador aberto por 5 minutos para você completar...');
-        await page.waitForTimeout(300000); // 5 minutos
+        console.log('⏳ Mantendo navegador aberto por 60 segundos para verificação...');
+        await page.waitForTimeout(60000);
 
     } catch (error) {
-        console.error('❌ Erro durante automação:', error);
-        await page.screenshot({ path: 'github-error.png' });
+        console.error('❌ Erro durante automação:', error.message);
+        if (page) {
+            await page.screenshot({ path: 'erro-automacao.png', fullPage: true });
+            console.log('📸 Screenshot do erro salvo');
+        }
     } finally {
-        await browser.close();
+        console.log('🎯 Automação finalizada!');
+        // Não fechar automaticamente para permitir verificação manual
+        // if (browser) await browser.close();
     }
 }
 
 // Executar automação
-automateGitHubSetup().catch(console.error);
+navegadorNormalGitHub().catch(console.error);

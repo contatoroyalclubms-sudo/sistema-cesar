@@ -58,39 +58,39 @@ def login_no_redis(request: LoginRequest, db: Session = Depends(get_db)):
     try:
         # Limpar CPF
         cpf_limpo = request.cpf.replace(".", "").replace("-", "").strip()
-        print(f"✅ [NO_REDIS] CPF cleaned: {cpf_limpo}")
+        print(f"[NO_REDIS] CPF cleaned: {cpf_limpo}")
         
         # Buscar usuário diretamente no banco
         usuario = db.query(Usuario).filter(Usuario.cpf == cpf_limpo).first()
         
         if not usuario:
-            print(f"❌ [NO_REDIS] User not found: {cpf_limpo}")
+            print(f"[NO_REDIS] User not found: {cpf_limpo}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="CPF ou senha incorretos"
             )
         
-        print(f"✅ [NO_REDIS] User found: {usuario.nome}")
+        print(f"[NO_REDIS] User found: {usuario.nome}")
         
         # Verificar senha localmente
         if not verificar_senha_local(request.senha, usuario.senha_hash):
-            print(f"❌ [NO_REDIS] Invalid password")
+            print(f"[NO_REDIS] Invalid password")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="CPF ou senha incorretos"
             )
         
-        print(f"✅ [NO_REDIS] Password verified")
+        print(f"[NO_REDIS] Password verified")
         
         # Verificar se usuário está ativo
         if usuario.ativo is False:
-            print(f"❌ [NO_REDIS] User inactive: {cpf_limpo}")
+            print(f"[NO_REDIS] User inactive: {cpf_limpo}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Usuário inativo"
             )
         
-        print(f"✅ [NO_REDIS] User is active")
+        print(f"[NO_REDIS] User is active")
         
         # Criar token
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -99,12 +99,12 @@ def login_no_redis(request: LoginRequest, db: Session = Depends(get_db)):
             expires_delta=access_token_expires
         )
         
-        print(f"✅ [NO_REDIS] Token created")
+        print(f"[NO_REDIS] Token created")
         
         # Atualizar último login
         usuario.ultimo_login = datetime.utcnow()
         db.commit()
-        print(f"✅ [NO_REDIS] Last login updated")
+        print(f"[NO_REDIS] Last login updated")
         
         # Criar dados do usuário
         usuario_data = {
@@ -119,7 +119,7 @@ def login_no_redis(request: LoginRequest, db: Session = Depends(get_db)):
             "criado_em": usuario.criado_em.isoformat() if usuario.criado_em else None
         }
         
-        print(f"✅ [NO_REDIS] User data created: {list(usuario_data.keys())}")
+        print(f"[NO_REDIS] User data created: {list(usuario_data.keys())}")
         
         # Retornar resposta
         response = {
@@ -128,13 +128,13 @@ def login_no_redis(request: LoginRequest, db: Session = Depends(get_db)):
             "usuario": usuario_data
         }
         
-        print(f"✅ [NO_REDIS] Login successful for {usuario.nome}")
+        print(f"[NO_REDIS] Login successful for {usuario.nome}")
         return response
         
     except HTTPException:
         raise
     except Exception as e:
-        print(f"❌ [NO_REDIS] Unexpected error: {str(e)}")
+        print(f"[NO_REDIS] Unexpected error: {str(e)}")
         import traceback
         traceback.print_exc()
         raise HTTPException(

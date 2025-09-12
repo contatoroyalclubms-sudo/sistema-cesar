@@ -1285,3 +1285,40 @@ class CategoriaStats(BaseModel):
     total_categorias: int
     categorias_ativas: int
     produtos_por_categoria: List[dict]
+
+# ==================== SCHEMAS MEEP INTEGRATION ====================
+
+from typing import Dict, Any
+
+class MEEPIntegrationBase(BaseModel):
+    evento_id: int
+    meep_event_id: Optional[str] = None
+    api_key: Optional[str] = None
+    webhook_url: Optional[str] = None
+
+class MEEPIntegrationCreate(MEEPIntegrationBase):
+    api_secret: str
+
+class MEEPIntegrationResponse(MEEPIntegrationBase):
+    id: int
+    sync_status: str
+    last_sync: Optional[datetime] = None
+    
+    class Config:
+        from_attributes = True
+
+class MEEPAnalyticsData(BaseModel):
+    total_requests: int
+    unique_visitors: int
+    conversion_rate: float
+    avg_session_time: float
+    top_sources: Dict[str, Any]
+    heat_map_data: Optional[Dict[str, Any]] = None
+
+class MEEPAnalyticsResponse(MEEPAnalyticsData):
+    id: int
+    evento_id: int
+    captured_at: datetime
+    
+    class Config:
+        from_attributes = True

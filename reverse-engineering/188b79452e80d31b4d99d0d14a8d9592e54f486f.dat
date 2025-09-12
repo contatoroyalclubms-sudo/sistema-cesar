@@ -1,0 +1,46 @@
+import {
+  Primitive
+} from "/node_modules/.vite/deps/chunk-5GLGVM3M.js?v=47dd5afa";
+import "/node_modules/.vite/deps/chunk-LPBYGXI2.js?v=47dd5afa";
+import {
+  require_jsx_runtime
+} from "/node_modules/.vite/deps/chunk-OT5EQO2H.js?v=47dd5afa";
+import "/node_modules/.vite/deps/chunk-TH7NCS4R.js?v=47dd5afa";
+import {
+  require_react
+} from "/node_modules/.vite/deps/chunk-OU5AQDZK.js?v=47dd5afa";
+import {
+  __toESM
+} from "/node_modules/.vite/deps/chunk-EWTE5DHJ.js?v=47dd5afa";
+
+// node_modules/@radix-ui/react-separator/dist/index.mjs
+var React = __toESM(require_react(), 1);
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var NAME = "Separator";
+var DEFAULT_ORIENTATION = "horizontal";
+var ORIENTATIONS = ["horizontal", "vertical"];
+var Separator = React.forwardRef((props, forwardedRef) => {
+  const { decorative, orientation: orientationProp = DEFAULT_ORIENTATION, ...domProps } = props;
+  const orientation = isValidOrientation(orientationProp) ? orientationProp : DEFAULT_ORIENTATION;
+  const ariaOrientation = orientation === "vertical" ? orientation : void 0;
+  const semanticProps = decorative ? { role: "none" } : { "aria-orientation": ariaOrientation, role: "separator" };
+  return (0, import_jsx_runtime.jsx)(
+    Primitive.div,
+    {
+      "data-orientation": orientation,
+      ...semanticProps,
+      ...domProps,
+      ref: forwardedRef
+    }
+  );
+});
+Separator.displayName = NAME;
+function isValidOrientation(orientation) {
+  return ORIENTATIONS.includes(orientation);
+}
+var Root = Separator;
+export {
+  Root,
+  Separator
+};
+//# sourceMappingURL=@radix-ui_react-separator.js.map

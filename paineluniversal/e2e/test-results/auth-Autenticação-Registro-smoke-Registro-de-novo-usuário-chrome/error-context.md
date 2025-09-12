@@ -1,0 +1,64 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - heading "Sistema de Gestão de Eventos" [level=2] [ref=e8]
+      - paragraph [ref=e9]: Crie sua conta para acessar o sistema
+    - button "Voltar para Login" [ref=e11] [cursor=pointer]:
+      - img
+      - text: Voltar para Login
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - img [ref=e16]
+          - text: Criar Conta
+        - generic [ref=e19]: Preencha os dados para criar sua conta
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - img [ref=e24]
+            - text: CPF
+          - textbox "CPF" [ref=e26]: 873.458.027-10
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - img [ref=e29]
+            - text: Nome Completo
+          - textbox "Nome Completo" [ref=e32]: Guilherme Barros
+        - generic [ref=e33]:
+          - generic [ref=e34]:
+            - img [ref=e35]
+            - text: Email
+          - textbox "Email" [ref=e38]: Eduardo56@yahoo.com
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - img [ref=e41]
+            - text: Telefone (Opcional)
+          - textbox "Telefone (Opcional)" [ref=e43]: (55) 0392-012
+          - paragraph [ref=e44]: Telefone deve ter 10 ou 11 dígitos
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - img [ref=e47]
+            - text: Tipo de Usuário
+          - combobox [ref=e50] [cursor=pointer]:
+            - generic: Cliente
+            - img [ref=e51] [cursor=pointer]
+          - combobox [ref=e53]
+        - generic [ref=e54]:
+          - generic [ref=e55]: Senha
+          - generic [ref=e56]:
+            - textbox "Senha" [ref=e57]: RIWuE6angX
+            - button [ref=e58] [cursor=pointer]:
+              - img
+        - generic [ref=e59]:
+          - generic [ref=e60]: Confirmar Senha
+          - generic [ref=e61]:
+            - textbox "Confirmar Senha" [ref=e62]: RIWuE6angX
+            - button [ref=e63] [cursor=pointer]:
+              - img
+        - button "Criar Conta" [active] [ref=e65] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list
+```

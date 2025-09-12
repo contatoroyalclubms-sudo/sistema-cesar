@@ -1,0 +1,65 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/separator.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/separator.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import * as SeparatorPrimitive from "/node_modules/.vite/deps/@radix-ui_react-separator.js?v=47dd5afa";
+import { cn } from "/src/lib/utils.ts";
+const Separator = React.forwardRef(
+  _c = ({ className, orientation = "horizontal", decorative = true, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    SeparatorPrimitive.Root,
+    {
+      ref,
+      decorative,
+      orientation,
+      className: cn(
+        "shrink-0 bg-zinc-200 dark:bg-zinc-800",
+        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/separator.tsx",
+      lineNumber: 33,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c2 = Separator;
+Separator.displayName = SeparatorPrimitive.Root.displayName;
+export { Separator };
+var _c, _c2;
+$RefreshReg$(_c, "Separator$React.forwardRef");
+$RefreshReg$(_c2, "Separator");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/separator.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/separator.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBYUk7Ozs7Ozs7Ozs7Ozs7Ozs7QUFiSixZQUFZQSxXQUFXO0FBQ3ZCLFlBQVlDLHdCQUF3QjtBQUVwQyxTQUFTQyxVQUFVO0FBRW5CLE1BQU1DLFlBQVlILE1BQU1JO0FBQUFBLEVBR3ZCQyxLQUNDQSxDQUNFLEVBQUVDLFdBQVdDLGNBQWMsY0FBY0MsYUFBYSxNQUFNLEdBQUdDLE1BQU0sR0FDckVDLFFBRUE7QUFBQSxJQUFDLG1CQUFtQjtBQUFBLElBQW5CO0FBQUEsTUFDQztBQUFBLE1BQ0E7QUFBQSxNQUNBO0FBQUEsTUFDQSxXQUFXUjtBQUFBQSxRQUNUO0FBQUEsUUFDQUssZ0JBQWdCLGVBQWUsbUJBQW1CO0FBQUEsUUFDbEREO0FBQUFBLE1BQ0Y7QUFBQSxNQUNBLEdBQUlHO0FBQUFBO0FBQUFBLElBVE47QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLEVBU1k7QUFHaEI7QUFBQ0UsTUFwQktSO0FBcUJOQSxVQUFVUyxjQUFjWCxtQkFBbUJZLEtBQUtEO0FBRWhELFNBQVNUO0FBQVcsSUFBQUUsSUFBQU07QUFBQUcsYUFBQVQsSUFBQTtBQUFBUyxhQUFBSCxLQUFBIiwibmFtZXMiOlsiUmVhY3QiLCJTZXBhcmF0b3JQcmltaXRpdmUiLCJjbiIsIlNlcGFyYXRvciIsImZvcndhcmRSZWYiLCJfYyIsImNsYXNzTmFtZSIsIm9yaWVudGF0aW9uIiwiZGVjb3JhdGl2ZSIsInByb3BzIiwicmVmIiwiX2MyIiwiZGlzcGxheU5hbWUiLCJSb290IiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbInNlcGFyYXRvci50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgUmVhY3QgZnJvbSBcInJlYWN0XCJcclxuaW1wb3J0ICogYXMgU2VwYXJhdG9yUHJpbWl0aXZlIGZyb20gXCJAcmFkaXgtdWkvcmVhY3Qtc2VwYXJhdG9yXCJcclxuXHJcbmltcG9ydCB7IGNuIH0gZnJvbSBcIkAvbGliL3V0aWxzXCJcclxuXHJcbmNvbnN0IFNlcGFyYXRvciA9IFJlYWN0LmZvcndhcmRSZWY8XHJcbiAgUmVhY3QuRWxlbWVudFJlZjx0eXBlb2YgU2VwYXJhdG9yUHJpbWl0aXZlLlJvb3Q+LFxyXG4gIFJlYWN0LkNvbXBvbmVudFByb3BzV2l0aG91dFJlZjx0eXBlb2YgU2VwYXJhdG9yUHJpbWl0aXZlLlJvb3Q+XHJcbj4oXHJcbiAgKFxyXG4gICAgeyBjbGFzc05hbWUsIG9yaWVudGF0aW9uID0gXCJob3Jpem9udGFsXCIsIGRlY29yYXRpdmUgPSB0cnVlLCAuLi5wcm9wcyB9LFxyXG4gICAgcmVmXHJcbiAgKSA9PiAoXHJcbiAgICA8U2VwYXJhdG9yUHJpbWl0aXZlLlJvb3RcclxuICAgICAgcmVmPXtyZWZ9XHJcbiAgICAgIGRlY29yYXRpdmU9e2RlY29yYXRpdmV9XHJcbiAgICAgIG9yaWVudGF0aW9uPXtvcmllbnRhdGlvbn1cclxuICAgICAgY2xhc3NOYW1lPXtjbihcclxuICAgICAgICBcInNocmluay0wIGJnLXppbmMtMjAwIGRhcms6YmctemluYy04MDBcIixcclxuICAgICAgICBvcmllbnRhdGlvbiA9PT0gXCJob3Jpem9udGFsXCIgPyBcImgtWzFweF0gdy1mdWxsXCIgOiBcImgtZnVsbCB3LVsxcHhdXCIsXHJcbiAgICAgICAgY2xhc3NOYW1lXHJcbiAgICAgICl9XHJcbiAgICAgIHsuLi5wcm9wc31cclxuICAgIC8+XHJcbiAgKVxyXG4pXHJcblNlcGFyYXRvci5kaXNwbGF5TmFtZSA9IFNlcGFyYXRvclByaW1pdGl2ZS5Sb290LmRpc3BsYXlOYW1lXHJcblxyXG5leHBvcnQgeyBTZXBhcmF0b3IgfVxyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL1VzZXIvT25lRHJpdmUvRGVza3RvcC9zaXN0ZW1hLXY2LW5vdm8vcGFpbmVsdW5pdmVyc2FsL3BhaW5lbHVuaXZlcnNhbC9mcm9udGVuZC9zcmMvY29tcG9uZW50cy91aS9zZXBhcmF0b3IudHN4In0=

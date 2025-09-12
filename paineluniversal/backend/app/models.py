@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Numeric, Enum, Date, Float, JSON, Time, UniqueConstraint
+from sqlalchemy import Time, Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Numeric, Enum, Date, Float, JSON, Time, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .database import Base
@@ -2512,6 +2512,7 @@ class PontoAcesso(Base):
     empresa = relationship("Empresa")
     leitores = relationship("LeitorQRCode", back_populates="ponto_acesso")
     movimentacoes = relationship("MovimentacaoAcesso", back_populates="ponto_acesso")
+    historicos_leitura = relationship("HistoricoLeituraQR", back_populates="ponto_acesso")
 
 class HistoricoLeituraQR(Base):
     """Histórico de todas as leituras de QR Code"""
@@ -2568,7 +2569,7 @@ class HistoricoLeituraQR(Base):
     
     # Relacionamentos
     leitor = relationship("LeitorQRCode", back_populates="leituras")
-    ponto_acesso = relationship("PontoAcesso", back_populates="movimentacoes")
+    ponto_acesso = relationship("PontoAcesso", back_populates="historicos_leitura")
     operador = relationship("Usuario")
     evento = relationship("Evento")
     empresa = relationship("Empresa")
@@ -3127,3 +3128,38 @@ class ConvidadoLista(Base):
 # ==================== MODELOS KDS (Kitchen Display System) ====================
 
 # ==================== MODELOS EVENTO CAIXA ====================
+
+# ==================== MODELOS MEEP INTEGRATION ====================
+
+class MEEPIntegration(Base):
+    __tablename__ = "meep_integrations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    meep_event_id = Column(String(255))
+    api_key = Column(String(500))
+    api_secret = Column(String(500))
+    webhook_url = Column(String(500))
+    sync_status = Column(String(50), default="pending")
+    last_sync = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relacionamentos
+    evento = relationship("Evento")
+
+class MEEPAnalytics(Base):
+    __tablename__ = "meep_analytics"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
+    total_requests = Column(Integer, default=0)
+    unique_visitors = Column(Integer, default=0)
+    conversion_rate = Column(Float, default=0.0)
+    avg_session_time = Column(Float, default=0.0)
+    top_sources = Column(JSON)
+    heat_map_data = Column(JSON)
+    captured_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relacionamentos
+    evento = relationship("Evento")

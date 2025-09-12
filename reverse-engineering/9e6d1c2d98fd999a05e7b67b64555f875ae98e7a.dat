@@ -1,0 +1,133 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/auth/PublicRegisterPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import { useNavigate } from "/node_modules/.vite/deps/react-router-dom.js?v=47dd5afa";
+import RegisterForm from "/src/components/auth/RegisterForm.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { ArrowLeft, Calendar } from "/node_modules/.vite/deps/lucide-react.js?v=47dd5afa";
+import { useToast } from "/src/hooks/use-toast.ts";
+const PublicRegisterPage = () => {
+  _s();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const handleRegisterSuccess = () => {
+    toast({
+      title: "Conta criada com sucesso!",
+      description: "Agora você pode fazer login com suas credenciais.",
+      duration: 5e3
+    });
+    setTimeout(() => {
+      navigate("/login");
+    }, 2e3);
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxDEV("div", { className: "max-w-md w-full space-y-8", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "text-center", children: [
+      /* @__PURE__ */ jsxDEV(Calendar, { className: "mx-auto h-12 w-12 text-blue-600" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+        lineNumber: 48,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("h2", { className: "mt-6 text-3xl font-extrabold text-gray-900", children: "Sistema de Gestão de Eventos" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+        lineNumber: 49,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "mt-2 text-sm text-gray-600", children: "Crie sua conta para acessar o sistema" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+        lineNumber: 52,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+      lineNumber: 47,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "flex justify-center", children: /* @__PURE__ */ jsxDEV(
+      Button,
+      {
+        variant: "ghost",
+        onClick: () => navigate("/login"),
+        className: "flex items-center gap-2 mb-4",
+        children: [
+          /* @__PURE__ */ jsxDEV(ArrowLeft, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+            lineNumber: 63,
+            columnNumber: 13
+          }, this),
+          "Voltar para Login"
+        ]
+      },
+      void 0,
+      true,
+      {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+        lineNumber: 58,
+        columnNumber: 11
+      },
+      this
+    ) }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+      lineNumber: 57,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV(
+      RegisterForm,
+      {
+        onSuccess: handleRegisterSuccess
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+        lineNumber: 68,
+        columnNumber: 9
+      },
+      this
+    )
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+    lineNumber: 46,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx",
+    lineNumber: 45,
+    columnNumber: 5
+  }, this);
+};
+_s(PublicRegisterPage, "DpKBWZw+BqIquRvaRc8JmfbTZgY=", false, function() {
+  return [useNavigate, useToast];
+});
+_c = PublicRegisterPage;
+export default PublicRegisterPage;
+var _c;
+$RefreshReg$(_c, "PublicRegisterPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/auth/PublicRegisterPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBNEJVOzs7Ozs7Ozs7Ozs7Ozs7OztBQTNCVixTQUFTQSxtQkFBbUI7QUFDNUIsT0FBT0Msa0JBQWtCO0FBQ3pCLFNBQVNDLGNBQWM7QUFDdkIsU0FBU0MsV0FBV0MsZ0JBQWdCO0FBQ3BDLFNBQVNDLGdCQUFnQjtBQUV6QixNQUFNQyxxQkFBK0JBLE1BQU07QUFBQUMsS0FBQTtBQUN6QyxRQUFNQyxXQUFXUixZQUFZO0FBQzdCLFFBQU0sRUFBRVMsTUFBTSxJQUFJSixTQUFTO0FBRTNCLFFBQU1LLHdCQUF3QkEsTUFBTTtBQUNsQ0QsVUFBTTtBQUFBLE1BQ0pFLE9BQU87QUFBQSxNQUNQQyxhQUFhO0FBQUEsTUFDYkMsVUFBVTtBQUFBLElBQ1osQ0FBQztBQUdEQyxlQUFXLE1BQU07QUFDZk4sZUFBUyxRQUFRO0FBQUEsSUFDbkIsR0FBRyxHQUFJO0FBQUEsRUFDVDtBQUVBLFNBQ0UsdUJBQUMsU0FBSSxXQUFVLHVGQUNiLGlDQUFDLFNBQUksV0FBVSw2QkFDYjtBQUFBLDJCQUFDLFNBQUksV0FBVSxlQUNiO0FBQUEsNkJBQUMsWUFBUyxXQUFVLHFDQUFwQjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXFEO0FBQUEsTUFDckQsdUJBQUMsUUFBRyxXQUFVLDhDQUE2Qyw0Q0FBM0Q7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUVBO0FBQUEsTUFDQSx1QkFBQyxPQUFFLFdBQVUsOEJBQTZCLHFEQUExQztBQUFBO0FBQUE7QUFBQTtBQUFBLGFBRUE7QUFBQSxTQVBGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FRQTtBQUFBLElBRUEsdUJBQUMsU0FBSSxXQUFVLHVCQUNiO0FBQUEsTUFBQztBQUFBO0FBQUEsUUFDQyxTQUFRO0FBQUEsUUFDUixTQUFTLE1BQU1BLFNBQVMsUUFBUTtBQUFBLFFBQ2hDLFdBQVU7QUFBQSxRQUVWO0FBQUEsaUNBQUMsYUFBVSxXQUFVLGFBQXJCO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQThCO0FBQUEsVUFBRztBQUFBO0FBQUE7QUFBQSxNQUxuQztBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsSUFPQSxLQVJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FTQTtBQUFBLElBRUE7QUFBQSxNQUFDO0FBQUE7QUFBQSxRQUNDLFdBQVdFO0FBQUFBO0FBQUFBLE1BRGI7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLElBQ21DO0FBQUEsT0F2QnJDO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0F5QkEsS0ExQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQTJCQTtBQUVKO0FBQUVILEdBL0NJRCxvQkFBNEI7QUFBQSxVQUNmTixhQUNDSyxRQUFRO0FBQUE7QUFBQVUsS0FGdEJUO0FBaUROLGVBQWVBO0FBQW1CLElBQUFTO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJ1c2VOYXZpZ2F0ZSIsIlJlZ2lzdGVyRm9ybSIsIkJ1dHRvbiIsIkFycm93TGVmdCIsIkNhbGVuZGFyIiwidXNlVG9hc3QiLCJQdWJsaWNSZWdpc3RlclBhZ2UiLCJfcyIsIm5hdmlnYXRlIiwidG9hc3QiLCJoYW5kbGVSZWdpc3RlclN1Y2Nlc3MiLCJ0aXRsZSIsImRlc2NyaXB0aW9uIiwiZHVyYXRpb24iLCJzZXRUaW1lb3V0IiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiUHVibGljUmVnaXN0ZXJQYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgeyB1c2VOYXZpZ2F0ZSB9IGZyb20gJ3JlYWN0LXJvdXRlci1kb20nO1xyXG5pbXBvcnQgUmVnaXN0ZXJGb3JtIGZyb20gJy4vUmVnaXN0ZXJGb3JtJztcclxuaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSAnLi4vdWkvYnV0dG9uJztcclxuaW1wb3J0IHsgQXJyb3dMZWZ0LCBDYWxlbmRhciB9IGZyb20gJ2x1Y2lkZS1yZWFjdCc7XHJcbmltcG9ydCB7IHVzZVRvYXN0IH0gZnJvbSAnLi4vLi4vaG9va3MvdXNlLXRvYXN0JztcclxuXHJcbmNvbnN0IFB1YmxpY1JlZ2lzdGVyUGFnZTogUmVhY3QuRkMgPSAoKSA9PiB7XHJcbiAgY29uc3QgbmF2aWdhdGUgPSB1c2VOYXZpZ2F0ZSgpO1xyXG4gIGNvbnN0IHsgdG9hc3QgfSA9IHVzZVRvYXN0KCk7XHJcblxyXG4gIGNvbnN0IGhhbmRsZVJlZ2lzdGVyU3VjY2VzcyA9ICgpID0+IHtcclxuICAgIHRvYXN0KHtcclxuICAgICAgdGl0bGU6IFwiQ29udGEgY3JpYWRhIGNvbSBzdWNlc3NvIVwiLFxyXG4gICAgICBkZXNjcmlwdGlvbjogXCJBZ29yYSB2b2PDqiBwb2RlIGZhemVyIGxvZ2luIGNvbSBzdWFzIGNyZWRlbmNpYWlzLlwiLFxyXG4gICAgICBkdXJhdGlvbjogNTAwMCxcclxuICAgIH0pO1xyXG4gICAgXHJcbiAgICAvLyBSZWRpcmVjaW9uYXIgcGFyYSBsb2dpbiBhcMOzcyAyIHNlZ3VuZG9zXHJcbiAgICBzZXRUaW1lb3V0KCgpID0+IHtcclxuICAgICAgbmF2aWdhdGUoJy9sb2dpbicpO1xyXG4gICAgfSwgMjAwMCk7XHJcbiAgfTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxkaXYgY2xhc3NOYW1lPVwibWluLWgtc2NyZWVuIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGJnLWdyYXktNTAgcHktMTIgcHgtNCBzbTpweC02IGxnOnB4LThcIj5cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJtYXgtdy1tZCB3LWZ1bGwgc3BhY2UteS04XCI+XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LWNlbnRlclwiPlxyXG4gICAgICAgICAgPENhbGVuZGFyIGNsYXNzTmFtZT1cIm14LWF1dG8gaC0xMiB3LTEyIHRleHQtYmx1ZS02MDBcIiAvPlxyXG4gICAgICAgICAgPGgyIGNsYXNzTmFtZT1cIm10LTYgdGV4dC0zeGwgZm9udC1leHRyYWJvbGQgdGV4dC1ncmF5LTkwMFwiPlxyXG4gICAgICAgICAgICBTaXN0ZW1hIGRlIEdlc3TDo28gZGUgRXZlbnRvc1xyXG4gICAgICAgICAgPC9oMj5cclxuICAgICAgICAgIDxwIGNsYXNzTmFtZT1cIm10LTIgdGV4dC1zbSB0ZXh0LWdyYXktNjAwXCI+XHJcbiAgICAgICAgICAgIENyaWUgc3VhIGNvbnRhIHBhcmEgYWNlc3NhciBvIHNpc3RlbWFcclxuICAgICAgICAgIDwvcD5cclxuICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGp1c3RpZnktY2VudGVyXCI+XHJcbiAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgIHZhcmlhbnQ9XCJnaG9zdFwiXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG5hdmlnYXRlKCcvbG9naW4nKX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgbWItNFwiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIDxBcnJvd0xlZnQgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XHJcbiAgICAgICAgICAgIFZvbHRhciBwYXJhIExvZ2luXHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgPFJlZ2lzdGVyRm9ybSBcclxuICAgICAgICAgIG9uU3VjY2Vzcz17aGFuZGxlUmVnaXN0ZXJTdWNjZXNzfVxyXG4gICAgICAgIC8+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IFB1YmxpY1JlZ2lzdGVyUGFnZTsiXSwiZmlsZSI6IkM6L1VzZXJzL1VzZXIvT25lRHJpdmUvRGVza3RvcC9zaXN0ZW1hLXY2LW5vdm8vcGFpbmVsdW5pdmVyc2FsL3BhaW5lbHVuaXZlcnNhbC9mcm9udGVuZC9zcmMvY29tcG9uZW50cy9hdXRoL1B1YmxpY1JlZ2lzdGVyUGFnZS50c3gifQ==

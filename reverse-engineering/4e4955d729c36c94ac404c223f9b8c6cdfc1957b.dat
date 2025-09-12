@@ -1,0 +1,71 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/popover.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/popover.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import * as PopoverPrimitive from "/node_modules/.vite/deps/@radix-ui_react-popover.js?v=47dd5afa";
+import { cn } from "/src/lib/utils.ts";
+const Popover = PopoverPrimitive.Root;
+const PopoverTrigger = PopoverPrimitive.Trigger;
+const PopoverAnchor = PopoverPrimitive.Anchor;
+const PopoverContent = React.forwardRef(
+  _c = ({ className, align = "center", sideOffset = 4, ...props }, ref) => /* @__PURE__ */ jsxDEV(PopoverPrimitive.Portal, { children: /* @__PURE__ */ jsxDEV(
+    PopoverPrimitive.Content,
+    {
+      ref,
+      align,
+      sideOffset,
+      className: cn(
+        "z-50 w-72 rounded-md border border-zinc-200 bg-white p-4 text-zinc-950 shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-popover-content-transform-origin] dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/popover.tsx",
+      lineNumber: 36,
+      columnNumber: 5
+    },
+    this
+  ) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/popover.tsx",
+    lineNumber: 35,
+    columnNumber: 1
+  }, this)
+);
+_c2 = PopoverContent;
+PopoverContent.displayName = PopoverPrimitive.Content.displayName;
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };
+var _c, _c2;
+$RefreshReg$(_c, "PopoverContent$React.forwardRef");
+$RefreshReg$(_c2, "PopoverContent");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/popover.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/popover.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBZ0JJOzs7Ozs7Ozs7Ozs7Ozs7O0FBaEJKLFlBQVlBLFdBQVc7QUFDdkIsWUFBWUMsc0JBQXNCO0FBRWxDLFNBQVNDLFVBQVU7QUFFbkIsTUFBTUMsVUFBVUYsaUJBQWlCRztBQUVqQyxNQUFNQyxpQkFBaUJKLGlCQUFpQks7QUFFeEMsTUFBTUMsZ0JBQWdCTixpQkFBaUJPO0FBRXZDLE1BQU1DLGlCQUFpQlQsTUFBTVU7QUFBQUEsRUFHNUJDLEtBQUNBLENBQUMsRUFBRUMsV0FBV0MsUUFBUSxVQUFVQyxhQUFhLEdBQUcsR0FBR0MsTUFBTSxHQUFHQyxRQUM1RCx1QkFBQyxpQkFBaUIsUUFBakIsRUFDQztBQUFBLElBQUMsaUJBQWlCO0FBQUEsSUFBakI7QUFBQSxNQUNDO0FBQUEsTUFDQTtBQUFBLE1BQ0E7QUFBQSxNQUNBLFdBQVdkO0FBQUFBLFFBQ1Q7QUFBQSxRQUNBVTtBQUFBQSxNQUNGO0FBQUEsTUFDQSxHQUFJRztBQUFBQTtBQUFBQSxJQVJOO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxFQVFZLEtBVGQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQVdBO0FBQ0Q7QUFBQ0UsTUFoQklSO0FBaUJOQSxlQUFlUyxjQUFjakIsaUJBQWlCa0IsUUFBUUQ7QUFFdEQsU0FBU2YsU0FBU0UsZ0JBQWdCSSxnQkFBZ0JGO0FBQWUsSUFBQUksSUFBQU07QUFBQUcsYUFBQVQsSUFBQTtBQUFBUyxhQUFBSCxLQUFBIiwibmFtZXMiOlsiUmVhY3QiLCJQb3BvdmVyUHJpbWl0aXZlIiwiY24iLCJQb3BvdmVyIiwiUm9vdCIsIlBvcG92ZXJUcmlnZ2VyIiwiVHJpZ2dlciIsIlBvcG92ZXJBbmNob3IiLCJBbmNob3IiLCJQb3BvdmVyQ29udGVudCIsImZvcndhcmRSZWYiLCJfYyIsImNsYXNzTmFtZSIsImFsaWduIiwic2lkZU9mZnNldCIsInByb3BzIiwicmVmIiwiX2MyIiwiZGlzcGxheU5hbWUiLCJDb250ZW50IiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbInBvcG92ZXIudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIFJlYWN0IGZyb20gXCJyZWFjdFwiXHJcbmltcG9ydCAqIGFzIFBvcG92ZXJQcmltaXRpdmUgZnJvbSBcIkByYWRpeC11aS9yZWFjdC1wb3BvdmVyXCJcclxuXHJcbmltcG9ydCB7IGNuIH0gZnJvbSBcIkAvbGliL3V0aWxzXCJcclxuXHJcbmNvbnN0IFBvcG92ZXIgPSBQb3BvdmVyUHJpbWl0aXZlLlJvb3RcclxuXHJcbmNvbnN0IFBvcG92ZXJUcmlnZ2VyID0gUG9wb3ZlclByaW1pdGl2ZS5UcmlnZ2VyXHJcblxyXG5jb25zdCBQb3BvdmVyQW5jaG9yID0gUG9wb3ZlclByaW1pdGl2ZS5BbmNob3JcclxuXHJcbmNvbnN0IFBvcG92ZXJDb250ZW50ID0gUmVhY3QuZm9yd2FyZFJlZjxcclxuICBSZWFjdC5FbGVtZW50UmVmPHR5cGVvZiBQb3BvdmVyUHJpbWl0aXZlLkNvbnRlbnQ+LFxyXG4gIFJlYWN0LkNvbXBvbmVudFByb3BzV2l0aG91dFJlZjx0eXBlb2YgUG9wb3ZlclByaW1pdGl2ZS5Db250ZW50PlxyXG4+KCh7IGNsYXNzTmFtZSwgYWxpZ24gPSBcImNlbnRlclwiLCBzaWRlT2Zmc2V0ID0gNCwgLi4ucHJvcHMgfSwgcmVmKSA9PiAoXHJcbiAgPFBvcG92ZXJQcmltaXRpdmUuUG9ydGFsPlxyXG4gICAgPFBvcG92ZXJQcmltaXRpdmUuQ29udGVudFxyXG4gICAgICByZWY9e3JlZn1cclxuICAgICAgYWxpZ249e2FsaWdufVxyXG4gICAgICBzaWRlT2Zmc2V0PXtzaWRlT2Zmc2V0fVxyXG4gICAgICBjbGFzc05hbWU9e2NuKFxyXG4gICAgICAgIFwiei01MCB3LTcyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci16aW5jLTIwMCBiZy13aGl0ZSBwLTQgdGV4dC16aW5jLTk1MCBzaGFkb3ctbWQgb3V0bGluZS1ub25lIGRhdGEtW3N0YXRlPW9wZW5dOmFuaW1hdGUtaW4gZGF0YS1bc3RhdGU9Y2xvc2VkXTphbmltYXRlLW91dCBkYXRhLVtzdGF0ZT1jbG9zZWRdOmZhZGUtb3V0LTAgZGF0YS1bc3RhdGU9b3Blbl06ZmFkZS1pbi0wIGRhdGEtW3N0YXRlPWNsb3NlZF06em9vbS1vdXQtOTUgZGF0YS1bc3RhdGU9b3Blbl06em9vbS1pbi05NSBkYXRhLVtzaWRlPWJvdHRvbV06c2xpZGUtaW4tZnJvbS10b3AtMiBkYXRhLVtzaWRlPWxlZnRdOnNsaWRlLWluLWZyb20tcmlnaHQtMiBkYXRhLVtzaWRlPXJpZ2h0XTpzbGlkZS1pbi1mcm9tLWxlZnQtMiBkYXRhLVtzaWRlPXRvcF06c2xpZGUtaW4tZnJvbS1ib3R0b20tMiBvcmlnaW4tWy0tcmFkaXgtcG9wb3Zlci1jb250ZW50LXRyYW5zZm9ybS1vcmlnaW5dIGRhcms6Ym9yZGVyLXppbmMtODAwIGRhcms6YmctemluYy05NTAgZGFyazp0ZXh0LXppbmMtNTBcIixcclxuICAgICAgICBjbGFzc05hbWVcclxuICAgICAgKX1cclxuICAgICAgey4uLnByb3BzfVxyXG4gICAgLz5cclxuICA8L1BvcG92ZXJQcmltaXRpdmUuUG9ydGFsPlxyXG4pKVxyXG5Qb3BvdmVyQ29udGVudC5kaXNwbGF5TmFtZSA9IFBvcG92ZXJQcmltaXRpdmUuQ29udGVudC5kaXNwbGF5TmFtZVxyXG5cclxuZXhwb3J0IHsgUG9wb3ZlciwgUG9wb3ZlclRyaWdnZXIsIFBvcG92ZXJDb250ZW50LCBQb3BvdmVyQW5jaG9yIH1cclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvdWkvcG9wb3Zlci50c3gifQ==

@@ -1,0 +1,58 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/operadores/OperadoresModule.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/operadores/OperadoresModule.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import CadastroModule from "/src/components/common/CadastroModule.tsx";
+import { operadoresConfig } from "/src/config/modules/operadoresConfig.js";
+import { operadoresService } from "/src/services/operadoresService.js";
+const OperadoresModule = () => {
+  return /* @__PURE__ */ jsxDEV(
+    CadastroModule,
+    {
+      config: operadoresConfig,
+      title: "Operadores",
+      description: "Gestão completa de operadores do sistema",
+      apiService: operadoresService
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/operadores/OperadoresModule.tsx",
+      lineNumber: 36,
+      columnNumber: 5
+    },
+    this
+  );
+};
+_c = OperadoresModule;
+export default OperadoresModule;
+var _c;
+$RefreshReg$(_c, "OperadoresModule");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/operadores/OperadoresModule.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/operadores/OperadoresModule.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBZ0JJOzs7Ozs7Ozs7Ozs7Ozs7O0FBUkosT0FBT0Esb0JBQW9CO0FBQzNCLFNBQVNDLHdCQUF3QjtBQUNqQyxTQUFTQyx5QkFBeUI7QUFJbEMsTUFBTUMsbUJBQW9EQSxNQUFNO0FBQzlELFNBQ0U7QUFBQSxJQUFDO0FBQUE7QUFBQSxNQUNDLFFBQVFGO0FBQUFBLE1BQ1IsT0FBTTtBQUFBLE1BQ04sYUFBWTtBQUFBLE1BQ1osWUFBWUM7QUFBQUE7QUFBQUEsSUFKZDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFJZ0M7QUFHcEM7QUFBRUUsS0FUSUQ7QUFXTixlQUFlQTtBQUFpQixJQUFBQztBQUFBQyxhQUFBRCxJQUFBIiwibmFtZXMiOlsiQ2FkYXN0cm9Nb2R1bGUiLCJvcGVyYWRvcmVzQ29uZmlnIiwib3BlcmFkb3Jlc1NlcnZpY2UiLCJPcGVyYWRvcmVzTW9kdWxlIiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiT3BlcmFkb3Jlc01vZHVsZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXHJcbiAqIE3Ds2R1bG8gZGUgT3BlcmFkb3Jlc1xyXG4gKiBcclxuICogQ29tcG9uZW50ZSBxdWUgaW1wbGVtZW50YSBvIHNpc3RlbWEgZGUgY2FkYXN0cm8gZGUgb3BlcmFkb3Jlc1xyXG4gKiB1dGlsaXphbmRvIG8gQ2FkYXN0cm9Nb2R1bGUgZ2Vuw6lyaWNvIGNvbSBjb25maWd1cmHDp8OjbyBlc3BlY8OtZmljYS5cclxuICovXHJcblxyXG5pbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgQ2FkYXN0cm9Nb2R1bGUgZnJvbSAnLi4vY29tbW9uL0NhZGFzdHJvTW9kdWxlJztcclxuaW1wb3J0IHsgb3BlcmFkb3Jlc0NvbmZpZyB9IGZyb20gJy4uLy4uL2NvbmZpZy9tb2R1bGVzL29wZXJhZG9yZXNDb25maWcnO1xyXG5pbXBvcnQgeyBvcGVyYWRvcmVzU2VydmljZSB9IGZyb20gJy4uLy4uL3NlcnZpY2VzL29wZXJhZG9yZXNTZXJ2aWNlJztcclxuXHJcbmludGVyZmFjZSBPcGVyYWRvcmVzTW9kdWxlUHJvcHMge31cclxuXHJcbmNvbnN0IE9wZXJhZG9yZXNNb2R1bGU6IFJlYWN0LkZDPE9wZXJhZG9yZXNNb2R1bGVQcm9wcz4gPSAoKSA9PiB7XHJcbiAgcmV0dXJuIChcclxuICAgIDxDYWRhc3Ryb01vZHVsZVxyXG4gICAgICBjb25maWc9e29wZXJhZG9yZXNDb25maWd9XHJcbiAgICAgIHRpdGxlPVwiT3BlcmFkb3Jlc1wiXHJcbiAgICAgIGRlc2NyaXB0aW9uPVwiR2VzdMOjbyBjb21wbGV0YSBkZSBvcGVyYWRvcmVzIGRvIHNpc3RlbWFcIlxyXG4gICAgICBhcGlTZXJ2aWNlPXtvcGVyYWRvcmVzU2VydmljZX1cclxuICAgIC8+XHJcbiAgKTtcclxufTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IE9wZXJhZG9yZXNNb2R1bGU7XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL29wZXJhZG9yZXMvT3BlcmFkb3Jlc01vZHVsZS50c3gifQ==

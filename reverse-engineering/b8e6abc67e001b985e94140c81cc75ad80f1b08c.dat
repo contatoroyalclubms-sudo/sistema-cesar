@@ -1,0 +1,226 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/table.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import { cn } from "/src/lib/utils.ts";
+const Table = React.forwardRef(
+  _c = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV("div", { className: "relative w-full overflow-auto", children: /* @__PURE__ */ jsxDEV(
+    "table",
+    {
+      ref,
+      className: cn("w-full caption-bottom text-sm", className),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 29,
+      columnNumber: 5
+    },
+    this
+  ) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+    lineNumber: 28,
+    columnNumber: 1
+  }, this)
+);
+_c2 = Table;
+Table.displayName = "Table";
+const TableHeader = React.forwardRef(
+  _c3 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV("thead", { ref, className: cn("[&_tr]:border-b", className), ...props }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+    lineNumber: 42,
+    columnNumber: 1
+  }, this)
+);
+_c4 = TableHeader;
+TableHeader.displayName = "TableHeader";
+const TableBody = React.forwardRef(
+  _c5 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    "tbody",
+    {
+      ref,
+      className: cn("[&_tr:last-child]:border-0", className),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 50,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c6 = TableBody;
+TableBody.displayName = "TableBody";
+const TableFooter = React.forwardRef(
+  _c7 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    "tfoot",
+    {
+      ref,
+      className: cn(
+        "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 62,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c8 = TableFooter;
+TableFooter.displayName = "TableFooter";
+const TableRow = React.forwardRef(
+  _c9 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    "tr",
+    {
+      ref,
+      className: cn(
+        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 77,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c0 = TableRow;
+TableRow.displayName = "TableRow";
+const TableHead = React.forwardRef(
+  _c1 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    "th",
+    {
+      ref,
+      className: cn(
+        "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 92,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c10 = TableHead;
+TableHead.displayName = "TableHead";
+const TableCell = React.forwardRef(
+  _c11 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    "td",
+    {
+      ref,
+      className: cn(
+        "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        className
+      ),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 107,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c12 = TableCell;
+TableCell.displayName = "TableCell";
+const TableCaption = React.forwardRef(
+  _c13 = ({ className, ...props }, ref) => /* @__PURE__ */ jsxDEV(
+    "caption",
+    {
+      ref,
+      className: cn("mt-4 text-sm text-muted-foreground", className),
+      ...props
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx",
+      lineNumber: 122,
+      columnNumber: 1
+    },
+    this
+  )
+);
+_c14 = TableCaption;
+TableCaption.displayName = "TableCaption";
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption
+};
+var _c, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9, _c0, _c1, _c10, _c11, _c12, _c13, _c14;
+$RefreshReg$(_c, "Table$React.forwardRef");
+$RefreshReg$(_c2, "Table");
+$RefreshReg$(_c3, "TableHeader$React.forwardRef");
+$RefreshReg$(_c4, "TableHeader");
+$RefreshReg$(_c5, "TableBody$React.forwardRef");
+$RefreshReg$(_c6, "TableBody");
+$RefreshReg$(_c7, "TableFooter$React.forwardRef");
+$RefreshReg$(_c8, "TableFooter");
+$RefreshReg$(_c9, "TableRow$React.forwardRef");
+$RefreshReg$(_c0, "TableRow");
+$RefreshReg$(_c1, "TableHead$React.forwardRef");
+$RefreshReg$(_c10, "TableHead");
+$RefreshReg$(_c11, "TableCell$React.forwardRef");
+$RefreshReg$(_c12, "TableCell");
+$RefreshReg$(_c13, "TableCaption$React.forwardRef");
+$RefreshReg$(_c14, "TableCaption");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/table.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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VGFibGUiLCJmb3J3YXJkUmVmIiwiX2MiLCJjbGFzc05hbWUiLCJwcm9wcyIsInJlZiIsIl9jMiIsImRpc3BsYXlOYW1lIiwiVGFibGVIZWFkZXIiLCJfYzMiLCJfYzQiLCJUYWJsZUJvZHkiLCJfYzUiLCJfYzYiLCJUYWJsZUZvb3RlciIsIl9jNyIsIl9jOCIsIlRhYmxlUm93IiwiX2M5IiwiX2MwIiwiVGFibGVIZWFkIiwiX2MxIiwiX2MxMCIsIlRhYmxlQ2VsbCIsIl9jMTEiLCJfYzEyIiwiVGFibGVDYXB0aW9uIiwiX2MxMyIsIl9jMTQiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsidGFibGUudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIFJlYWN0IGZyb20gXCJyZWFjdFwiXHJcblxyXG5pbXBvcnQgeyBjbiB9IGZyb20gXCJAL2xpYi91dGlsc1wiXHJcblxyXG5jb25zdCBUYWJsZSA9IFJlYWN0LmZvcndhcmRSZWY8XHJcbiAgSFRNTFRhYmxlRWxlbWVudCxcclxuICBSZWFjdC5IVE1MQXR0cmlidXRlczxIVE1MVGFibGVFbGVtZW50PlxyXG4+KCh7IGNsYXNzTmFtZSwgLi4ucHJvcHMgfSwgcmVmKSA9PiAoXHJcbiAgPGRpdiBjbGFzc05hbWU9XCJyZWxhdGl2ZSB3LWZ1bGwgb3ZlcmZsb3ctYXV0b1wiPlxyXG4gICAgPHRhYmxlXHJcbiAgICAgIHJlZj17cmVmfVxyXG4gICAgICBjbGFzc05hbWU9e2NuKFwidy1mdWxsIGNhcHRpb24tYm90dG9tIHRleHQtc21cIiwgY2xhc3NOYW1lKX1cclxuICAgICAgey4uLnByb3BzfVxyXG4gICAgLz5cclxuICA8L2Rpdj5cclxuKSlcclxuVGFibGUuZGlzcGxheU5hbWUgPSBcIlRhYmxlXCJcclxuXHJcbmNvbnN0IFRhYmxlSGVhZGVyID0gUmVhY3QuZm9yd2FyZFJlZjxcclxuICBIVE1MVGFibGVTZWN0aW9uRWxlbWVudCxcclxuICBSZWFjdC5IVE1MQXR0cmlidXRlczxIVE1MVGFibGVTZWN0aW9uRWxlbWVudD5cclxuPigoeyBjbGFzc05hbWUsIC4uLnByb3BzIH0sIHJlZikgPT4gKFxyXG4gIDx0aGVhZCByZWY9e3JlZn0gY2xhc3NOYW1lPXtjbihcIlsmX3RyXTpib3JkZXItYlwiLCBjbGFzc05hbWUpfSB7Li4ucHJvcHN9IC8+XHJcbikpXHJcblRhYmxlSGVhZGVyLmRpc3BsYXlOYW1lID0gXCJUYWJsZUhlYWRlclwiXHJcblxyXG5jb25zdCBUYWJsZUJvZHkgPSBSZWFjdC5mb3J3YXJkUmVmPFxyXG4gIEhUTUxUYWJsZVNlY3Rpb25FbGVtZW50LFxyXG4gIFJlYWN0LkhUTUxBdHRyaWJ1dGVzPEhUTUxUYWJsZVNlY3Rpb25FbGVtZW50PlxyXG4+KCh7IGNsYXNzTmFtZSwgLi4ucHJvcHMgfSwgcmVmKSA9PiAoXHJcbiAgPHRib2R5XHJcbiAgICByZWY9e3JlZn1cclxuICAgIGNsYXNzTmFtZT17Y24oXCJbJl90cjpsYXN0LWNoaWxkXTpib3JkZXItMFwiLCBjbGFzc05hbWUpfVxyXG4gICAgey4uLnByb3BzfVxyXG4gIC8+XHJcbikpXHJcblRhYmxlQm9keS5kaXNwbGF5TmFtZSA9IFwiVGFibGVCb2R5XCJcclxuXHJcbmNvbnN0IFRhYmxlRm9vdGVyID0gUmVhY3QuZm9yd2FyZFJlZjxcclxuICBIVE1MVGFibGVTZWN0aW9uRWxlbWVudCxcclxuICBSZWFjdC5IVE1MQXR0cmlidXRlczxIVE1MVGFibGVTZWN0aW9uRWxlbWVudD5cclxuPigoeyBjbGFzc05hbWUsIC4uLnByb3BzIH0sIHJlZikgPT4gKFxyXG4gIDx0Zm9vdFxyXG4gICAgcmVmPXtyZWZ9XHJcbiAgICBjbGFzc05hbWU9e2NuKFxyXG4gICAgICBcImJvcmRlci10IGJnLW11dGVkLzUwIGZvbnQtbWVkaXVtIFsmPnRyXTpsYXN0OmJvcmRlci1iLTBcIixcclxuICAgICAgY2xhc3NOYW1lXHJcbiAgICApfVxyXG4gICAgey4uLnByb3BzfVxyXG4gIC8+XHJcbikpXHJcblRhYmxlRm9vdGVyLmRpc3BsYXlOYW1lID0gXCJUYWJsZUZvb3RlclwiXHJcblxyXG5jb25zdCBUYWJsZVJvdyA9IFJlYWN0LmZvcndhcmRSZWY8XHJcbiAgSFRNTFRhYmxlUm93RWxlbWVudCxcclxuICBSZWFjdC5IVE1MQXR0cmlidXRlczxIVE1MVGFibGVSb3dFbGVtZW50PlxyXG4+KCh7IGNsYXNzTmFtZSwgLi4ucHJvcHMgfSwgcmVmKSA9PiAoXHJcbiAgPHRyXHJcbiAgICByZWY9e3JlZn1cclxuICAgIGNsYXNzTmFtZT17Y24oXHJcbiAgICAgIFwiYm9yZGVyLWIgdHJhbnNpdGlvbi1jb2xvcnMgaG92ZXI6YmctbXV0ZWQvNTAgZGF0YS1bc3RhdGU9c2VsZWN0ZWRdOmJnLW11dGVkXCIsXHJcbiAgICAgIGNsYXNzTmFtZVxyXG4gICAgKX1cclxuICAgIHsuLi5wcm9wc31cclxuICAvPlxyXG4pKVxyXG5UYWJsZVJvdy5kaXNwbGF5TmFtZSA9IFwiVGFibGVSb3dcIlxyXG5cclxuY29uc3QgVGFibGVIZWFkID0gUmVhY3QuZm9yd2FyZFJlZjxcclxuICBIVE1MVGFibGVDZWxsRWxlbWVudCxcclxuICBSZWFjdC5UaEhUTUxBdHRyaWJ1dGVzPEhUTUxUYWJsZUNlbGxFbGVtZW50PlxyXG4+KCh7IGNsYXNzTmFtZSwgLi4ucHJvcHMgfSwgcmVmKSA9PiAoXHJcbiAgPHRoXHJcbiAgICByZWY9e3JlZn1cclxuICAgIGNsYXNzTmFtZT17Y24oXHJcbiAgICAgIFwiaC0xMCBweC0yIHRleHQtbGVmdCBhbGlnbi1taWRkbGUgZm9udC1tZWRpdW0gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIFsmOmhhcyhbcm9sZT1jaGVja2JveF0pXTpwci0wIFsmPltyb2xlPWNoZWNrYm94XV06dHJhbnNsYXRlLXktWzJweF1cIixcclxuICAgICAgY2xhc3NOYW1lXHJcbiAgICApfVxyXG4gICAgey4uLnByb3BzfVxyXG4gIC8+XHJcbikpXHJcblRhYmxlSGVhZC5kaXNwbGF5TmFtZSA9IFwiVGFibGVIZWFkXCJcclxuXHJcbmNvbnN0IFRhYmxlQ2VsbCA9IFJlYWN0LmZvcndhcmRSZWY8XHJcbiAgSFRNTFRhYmxlQ2VsbEVsZW1lbnQsXHJcbiAgUmVhY3QuVGRIVE1MQXR0cmlidXRlczxIVE1MVGFibGVDZWxsRWxlbWVudD5cclxuPigoeyBjbGFzc05hbWUsIC4uLnByb3BzIH0sIHJlZikgPT4gKFxyXG4gIDx0ZFxyXG4gICAgcmVmPXtyZWZ9XHJcbiAgICBjbGFzc05hbWU9e2NuKFxyXG4gICAgICBcInAtMiBhbGlnbi1taWRkbGUgWyY6aGFzKFtyb2xlPWNoZWNrYm94XSldOnByLTAgWyY+W3JvbGU9Y2hlY2tib3hdXTp0cmFuc2xhdGUteS1bMnB4XVwiLFxyXG4gICAgICBjbGFzc05hbWVcclxuICAgICl9XHJcbiAgICB7Li4ucHJvcHN9XHJcbiAgLz5cclxuKSlcclxuVGFibGVDZWxsLmRpc3BsYXlOYW1lID0gXCJUYWJsZUNlbGxcIlxyXG5cclxuY29uc3QgVGFibGVDYXB0aW9uID0gUmVhY3QuZm9yd2FyZFJlZjxcclxuICBIVE1MVGFibGVDYXB0aW9uRWxlbWVudCxcclxuICBSZWFjdC5IVE1MQXR0cmlidXRlczxIVE1MVGFibGVDYXB0aW9uRWxlbWVudD5cclxuPigoeyBjbGFzc05hbWUsIC4uLnByb3BzIH0sIHJlZikgPT4gKFxyXG4gIDxjYXB0aW9uXHJcbiAgICByZWY9e3JlZn1cclxuICAgIGNsYXNzTmFtZT17Y24oXCJtdC00IHRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCIsIGNsYXNzTmFtZSl9XHJcbiAgICB7Li4ucHJvcHN9XHJcbiAgLz5cclxuKSlcclxuVGFibGVDYXB0aW9uLmRpc3BsYXlOYW1lID0gXCJUYWJsZUNhcHRpb25cIlxyXG5cclxuZXhwb3J0IHtcclxuICBUYWJsZSxcclxuICBUYWJsZUhlYWRlcixcclxuICBUYWJsZUJvZHksXHJcbiAgVGFibGVGb290ZXIsXHJcbiAgVGFibGVIZWFkLFxyXG4gIFRhYmxlUm93LFxyXG4gIFRhYmxlQ2VsbCxcclxuICBUYWJsZUNhcHRpb24sXHJcbn1cclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvdWkvdGFibGUudHN4In0=

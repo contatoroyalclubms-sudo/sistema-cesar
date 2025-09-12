@@ -1,0 +1,845 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/meep/MEEPDashboard.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=47dd5afa";
+import {
+  Shield,
+  Zap,
+  Activity,
+  BarChart3,
+  Smartphone,
+  CheckCircle,
+  Users,
+  Clock
+} from "/node_modules/.vite/deps/lucide-react.js?v=47dd5afa";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "/src/components/ui/card.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { Badge } from "/src/components/ui/badge.tsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "/src/components/ui/tabs.tsx";
+const MEEPDashboard = () => {
+  const metricas = {
+    validacoesCPF: 1247,
+    checkinsSucesso: 1186,
+    equipamentosOnline: 8,
+    alertasSeguranca: 3,
+    tempoMedioCheckin: 18,
+    taxaSucesso: 95.1
+  };
+  const modulosAtivos = [
+    {
+      nome: "Validação CPF",
+      status: "ativo",
+      descricao: "Integração com Receita Federal",
+      icon: Shield,
+      color: "text-green-600"
+    },
+    {
+      nome: "Check-in Multi-fator",
+      status: "ativo",
+      descricao: "QR Code + 3 dígitos CPF",
+      icon: Smartphone,
+      color: "text-blue-600"
+    },
+    {
+      nome: "Analytics IA",
+      status: "ativo",
+      descricao: "Insights em tempo real",
+      icon: BarChart3,
+      color: "text-purple-600"
+    },
+    {
+      nome: "Gestão Equipamentos",
+      status: "ativo",
+      descricao: "Monitoramento de dispositivos",
+      icon: Activity,
+      color: "text-orange-600"
+    }
+  ];
+  const alertasRecentes = [
+    {
+      tipo: "info",
+      mensagem: "Pico de acesso detectado às 14:30",
+      timestamp: "15 min atrás"
+    },
+    {
+      tipo: "warning",
+      mensagem: "Equipamento Tablet-03 com bateria baixa",
+      timestamp: "23 min atrás"
+    },
+    {
+      tipo: "success",
+      mensagem: "Meta de 1000 check-ins alcançada",
+      timestamp: "1 hora atrás"
+    }
+  ];
+  return /* @__PURE__ */ jsxDEV(
+    motion.div,
+    {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      className: "space-y-6",
+      children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("h1", { className: "text-3xl font-bold text-foreground", children: "MEEP Dashboard" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 104,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { className: "text-muted-foreground", children: "Monitoramento, Eventos, Engajamento e Performance" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 105,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 103,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2", children: /* @__PURE__ */ jsxDEV(Badge, { variant: "default", className: "bg-green-100 text-green-800", children: [
+            /* @__PURE__ */ jsxDEV(Zap, { className: "h-3 w-3 mr-1" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 112,
+              columnNumber: 13
+            }, this),
+            "Sistema Ativo"
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 111,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 110,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+          lineNumber: 102,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "flex flex-row items-center justify-between space-y-0 pb-2", children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm font-medium", children: "Validações CPF" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 122,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Shield, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 123,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 121,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-2xl font-bold", children: metricas.validacoesCPF.toLocaleString() }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 126,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: [
+                "+",
+                Math.round(metricas.validacoesCPF * 0.12),
+                " desde ontem"
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 127,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 125,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 120,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "flex flex-row items-center justify-between space-y-0 pb-2", children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm font-medium", children: "Check-ins Realizados" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 135,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(CheckCircle, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 136,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 134,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-2xl font-bold", children: metricas.checkinsSucesso.toLocaleString() }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 139,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: [
+                "Taxa de sucesso: ",
+                metricas.taxaSucesso,
+                "%"
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 140,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 138,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 133,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "flex flex-row items-center justify-between space-y-0 pb-2", children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm font-medium", children: "Equipamentos Online" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 148,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Activity, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 149,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 147,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-2xl font-bold", children: [
+                metricas.equipamentosOnline,
+                "/10"
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 152,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: "80% dos equipamentos ativos" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 153,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 151,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 146,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "flex flex-row items-center justify-between space-y-0 pb-2", children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm font-medium", children: "Tempo Médio Check-in" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 161,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Clock, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 162,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 160,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-2xl font-bold", children: [
+                metricas.tempoMedioCheckin,
+                "s"
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 165,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: "-2s desde a última semana" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 166,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 164,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 159,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "flex flex-row items-center justify-between space-y-0 pb-2", children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm font-medium", children: "Participantes Ativos" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 174,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Users, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 175,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 173,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-2xl font-bold", children: "847" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 178,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: "71% de ocupação máxima" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 179,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 177,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 172,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "flex flex-row items-center justify-between space-y-0 pb-2", children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm font-medium", children: "Alertas de Segurança" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 187,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(Shield, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 188,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 186,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-2xl font-bold text-yellow-600", children: metricas.alertasSeguranca }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 191,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: "Requer atenção" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 192,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 190,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 185,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+          lineNumber: 119,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV(Tabs, { defaultValue: "modulos", className: "w-full", children: [
+          /* @__PURE__ */ jsxDEV(TabsList, { children: [
+            /* @__PURE__ */ jsxDEV(TabsTrigger, { value: "modulos", children: "Módulos MEEP" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 201,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(TabsTrigger, { value: "alertas", children: "Alertas Recentes" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 202,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(TabsTrigger, { value: "performance", children: "Performance" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 203,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 200,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(TabsContent, { value: "modulos", className: "space-y-4", children: /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { children: "Módulos MEEP Ativos" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 209,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(CardDescription, { children: "Status dos módulos principais do sistema MEEP" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 210,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 208,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: modulosAtivos.map(
+              (modulo, index) => /* @__PURE__ */ jsxDEV(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.95 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { delay: index * 0.1 },
+                  className: "flex items-center space-x-3 p-4 border rounded-lg hover:bg-muted/50 transition-colors",
+                  children: [
+                    /* @__PURE__ */ jsxDEV(modulo.icon, { className: `h-8 w-8 ${modulo.color}` }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                      lineNumber: 224,
+                      columnNumber: 21
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("div", { className: "flex-1", children: [
+                      /* @__PURE__ */ jsxDEV("div", { className: "font-medium", children: modulo.nome }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                        lineNumber: 226,
+                        columnNumber: 23
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-muted-foreground", children: modulo.descricao }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                        lineNumber: 227,
+                        columnNumber: 23
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                      lineNumber: 225,
+                      columnNumber: 21
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(Badge, { variant: "default", className: "bg-green-100 text-green-800", children: modulo.status }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                      lineNumber: 229,
+                      columnNumber: 21
+                    }, this)
+                  ]
+                },
+                index,
+                true,
+                {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 217,
+                  columnNumber: 17
+                },
+                this
+              )
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 215,
+              columnNumber: 15
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 214,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 207,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 206,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(TabsContent, { value: "alertas", className: "space-y-4", children: /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { children: "Alertas e Notificações" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 242,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(CardDescription, { children: "Últimas atividades e alertas do sistema" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 243,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 241,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: alertasRecentes.map(
+              (alerta, index) => /* @__PURE__ */ jsxDEV(
+                motion.div,
+                {
+                  initial: { opacity: 0, x: -20 },
+                  animate: { opacity: 1, x: 0 },
+                  transition: { delay: index * 0.1 },
+                  className: "flex items-center space-x-3 p-3 border rounded-lg",
+                  children: [
+                    /* @__PURE__ */ jsxDEV("div", { className: `h-3 w-3 rounded-full ${alerta.tipo === "success" ? "bg-green-500" : alerta.tipo === "warning" ? "bg-yellow-500" : alerta.tipo === "error" ? "bg-red-500" : "bg-blue-500"}` }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                      lineNumber: 257,
+                      columnNumber: 21
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("div", { className: "flex-1", children: [
+                      /* @__PURE__ */ jsxDEV("div", { className: "text-sm", children: alerta.mensagem }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                        lineNumber: 263,
+                        columnNumber: 23
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("div", { className: "text-xs text-muted-foreground", children: alerta.timestamp }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                        lineNumber: 264,
+                        columnNumber: 23
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                      lineNumber: 262,
+                      columnNumber: 21
+                    }, this)
+                  ]
+                },
+                index,
+                true,
+                {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 250,
+                  columnNumber: 17
+                },
+                this
+              )
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 248,
+              columnNumber: 15
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 247,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 240,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 239,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(TabsContent, { value: "performance", className: "space-y-4", children: /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { children: [
+              /* @__PURE__ */ jsxDEV(CardTitle, { children: "Métricas de Performance" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 276,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV(CardDescription, { children: "Indicadores de performance do sistema MEEP" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 277,
+                columnNumber: 15
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 275,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between text-sm", children: [
+                  /* @__PURE__ */ jsxDEV("span", { children: "Taxa de Sucesso Check-in" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 285,
+                    columnNumber: 21
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { className: "font-medium", children: [
+                    metricas.taxaSucesso,
+                    "%"
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 286,
+                    columnNumber: 21
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 284,
+                  columnNumber: 19
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "w-full bg-gray-200 rounded-full h-2", children: /* @__PURE__ */ jsxDEV(
+                  "div",
+                  {
+                    className: "bg-green-600 h-2 rounded-full",
+                    style: { width: `${metricas.taxaSucesso}%` }
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 289,
+                    columnNumber: 21
+                  },
+                  this
+                ) }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 288,
+                  columnNumber: 19
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 283,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between text-sm", children: [
+                  /* @__PURE__ */ jsxDEV("span", { children: "Disponibilidade de Equipamentos" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 298,
+                    columnNumber: 21
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { className: "font-medium", children: "80%" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 299,
+                    columnNumber: 21
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 297,
+                  columnNumber: 19
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "w-full bg-gray-200 rounded-full h-2", children: /* @__PURE__ */ jsxDEV(
+                  "div",
+                  {
+                    className: "bg-blue-600 h-2 rounded-full",
+                    style: { width: "80%" }
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 302,
+                    columnNumber: 21
+                  },
+                  this
+                ) }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 301,
+                  columnNumber: 19
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 296,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between text-sm", children: [
+                  /* @__PURE__ */ jsxDEV("span", { children: "Performance Validação CPF" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 311,
+                    columnNumber: 21
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { className: "font-medium", children: "94%" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 312,
+                    columnNumber: 21
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 310,
+                  columnNumber: 19
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "w-full bg-gray-200 rounded-full h-2", children: /* @__PURE__ */ jsxDEV(
+                  "div",
+                  {
+                    className: "bg-purple-600 h-2 rounded-full",
+                    style: { width: "94%" }
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 315,
+                    columnNumber: 21
+                  },
+                  this
+                ) }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 314,
+                  columnNumber: 19
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 309,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between text-sm", children: [
+                  /* @__PURE__ */ jsxDEV("span", { children: "Satisfação do Usuário" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 324,
+                    columnNumber: 21
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { className: "font-medium", children: "92%" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 325,
+                    columnNumber: 21
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 323,
+                  columnNumber: 19
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "w-full bg-gray-200 rounded-full h-2", children: /* @__PURE__ */ jsxDEV(
+                  "div",
+                  {
+                    className: "bg-orange-600 h-2 rounded-full",
+                    style: { width: "92%" }
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                    lineNumber: 328,
+                    columnNumber: 21
+                  },
+                  this
+                ) }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                  lineNumber: 327,
+                  columnNumber: 19
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+                lineNumber: 322,
+                columnNumber: 17
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 282,
+              columnNumber: 15
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 281,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 274,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 273,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+          lineNumber: 199,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV(Card, { className: "bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200", children: /* @__PURE__ */ jsxDEV(CardContent, { className: "pt-6", children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold text-blue-900", children: "Sistema MEEP Ativo e Funcionando" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 345,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { className: "text-blue-700 mt-1", children: "Todos os módulos principais estão operacionais. Explore as funcionalidades avançadas." }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 348,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 344,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "flex space-x-2", children: [
+            /* @__PURE__ */ jsxDEV(Button, { variant: "outline", children: "Ver Relatórios" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 353,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV(Button, { children: "Analytics Avançado" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+              lineNumber: 356,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+            lineNumber: 352,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+          lineNumber: 343,
+          columnNumber: 11
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+          lineNumber: 342,
+          columnNumber: 9
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+          lineNumber: 341,
+          columnNumber: 7
+        }, this)
+      ]
+    },
+    void 0,
+    true,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx",
+      lineNumber: 97,
+      columnNumber: 5
+    },
+    this
+  );
+};
+_c = MEEPDashboard;
+export default MEEPDashboard;
+var _c;
+$RefreshReg$(_c, "MEEPDashboard");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPDashboard.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBb0ZVOzs7Ozs7Ozs7Ozs7Ozs7O0FBbkZWLFNBQVNBLGNBQWM7QUFDdkI7QUFBQSxFQUNFQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxFQUNBQztBQUFBQSxPQUNLO0FBQ1AsU0FBU0MsTUFBTUMsYUFBYUMsaUJBQWlCQyxZQUFZQyxpQkFBaUI7QUFDMUUsU0FBU0MsY0FBYztBQUN2QixTQUFTQyxhQUFhO0FBQ3RCLFNBQVNDLE1BQU1DLGFBQWFDLFVBQVVDLG1CQUFtQjtBQUV6RCxNQUFNQyxnQkFBMEJBLE1BQU07QUFDcEMsUUFBTUMsV0FBVztBQUFBLElBQ2ZDLGVBQWU7QUFBQSxJQUNmQyxpQkFBaUI7QUFBQSxJQUNqQkMsb0JBQW9CO0FBQUEsSUFDcEJDLGtCQUFrQjtBQUFBLElBQ2xCQyxtQkFBbUI7QUFBQSxJQUNuQkMsYUFBYTtBQUFBLEVBQ2Y7QUFFQSxRQUFNQyxnQkFBZ0I7QUFBQSxJQUNwQjtBQUFBLE1BQ0VDLE1BQU07QUFBQSxNQUNOQyxRQUFRO0FBQUEsTUFDUkMsV0FBVztBQUFBLE1BQ1hDLE1BQU0vQjtBQUFBQSxNQUNOZ0MsT0FBTztBQUFBLElBQ1Q7QUFBQSxJQUNBO0FBQUEsTUFDRUosTUFBTTtBQUFBLE1BQ05DLFFBQVE7QUFBQSxNQUNSQyxXQUFXO0FBQUEsTUFDWEMsTUFBTTNCO0FBQUFBLE1BQ040QixPQUFPO0FBQUEsSUFDVDtBQUFBLElBQ0E7QUFBQSxNQUNFSixNQUFNO0FBQUEsTUFDTkMsUUFBUTtBQUFBLE1BQ1JDLFdBQVc7QUFBQSxNQUNYQyxNQUFNNUI7QUFBQUEsTUFDTjZCLE9BQU87QUFBQSxJQUNUO0FBQUEsSUFDQTtBQUFBLE1BQ0VKLE1BQU07QUFBQSxNQUNOQyxRQUFRO0FBQUEsTUFDUkMsV0FBVztBQUFBLE1BQ1hDLE1BQU03QjtBQUFBQSxNQUNOOEIsT0FBTztBQUFBLElBQ1Q7QUFBQSxFQUFDO0FBR0gsUUFBTUMsa0JBQWtCO0FBQUEsSUFDdEI7QUFBQSxNQUNFQyxNQUFNO0FBQUEsTUFDTkMsVUFBVTtBQUFBLE1BQ1ZDLFdBQVc7QUFBQSxJQUNiO0FBQUEsSUFDQTtBQUFBLE1BQ0VGLE1BQU07QUFBQSxNQUNOQyxVQUFVO0FBQUEsTUFDVkMsV0FBVztBQUFBLElBQ2I7QUFBQSxJQUNBO0FBQUEsTUFDRUYsTUFBTTtBQUFBLE1BQ05DLFVBQVU7QUFBQSxNQUNWQyxXQUFXO0FBQUEsSUFDYjtBQUFBLEVBQUM7QUFHSCxTQUNFO0FBQUEsSUFBQyxPQUFPO0FBQUEsSUFBUDtBQUFBLE1BQ0MsU0FBUyxFQUFFQyxTQUFTLEdBQUdDLEdBQUcsR0FBRztBQUFBLE1BQzdCLFNBQVMsRUFBRUQsU0FBUyxHQUFHQyxHQUFHLEVBQUU7QUFBQSxNQUM1QixXQUFVO0FBQUEsTUFFVjtBQUFBLCtCQUFDLFNBQUksV0FBVSxxQ0FDYjtBQUFBLGlDQUFDLFNBQ0M7QUFBQSxtQ0FBQyxRQUFHLFdBQVUsc0NBQXFDLDhCQUFuRDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFpRTtBQUFBLFlBQ2pFLHVCQUFDLE9BQUUsV0FBVSx5QkFBd0IsaUVBQXJDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBRUE7QUFBQSxlQUpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBS0E7QUFBQSxVQUVBLHVCQUFDLFNBQUksV0FBVSwrQkFDYixpQ0FBQyxTQUFNLFNBQVEsV0FBVSxXQUFVLCtCQUNqQztBQUFBLG1DQUFDLE9BQUksV0FBVSxrQkFBZjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUE2QjtBQUFBLFlBQUc7QUFBQSxlQURsQztBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUdBLEtBSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFLQTtBQUFBLGFBYkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQWNBO0FBQUEsUUFHQSx1QkFBQyxTQUFJLFdBQVUsd0RBQ2I7QUFBQSxpQ0FBQyxRQUNDO0FBQUEsbUNBQUMsY0FBVyxXQUFVLDZEQUNwQjtBQUFBLHFDQUFDLGFBQVUsV0FBVSx1QkFBc0IsOEJBQTNDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQXlEO0FBQUEsY0FDekQsdUJBQUMsVUFBTyxXQUFVLG1DQUFsQjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFpRDtBQUFBLGlCQUZuRDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUdBO0FBQUEsWUFDQSx1QkFBQyxlQUNDO0FBQUEscUNBQUMsU0FBSSxXQUFVLHNCQUFzQmxCLG1CQUFTQyxjQUFja0IsZUFBZSxLQUEzRTtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUE2RTtBQUFBLGNBQzdFLHVCQUFDLE9BQUUsV0FBVSxpQ0FBZ0M7QUFBQTtBQUFBLGdCQUN6Q0MsS0FBS0MsTUFBTXJCLFNBQVNDLGdCQUFnQixJQUFJO0FBQUEsZ0JBQUU7QUFBQSxtQkFEOUM7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFFQTtBQUFBLGlCQUpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBS0E7QUFBQSxlQVZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBV0E7QUFBQSxVQUVBLHVCQUFDLFFBQ0M7QUFBQSxtQ0FBQyxjQUFXLFdBQVUsNkRBQ3BCO0FBQUEscUNBQUMsYUFBVSxXQUFVLHVCQUFzQixvQ0FBM0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBK0Q7QUFBQSxjQUMvRCx1QkFBQyxlQUFZLFdBQVUsbUNBQXZCO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQXNEO0FBQUEsaUJBRnhEO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBR0E7QUFBQSxZQUNBLHVCQUFDLGVBQ0M7QUFBQSxxQ0FBQyxTQUFJLFdBQVUsc0JBQXNCRCxtQkFBU0UsZ0JBQWdCaUIsZUFBZSxLQUE3RTtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUErRTtBQUFBLGNBQy9FLHVCQUFDLE9BQUUsV0FBVSxpQ0FBZ0M7QUFBQTtBQUFBLGdCQUN6Qm5CLFNBQVNNO0FBQUFBLGdCQUFZO0FBQUEsbUJBRHpDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBRUE7QUFBQSxpQkFKRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUtBO0FBQUEsZUFWRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQVdBO0FBQUEsVUFFQSx1QkFBQyxRQUNDO0FBQUEsbUNBQUMsY0FBVyxXQUFVLDZEQUNwQjtBQUFBLHFDQUFDLGFBQVUsV0FBVSx1QkFBc0IsbUNBQTNDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQThEO0FBQUEsY0FDOUQsdUJBQUMsWUFBUyxXQUFVLG1DQUFwQjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFtRDtBQUFBLGlCQUZyRDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUdBO0FBQUEsWUFDQSx1QkFBQyxlQUNDO0FBQUEscUNBQUMsU0FBSSxXQUFVLHNCQUFzQk47QUFBQUEseUJBQVNHO0FBQUFBLGdCQUFtQjtBQUFBLG1CQUFqRTtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFvRTtBQUFBLGNBQ3BFLHVCQUFDLE9BQUUsV0FBVSxpQ0FBZ0MsMkNBQTdDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBRUE7QUFBQSxpQkFKRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUtBO0FBQUEsZUFWRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQVdBO0FBQUEsVUFFQSx1QkFBQyxRQUNDO0FBQUEsbUNBQUMsY0FBVyxXQUFVLDZEQUNwQjtBQUFBLHFDQUFDLGFBQVUsV0FBVSx1QkFBc0Isb0NBQTNDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQStEO0FBQUEsY0FDL0QsdUJBQUMsU0FBTSxXQUFVLG1DQUFqQjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFnRDtBQUFBLGlCQUZsRDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUdBO0FBQUEsWUFDQSx1QkFBQyxlQUNDO0FBQUEscUNBQUMsU0FBSSxXQUFVLHNCQUFzQkg7QUFBQUEseUJBQVNLO0FBQUFBLGdCQUFrQjtBQUFBLG1CQUFoRTtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFpRTtBQUFBLGNBQ2pFLHVCQUFDLE9BQUUsV0FBVSxpQ0FBZ0MseUNBQTdDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBRUE7QUFBQSxpQkFKRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUtBO0FBQUEsZUFWRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQVdBO0FBQUEsVUFFQSx1QkFBQyxRQUNDO0FBQUEsbUNBQUMsY0FBVyxXQUFVLDZEQUNwQjtBQUFBLHFDQUFDLGFBQVUsV0FBVSx1QkFBc0Isb0NBQTNDO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQStEO0FBQUEsY0FDL0QsdUJBQUMsU0FBTSxXQUFVLG1DQUFqQjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFnRDtBQUFBLGlCQUZsRDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUdBO0FBQUEsWUFDQSx1QkFBQyxlQUNDO0FBQUEscUNBQUMsU0FBSSxXQUFVLHNCQUFxQixtQkFBcEM7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBdUM7QUFBQSxjQUN2Qyx1QkFBQyxPQUFFLFdBQVUsaUNBQWdDLHNDQUE3QztBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUVBO0FBQUEsaUJBSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFLQTtBQUFBLGVBVkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFXQTtBQUFBLFVBRUEsdUJBQUMsUUFDQztBQUFBLG1DQUFDLGNBQVcsV0FBVSw2REFDcEI7QUFBQSxxQ0FBQyxhQUFVLFdBQVUsdUJBQXNCLG9DQUEzQztBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUErRDtBQUFBLGNBQy9ELHVCQUFDLFVBQU8sV0FBVSxtQ0FBbEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBaUQ7QUFBQSxpQkFGbkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFHQTtBQUFBLFlBQ0EsdUJBQUMsZUFDQztBQUFBLHFDQUFDLFNBQUksV0FBVSxzQ0FBc0NMLG1CQUFTSSxvQkFBOUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBK0U7QUFBQSxjQUMvRSx1QkFBQyxPQUFFLFdBQVUsaUNBQWdDLDhCQUE3QztBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUVBO0FBQUEsaUJBSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFLQTtBQUFBLGVBVkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFXQTtBQUFBLGFBN0VGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUE4RUE7QUFBQSxRQUVBLHVCQUFDLFFBQUssY0FBYSxXQUFVLFdBQVUsVUFDckM7QUFBQSxpQ0FBQyxZQUNDO0FBQUEsbUNBQUMsZUFBWSxPQUFNLFdBQVUsNEJBQTdCO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXlDO0FBQUEsWUFDekMsdUJBQUMsZUFBWSxPQUFNLFdBQVUsZ0NBQTdCO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQTZDO0FBQUEsWUFDN0MsdUJBQUMsZUFBWSxPQUFNLGVBQWMsMkJBQWpDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQTRDO0FBQUEsZUFIOUM7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFJQTtBQUFBLFVBRUEsdUJBQUMsZUFBWSxPQUFNLFdBQVUsV0FBVSxhQUNyQyxpQ0FBQyxRQUNDO0FBQUEsbUNBQUMsY0FDQztBQUFBLHFDQUFDLGFBQVUsbUNBQVg7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBOEI7QUFBQSxjQUM5Qix1QkFBQyxtQkFBZ0IsNkRBQWpCO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBRUE7QUFBQSxpQkFKRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUtBO0FBQUEsWUFDQSx1QkFBQyxlQUNDLGlDQUFDLFNBQUksV0FBVSx5Q0FDWkcsd0JBQWNlO0FBQUFBLGNBQUksQ0FBQ0MsUUFBUUMsVUFDMUI7QUFBQSxnQkFBQyxPQUFPO0FBQUEsZ0JBQVA7QUFBQSxrQkFFQyxTQUFTLEVBQUVQLFNBQVMsR0FBR1EsT0FBTyxLQUFLO0FBQUEsa0JBQ25DLFNBQVMsRUFBRVIsU0FBUyxHQUFHUSxPQUFPLEVBQUU7QUFBQSxrQkFDaEMsWUFBWSxFQUFFQyxPQUFPRixRQUFRLElBQUk7QUFBQSxrQkFDakMsV0FBVTtBQUFBLGtCQUVWO0FBQUEsMkNBQUMsT0FBTyxNQUFQLEVBQVksV0FBVyxXQUFXRCxPQUFPWCxLQUFLLE1BQS9DO0FBQUE7QUFBQTtBQUFBO0FBQUEsMkJBQWtEO0FBQUEsb0JBQ2xELHVCQUFDLFNBQUksV0FBVSxVQUNiO0FBQUEsNkNBQUMsU0FBSSxXQUFVLGVBQWVXLGlCQUFPZixRQUFyQztBQUFBO0FBQUE7QUFBQTtBQUFBLDZCQUEwQztBQUFBLHNCQUMxQyx1QkFBQyxTQUFJLFdBQVUsaUNBQWlDZSxpQkFBT2IsYUFBdkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSw2QkFBaUU7QUFBQSx5QkFGbkU7QUFBQTtBQUFBO0FBQUE7QUFBQSwyQkFHQTtBQUFBLG9CQUNBLHVCQUFDLFNBQU0sU0FBUSxXQUFVLFdBQVUsK0JBQ2hDYSxpQkFBT2QsVUFEVjtBQUFBO0FBQUE7QUFBQTtBQUFBLDJCQUVBO0FBQUE7QUFBQTtBQUFBLGdCQWJLZTtBQUFBQSxnQkFEUDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLGNBZUE7QUFBQSxZQUNELEtBbEJIO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBbUJBLEtBcEJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBcUJBO0FBQUEsZUE1QkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkE2QkEsS0E5QkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkErQkE7QUFBQSxVQUVBLHVCQUFDLGVBQVksT0FBTSxXQUFVLFdBQVUsYUFDckMsaUNBQUMsUUFDQztBQUFBLG1DQUFDLGNBQ0M7QUFBQSxxQ0FBQyxhQUFVLHNDQUFYO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQWlDO0FBQUEsY0FDakMsdUJBQUMsbUJBQWdCLHVEQUFqQjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUVBO0FBQUEsaUJBSkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFLQTtBQUFBLFlBQ0EsdUJBQUMsZUFDQyxpQ0FBQyxTQUFJLFdBQVUsYUFDWlgsMEJBQWdCUztBQUFBQSxjQUFJLENBQUNLLFFBQVFILFVBQzVCO0FBQUEsZ0JBQUMsT0FBTztBQUFBLGdCQUFQO0FBQUEsa0JBRUMsU0FBUyxFQUFFUCxTQUFTLEdBQUdXLEdBQUcsSUFBSTtBQUFBLGtCQUM5QixTQUFTLEVBQUVYLFNBQVMsR0FBR1csR0FBRyxFQUFFO0FBQUEsa0JBQzVCLFlBQVksRUFBRUYsT0FBT0YsUUFBUSxJQUFJO0FBQUEsa0JBQ2pDLFdBQVU7QUFBQSxrQkFFVjtBQUFBLDJDQUFDLFNBQUksV0FBVyx3QkFDZEcsT0FBT2IsU0FBUyxZQUFZLGlCQUM1QmEsT0FBT2IsU0FBUyxZQUFZLGtCQUM1QmEsT0FBT2IsU0FBUyxVQUFVLGVBQWUsYUFBYSxNQUh4RDtBQUFBO0FBQUE7QUFBQTtBQUFBLDJCQUlHO0FBQUEsb0JBQ0gsdUJBQUMsU0FBSSxXQUFVLFVBQ2I7QUFBQSw2Q0FBQyxTQUFJLFdBQVUsV0FBV2EsaUJBQU9aLFlBQWpDO0FBQUE7QUFBQTtBQUFBO0FBQUEsNkJBQTBDO0FBQUEsc0JBQzFDLHVCQUFDLFNBQUksV0FBVSxpQ0FBaUNZLGlCQUFPWCxhQUF2RDtBQUFBO0FBQUE7QUFBQTtBQUFBLDZCQUFpRTtBQUFBLHlCQUZuRTtBQUFBO0FBQUE7QUFBQTtBQUFBLDJCQUdBO0FBQUE7QUFBQTtBQUFBLGdCQWRLUTtBQUFBQSxnQkFEUDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLGNBZ0JBO0FBQUEsWUFDRCxLQW5CSDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQW9CQSxLQXJCRjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQXNCQTtBQUFBLGVBN0JGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBOEJBLEtBL0JGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBZ0NBO0FBQUEsVUFFQSx1QkFBQyxlQUFZLE9BQU0sZUFBYyxXQUFVLGFBQ3pDLGlDQUFDLFFBQ0M7QUFBQSxtQ0FBQyxjQUNDO0FBQUEscUNBQUMsYUFBVSx1Q0FBWDtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFrQztBQUFBLGNBQ2xDLHVCQUFDLG1CQUFnQiwwREFBakI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFFQTtBQUFBLGlCQUpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBS0E7QUFBQSxZQUNBLHVCQUFDLGVBQ0MsaUNBQUMsU0FBSSxXQUFVLGFBQ2I7QUFBQSxxQ0FBQyxTQUFJLFdBQVUsYUFDYjtBQUFBLHVDQUFDLFNBQUksV0FBVSxnQ0FDYjtBQUFBLHlDQUFDLFVBQUssd0NBQU47QUFBQTtBQUFBO0FBQUE7QUFBQSx5QkFBOEI7QUFBQSxrQkFDOUIsdUJBQUMsVUFBSyxXQUFVLGVBQWV4QjtBQUFBQSw2QkFBU007QUFBQUEsb0JBQVk7QUFBQSx1QkFBcEQ7QUFBQTtBQUFBO0FBQUE7QUFBQSx5QkFBcUQ7QUFBQSxxQkFGdkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSx1QkFHQTtBQUFBLGdCQUNBLHVCQUFDLFNBQUksV0FBVSx1Q0FDYjtBQUFBLGtCQUFDO0FBQUE7QUFBQSxvQkFDQyxXQUFVO0FBQUEsb0JBQ1YsT0FBTyxFQUFFdUIsT0FBTyxHQUFHN0IsU0FBU00sV0FBVyxJQUFJO0FBQUE7QUFBQSxrQkFGN0M7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLGdCQUUrQyxLQUhqRDtBQUFBO0FBQUE7QUFBQTtBQUFBLHVCQUtBO0FBQUEsbUJBVkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFXQTtBQUFBLGNBRUEsdUJBQUMsU0FBSSxXQUFVLGFBQ2I7QUFBQSx1Q0FBQyxTQUFJLFdBQVUsZ0NBQ2I7QUFBQSx5Q0FBQyxVQUFLLCtDQUFOO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBQXFDO0FBQUEsa0JBQ3JDLHVCQUFDLFVBQUssV0FBVSxlQUFjLG1CQUE5QjtBQUFBO0FBQUE7QUFBQTtBQUFBLHlCQUFpQztBQUFBLHFCQUZuQztBQUFBO0FBQUE7QUFBQTtBQUFBLHVCQUdBO0FBQUEsZ0JBQ0EsdUJBQUMsU0FBSSxXQUFVLHVDQUNiO0FBQUEsa0JBQUM7QUFBQTtBQUFBLG9CQUNDLFdBQVU7QUFBQSxvQkFDVixPQUFPLEVBQUV1QixPQUFPLE1BQU07QUFBQTtBQUFBLGtCQUZ4QjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsZ0JBRTBCLEtBSDVCO0FBQUE7QUFBQTtBQUFBO0FBQUEsdUJBS0E7QUFBQSxtQkFWRjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQVdBO0FBQUEsY0FFQSx1QkFBQyxTQUFJLFdBQVUsYUFDYjtBQUFBLHVDQUFDLFNBQUksV0FBVSxnQ0FDYjtBQUFBLHlDQUFDLFVBQUsseUNBQU47QUFBQTtBQUFBO0FBQUE7QUFBQSx5QkFBK0I7QUFBQSxrQkFDL0IsdUJBQUMsVUFBSyxXQUFVLGVBQWMsbUJBQTlCO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBQWlDO0FBQUEscUJBRm5DO0FBQUE7QUFBQTtBQUFBO0FBQUEsdUJBR0E7QUFBQSxnQkFDQSx1QkFBQyxTQUFJLFdBQVUsdUNBQ2I7QUFBQSxrQkFBQztBQUFBO0FBQUEsb0JBQ0MsV0FBVTtBQUFBLG9CQUNWLE9BQU8sRUFBRUEsT0FBTyxNQUFNO0FBQUE7QUFBQSxrQkFGeEI7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLGdCQUUwQixLQUg1QjtBQUFBO0FBQUE7QUFBQTtBQUFBLHVCQUtBO0FBQUEsbUJBVkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFXQTtBQUFBLGNBRUEsdUJBQUMsU0FBSSxXQUFVLGFBQ2I7QUFBQSx1Q0FBQyxTQUFJLFdBQVUsZ0NBQ2I7QUFBQSx5Q0FBQyxVQUFLLHFDQUFOO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBQTJCO0FBQUEsa0JBQzNCLHVCQUFDLFVBQUssV0FBVSxlQUFjLG1CQUE5QjtBQUFBO0FBQUE7QUFBQTtBQUFBLHlCQUFpQztBQUFBLHFCQUZuQztBQUFBO0FBQUE7QUFBQTtBQUFBLHVCQUdBO0FBQUEsZ0JBQ0EsdUJBQUMsU0FBSSxXQUFVLHVDQUNiO0FBQUEsa0JBQUM7QUFBQTtBQUFBLG9CQUNDLFdBQVU7QUFBQSxvQkFDVixPQUFPLEVBQUVBLE9BQU8sTUFBTTtBQUFBO0FBQUEsa0JBRnhCO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxnQkFFMEIsS0FINUI7QUFBQTtBQUFBO0FBQUE7QUFBQSx1QkFLQTtBQUFBLG1CQVZGO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBV0E7QUFBQSxpQkFuREY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFvREEsS0FyREY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFzREE7QUFBQSxlQTdERjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQThEQSxLQS9ERjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQWdFQTtBQUFBLGFBMUlGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUEySUE7QUFBQSxRQUdBLHVCQUFDLFFBQUssV0FBVSw4REFDZCxpQ0FBQyxlQUFZLFdBQVUsUUFDckIsaUNBQUMsU0FBSSxXQUFVLHFDQUNiO0FBQUEsaUNBQUMsU0FDQztBQUFBLG1DQUFDLFFBQUcsV0FBVSx1Q0FBc0MsZ0RBQXBEO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBRUE7QUFBQSxZQUNBLHVCQUFDLE9BQUUsV0FBVSxzQkFBcUIscUdBQWxDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBRUE7QUFBQSxlQU5GO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBT0E7QUFBQSxVQUNBLHVCQUFDLFNBQUksV0FBVSxrQkFDYjtBQUFBLG1DQUFDLFVBQU8sU0FBUSxXQUFVLDhCQUExQjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUVBO0FBQUEsWUFDQSx1QkFBQyxVQUFPLGtDQUFSO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBRUE7QUFBQSxlQU5GO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBT0E7QUFBQSxhQWhCRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBaUJBLEtBbEJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFtQkEsS0FwQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQXFCQTtBQUFBO0FBQUE7QUFBQSxJQXpRRjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUEwUUE7QUFFSjtBQUFFQyxLQXhVSS9CO0FBMFVOLGVBQWVBO0FBQWMsSUFBQStCO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJtb3Rpb24iLCJTaGllbGQiLCJaYXAiLCJBY3Rpdml0eSIsIkJhckNoYXJ0MyIsIlNtYXJ0cGhvbmUiLCJDaGVja0NpcmNsZSIsIlVzZXJzIiwiQ2xvY2siLCJDYXJkIiwiQ2FyZENvbnRlbnQiLCJDYXJkRGVzY3JpcHRpb24iLCJDYXJkSGVhZGVyIiwiQ2FyZFRpdGxlIiwiQnV0dG9uIiwiQmFkZ2UiLCJUYWJzIiwiVGFic0NvbnRlbnQiLCJUYWJzTGlzdCIsIlRhYnNUcmlnZ2VyIiwiTUVFUERhc2hib2FyZCIsIm1ldHJpY2FzIiwidmFsaWRhY29lc0NQRiIsImNoZWNraW5zU3VjZXNzbyIsImVxdWlwYW1lbnRvc09ubGluZSIsImFsZXJ0YXNTZWd1cmFuY2EiLCJ0ZW1wb01lZGlvQ2hlY2tpbiIsInRheGFTdWNlc3NvIiwibW9kdWxvc0F0aXZvcyIsIm5vbWUiLCJzdGF0dXMiLCJkZXNjcmljYW8iLCJpY29uIiwiY29sb3IiLCJhbGVydGFzUmVjZW50ZXMiLCJ0aXBvIiwibWVuc2FnZW0iLCJ0aW1lc3RhbXAiLCJvcGFjaXR5IiwieSIsInRvTG9jYWxlU3RyaW5nIiwiTWF0aCIsInJvdW5kIiwibWFwIiwibW9kdWxvIiwiaW5kZXgiLCJzY2FsZSIsImRlbGF5IiwiYWxlcnRhIiwieCIsIndpZHRoIiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiTUVFUERhc2hib2FyZC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcclxuaW1wb3J0IHsgbW90aW9uIH0gZnJvbSAnZnJhbWVyLW1vdGlvbic7XHJcbmltcG9ydCB7IFxyXG4gIFNoaWVsZCwgXHJcbiAgWmFwLCBcclxuICBBY3Rpdml0eSwgXHJcbiAgQmFyQ2hhcnQzLFxyXG4gIFNtYXJ0cGhvbmUsXHJcbiAgQ2hlY2tDaXJjbGUsXHJcbiAgVXNlcnMsXHJcbiAgQ2xvY2tcclxufSBmcm9tICdsdWNpZGUtcmVhY3QnO1xyXG5pbXBvcnQgeyBDYXJkLCBDYXJkQ29udGVudCwgQ2FyZERlc2NyaXB0aW9uLCBDYXJkSGVhZGVyLCBDYXJkVGl0bGUgfSBmcm9tICcuLi91aS9jYXJkJztcclxuaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSAnLi4vdWkvYnV0dG9uJztcclxuaW1wb3J0IHsgQmFkZ2UgfSBmcm9tICcuLi91aS9iYWRnZSc7XHJcbmltcG9ydCB7IFRhYnMsIFRhYnNDb250ZW50LCBUYWJzTGlzdCwgVGFic1RyaWdnZXIgfSBmcm9tICcuLi91aS90YWJzJztcclxuXHJcbmNvbnN0IE1FRVBEYXNoYm9hcmQ6IFJlYWN0LkZDID0gKCkgPT4ge1xyXG4gIGNvbnN0IG1ldHJpY2FzID0ge1xyXG4gICAgdmFsaWRhY29lc0NQRjogMTI0NyxcclxuICAgIGNoZWNraW5zU3VjZXNzbzogMTE4NixcclxuICAgIGVxdWlwYW1lbnRvc09ubGluZTogOCxcclxuICAgIGFsZXJ0YXNTZWd1cmFuY2E6IDMsXHJcbiAgICB0ZW1wb01lZGlvQ2hlY2tpbjogMTgsXHJcbiAgICB0YXhhU3VjZXNzbzogOTUuMVxyXG4gIH07XHJcblxyXG4gIGNvbnN0IG1vZHVsb3NBdGl2b3MgPSBbXHJcbiAgICB7XHJcbiAgICAgIG5vbWU6ICdWYWxpZGHDp8OjbyBDUEYnLFxyXG4gICAgICBzdGF0dXM6ICdhdGl2bycsXHJcbiAgICAgIGRlc2NyaWNhbzogJ0ludGVncmHDp8OjbyBjb20gUmVjZWl0YSBGZWRlcmFsJyxcclxuICAgICAgaWNvbjogU2hpZWxkLFxyXG4gICAgICBjb2xvcjogJ3RleHQtZ3JlZW4tNjAwJ1xyXG4gICAgfSxcclxuICAgIHtcclxuICAgICAgbm9tZTogJ0NoZWNrLWluIE11bHRpLWZhdG9yJyxcclxuICAgICAgc3RhdHVzOiAnYXRpdm8nLCBcclxuICAgICAgZGVzY3JpY2FvOiAnUVIgQ29kZSArIDMgZMOtZ2l0b3MgQ1BGJyxcclxuICAgICAgaWNvbjogU21hcnRwaG9uZSxcclxuICAgICAgY29sb3I6ICd0ZXh0LWJsdWUtNjAwJ1xyXG4gICAgfSxcclxuICAgIHtcclxuICAgICAgbm9tZTogJ0FuYWx5dGljcyBJQScsXHJcbiAgICAgIHN0YXR1czogJ2F0aXZvJyxcclxuICAgICAgZGVzY3JpY2FvOiAnSW5zaWdodHMgZW0gdGVtcG8gcmVhbCcsXHJcbiAgICAgIGljb246IEJhckNoYXJ0MyxcclxuICAgICAgY29sb3I6ICd0ZXh0LXB1cnBsZS02MDAnXHJcbiAgICB9LFxyXG4gICAge1xyXG4gICAgICBub21lOiAnR2VzdMOjbyBFcXVpcGFtZW50b3MnLFxyXG4gICAgICBzdGF0dXM6ICdhdGl2bycsXHJcbiAgICAgIGRlc2NyaWNhbzogJ01vbml0b3JhbWVudG8gZGUgZGlzcG9zaXRpdm9zJyxcclxuICAgICAgaWNvbjogQWN0aXZpdHksXHJcbiAgICAgIGNvbG9yOiAndGV4dC1vcmFuZ2UtNjAwJ1xyXG4gICAgfVxyXG4gIF07XHJcblxyXG4gIGNvbnN0IGFsZXJ0YXNSZWNlbnRlcyA9IFtcclxuICAgIHtcclxuICAgICAgdGlwbzogJ2luZm8nLFxyXG4gICAgICBtZW5zYWdlbTogJ1BpY28gZGUgYWNlc3NvIGRldGVjdGFkbyDDoHMgMTQ6MzAnLFxyXG4gICAgICB0aW1lc3RhbXA6ICcxNSBtaW4gYXRyw6FzJ1xyXG4gICAgfSxcclxuICAgIHtcclxuICAgICAgdGlwbzogJ3dhcm5pbmcnLFxyXG4gICAgICBtZW5zYWdlbTogJ0VxdWlwYW1lbnRvIFRhYmxldC0wMyBjb20gYmF0ZXJpYSBiYWl4YScsXHJcbiAgICAgIHRpbWVzdGFtcDogJzIzIG1pbiBhdHLDoXMnXHJcbiAgICB9LFxyXG4gICAge1xyXG4gICAgICB0aXBvOiAnc3VjY2VzcycsXHJcbiAgICAgIG1lbnNhZ2VtOiAnTWV0YSBkZSAxMDAwIGNoZWNrLWlucyBhbGNhbsOnYWRhJyxcclxuICAgICAgdGltZXN0YW1wOiAnMSBob3JhIGF0csOhcydcclxuICAgIH1cclxuICBdO1xyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPG1vdGlvbi5kaXZcclxuICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB5OiAyMCB9fVxyXG4gICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX1cclxuICAgICAgY2xhc3NOYW1lPVwic3BhY2UteS02XCJcclxuICAgID5cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW5cIj5cclxuICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgPGgxIGNsYXNzTmFtZT1cInRleHQtM3hsIGZvbnQtYm9sZCB0ZXh0LWZvcmVncm91bmRcIj5NRUVQIERhc2hib2FyZDwvaDE+XHJcbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgTW9uaXRvcmFtZW50bywgRXZlbnRvcywgRW5nYWphbWVudG8gZSBQZXJmb3JtYW5jZVxyXG4gICAgICAgICAgPC9wPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICAgIFxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCI+XHJcbiAgICAgICAgICA8QmFkZ2UgdmFyaWFudD1cImRlZmF1bHRcIiBjbGFzc05hbWU9XCJiZy1ncmVlbi0xMDAgdGV4dC1ncmVlbi04MDBcIj5cclxuICAgICAgICAgICAgPFphcCBjbGFzc05hbWU9XCJoLTMgdy0zIG1yLTFcIiAvPlxyXG4gICAgICAgICAgICBTaXN0ZW1hIEF0aXZvXHJcbiAgICAgICAgICA8L0JhZGdlPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICA8L2Rpdj5cclxuXHJcbiAgICAgIHsvKiBNw6l0cmljYXMgUHJpbmNpcGFpcyAqL31cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIGdyaWQtY29scy0xIG1kOmdyaWQtY29scy0yIGxnOmdyaWQtY29scy0zIGdhcC02XCI+XHJcbiAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICA8Q2FyZEhlYWRlciBjbGFzc05hbWU9XCJmbGV4IGZsZXgtcm93IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gc3BhY2UteS0wIHBiLTJcIj5cclxuICAgICAgICAgICAgPENhcmRUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LXNtIGZvbnQtbWVkaXVtXCI+VmFsaWRhw6fDtWVzIENQRjwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICA8U2hpZWxkIGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCIgLz5cclxuICAgICAgICAgIDwvQ2FyZEhlYWRlcj5cclxuICAgICAgICAgIDxDYXJkQ29udGVudD5cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LTJ4bCBmb250LWJvbGRcIj57bWV0cmljYXMudmFsaWRhY29lc0NQRi50b0xvY2FsZVN0cmluZygpfTwvZGl2PlxyXG4gICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXhzIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlxyXG4gICAgICAgICAgICAgICt7TWF0aC5yb3VuZChtZXRyaWNhcy52YWxpZGFjb2VzQ1BGICogMC4xMil9IGRlc2RlIG9udGVtXHJcbiAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgPC9DYXJkPlxyXG5cclxuICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgIDxDYXJkSGVhZGVyIGNsYXNzTmFtZT1cImZsZXggZmxleC1yb3cgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBzcGFjZS15LTAgcGItMlwiPlxyXG4gICAgICAgICAgICA8Q2FyZFRpdGxlIGNsYXNzTmFtZT1cInRleHQtc20gZm9udC1tZWRpdW1cIj5DaGVjay1pbnMgUmVhbGl6YWRvczwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICA8Q2hlY2tDaXJjbGUgY2xhc3NOYW1lPVwiaC00IHctNCB0ZXh0LW11dGVkLWZvcmVncm91bmRcIiAvPlxyXG4gICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtMnhsIGZvbnQtYm9sZFwiPnttZXRyaWNhcy5jaGVja2luc1N1Y2Vzc28udG9Mb2NhbGVTdHJpbmcoKX08L2Rpdj5cclxuICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgICBUYXhhIGRlIHN1Y2Vzc286IHttZXRyaWNhcy50YXhhU3VjZXNzb30lXHJcbiAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgPC9DYXJkPlxyXG5cclxuICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgIDxDYXJkSGVhZGVyIGNsYXNzTmFtZT1cImZsZXggZmxleC1yb3cgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBzcGFjZS15LTAgcGItMlwiPlxyXG4gICAgICAgICAgICA8Q2FyZFRpdGxlIGNsYXNzTmFtZT1cInRleHQtc20gZm9udC1tZWRpdW1cIj5FcXVpcGFtZW50b3MgT25saW5lPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgICAgIDxBY3Rpdml0eSBjbGFzc05hbWU9XCJoLTQgdy00IHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiIC8+XHJcbiAgICAgICAgICA8L0NhcmRIZWFkZXI+XHJcbiAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC0yeGwgZm9udC1ib2xkXCI+e21ldHJpY2FzLmVxdWlwYW1lbnRvc09ubGluZX0vMTA8L2Rpdj5cclxuICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgICA4MCUgZG9zIGVxdWlwYW1lbnRvcyBhdGl2b3NcclxuICAgICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICA8L0NhcmQ+XHJcblxyXG4gICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgPENhcmRIZWFkZXIgY2xhc3NOYW1lPVwiZmxleCBmbGV4LXJvdyBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIHNwYWNlLXktMCBwYi0yXCI+XHJcbiAgICAgICAgICAgIDxDYXJkVGl0bGUgY2xhc3NOYW1lPVwidGV4dC1zbSBmb250LW1lZGl1bVwiPlRlbXBvIE3DqWRpbyBDaGVjay1pbjwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICA8Q2xvY2sgY2xhc3NOYW1lPVwiaC00IHctNCB0ZXh0LW11dGVkLWZvcmVncm91bmRcIiAvPlxyXG4gICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtMnhsIGZvbnQtYm9sZFwiPnttZXRyaWNhcy50ZW1wb01lZGlvQ2hlY2tpbn1zPC9kaXY+XHJcbiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQteHMgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICAgICAgLTJzIGRlc2RlIGEgw7psdGltYSBzZW1hbmFcclxuICAgICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICA8L0NhcmQ+XHJcblxyXG4gICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgPENhcmRIZWFkZXIgY2xhc3NOYW1lPVwiZmxleCBmbGV4LXJvdyBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIHNwYWNlLXktMCBwYi0yXCI+XHJcbiAgICAgICAgICAgIDxDYXJkVGl0bGUgY2xhc3NOYW1lPVwidGV4dC1zbSBmb250LW1lZGl1bVwiPlBhcnRpY2lwYW50ZXMgQXRpdm9zPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgICAgIDxVc2VycyBjbGFzc05hbWU9XCJoLTQgdy00IHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiIC8+XHJcbiAgICAgICAgICA8L0NhcmRIZWFkZXI+XHJcbiAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC0yeGwgZm9udC1ib2xkXCI+ODQ3PC9kaXY+XHJcbiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQteHMgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICAgICAgNzElIGRlIG9jdXBhw6fDo28gbcOheGltYVxyXG4gICAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICA8L0NhcmRDb250ZW50PlxyXG4gICAgICAgIDwvQ2FyZD5cclxuXHJcbiAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICA8Q2FyZEhlYWRlciBjbGFzc05hbWU9XCJmbGV4IGZsZXgtcm93IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gc3BhY2UteS0wIHBiLTJcIj5cclxuICAgICAgICAgICAgPENhcmRUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LXNtIGZvbnQtbWVkaXVtXCI+QWxlcnRhcyBkZSBTZWd1cmFuw6dhPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgICAgIDxTaGllbGQgY2xhc3NOYW1lPVwiaC00IHctNCB0ZXh0LW11dGVkLWZvcmVncm91bmRcIiAvPlxyXG4gICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtMnhsIGZvbnQtYm9sZCB0ZXh0LXllbGxvdy02MDBcIj57bWV0cmljYXMuYWxlcnRhc1NlZ3VyYW5jYX08L2Rpdj5cclxuICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgICBSZXF1ZXIgYXRlbsOnw6NvXHJcbiAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgPC9DYXJkPlxyXG4gICAgICA8L2Rpdj5cclxuXHJcbiAgICAgIDxUYWJzIGRlZmF1bHRWYWx1ZT1cIm1vZHVsb3NcIiBjbGFzc05hbWU9XCJ3LWZ1bGxcIj5cclxuICAgICAgICA8VGFic0xpc3Q+XHJcbiAgICAgICAgICA8VGFic1RyaWdnZXIgdmFsdWU9XCJtb2R1bG9zXCI+TcOzZHVsb3MgTUVFUDwvVGFic1RyaWdnZXI+XHJcbiAgICAgICAgICA8VGFic1RyaWdnZXIgdmFsdWU9XCJhbGVydGFzXCI+QWxlcnRhcyBSZWNlbnRlczwvVGFic1RyaWdnZXI+XHJcbiAgICAgICAgICA8VGFic1RyaWdnZXIgdmFsdWU9XCJwZXJmb3JtYW5jZVwiPlBlcmZvcm1hbmNlPC9UYWJzVHJpZ2dlcj5cclxuICAgICAgICA8L1RhYnNMaXN0PlxyXG5cclxuICAgICAgICA8VGFic0NvbnRlbnQgdmFsdWU9XCJtb2R1bG9zXCIgY2xhc3NOYW1lPVwic3BhY2UteS00XCI+XHJcbiAgICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgICAgPENhcmRIZWFkZXI+XHJcbiAgICAgICAgICAgICAgPENhcmRUaXRsZT5Nw7NkdWxvcyBNRUVQIEF0aXZvczwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICAgIDxDYXJkRGVzY3JpcHRpb24+XHJcbiAgICAgICAgICAgICAgICBTdGF0dXMgZG9zIG3Ds2R1bG9zIHByaW5jaXBhaXMgZG8gc2lzdGVtYSBNRUVQXHJcbiAgICAgICAgICAgICAgPC9DYXJkRGVzY3JpcHRpb24+XHJcbiAgICAgICAgICAgIDwvQ2FyZEhlYWRlcj5cclxuICAgICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBncmlkLWNvbHMtMSBtZDpncmlkLWNvbHMtMiBnYXAtNFwiPlxyXG4gICAgICAgICAgICAgICAge21vZHVsb3NBdGl2b3MubWFwKChtb2R1bG8sIGluZGV4KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgICAgICAgICAgICAgICAga2V5PXtpbmRleH1cclxuICAgICAgICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHNjYWxlOiAwLjk1IH19XHJcbiAgICAgICAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCBzY2FsZTogMSB9fVxyXG4gICAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZGVsYXk6IGluZGV4ICogMC4xIH19XHJcbiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0zIHAtNCBib3JkZXIgcm91bmRlZC1sZyBob3ZlcjpiZy1tdXRlZC81MCB0cmFuc2l0aW9uLWNvbG9yc1wiXHJcbiAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICA8bW9kdWxvLmljb24gY2xhc3NOYW1lPXtgaC04IHctOCAke21vZHVsby5jb2xvcn1gfSAvPlxyXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleC0xXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZvbnQtbWVkaXVtXCI+e21vZHVsby5ub21lfTwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPnttb2R1bG8uZGVzY3JpY2FvfTwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgIDxCYWRnZSB2YXJpYW50PVwiZGVmYXVsdFwiIGNsYXNzTmFtZT1cImJnLWdyZWVuLTEwMCB0ZXh0LWdyZWVuLTgwMFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAge21vZHVsby5zdGF0dXN9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9CYWRnZT5cclxuICAgICAgICAgICAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgPC9UYWJzQ29udGVudD5cclxuXHJcbiAgICAgICAgPFRhYnNDb250ZW50IHZhbHVlPVwiYWxlcnRhc1wiIGNsYXNzTmFtZT1cInNwYWNlLXktNFwiPlxyXG4gICAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICAgIDxDYXJkSGVhZGVyPlxyXG4gICAgICAgICAgICAgIDxDYXJkVGl0bGU+QWxlcnRhcyBlIE5vdGlmaWNhw6fDtWVzPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgICAgICAgPENhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICAgICAgICAgIMOabHRpbWFzIGF0aXZpZGFkZXMgZSBhbGVydGFzIGRvIHNpc3RlbWFcclxuICAgICAgICAgICAgICA8L0NhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTRcIj5cclxuICAgICAgICAgICAgICAgIHthbGVydGFzUmVjZW50ZXMubWFwKChhbGVydGEsIGluZGV4KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgICAgICAgICAgICAgICAga2V5PXtpbmRleH1cclxuICAgICAgICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHg6IC0yMCB9fVxyXG4gICAgICAgICAgICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeDogMCB9fVxyXG4gICAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZGVsYXk6IGluZGV4ICogMC4xIH19XHJcbiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0zIHAtMyBib3JkZXIgcm91bmRlZC1sZ1wiXHJcbiAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT17YGgtMyB3LTMgcm91bmRlZC1mdWxsICR7XHJcbiAgICAgICAgICAgICAgICAgICAgICBhbGVydGEudGlwbyA9PT0gJ3N1Y2Nlc3MnID8gJ2JnLWdyZWVuLTUwMCcgOlxyXG4gICAgICAgICAgICAgICAgICAgICAgYWxlcnRhLnRpcG8gPT09ICd3YXJuaW5nJyA/ICdiZy15ZWxsb3ctNTAwJyA6XHJcbiAgICAgICAgICAgICAgICAgICAgICBhbGVydGEudGlwbyA9PT0gJ2Vycm9yJyA/ICdiZy1yZWQtNTAwJyA6ICdiZy1ibHVlLTUwMCdcclxuICAgICAgICAgICAgICAgICAgICB9YH0gLz5cclxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXgtMVwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXNtXCI+e2FsZXJ0YS5tZW5zYWdlbX08L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj57YWxlcnRhLnRpbWVzdGFtcH08L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgPC9UYWJzQ29udGVudD5cclxuXHJcbiAgICAgICAgPFRhYnNDb250ZW50IHZhbHVlPVwicGVyZm9ybWFuY2VcIiBjbGFzc05hbWU9XCJzcGFjZS15LTRcIj5cclxuICAgICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgICA8Q2FyZEhlYWRlcj5cclxuICAgICAgICAgICAgICA8Q2FyZFRpdGxlPk3DqXRyaWNhcyBkZSBQZXJmb3JtYW5jZTwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICAgIDxDYXJkRGVzY3JpcHRpb24+XHJcbiAgICAgICAgICAgICAgICBJbmRpY2Fkb3JlcyBkZSBwZXJmb3JtYW5jZSBkbyBzaXN0ZW1hIE1FRVBcclxuICAgICAgICAgICAgICA8L0NhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTZcIj5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBqdXN0aWZ5LWJldHdlZW4gdGV4dC1zbVwiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxzcGFuPlRheGEgZGUgU3VjZXNzbyBDaGVjay1pbjwvc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJmb250LW1lZGl1bVwiPnttZXRyaWNhcy50YXhhU3VjZXNzb30lPC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ3LWZ1bGwgYmctZ3JheS0yMDAgcm91bmRlZC1mdWxsIGgtMlwiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgXHJcbiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy1ncmVlbi02MDAgaC0yIHJvdW5kZWQtZnVsbFwiIFxyXG4gICAgICAgICAgICAgICAgICAgICAgc3R5bGU9e3sgd2lkdGg6IGAke21ldHJpY2FzLnRheGFTdWNlc3NvfSVgIH19XHJcbiAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktMlwiPlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXgganVzdGlmeS1iZXR3ZWVuIHRleHQtc21cIj5cclxuICAgICAgICAgICAgICAgICAgICA8c3Bhbj5EaXNwb25pYmlsaWRhZGUgZGUgRXF1aXBhbWVudG9zPC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImZvbnQtbWVkaXVtXCI+ODAlPC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ3LWZ1bGwgYmctZ3JheS0yMDAgcm91bmRlZC1mdWxsIGgtMlwiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgXHJcbiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy1ibHVlLTYwMCBoLTIgcm91bmRlZC1mdWxsXCIgXHJcbiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyB3aWR0aDogJzgwJScgfX1cclxuICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBqdXN0aWZ5LWJldHdlZW4gdGV4dC1zbVwiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxzcGFuPlBlcmZvcm1hbmNlIFZhbGlkYcOnw6NvIENQRjwvc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJmb250LW1lZGl1bVwiPjk0JTwvc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidy1mdWxsIGJnLWdyYXktMjAwIHJvdW5kZWQtZnVsbCBoLTJcIj5cclxuICAgICAgICAgICAgICAgICAgICA8ZGl2IFxyXG4gICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctcHVycGxlLTYwMCBoLTIgcm91bmRlZC1mdWxsXCIgXHJcbiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyB3aWR0aDogJzk0JScgfX1cclxuICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBqdXN0aWZ5LWJldHdlZW4gdGV4dC1zbVwiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxzcGFuPlNhdGlzZmHDp8OjbyBkbyBVc3XDoXJpbzwvc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJmb250LW1lZGl1bVwiPjkyJTwvc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidy1mdWxsIGJnLWdyYXktMjAwIHJvdW5kZWQtZnVsbCBoLTJcIj5cclxuICAgICAgICAgICAgICAgICAgICA8ZGl2IFxyXG4gICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctb3JhbmdlLTYwMCBoLTIgcm91bmRlZC1mdWxsXCIgXHJcbiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyB3aWR0aDogJzkyJScgfX1cclxuICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8L0NhcmRDb250ZW50PlxyXG4gICAgICAgICAgPC9DYXJkPlxyXG4gICAgICAgIDwvVGFic0NvbnRlbnQ+XHJcbiAgICAgIDwvVGFicz5cclxuXHJcbiAgICAgIHsvKiBDYWxsIHRvIEFjdGlvbiAqL31cclxuICAgICAgPENhcmQgY2xhc3NOYW1lPVwiYmctZ3JhZGllbnQtdG8tciBmcm9tLWJsdWUtNTAgdG8tcHVycGxlLTUwIGJvcmRlci1ibHVlLTIwMFwiPlxyXG4gICAgICAgIDxDYXJkQ29udGVudCBjbGFzc05hbWU9XCJwdC02XCI+XHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlblwiPlxyXG4gICAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICAgIDxoMyBjbGFzc05hbWU9XCJ0ZXh0LWxnIGZvbnQtc2VtaWJvbGQgdGV4dC1ibHVlLTkwMFwiPlxyXG4gICAgICAgICAgICAgICAgU2lzdGVtYSBNRUVQIEF0aXZvIGUgRnVuY2lvbmFuZG9cclxuICAgICAgICAgICAgICA8L2gzPlxyXG4gICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtYmx1ZS03MDAgbXQtMVwiPlxyXG4gICAgICAgICAgICAgICAgVG9kb3Mgb3MgbcOzZHVsb3MgcHJpbmNpcGFpcyBlc3TDo28gb3BlcmFjaW9uYWlzLiBFeHBsb3JlIGFzIGZ1bmNpb25hbGlkYWRlcyBhdmFuw6dhZGFzLlxyXG4gICAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBzcGFjZS14LTJcIj5cclxuICAgICAgICAgICAgICA8QnV0dG9uIHZhcmlhbnQ9XCJvdXRsaW5lXCI+XHJcbiAgICAgICAgICAgICAgICBWZXIgUmVsYXTDs3Jpb3NcclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgICA8QnV0dG9uPlxyXG4gICAgICAgICAgICAgICAgQW5hbHl0aWNzIEF2YW7Dp2Fkb1xyXG4gICAgICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgIDwvQ2FyZD5cclxuICAgIDwvbW90aW9uLmRpdj5cclxuICApO1xyXG59O1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgTUVFUERhc2hib2FyZDtcclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvbWVlcC9NRUVQRGFzaGJvYXJkLnRzeCJ9

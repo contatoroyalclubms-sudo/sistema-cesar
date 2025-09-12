@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-09-11T06:18:17.795Z",
+  "sistema": "Painel Universal - Sistema de Eventos",
+  "analise": {
+    "headers_seguranca": [],
+    "autenticacao": {
+      "tipo": "JWT",
+      "token_presente": false,
+      "refresh_token": false
+    },
+    "endpoints_publicos": [
+      "/api/cors-test",
+      "/api/cors-test"
+    ],
+    "endpoints_protegidos": [],
+    "vulnerabilidades_potenciais": [
+      "Falta header X-Frame-Options (Clickjacking)",
+      "Falta Content-Security-Policy",
+      "Falta Strict-Transport-Security (HSTS)"
+    ],
+    "recomendacoes": []
+  }
+}

@@ -1,0 +1,136 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/date-range-picker.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport3_react);
+import { CalendarIcon } from "/node_modules/.vite/deps/lucide-react.js?v=47dd5afa";
+import { cn } from "/src/lib/utils.ts";
+import { Button } from "/src/components/ui/button.tsx";
+import { Calendar } from "/src/components/ui/calendar.tsx";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "/src/components/ui/popover.tsx";
+export function DatePickerWithRange({
+  className,
+  date,
+  onDateChange
+}) {
+  _s();
+  const [selectedDate, setSelectedDate] = React.useState(date);
+  const handleDateChange = (range) => {
+    setSelectedDate(range);
+    onDateChange?.(range);
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: cn("grid gap-2", className), children: /* @__PURE__ */ jsxDEV(Popover, { children: [
+    /* @__PURE__ */ jsxDEV(PopoverTrigger, { asChild: true, children: /* @__PURE__ */ jsxDEV(
+      Button,
+      {
+        id: "date",
+        variant: "outline",
+        className: cn(
+          "w-[300px] justify-start text-left font-normal",
+          !selectedDate && "text-muted-foreground"
+        ),
+        children: [
+          /* @__PURE__ */ jsxDEV(CalendarIcon, { className: "mr-2 h-4 w-4" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+            lineNumber: 62,
+            columnNumber: 13
+          }, this),
+          selectedDate?.from ? selectedDate.to ? /* @__PURE__ */ jsxDEV(Fragment, { children: [
+            selectedDate.from.toLocaleDateString(),
+            " -",
+            " ",
+            selectedDate.to.toLocaleDateString()
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+            lineNumber: 65,
+            columnNumber: 13
+          }, this) : selectedDate.from.toLocaleDateString() : /* @__PURE__ */ jsxDEV("span", { children: "Selecionar período" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+            lineNumber: 73,
+            columnNumber: 13
+          }, this)
+        ]
+      },
+      void 0,
+      true,
+      {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+        lineNumber: 54,
+        columnNumber: 11
+      },
+      this
+    ) }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+      lineNumber: 53,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV(PopoverContent, { className: "w-auto p-0", align: "start", children: /* @__PURE__ */ jsxDEV(
+      Calendar,
+      {
+        initialFocus: true,
+        mode: "range",
+        defaultMonth: selectedDate?.from,
+        selected: selectedDate,
+        onSelect: handleDateChange,
+        numberOfMonths: 2
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+        lineNumber: 78,
+        columnNumber: 11
+      },
+      this
+    ) }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+      lineNumber: 77,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+    lineNumber: 52,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx",
+    lineNumber: 51,
+    columnNumber: 5
+  }, this);
+}
+_s(DatePickerWithRange, "FaETItdPCXv59s2qs2vNcoApgyI=");
+_c = DatePickerWithRange;
+var _c;
+$RefreshReg$(_c, "DatePickerWithRange");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/date-range-picker.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBMENZLFNBR0ksVUFISjs7Ozs7Ozs7Ozs7Ozs7Ozs7QUExQ1osWUFBWUEsV0FBVztBQUN2QixTQUFTQyxvQkFBb0I7QUFFN0IsU0FBU0MsVUFBVTtBQUNuQixTQUFTQyxjQUFjO0FBQ3ZCLFNBQVNDLGdCQUFnQjtBQUN6QjtBQUFBLEVBQ0VDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDO0FBQUFBLE9BQ0s7QUFRQSxnQkFBU0Msb0JBQW9CO0FBQUEsRUFDbENDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDO0FBQ3dCLEdBQUc7QUFBQUMsS0FBQTtBQUMzQixRQUFNLENBQUNDLGNBQWNDLGVBQWUsSUFBSWQsTUFBTWUsU0FBZ0NMLElBQUk7QUFFbEYsUUFBTU0sbUJBQW1CQSxDQUFDQyxVQUFpQztBQUN6REgsb0JBQWdCRyxLQUFLO0FBQ3JCTixtQkFBZU0sS0FBSztBQUFBLEVBQ3RCO0FBRUEsU0FDRSx1QkFBQyxTQUFJLFdBQVdmLEdBQUcsY0FBY08sU0FBUyxHQUN4QyxpQ0FBQyxXQUNDO0FBQUEsMkJBQUMsa0JBQWUsU0FBTyxNQUNyQjtBQUFBLE1BQUM7QUFBQTtBQUFBLFFBQ0MsSUFBRztBQUFBLFFBQ0gsU0FBUztBQUFBLFFBQ1QsV0FBV1A7QUFBQUEsVUFDVDtBQUFBLFVBQ0EsQ0FBQ1csZ0JBQWdCO0FBQUEsUUFDbkI7QUFBQSxRQUVBO0FBQUEsaUNBQUMsZ0JBQWEsV0FBVSxrQkFBeEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBc0M7QUFBQSxVQUNyQ0EsY0FBY0ssT0FDYkwsYUFBYU0sS0FDWCxtQ0FDR047QUFBQUEseUJBQWFLLEtBQUtFLG1CQUFtQjtBQUFBLFlBQUU7QUFBQSxZQUFHO0FBQUEsWUFDMUNQLGFBQWFNLEdBQUdDLG1CQUFtQjtBQUFBLGVBRnRDO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBR0EsSUFFQVAsYUFBYUssS0FBS0UsbUJBQW1CLElBR3ZDLHVCQUFDLFVBQUssa0NBQU47QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBd0I7QUFBQTtBQUFBO0FBQUEsTUFuQjVCO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxJQXFCQSxLQXRCRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBdUJBO0FBQUEsSUFDQSx1QkFBQyxrQkFBZSxXQUFVLGNBQWEsT0FBTSxTQUMzQztBQUFBLE1BQUM7QUFBQTtBQUFBLFFBQ0M7QUFBQSxRQUNBLE1BQUs7QUFBQSxRQUNMLGNBQWNQLGNBQWNLO0FBQUFBLFFBQzVCLFVBQVVMO0FBQUFBLFFBQ1YsVUFBVUc7QUFBQUEsUUFDVixnQkFBZ0I7QUFBQTtBQUFBLE1BTmxCO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxJQU1vQixLQVB0QjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBU0E7QUFBQSxPQWxDRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBbUNBLEtBcENGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FxQ0E7QUFFSjtBQUFDSixHQXBEZUoscUJBQW1CO0FBQUFhLEtBQW5CYjtBQUFtQixJQUFBYTtBQUFBQyxhQUFBRCxJQUFBIiwibmFtZXMiOlsiUmVhY3QiLCJDYWxlbmRhckljb24iLCJjbiIsIkJ1dHRvbiIsIkNhbGVuZGFyIiwiUG9wb3ZlciIsIlBvcG92ZXJDb250ZW50IiwiUG9wb3ZlclRyaWdnZXIiLCJEYXRlUGlja2VyV2l0aFJhbmdlIiwiY2xhc3NOYW1lIiwiZGF0ZSIsIm9uRGF0ZUNoYW5nZSIsIl9zIiwic2VsZWN0ZWREYXRlIiwic2V0U2VsZWN0ZWREYXRlIiwidXNlU3RhdGUiLCJoYW5kbGVEYXRlQ2hhbmdlIiwicmFuZ2UiLCJmcm9tIiwidG8iLCJ0b0xvY2FsZURhdGVTdHJpbmciLCJfYyIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJkYXRlLXJhbmdlLXBpY2tlci50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgUmVhY3QgZnJvbSBcInJlYWN0XCJcclxuaW1wb3J0IHsgQ2FsZW5kYXJJY29uIH0gZnJvbSBcImx1Y2lkZS1yZWFjdFwiXHJcbmltcG9ydCB7IERhdGVSYW5nZSB9IGZyb20gXCJyZWFjdC1kYXktcGlja2VyXCJcclxuaW1wb3J0IHsgY24gfSBmcm9tIFwiQC9saWIvdXRpbHNcIlxyXG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2J1dHRvblwiXHJcbmltcG9ydCB7IENhbGVuZGFyIH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9jYWxlbmRhclwiXHJcbmltcG9ydCB7XHJcbiAgUG9wb3ZlcixcclxuICBQb3BvdmVyQ29udGVudCxcclxuICBQb3BvdmVyVHJpZ2dlcixcclxufSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3BvcG92ZXJcIlxyXG5cclxuaW50ZXJmYWNlIERhdGVQaWNrZXJXaXRoUmFuZ2VQcm9wcyB7XHJcbiAgY2xhc3NOYW1lPzogc3RyaW5nXHJcbiAgZGF0ZT86IERhdGVSYW5nZVxyXG4gIG9uRGF0ZUNoYW5nZT86IChkYXRlOiBEYXRlUmFuZ2UgfCB1bmRlZmluZWQpID0+IHZvaWRcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIERhdGVQaWNrZXJXaXRoUmFuZ2Uoe1xyXG4gIGNsYXNzTmFtZSxcclxuICBkYXRlLFxyXG4gIG9uRGF0ZUNoYW5nZSxcclxufTogRGF0ZVBpY2tlcldpdGhSYW5nZVByb3BzKSB7XHJcbiAgY29uc3QgW3NlbGVjdGVkRGF0ZSwgc2V0U2VsZWN0ZWREYXRlXSA9IFJlYWN0LnVzZVN0YXRlPERhdGVSYW5nZSB8IHVuZGVmaW5lZD4oZGF0ZSlcclxuXHJcbiAgY29uc3QgaGFuZGxlRGF0ZUNoYW5nZSA9IChyYW5nZTogRGF0ZVJhbmdlIHwgdW5kZWZpbmVkKSA9PiB7XHJcbiAgICBzZXRTZWxlY3RlZERhdGUocmFuZ2UpXHJcbiAgICBvbkRhdGVDaGFuZ2U/LihyYW5nZSlcclxuICB9XHJcblxyXG4gIHJldHVybiAoXHJcbiAgICA8ZGl2IGNsYXNzTmFtZT17Y24oXCJncmlkIGdhcC0yXCIsIGNsYXNzTmFtZSl9PlxyXG4gICAgICA8UG9wb3Zlcj5cclxuICAgICAgICA8UG9wb3ZlclRyaWdnZXIgYXNDaGlsZD5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgaWQ9XCJkYXRlXCJcclxuICAgICAgICAgICAgdmFyaWFudD17XCJvdXRsaW5lXCJ9XHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT17Y24oXHJcbiAgICAgICAgICAgICAgXCJ3LVszMDBweF0ganVzdGlmeS1zdGFydCB0ZXh0LWxlZnQgZm9udC1ub3JtYWxcIixcclxuICAgICAgICAgICAgICAhc2VsZWN0ZWREYXRlICYmIFwidGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCJcclxuICAgICAgICAgICAgKX1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPENhbGVuZGFySWNvbiBjbGFzc05hbWU9XCJtci0yIGgtNCB3LTRcIiAvPlxyXG4gICAgICAgICAgICB7c2VsZWN0ZWREYXRlPy5mcm9tID8gKFxyXG4gICAgICAgICAgICAgIHNlbGVjdGVkRGF0ZS50byA/IChcclxuICAgICAgICAgICAgICAgIDw+XHJcbiAgICAgICAgICAgICAgICAgIHtzZWxlY3RlZERhdGUuZnJvbS50b0xvY2FsZURhdGVTdHJpbmcoKX0gLXtcIiBcIn1cclxuICAgICAgICAgICAgICAgICAge3NlbGVjdGVkRGF0ZS50by50b0xvY2FsZURhdGVTdHJpbmcoKX1cclxuICAgICAgICAgICAgICAgIDwvPlxyXG4gICAgICAgICAgICAgICkgOiAoXHJcbiAgICAgICAgICAgICAgICBzZWxlY3RlZERhdGUuZnJvbS50b0xvY2FsZURhdGVTdHJpbmcoKVxyXG4gICAgICAgICAgICAgIClcclxuICAgICAgICAgICAgKSA6IChcclxuICAgICAgICAgICAgICA8c3Bhbj5TZWxlY2lvbmFyIHBlcsOtb2RvPC9zcGFuPlxyXG4gICAgICAgICAgICApfVxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgPC9Qb3BvdmVyVHJpZ2dlcj5cclxuICAgICAgICA8UG9wb3ZlckNvbnRlbnQgY2xhc3NOYW1lPVwidy1hdXRvIHAtMFwiIGFsaWduPVwic3RhcnRcIj5cclxuICAgICAgICAgIDxDYWxlbmRhclxyXG4gICAgICAgICAgICBpbml0aWFsRm9jdXNcclxuICAgICAgICAgICAgbW9kZT1cInJhbmdlXCJcclxuICAgICAgICAgICAgZGVmYXVsdE1vbnRoPXtzZWxlY3RlZERhdGU/LmZyb219XHJcbiAgICAgICAgICAgIHNlbGVjdGVkPXtzZWxlY3RlZERhdGV9XHJcbiAgICAgICAgICAgIG9uU2VsZWN0PXtoYW5kbGVEYXRlQ2hhbmdlfVxyXG4gICAgICAgICAgICBudW1iZXJPZk1vbnRocz17Mn1cclxuICAgICAgICAgIC8+XHJcbiAgICAgICAgPC9Qb3BvdmVyQ29udGVudD5cclxuICAgICAgPC9Qb3BvdmVyPlxyXG4gICAgPC9kaXY+XHJcbiAgKVxyXG59XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL3VpL2RhdGUtcmFuZ2UtcGlja2VyLnRzeCJ9

@@ -1,0 +1,13 @@
+graph TD
+    A[Início] --> B[Login]
+    B --> C{Autenticado?}
+    C -->|Sim| D[Dashboard]
+    C -->|Não| B
+    D --> E[Eventos]
+    D --> F[PDV]
+    D --> G[Check-in]
+    D --> H[Relatórios]
+    E --> I[Criar Evento]
+    F --> J[Realizar Venda]
+    G --> K[Fazer Check-in]
+    H --> L[Gerar Relatório]

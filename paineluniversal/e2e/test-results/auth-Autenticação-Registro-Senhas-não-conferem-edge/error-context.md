@@ -1,0 +1,64 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - heading "Sistema de Gestão de Eventos" [level=2] [ref=e8]
+      - paragraph [ref=e9]: Crie sua conta para acessar o sistema
+    - button "Voltar para Login" [ref=e11] [cursor=pointer]:
+      - img
+      - text: Voltar para Login
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - img [ref=e16]
+          - text: Criar Conta
+        - generic [ref=e19]: Preencha os dados para criar sua conta
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - img [ref=e24]
+            - text: CPF
+          - textbox "CPF" [ref=e26]: 214.813.022-64
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - img [ref=e29]
+            - text: Nome Completo
+          - textbox "Nome Completo" [ref=e32]: Murilo Macedo
+        - generic [ref=e33]:
+          - generic [ref=e34]:
+            - img [ref=e35]
+            - text: Email
+          - textbox "Email" [ref=e38]: Heitor_Costa@live.com
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - img [ref=e41]
+            - text: Telefone (Opcional)
+          - textbox "Telefone (Opcional)" [ref=e43]
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - img [ref=e46]
+            - text: Tipo de Usuário
+          - combobox [ref=e49] [cursor=pointer]:
+            - generic: Cliente
+            - img [ref=e50] [cursor=pointer]
+          - combobox [ref=e52]
+        - generic [ref=e53]:
+          - generic [ref=e54]: Senha
+          - generic [ref=e55]:
+            - textbox "Senha" [ref=e56]: Senha123
+            - button [ref=e57] [cursor=pointer]:
+              - img
+        - generic [ref=e58]:
+          - generic [ref=e59]: Confirmar Senha
+          - generic [ref=e60]:
+            - textbox "Confirmar Senha" [ref=e61]: SenhaDiferente123
+            - button [ref=e62] [cursor=pointer]:
+              - img
+          - paragraph [ref=e63]: Senhas não coincidem
+        - button "Criar Conta" [active] [ref=e65] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list
+```

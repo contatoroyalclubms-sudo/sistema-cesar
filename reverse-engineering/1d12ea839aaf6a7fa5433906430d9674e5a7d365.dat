@@ -1,0 +1,195 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/SystemStatus.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const useState = __vite__cjsImport3_react["useState"]; const useEffect = __vite__cjsImport3_react["useEffect"];
+import { Alert, AlertDescription } from "/src/components/ui/alert.tsx";
+import { Loader2, CheckCircle, AlertCircle, Clock } from "/node_modules/.vite/deps/lucide-react.js?v=47dd5afa";
+import { publicApi } from "/src/services/api.ts";
+const SystemStatus = ({ onStatusChange }) => {
+  _s();
+  const [status, setStatus] = useState("checking");
+  const [lastCheck, setLastCheck] = useState(null);
+  const checkStatus = async () => {
+    setStatus("checking");
+    const startTime = Date.now();
+    try {
+      await publicApi.get("/healthz", { timeout: 5e3 });
+      const responseTime = Date.now() - startTime;
+      if (responseTime > 3e3) {
+        setStatus("slow");
+      } else {
+        setStatus("online");
+      }
+      setLastCheck(/* @__PURE__ */ new Date());
+      onStatusChange?.(true);
+    } catch (error) {
+      console.error("Sistema offline:", error);
+      setStatus("offline");
+      onStatusChange?.(false);
+    }
+  };
+  useEffect(() => {
+    checkStatus();
+    const interval = setInterval(checkStatus, 3e4);
+    return () => clearInterval(interval);
+  }, []);
+  const getStatusConfig = () => {
+    switch (status) {
+      case "checking":
+        return {
+          icon: /* @__PURE__ */ jsxDEV(Loader2, { className: "h-4 w-4 animate-spin" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+            lineNumber: 70,
+            columnNumber: 17
+          }, this),
+          color: "bg-blue-50 border-blue-200 text-blue-700",
+          message: "Verificando status do sistema..."
+        };
+      case "online":
+        return {
+          icon: /* @__PURE__ */ jsxDEV(CheckCircle, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+            lineNumber: 76,
+            columnNumber: 17
+          }, this),
+          color: "bg-green-50 border-green-200 text-green-700",
+          message: "Sistema funcionando normalmente"
+        };
+      case "slow":
+        return {
+          icon: /* @__PURE__ */ jsxDEV(Clock, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+            lineNumber: 82,
+            columnNumber: 17
+          }, this),
+          color: "bg-yellow-50 border-yellow-200 text-yellow-700",
+          message: "Sistema respondendo lentamente"
+        };
+      case "offline":
+        return {
+          icon: /* @__PURE__ */ jsxDEV(AlertCircle, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+            lineNumber: 88,
+            columnNumber: 17
+          }, this),
+          color: "bg-red-50 border-red-200 text-red-700",
+          message: "Sistema temporariamente indisponível"
+        };
+      default:
+        return {
+          icon: /* @__PURE__ */ jsxDEV(AlertCircle, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+            lineNumber: 94,
+            columnNumber: 17
+          }, this),
+          color: "bg-gray-50 border-gray-200 text-gray-700",
+          message: "Status desconhecido"
+        };
+    }
+  };
+  const config = getStatusConfig();
+  if (status === "online") {
+    return null;
+  }
+  return /* @__PURE__ */ jsxDEV(Alert, { className: `mb-4 ${config.color}`, children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-2", children: [
+    config.icon,
+    /* @__PURE__ */ jsxDEV(AlertDescription, { children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2", children: [
+        /* @__PURE__ */ jsxDEV("span", { children: config.message }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+          lineNumber: 113,
+          columnNumber: 13
+        }, this),
+        lastCheck && /* @__PURE__ */ jsxDEV("span", { className: "text-xs opacity-75", children: [
+          "Última verificação: ",
+          lastCheck.toLocaleTimeString()
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+          lineNumber: 115,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+        lineNumber: 112,
+        columnNumber: 11
+      }, this),
+      status === "offline" && /* @__PURE__ */ jsxDEV("div", { className: "mt-2 space-y-1 text-sm", children: [
+        /* @__PURE__ */ jsxDEV("p", { children: "• Verifique sua conexão com a internet" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+          lineNumber: 122,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: "• Tente novamente em alguns minutos" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+          lineNumber: 123,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: "• Se o problema persistir, entre em contato com o suporte" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+          lineNumber: 124,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+        lineNumber: 121,
+        columnNumber: 11
+      }, this),
+      status === "slow" && /* @__PURE__ */ jsxDEV("div", { className: "mt-2 text-sm", children: /* @__PURE__ */ jsxDEV("p", { children: "O sistema pode demorar mais que o normal para responder." }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+        lineNumber: 129,
+        columnNumber: 15
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+        lineNumber: 128,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+      lineNumber: 111,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+    lineNumber: 109,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx",
+    lineNumber: 108,
+    columnNumber: 5
+  }, this);
+};
+_s(SystemStatus, "pyN+a+HK6vERTGqkFFKEBwB47Y4=");
+_c = SystemStatus;
+export default SystemStatus;
+var _c;
+$RefreshReg$(_c, "SystemStatus");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/ui/SystemStatus.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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ckJqQixhQUNDLHVCQUFDLFVBQUssV0FBVSxzQkFBcUI7QUFBQTtBQUFBLFVBQ2RBLFVBQVVtQixtQkFBbUI7QUFBQSxhQURwRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBRUE7QUFBQSxXQUxKO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFPQTtBQUFBLE1BQ0NyQixXQUFXLGFBQ1YsdUJBQUMsU0FBSSxXQUFVLDBCQUNiO0FBQUEsK0JBQUMsT0FBRSxzREFBSDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQXlDO0FBQUEsUUFDekMsdUJBQUMsT0FBRSxtREFBSDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQXNDO0FBQUEsUUFDdEMsdUJBQUMsT0FBRSx5RUFBSDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQTREO0FBQUEsV0FIOUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUlBO0FBQUEsTUFFREEsV0FBVyxVQUNWLHVCQUFDLFNBQUksV0FBVSxnQkFDYixpQ0FBQyxPQUFFLHdFQUFIO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBMkQsS0FEN0Q7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUVBO0FBQUEsU0FuQko7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQXFCQTtBQUFBLE9BdkJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0F3QkEsS0F6QkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQTBCQTtBQUVKO0FBQUVELEdBM0dJRixjQUF5QztBQUFBeUIsS0FBekN6QjtBQTZHTixlQUFlQTtBQUFhLElBQUF5QjtBQUFBQyxhQUFBRCxJQUFBIiwibmFtZXMiOlsidXNlU3RhdGUiLCJ1c2VFZmZlY3QiLCJBbGVydCIsIkFsZXJ0RGVzY3JpcHRpb24iLCJMb2FkZXIyIiwiQ2hlY2tDaXJjbGUiLCJBbGVydENpcmNsZSIsIkNsb2NrIiwicHVibGljQXBpIiwiU3lzdGVtU3RhdHVzIiwib25TdGF0dXNDaGFuZ2UiLCJfcyIsInN0YXR1cyIsInNldFN0YXR1cyIsImxhc3RDaGVjayIsInNldExhc3RDaGVjayIsImNoZWNrU3RhdHVzIiwic3RhcnRUaW1lIiwiRGF0ZSIsIm5vdyIsImdldCIsInRpbWVvdXQiLCJyZXNwb25zZVRpbWUiLCJlcnJvciIsImNvbnNvbGUiLCJpbnRlcnZhbCIsInNldEludGVydmFsIiwiY2xlYXJJbnRlcnZhbCIsImdldFN0YXR1c0NvbmZpZyIsImljb24iLCJjb2xvciIsIm1lc3NhZ2UiLCJjb25maWciLCJ0b0xvY2FsZVRpbWVTdHJpbmciLCJfYyIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJTeXN0ZW1TdGF0dXMudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyB1c2VTdGF0ZSwgdXNlRWZmZWN0IH0gZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgeyBBbGVydCwgQWxlcnREZXNjcmlwdGlvbiB9IGZyb20gXCIuLi91aS9hbGVydFwiO1xyXG5pbXBvcnQgeyBMb2FkZXIyLCBDaGVja0NpcmNsZSwgQWxlcnRDaXJjbGUsIENsb2NrIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcclxuaW1wb3J0IHsgcHVibGljQXBpIH0gZnJvbSAnLi4vLi4vc2VydmljZXMvYXBpJztcclxuXHJcbmludGVyZmFjZSBTeXN0ZW1TdGF0dXNQcm9wcyB7XHJcbiAgb25TdGF0dXNDaGFuZ2U/OiAoaXNPbmxpbmU6IGJvb2xlYW4pID0+IHZvaWQ7XHJcbn1cclxuXHJcbmNvbnN0IFN5c3RlbVN0YXR1czogUmVhY3QuRkM8U3lzdGVtU3RhdHVzUHJvcHM+ID0gKHsgb25TdGF0dXNDaGFuZ2UgfSkgPT4ge1xyXG4gIGNvbnN0IFtzdGF0dXMsIHNldFN0YXR1c10gPSB1c2VTdGF0ZTwnY2hlY2tpbmcnIHwgJ29ubGluZScgfCAnc2xvdycgfCAnb2ZmbGluZSc+KCdjaGVja2luZycpO1xyXG4gIGNvbnN0IFtsYXN0Q2hlY2ssIHNldExhc3RDaGVja10gPSB1c2VTdGF0ZTxEYXRlIHwgbnVsbD4obnVsbCk7XHJcblxyXG4gIGNvbnN0IGNoZWNrU3RhdHVzID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgc2V0U3RhdHVzKCdjaGVja2luZycpO1xyXG4gICAgY29uc3Qgc3RhcnRUaW1lID0gRGF0ZS5ub3coKTtcclxuICAgIFxyXG4gICAgdHJ5IHtcclxuICAgICAgYXdhaXQgcHVibGljQXBpLmdldCgnL2hlYWx0aHonLCB7IHRpbWVvdXQ6IDUwMDAgfSk7XHJcbiAgICAgIGNvbnN0IHJlc3BvbnNlVGltZSA9IERhdGUubm93KCkgLSBzdGFydFRpbWU7XHJcbiAgICAgIFxyXG4gICAgICBpZiAocmVzcG9uc2VUaW1lID4gMzAwMCkge1xyXG4gICAgICAgIHNldFN0YXR1cygnc2xvdycpO1xyXG4gICAgICB9IGVsc2Uge1xyXG4gICAgICAgIHNldFN0YXR1cygnb25saW5lJyk7XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgIHNldExhc3RDaGVjayhuZXcgRGF0ZSgpKTtcclxuICAgICAgb25TdGF0dXNDaGFuZ2U/Lih0cnVlKTtcclxuICAgICAgXHJcbiAgICB9IGNhdGNoIChlcnJvcikge1xyXG4gICAgICBjb25zb2xlLmVycm9yKCdTaXN0ZW1hIG9mZmxpbmU6JywgZXJyb3IpO1xyXG4gICAgICBzZXRTdGF0dXMoJ29mZmxpbmUnKTtcclxuICAgICAgb25TdGF0dXNDaGFuZ2U/LihmYWxzZSk7XHJcbiAgICB9XHJcbiAgfTtcclxuXHJcbiAgdXNlRWZmZWN0KCgpID0+IHtcclxuICAgIGNoZWNrU3RhdHVzKCk7XHJcbiAgICBcclxuICAgIC8vIFZlcmlmaWNhciBzdGF0dXMgYSBjYWRhIDMwIHNlZ3VuZG9zXHJcbiAgICBjb25zdCBpbnRlcnZhbCA9IHNldEludGVydmFsKGNoZWNrU3RhdHVzLCAzMDAwMCk7XHJcbiAgICBcclxuICAgIHJldHVybiAoKSA9PiBjbGVhckludGVydmFsKGludGVydmFsKTtcclxuICB9LCBbXSk7XHJcblxyXG4gIGNvbnN0IGdldFN0YXR1c0NvbmZpZyA9ICgpID0+IHtcclxuICAgIHN3aXRjaCAoc3RhdHVzKSB7XHJcbiAgICAgIGNhc2UgJ2NoZWNraW5nJzpcclxuICAgICAgICByZXR1cm4ge1xyXG4gICAgICAgICAgaWNvbjogPExvYWRlcjIgY2xhc3NOYW1lPVwiaC00IHctNCBhbmltYXRlLXNwaW5cIiAvPixcclxuICAgICAgICAgIGNvbG9yOiAnYmctYmx1ZS01MCBib3JkZXItYmx1ZS0yMDAgdGV4dC1ibHVlLTcwMCcsXHJcbiAgICAgICAgICBtZXNzYWdlOiAnVmVyaWZpY2FuZG8gc3RhdHVzIGRvIHNpc3RlbWEuLi4nXHJcbiAgICAgICAgfTtcclxuICAgICAgY2FzZSAnb25saW5lJzpcclxuICAgICAgICByZXR1cm4ge1xyXG4gICAgICAgICAgaWNvbjogPENoZWNrQ2lyY2xlIGNsYXNzTmFtZT1cImgtNCB3LTRcIiAvPixcclxuICAgICAgICAgIGNvbG9yOiAnYmctZ3JlZW4tNTAgYm9yZGVyLWdyZWVuLTIwMCB0ZXh0LWdyZWVuLTcwMCcsXHJcbiAgICAgICAgICBtZXNzYWdlOiAnU2lzdGVtYSBmdW5jaW9uYW5kbyBub3JtYWxtZW50ZSdcclxuICAgICAgICB9O1xyXG4gICAgICBjYXNlICdzbG93JzpcclxuICAgICAgICByZXR1cm4ge1xyXG4gICAgICAgICAgaWNvbjogPENsb2NrIGNsYXNzTmFtZT1cImgtNCB3LTRcIiAvPixcclxuICAgICAgICAgIGNvbG9yOiAnYmcteWVsbG93LTUwIGJvcmRlci15ZWxsb3ctMjAwIHRleHQteWVsbG93LTcwMCcsXHJcbiAgICAgICAgICBtZXNzYWdlOiAnU2lzdGVtYSByZXNwb25kZW5kbyBsZW50YW1lbnRlJ1xyXG4gICAgICAgIH07XHJcbiAgICAgIGNhc2UgJ29mZmxpbmUnOlxyXG4gICAgICAgIHJldHVybiB7XHJcbiAgICAgICAgICBpY29uOiA8QWxlcnRDaXJjbGUgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+LFxyXG4gICAgICAgICAgY29sb3I6ICdiZy1yZWQtNTAgYm9yZGVyLXJlZC0yMDAgdGV4dC1yZWQtNzAwJyxcclxuICAgICAgICAgIG1lc3NhZ2U6ICdTaXN0ZW1hIHRlbXBvcmFyaWFtZW50ZSBpbmRpc3BvbsOtdmVsJ1xyXG4gICAgICAgIH07XHJcbiAgICAgIGRlZmF1bHQ6XHJcbiAgICAgICAgcmV0dXJuIHtcclxuICAgICAgICAgIGljb246IDxBbGVydENpcmNsZSBjbGFzc05hbWU9XCJoLTQgdy00XCIgLz4sXHJcbiAgICAgICAgICBjb2xvcjogJ2JnLWdyYXktNTAgYm9yZGVyLWdyYXktMjAwIHRleHQtZ3JheS03MDAnLFxyXG4gICAgICAgICAgbWVzc2FnZTogJ1N0YXR1cyBkZXNjb25oZWNpZG8nXHJcbiAgICAgICAgfTtcclxuICAgIH1cclxuICB9O1xyXG5cclxuICBjb25zdCBjb25maWcgPSBnZXRTdGF0dXNDb25maWcoKTtcclxuXHJcbiAgaWYgKHN0YXR1cyA9PT0gJ29ubGluZScpIHtcclxuICAgIHJldHVybiBudWxsOyAvLyBOw6NvIG1vc3RyYXIgbmFkYSBxdWFuZG8gdHVkbyBlc3TDoSBmdW5jaW9uYW5kb1xyXG4gIH1cclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxBbGVydCBjbGFzc05hbWU9e2BtYi00ICR7Y29uZmlnLmNvbG9yfWB9PlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCI+XHJcbiAgICAgICAge2NvbmZpZy5pY29ufVxyXG4gICAgICAgIDxBbGVydERlc2NyaXB0aW9uPlxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGZsZXgtY29sIHNtOmZsZXgtcm93IHNtOml0ZW1zLWNlbnRlciBzbTpqdXN0aWZ5LWJldHdlZW4gZ2FwLTJcIj5cclxuICAgICAgICAgICAgPHNwYW4+e2NvbmZpZy5tZXNzYWdlfTwvc3Bhbj5cclxuICAgICAgICAgICAge2xhc3RDaGVjayAmJiAoXHJcbiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC14cyBvcGFjaXR5LTc1XCI+XHJcbiAgICAgICAgICAgICAgICDDmmx0aW1hIHZlcmlmaWNhw6fDo286IHtsYXN0Q2hlY2sudG9Mb2NhbGVUaW1lU3RyaW5nKCl9XHJcbiAgICAgICAgICAgICAgPC9zcGFuPlxyXG4gICAgICAgICAgICApfVxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICB7c3RhdHVzID09PSAnb2ZmbGluZScgJiYgKFxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm10LTIgc3BhY2UteS0xIHRleHQtc21cIj5cclxuICAgICAgICAgICAgICA8cD7igKIgVmVyaWZpcXVlIHN1YSBjb25leMOjbyBjb20gYSBpbnRlcm5ldDwvcD5cclxuICAgICAgICAgICAgICA8cD7igKIgVGVudGUgbm92YW1lbnRlIGVtIGFsZ3VucyBtaW51dG9zPC9wPlxyXG4gICAgICAgICAgICAgIDxwPuKAoiBTZSBvIHByb2JsZW1hIHBlcnNpc3RpciwgZW50cmUgZW0gY29udGF0byBjb20gbyBzdXBvcnRlPC9wPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICl9XHJcbiAgICAgICAgICB7c3RhdHVzID09PSAnc2xvdycgJiYgKFxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm10LTIgdGV4dC1zbVwiPlxyXG4gICAgICAgICAgICAgIDxwPk8gc2lzdGVtYSBwb2RlIGRlbW9yYXIgbWFpcyBxdWUgbyBub3JtYWwgcGFyYSByZXNwb25kZXIuPC9wPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICl9XHJcbiAgICAgICAgPC9BbGVydERlc2NyaXB0aW9uPlxyXG4gICAgICA8L2Rpdj5cclxuICAgIDwvQWxlcnQ+XHJcbiAgKTtcclxufTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IFN5c3RlbVN0YXR1cztcclxuIl0sImZpbGUiOiJDOi9Vc2Vycy9Vc2VyL09uZURyaXZlL0Rlc2t0b3Avc2lzdGVtYS12Ni1ub3ZvL3BhaW5lbHVuaXZlcnNhbC9wYWluZWx1bml2ZXJzYWwvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvdWkvU3lzdGVtU3RhdHVzLnRzeCJ9

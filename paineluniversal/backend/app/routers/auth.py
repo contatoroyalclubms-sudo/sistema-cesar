@@ -347,6 +347,116 @@ async def obter_perfil(usuario_atual: Usuario = Depends(obter_usuario_atual)):
     
     return user_dict
 
+@router.post("/refresh")
+async def refresh_token(request: Request, db: Session = Depends(get_db)):
+    """
+    Refresh do token JWT
+    - Aceita tokens expirados com período de graça de 7 dias
+    - Retorna novo token com validade estendida
+    """
+    from jose import jwt, JWTError
+    from datetime import datetime
+    import os
+    
+    try:
+        # Extrair token do header Authorization
+        authorization = request.headers.get("Authorization")
+        if not authorization:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token não fornecido"
+            )
+        
+        # Remover "Bearer " do início
+        token = authorization.replace("Bearer ", "").replace("bearer ", "")
+        
+        print(f"🔄 Tentando refresh do token...")
+        
+        # Decodificar token SEM validar expiração
+        try:
+            # Primeiro, decodificar sem verificação para pegar os dados
+            payload = jwt.decode(
+                token, 
+                settings.secret_key, 
+                algorithms=["HS256"],
+                options={"verify_exp": False}  # Não verificar expiração
+            )
+            
+            cpf = payload.get("sub")
+            exp = payload.get("exp")
+            
+            if not cpf:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Token inválido - sem CPF"
+                )
+            
+            # Verificar período de graça (7 dias após expiração)
+            if exp:
+                from datetime import timezone
+                exp_datetime = datetime.fromtimestamp(exp, tz=timezone.utc)
+                now = datetime.now(timezone.utc)
+                grace_period = timedelta(days=7)
+                
+                if now > exp_datetime + grace_period:
+                    print(f"❌ Token expirou há mais de 7 dias")
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Token expirado além do período de graça"
+                    )
+            
+            # Buscar usuário no banco
+            usuario = db.query(Usuario).filter(Usuario.cpf == cpf).first()
+            if not usuario:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Usuário não encontrado"
+                )
+            
+            # Verificar se usuário está ativo
+            if not usuario.ativo:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Usuário inativo"
+                )
+            
+            print(f"✅ Usuário validado: {usuario.nome}")
+            
+            # Criar novo token
+            access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
+            new_token = criar_access_token(
+                data={"sub": str(usuario.cpf)}, 
+                expires_delta=access_token_expires
+            )
+            
+            # Atualizar último login
+            usuario.ultimo_login = datetime.now()
+            db.commit()
+            
+            print(f"✅ Novo token gerado para {usuario.nome}")
+            
+            # Retornar novo token no mesmo formato do login
+            return {
+                "access_token": new_token,
+                "token_type": "bearer"
+            }
+            
+        except JWTError as e:
+            print(f"❌ Erro JWT: {str(e)}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=f"Token inválido: {str(e)}"
+            )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Erro no refresh token: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erro ao renovar token: {str(e)}"
+        )
+
 @router.post("/logout")
 async def logout(usuario_atual: Usuario = Depends(obter_usuario_atual)):
     """Logout do usuário (invalidar token)"""

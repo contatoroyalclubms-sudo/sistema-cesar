@@ -1,0 +1,82 @@
+{
+  "timestamp": 1757571550470,
+  "iteracao": 90,
+  "estatisticas": {
+    "totalRequests": 50,
+    "apis": 7,
+    "curlCommands": 50,
+    "postmanRequests": 25,
+    "websockets": 0,
+    "errors": 1,
+    "screenshots": 3
+  },
+  "dados": {
+    "totalRequests": 50,
+    "apis": {},
+    "cookies": [],
+    "localStorage": {},
+    "sessionStorage": {},
+    "tokens": [],
+    "websockets": [],
+    "forms": [],
+    "buttons": [],
+    "links": [],
+    "images": [],
+    "scripts": [],
+    "styles": [],
+    "iframes": [],
+    "videos": [],
+    "audios": [],
+    "canvas": [],
+    "webgl": [],
+    "workers": [],
+    "manifests": [],
+    "performance": [],
+    "errors": [
+      {
+        "url": "https://app-prd-portal-v4-api.azurewebsites.net/api/mfa/login",
+        "status": 401,
+        "timestamp": 1757571468004
+      }
+    ],
+    "console": [
+      {
+        "type": "log",
+        "text": "[MEEP] Super monitor ativado!",
+        "timestamp": 1757571460992
+      },
+      {
+        "type": "error",
+        "text": "Refused to apply style from 'https://fonts.googleapis.com/css2?family=Roboto:wght@300,400,500,700&display=swap' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.",
+        "timestamp": 1757571461414
+      },
+      {
+        "type": "warning",
+        "text": "Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading",
+        "timestamp": 1757571461689
+      },
+      {
+        "type": "log",
+        "text": "[MEEP] Super monitor ativado!",
+        "timestamp": 1757571464426
+      },
+      {
+        "type": "verbose",
+        "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+        "timestamp": 1757571464886
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "timestamp": 1757571467973
+      }
+    ],
+    "navigation": [],
+    "screenshots": [
+      "meep-ultimate/screenshots/main-01-home.png",
+      "meep-ultimate/screenshots/main-02-filled.png",
+      "meep-ultimate/screenshots/main-03-after-login.png"
+    ],
+    "har": null
+  }
+}

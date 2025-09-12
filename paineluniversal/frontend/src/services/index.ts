@@ -32,88 +32,17 @@ export type {
   DashboardResumo,
 };
 
-// Função utilitária para detectar formato do input
-const detectarTipoInput = (input: string): 'email' | 'cpf' => {
-  // Verificar se é email (contém @ e formato básico)
-  if (input.includes('@') && input.includes('.')) {
-    return 'email';
-  }
-  
-  // Verificar se é CPF (11 dígitos, com ou sem formatação)
-  const cpfLimpo = input.replace(/\D/g, '');
-  if (cpfLimpo.length === 11) {
-    return 'cpf';
-  }
-  
-  // Se não tem formato claro, assumir email se contém @
-  return input.includes('@') ? 'email' : 'cpf';
-};
-
-// Função para buscar CPF por email
-const buscarCpfPorEmail = async (email: string): Promise<string | null> => {
-  try {
-    console.log('🔍 Buscando CPF para email:', email);
-    
-    // Tentar buscar usuário por email usando endpoint público
-    const response = await publicApi.get('/api/usuarios/buscar-por-email', {
-      params: { email }
-    });
-    
-    if (response.data && response.data.cpf) {
-      console.log('✅ CPF encontrado para email');
-      return response.data.cpf;
-    }
-    
-    return null;
-  } catch (error: any) {
-    console.warn('⚠️ Não foi possível buscar CPF por email:', error.message);
-    
-    // Se o endpoint não existe, tentar alguns CPFs de teste conhecidos
-    const testUsers: Record<string, string> = {
-      'admin@teste.com': '00000000000',
-      'admin@admin.com': '00000000000',
-      'promoter@teste.com': '11111111111',
-      'promoter@promoter.com': '11111111111',
-      'cliente@teste.com': '22222222222',
-      'cliente@cliente.com': '22222222222'
-    };
-    
-    if (testUsers[email.toLowerCase()]) {
-      console.log('✅ CPF encontrado via mapeamento de teste');
-      return testUsers[email.toLowerCase()];
-    }
-    
-    return null;
-  }
-};
+// Sistema usa apenas CPF brasileiro para autenticação
+// Não há suporte para login com email ou OAuth
 
 // Serviços de Autenticação
 export const authService = {
   async login(data: LoginRequest): Promise<Token> {
     console.log('🔐 Iniciando processo de login...');
     
-    // Detectar se o input é email ou CPF
-    const tipoInput = detectarTipoInput(data.cpf);
-    console.log('🔍 Tipo de input detectado:', tipoInput);
-    
-    let cpfParaLogin = data.cpf;
-    
-    // Se for email, buscar o CPF correspondente
-    if (tipoInput === 'email') {
-      console.log('📧 Email detectado, buscando CPF correspondente...');
-      const cpfEncontrado = await buscarCpfPorEmail(data.cpf);
-      
-      if (!cpfEncontrado) {
-        throw new Error('Email não encontrado no sistema ou CPF não associado');
-      }
-      
-      cpfParaLogin = cpfEncontrado;
-      console.log('✅ CPF obtido para login');
-    } else {
-      // Se for CPF, limpar formatação
-      cpfParaLogin = data.cpf.replace(/\D/g, '');
-      console.log('✅ CPF formatado para login');
-    }
+    // Sempre usar como CPF, removendo formatação
+    const cpfParaLogin = data.cpf.replace(/\D/g, '');
+    console.log('✅ CPF formatado para login:', cpfParaLogin);
     
     // Fazer login com CPF
     console.log('🚀 Enviando requisição de login com CPF...');

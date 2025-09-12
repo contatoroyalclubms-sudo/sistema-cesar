@@ -11,7 +11,7 @@ interface AuthState {
 }
 
 interface AuthActions {
-  login: (email: string, senha: string) => Promise<void>;
+  login: (cpf: string, senha: string) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
   setUser: (user: Usuario) => void;
@@ -40,15 +40,15 @@ export const useAuthStore = create<AuthStore>()(
       isLoading: true,
 
       // Ações
-      login: async (emailOuCpf: string, senha: string) => {
+      login: async (cpf: string, senha: string) => {
         set({ isLoading: true });
         
         try {
           console.log('🔐 AuthStore: Iniciando login...');
           
-          // Usar o novo sistema híbrido de autenticação
+          // Usar apenas CPF - sem detecção de email
           const response = await authService.login({
-            cpf: emailOuCpf, // O authService agora detecta automaticamente email vs CPF
+            cpf: cpf,
             senha
           });
 

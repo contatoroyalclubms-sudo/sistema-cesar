@@ -1,0 +1,43 @@
+"use client";
+import {
+  Primitive
+} from "/node_modules/.vite/deps/chunk-5GLGVM3M.js?v=47dd5afa";
+import "/node_modules/.vite/deps/chunk-LPBYGXI2.js?v=47dd5afa";
+import {
+  require_jsx_runtime
+} from "/node_modules/.vite/deps/chunk-OT5EQO2H.js?v=47dd5afa";
+import "/node_modules/.vite/deps/chunk-TH7NCS4R.js?v=47dd5afa";
+import {
+  require_react
+} from "/node_modules/.vite/deps/chunk-OU5AQDZK.js?v=47dd5afa";
+import {
+  __toESM
+} from "/node_modules/.vite/deps/chunk-EWTE5DHJ.js?v=47dd5afa";
+
+// node_modules/@radix-ui/react-label/dist/index.mjs
+var React = __toESM(require_react(), 1);
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var NAME = "Label";
+var Label = React.forwardRef((props, forwardedRef) => {
+  return (0, import_jsx_runtime.jsx)(
+    Primitive.label,
+    {
+      ...props,
+      ref: forwardedRef,
+      onMouseDown: (event) => {
+        var _a;
+        const target = event.target;
+        if (target.closest("button, input, select, textarea")) return;
+        (_a = props.onMouseDown) == null ? void 0 : _a.call(props, event);
+        if (!event.defaultPrevented && event.detail > 1) event.preventDefault();
+      }
+    }
+  );
+});
+Label.displayName = NAME;
+var Root = Label;
+export {
+  Label,
+  Root
+};
+//# sourceMappingURL=@radix-ui_react-label.js.map

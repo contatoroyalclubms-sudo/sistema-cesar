@@ -13,7 +13,7 @@ from decimal import Decimal
 from ..database import get_db
 from ..models import (
     Evento, Usuario, Transacao, Checkin, 
-    Produto, ItemVenda, CaixaEvento, MovimentacaoCaixa
+    Produto, ItemVendaPDV, CaixaEvento, MovimentacaoFinanceira
 )
 from ..schemas import (
     CaixaEventoCreate, CaixaEventoUpdate, CaixaEventoResponse,

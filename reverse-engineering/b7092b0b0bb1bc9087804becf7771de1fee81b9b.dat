@@ -1,0 +1,1216 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/PrinterManagement.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const useState = __vite__cjsImport3_react["useState"]; const useEffect = __vite__cjsImport3_react["useEffect"];
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Switch,
+  FormControlLabel,
+  Chip,
+  Alert,
+  IconButton,
+  Tooltip,
+  Divider,
+  Paper,
+  CircularProgress
+} from "/node_modules/.vite/deps/@mui_material.js?v=47dd5afa";
+import {
+  Add as AddIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Refresh as RefreshIcon,
+  PlayArrow as TestIcon,
+  CheckCircle as OnlineIcon,
+  Error as ErrorIcon,
+  Warning as WarningIcon
+} from "/node_modules/.vite/deps/@mui_icons-material.js?v=47dd5afa";
+import { useSnackbar } from "/node_modules/.vite/deps/notistack.js?v=47dd5afa";
+import { api } from "/src/services/api.ts";
+const PrinterManagement = () => {
+  _s();
+  const [impressoras, setImpressoras] = useState([]);
+  const [statusGeral, setStatusGeral] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [dialogAberto, setDialogAberto] = useState(false);
+  const [impressoraSelecionada, setImpressoraSelecionada] = useState(null);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [filtroStatus, setFiltroStatus] = useState("todos");
+  const [filtroTipo, setFiltroTipo] = useState("todos");
+  const { enqueueSnackbar } = useSnackbar();
+  const [novaImpressora, setNovaImpressora] = useState({
+    nome: "",
+    tipo: "TERMICA_80MM",
+    interface: "ETHERNET",
+    endereco: "",
+    porta: 9100,
+    estacao: "",
+    local_fisico: "",
+    densidade: 8,
+    velocidade: 100,
+    corte_automatico: true,
+    evento_id: 1
+    // TODO: pegar do contexto
+  });
+  useEffect(() => {
+    carregarDados();
+    const interval = setInterval(carregarStatusGeral, 3e4);
+    return () => clearInterval(interval);
+  }, []);
+  const carregarDados = async () => {
+    try {
+      setLoading(true);
+      await Promise.all(
+        [
+          carregarImpressoras(),
+          carregarStatusGeral()
+        ]
+      );
+    } catch (error) {
+      console.error("Erro ao carregar dados:", error);
+      enqueueSnackbar("Erro ao carregar dados das impressoras", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const carregarImpressoras = async () => {
+    try {
+      const response = await api.get("/api/printer/impressoras");
+      setImpressoras(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar impressoras:", error);
+      throw error;
+    }
+  };
+  const carregarStatusGeral = async () => {
+    try {
+      const response = await api.get("/api/printer/status");
+      setStatusGeral(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar status geral:", error);
+    }
+  };
+  const handleSalvarImpressora = async () => {
+    try {
+      if (modoEdicao && impressoraSelecionada) {
+        await api.put(`/api/printer/impressoras/${impressoraSelecionada.id}`, novaImpressora);
+        enqueueSnackbar("Impressora atualizada com sucesso", { variant: "success" });
+      } else {
+        await api.post("/api/printer/impressoras", novaImpressora);
+        enqueueSnackbar("Impressora criada com sucesso", { variant: "success" });
+      }
+      setDialogAberto(false);
+      await carregarImpressoras();
+      resetarFormulario();
+    } catch (error) {
+      console.error("Erro ao salvar impressora:", error);
+      const message = error.response?.data?.detail || "Erro ao salvar impressora";
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
+  const handleEditarImpressora = (impressora) => {
+    setImpressoraSelecionada(impressora);
+    setNovaImpressora({
+      nome: impressora.nome,
+      tipo: impressora.tipo,
+      interface: impressora.interface,
+      endereco: impressora.endereco,
+      porta: impressora.porta,
+      estacao: impressora.estacao || "",
+      local_fisico: impressora.local_fisico || "",
+      densidade: impressora.densidade,
+      velocidade: impressora.velocidade,
+      corte_automatico: impressora.corte_automatico,
+      evento_id: impressora.evento_id
+    });
+    setModoEdicao(true);
+    setDialogAberto(true);
+  };
+  const handleDeletarImpressora = async (impressora) => {
+    if (window.confirm(`Tem certeza que deseja deletar a impressora "${impressora.nome}"?`)) {
+      try {
+        await api.delete(`/api/printer/impressoras/${impressora.id}`);
+        enqueueSnackbar("Impressora deletada com sucesso", { variant: "success" });
+        await carregarImpressoras();
+      } catch (error) {
+        console.error("Erro ao deletar impressora:", error);
+        const message = error.response?.data?.detail || "Erro ao deletar impressora";
+        enqueueSnackbar(message, { variant: "error" });
+      }
+    }
+  };
+  const handleTestarImpressora = async (impressora) => {
+    try {
+      await api.post(`/api/printer/impressoras/${impressora.id}/teste`);
+      enqueueSnackbar("Teste de impressão enviado", { variant: "success" });
+    } catch (error) {
+      console.error("Erro ao testar impressora:", error);
+      const message = error.response?.data?.detail || "Erro ao enviar teste";
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
+  const resetarFormulario = () => {
+    setNovaImpressora({
+      nome: "",
+      tipo: "TERMICA_80MM",
+      interface: "ETHERNET",
+      endereco: "",
+      porta: 9100,
+      estacao: "",
+      local_fisico: "",
+      densidade: 8,
+      velocidade: 100,
+      corte_automatico: true,
+      evento_id: 1
+    });
+    setImpressoraSelecionada(null);
+    setModoEdicao(false);
+  };
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "ONLINE":
+        return /* @__PURE__ */ jsxDEV(OnlineIcon, { color: "success" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 269,
+          columnNumber: 16
+        }, this);
+      case "OFFLINE":
+        return /* @__PURE__ */ jsxDEV(ErrorIcon, { color: "error" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 271,
+          columnNumber: 16
+        }, this);
+      case "ERRO_PAPEL":
+      case "ERRO_CONEXAO":
+        return /* @__PURE__ */ jsxDEV(ErrorIcon, { color: "error" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 274,
+          columnNumber: 16
+        }, this);
+      case "MANUTENCAO":
+        return /* @__PURE__ */ jsxDEV(WarningIcon, { color: "warning" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 276,
+          columnNumber: 16
+        }, this);
+      default:
+        return /* @__PURE__ */ jsxDEV(WarningIcon, { color: "disabled" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 278,
+          columnNumber: 16
+        }, this);
+    }
+  };
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "ONLINE":
+        return "success";
+      case "OFFLINE":
+        return "error";
+      case "ERRO_PAPEL":
+      case "ERRO_CONEXAO":
+        return "error";
+      case "MANUTENCAO":
+        return "warning";
+      default:
+        return "default";
+    }
+  };
+  const impressorasFiltradas = impressoras.filter((impressora) => {
+    const statusMatch = filtroStatus === "todos" || impressora.status === filtroStatus;
+    const tipoMatch = filtroTipo === "todos" || impressora.tipo === filtroTipo;
+    return statusMatch && tipoMatch;
+  });
+  if (loading) {
+    return /* @__PURE__ */ jsxDEV(Box, { display: "flex", justifyContent: "center", alignItems: "center", minHeight: "400px", children: /* @__PURE__ */ jsxDEV(CircularProgress, {}, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+      lineNumber: 302,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+      lineNumber: 301,
+      columnNumber: 7
+    }, this);
+  }
+  return /* @__PURE__ */ jsxDEV(Box, { p: 3, children: [
+    /* @__PURE__ */ jsxDEV(Paper, { elevation: 2, sx: { p: 2, mb: 3 }, children: [
+      /* @__PURE__ */ jsxDEV(Typography, { variant: "h4", gutterBottom: true, children: "Gerenciamento de Impressoras Térmicas" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 311,
+        columnNumber: 9
+      }, this),
+      statusGeral && /* @__PURE__ */ jsxDEV(Grid, { container: true, spacing: 2, sx: { mt: 1 }, children: [
+        /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, md: 2, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { color: "textSecondary", gutterBottom: true, children: "Total" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 320,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h5", children: statusGeral.total_impressoras }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 323,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 319,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 318,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 317,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, md: 2, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { color: "textSecondary", gutterBottom: true, children: "Online" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 332,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h5", color: "success.main", children: statusGeral.online }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 335,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 331,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 330,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 329,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, md: 2, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { color: "textSecondary", gutterBottom: true, children: "Offline" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 344,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h5", color: "error.main", children: statusGeral.offline }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 347,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 343,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 342,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 341,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, md: 2, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { color: "textSecondary", gutterBottom: true, children: "Com Erro" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 356,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h5", color: "warning.main", children: statusGeral.com_erro }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 359,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 355,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 354,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 353,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, md: 2, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { color: "textSecondary", gutterBottom: true, children: "Jobs Pendentes" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 368,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h5", children: statusGeral.jobs_pendentes }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 371,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 367,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 366,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 365,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, md: 2, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+          /* @__PURE__ */ jsxDEV(Typography, { color: "textSecondary", gutterBottom: true, children: "Processando" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 380,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h5", color: "info.main", children: statusGeral.jobs_processando }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 383,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 379,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 378,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 377,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 316,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+      lineNumber: 310,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Box, { display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, children: [
+      /* @__PURE__ */ jsxDEV(Box, { display: "flex", gap: 2, children: [
+        /* @__PURE__ */ jsxDEV(FormControl, { size: "small", sx: { minWidth: 120 }, children: [
+          /* @__PURE__ */ jsxDEV(InputLabel, { children: "Status" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 397,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            Select,
+            {
+              value: filtroStatus,
+              label: "Status",
+              onChange: (e) => setFiltroStatus(e.target.value),
+              children: [
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "todos", children: "Todos" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 403,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "ONLINE", children: "Online" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 404,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "OFFLINE", children: "Offline" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 405,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "ERRO_PAPEL", children: "Erro Papel" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 406,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "ERRO_CONEXAO", children: "Erro Conexão" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 407,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "MANUTENCAO", children: "Manutenção" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 408,
+                  columnNumber: 15
+                }, this)
+              ]
+            },
+            void 0,
+            true,
+            {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 398,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 396,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(FormControl, { size: "small", sx: { minWidth: 120 }, children: [
+          /* @__PURE__ */ jsxDEV(InputLabel, { children: "Tipo" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 413,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            Select,
+            {
+              value: filtroTipo,
+              label: "Tipo",
+              onChange: (e) => setFiltroTipo(e.target.value),
+              children: [
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "todos", children: "Todos" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 419,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "TERMICA_58MM", children: "Térmica 58mm" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 420,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "TERMICA_80MM", children: "Térmica 80mm" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 421,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "MATRICIAL", children: "Matricial" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 422,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV(MenuItem, { value: "JATO_TINTA", children: "Jato de Tinta" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 423,
+                  columnNumber: 15
+                }, this)
+              ]
+            },
+            void 0,
+            true,
+            {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 414,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 412,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 395,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Box, { display: "flex", gap: 1, children: [
+        /* @__PURE__ */ jsxDEV(
+          Button,
+          {
+            variant: "outlined",
+            startIcon: /* @__PURE__ */ jsxDEV(RefreshIcon, {}, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 431,
+              columnNumber: 24
+            }, this),
+            onClick: carregarDados,
+            children: "Atualizar"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 429,
+            columnNumber: 11
+          },
+          this
+        ),
+        /* @__PURE__ */ jsxDEV(
+          Button,
+          {
+            variant: "contained",
+            startIcon: /* @__PURE__ */ jsxDEV(AddIcon, {}, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 438,
+              columnNumber: 24
+            }, this),
+            onClick: () => {
+              resetarFormulario();
+              setDialogAberto(true);
+            },
+            children: "Nova Impressora"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 436,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 428,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+      lineNumber: 394,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Grid, { container: true, spacing: 2, children: impressorasFiltradas.map(
+      (impressora) => /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, md: 6, lg: 4, children: /* @__PURE__ */ jsxDEV(Card, { children: /* @__PURE__ */ jsxDEV(CardContent, { children: [
+        /* @__PURE__ */ jsxDEV(Box, { display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2, children: [
+          /* @__PURE__ */ jsxDEV(Typography, { variant: "h6", component: "div", children: impressora.nome }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 456,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV(Box, { display: "flex", alignItems: "center", gap: 1, children: [
+            getStatusIcon(impressora.status),
+            /* @__PURE__ */ jsxDEV(
+              Chip,
+              {
+                label: impressora.status,
+                color: getStatusColor(impressora.status),
+                size: "small"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 461,
+                columnNumber: 21
+              },
+              this
+            )
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 459,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 455,
+          columnNumber: 17
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body2", color: "text.secondary", gutterBottom: true, children: [
+          impressora.tipo,
+          " • ",
+          impressora.interface
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 469,
+          columnNumber: 17
+        }, this),
+        /* @__PURE__ */ jsxDEV(Typography, { variant: "body2", gutterBottom: true, children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: "Endereço:" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 474,
+            columnNumber: 19
+          }, this),
+          " ",
+          impressora.endereco,
+          impressora.porta && `:${impressora.porta}`
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 473,
+          columnNumber: 17
+        }, this),
+        impressora.estacao && /* @__PURE__ */ jsxDEV(Typography, { variant: "body2", gutterBottom: true, children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: "Estação:" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 480,
+            columnNumber: 21
+          }, this),
+          " ",
+          impressora.estacao
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 479,
+          columnNumber: 15
+        }, this),
+        impressora.local_fisico && /* @__PURE__ */ jsxDEV(Typography, { variant: "body2", gutterBottom: true, children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: "Local:" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 486,
+            columnNumber: 21
+          }, this),
+          " ",
+          impressora.local_fisico
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 485,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV(Divider, { sx: { my: 2 } }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 490,
+          columnNumber: 17
+        }, this),
+        /* @__PURE__ */ jsxDEV(Box, { display: "flex", justifyContent: "space-between", alignItems: "center", children: [
+          /* @__PURE__ */ jsxDEV(
+            FormControlLabel,
+            {
+              control: /* @__PURE__ */ jsxDEV(Switch, { checked: impressora.ativo, disabled: true }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 494,
+                columnNumber: 28
+              }, this),
+              label: "Ativa"
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 493,
+              columnNumber: 19
+            },
+            this
+          ),
+          /* @__PURE__ */ jsxDEV(Box, { children: [
+            /* @__PURE__ */ jsxDEV(Tooltip, { title: "Testar Impressora", children: /* @__PURE__ */ jsxDEV(
+              IconButton,
+              {
+                size: "small",
+                onClick: () => handleTestarImpressora(impressora),
+                disabled: impressora.status !== "ONLINE",
+                children: /* @__PURE__ */ jsxDEV(TestIcon, {}, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 505,
+                  columnNumber: 25
+                }, this)
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 500,
+                columnNumber: 23
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 499,
+              columnNumber: 21
+            }, this),
+            /* @__PURE__ */ jsxDEV(Tooltip, { title: "Editar", children: /* @__PURE__ */ jsxDEV(
+              IconButton,
+              {
+                size: "small",
+                onClick: () => handleEditarImpressora(impressora),
+                children: /* @__PURE__ */ jsxDEV(EditIcon, {}, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 513,
+                  columnNumber: 25
+                }, this)
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 509,
+                columnNumber: 23
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 508,
+              columnNumber: 21
+            }, this),
+            /* @__PURE__ */ jsxDEV(Tooltip, { title: "Deletar", children: /* @__PURE__ */ jsxDEV(
+              IconButton,
+              {
+                size: "small",
+                onClick: () => handleDeletarImpressora(impressora),
+                children: /* @__PURE__ */ jsxDEV(DeleteIcon, {}, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 521,
+                  columnNumber: 25
+                }, this)
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 517,
+                columnNumber: 23
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 516,
+              columnNumber: 21
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 498,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+          lineNumber: 492,
+          columnNumber: 17
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 454,
+        columnNumber: 15
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 453,
+        columnNumber: 13
+      }, this) }, impressora.id, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 452,
+        columnNumber: 9
+      }, this)
+    ) }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+      lineNumber: 450,
+      columnNumber: 7
+    }, this),
+    impressorasFiltradas.length === 0 && /* @__PURE__ */ jsxDEV(Alert, { severity: "info", sx: { mt: 2 }, children: "Nenhuma impressora encontrada com os filtros aplicados." }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+      lineNumber: 533,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(
+      Dialog,
+      {
+        open: dialogAberto,
+        onClose: () => setDialogAberto(false),
+        maxWidth: "md",
+        fullWidth: true,
+        children: [
+          /* @__PURE__ */ jsxDEV(DialogTitle, { children: modoEdicao ? "Editar Impressora" : "Nova Impressora" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 545,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(DialogContent, { children: /* @__PURE__ */ jsxDEV(Grid, { container: true, spacing: 2, sx: { mt: 1 }, children: [
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Nome da Impressora",
+                value: novaImpressora.nome,
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, nome: e.target.value }),
+                required: true
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 551,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 550,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, children: /* @__PURE__ */ jsxDEV(FormControl, { fullWidth: true, required: true, children: [
+              /* @__PURE__ */ jsxDEV(InputLabel, { children: "Tipo" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 561,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV(
+                Select,
+                {
+                  value: novaImpressora.tipo,
+                  label: "Tipo",
+                  onChange: (e) => setNovaImpressora({ ...novaImpressora, tipo: e.target.value }),
+                  children: [
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "TERMICA_58MM", children: "Térmica 58mm" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 567,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "TERMICA_80MM", children: "Térmica 80mm" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 568,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "MATRICIAL", children: "Matricial" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 569,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "JATO_TINTA", children: "Jato de Tinta" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 570,
+                      columnNumber: 19
+                    }, this)
+                  ]
+                },
+                void 0,
+                true,
+                {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 562,
+                  columnNumber: 17
+                },
+                this
+              )
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 560,
+              columnNumber: 15
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 559,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, children: /* @__PURE__ */ jsxDEV(FormControl, { fullWidth: true, required: true, children: [
+              /* @__PURE__ */ jsxDEV(InputLabel, { children: "Interface" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 576,
+                columnNumber: 17
+              }, this),
+              /* @__PURE__ */ jsxDEV(
+                Select,
+                {
+                  value: novaImpressora.interface,
+                  label: "Interface",
+                  onChange: (e) => setNovaImpressora({ ...novaImpressora, interface: e.target.value }),
+                  children: [
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "USB", children: "USB" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 582,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "ETHERNET", children: "Ethernet" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 583,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "WIFI", children: "Wi-Fi" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 584,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "BLUETOOTH", children: "Bluetooth" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 585,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "PARALELA", children: "Paralela" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 586,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(MenuItem, { value: "SERIAL", children: "Serial" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                      lineNumber: 587,
+                      columnNumber: 19
+                    }, this)
+                  ]
+                },
+                void 0,
+                true,
+                {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                  lineNumber: 577,
+                  columnNumber: 17
+                },
+                this
+              )
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 575,
+              columnNumber: 15
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 574,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Endereço",
+                value: novaImpressora.endereco,
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, endereco: e.target.value }),
+                required: true,
+                helperText: "IP para Ethernet/Wi-Fi, Caminho para USB, MAC para Bluetooth"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 592,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 591,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Porta",
+                type: "number",
+                value: novaImpressora.porta || "",
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, porta: e.target.value ? parseInt(e.target.value) : void 0 }),
+                helperText: "Padrão: 9100 para Ethernet"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 602,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 601,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 6, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Estação/Setor",
+                value: novaImpressora.estacao,
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, estacao: e.target.value }),
+                helperText: "Ex: COZINHA, BAR, CAIXA"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 612,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 611,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Local Físico",
+                value: novaImpressora.local_fisico,
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, local_fisico: e.target.value }),
+                helperText: "Descrição da localização física"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 621,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 620,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 4, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Densidade",
+                type: "number",
+                value: novaImpressora.densidade,
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, densidade: parseInt(e.target.value) }),
+                inputProps: { min: 1, max: 15 },
+                helperText: "1-15 (padrão: 8)"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 630,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 629,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 4, children: /* @__PURE__ */ jsxDEV(
+              TextField,
+              {
+                fullWidth: true,
+                label: "Velocidade",
+                type: "number",
+                value: novaImpressora.velocidade,
+                onChange: (e) => setNovaImpressora({ ...novaImpressora, velocidade: parseInt(e.target.value) }),
+                inputProps: { min: 1, max: 200 },
+                helperText: "1-200% (padrão: 100)"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 641,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 640,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(Grid, { item: true, xs: 12, sm: 4, children: /* @__PURE__ */ jsxDEV(
+              FormControlLabel,
+              {
+                control: /* @__PURE__ */ jsxDEV(
+                  Switch,
+                  {
+                    checked: novaImpressora.corte_automatico,
+                    onChange: (e) => setNovaImpressora({ ...novaImpressora, corte_automatico: e.target.checked })
+                  },
+                  void 0,
+                  false,
+                  {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                    lineNumber: 654,
+                    columnNumber: 17
+                  },
+                  this
+                ),
+                label: "Corte Automático"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 652,
+                columnNumber: 15
+              },
+              this
+            ) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 651,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 549,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 548,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(DialogActions, { children: [
+            /* @__PURE__ */ jsxDEV(Button, { onClick: () => setDialogAberto(false), children: "Cancelar" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+              lineNumber: 665,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(
+              Button,
+              {
+                onClick: handleSalvarImpressora,
+                variant: "contained",
+                disabled: !novaImpressora.nome || !novaImpressora.endereco,
+                children: modoEdicao ? "Atualizar" : "Criar"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+                lineNumber: 668,
+                columnNumber: 11
+              },
+              this
+            )
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+            lineNumber: 664,
+            columnNumber: 9
+          }, this)
+        ]
+      },
+      void 0,
+      true,
+      {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+        lineNumber: 539,
+        columnNumber: 7
+      },
+      this
+    )
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx",
+    lineNumber: 308,
+    columnNumber: 5
+  }, this);
+};
+_s(PrinterManagement, "Dv5PZK6i3kfANjnNrpLRGwOJirk=", false, function() {
+  return [useSnackbar];
+});
+_c = PrinterManagement;
+export default PrinterManagement;
+var _c;
+$RefreshReg$(_c, "PrinterManagement");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/PrinterManagement.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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Im5hbWVzIjpbInVzZVN0YXRlIiwidXNlRWZmZWN0IiwiQm94IiwiQ2FyZCIsIkNhcmRDb250ZW50IiwiVHlwb2dyYXBoeSIsIkdyaWQiLCJCdXR0b24iLCJUZXh0RmllbGQiLCJEaWFsb2ciLCJEaWFsb2dUaXRsZSIsIkRpYWxvZ0NvbnRlbnQiLCJEaWFsb2dBY3Rpb25zIiwiRm9ybUNvbnRyb2wiLCJJbnB1dExhYmVsIiwiU2VsZWN0IiwiTWVudUl0ZW0iLCJTd2l0Y2giLCJGb3JtQ29udHJvbExhYmVsIiwiQ2hpcCIsIkFsZXJ0IiwiSWNvbkJ1dHRvbiIsIlRvb2x0aXAiLCJEaXZpZGVyIiwiUGFwZXIiLCJDaXJjdWxhclByb2dyZXNzIiwiQWRkIiwiQWRkSWNvbiIsIkVkaXQiLCJFZGl0SWNvbiIsIkRlbGV0ZSIsIkRlbGV0ZUljb24iLCJSZWZyZXNoIiwiUmVmcmVzaEljb24iLCJQbGF5QXJyb3ciLCJUZXN0SWNvbiIsIkNoZWNrQ2lyY2xlIiwiT25saW5lSWNvbiIsIkVycm9yIiwiRXJyb3JJY29uIiwiV2FybmluZyIsIldhcm5pbmdJY29uIiwidXNlU25hY2tiYXIiLCJhcGkiLCJQcmludGVyTWFuYWdlbWVudCIsIl9zIiwiaW1wcmVzc29yYXMiLCJzZXRJbXByZXNzb3JhcyIsInN0YXR1c0dlcmFsIiwic2V0U3RhdHVzR2VyYWwiLCJsb2FkaW5nIiwic2V0TG9hZGluZyIsImRpYWxvZ0FiZXJ0byIsInNldERpYWxvZ0FiZXJ0byIsImltcHJlc3NvcmFTZWxlY2lvbmFkYSIsInNldEltcHJlc3NvcmFTZWxlY2lvbmFkYSIsIm1vZG9FZGljYW8iLCJzZXRNb2RvRWRpY2FvIiwiZmlsdHJvU3RhdHVzIiwic2V0RmlsdHJvU3RhdHVzIiwiZmlsdHJvVGlwbyIsInNldEZpbHRyb1RpcG8iLCJlbnF1ZXVlU25hY2tiYXIiLCJub3ZhSW1wcmVzc29yYSIsInNldE5vdmFJbXByZXNzb3JhIiwibm9tZSIsInRpcG8iLCJpbnRlcmZhY2UiLCJlbmRlcmVjbyIsInBvcnRhIiwiZXN0YWNhbyIsImxvY2FsX2Zpc2ljbyIsImRlbnNpZGFkZSIsInZlbG9jaWRhZGUiLCJjb3J0ZV9hdXRvbWF0aWNvIiwiZXZlbnRvX2lkIiwiY2FycmVnYXJEYWRvcyIsImludGVydmFsIiwic2V0SW50ZXJ2YWwiLCJjYXJyZWdhclN0YXR1c0dlcmFsIiwiY2xlYXJJbnRlcnZhbCIsIlByb21pc2UiLCJhbGwiLCJjYXJyZWdhckltcHJlc3NvcmFzIiwiZXJyb3IiLCJjb25zb2xlIiwidmFyaWFudCIsInJlc3BvbnNlIiwiZ2V0IiwiZGF0YSIsImhhbmRsZVNhbHZhckltcHJlc3NvcmEiLCJwdXQiLCJpZCIsInBvc3QiLCJyZXNldGFyRm9ybXVsYXJpbyIsIm1lc3NhZ2UiLCJkZXRhaWwiLCJoYW5kbGVFZGl0YXJJbXByZXNzb3JhIiwiaW1wcmVzc29yYSIsImhhbmRsZURlbGV0YXJJbXByZXNzb3JhIiwid2luZG93IiwiY29uZmlybSIsImRlbGV0ZSIsImhhbmRsZVRlc3RhckltcHJlc3NvcmEiLCJnZXRTdGF0dXNJY29uIiwic3RhdHVzIiwiZ2V0U3RhdHVzQ29sb3IiLCJpbXByZXNzb3Jhc0ZpbHRyYWRhcyIsImZpbHRlciIsInN0YXR1c01hdGNoIiwidGlwb01hdGNoIiwicCIsIm1iIiwibXQiLCJ0b3RhbF9pbXByZXNzb3JhcyIsIm9ubGluZSIsIm9mZmxpbmUiLCJjb21fZXJybyIsImpvYnNfcGVuZGVudGVzIiwiam9ic19wcm9jZXNzYW5kbyIsIm1pbldpZHRoIiwiZSIsInRhcmdldCIsInZhbHVlIiwibWFwIiwibXkiLCJhdGl2byIsImxlbmd0aCIsInBhcnNlSW50IiwidW5kZWZpbmVkIiwibWluIiwibWF4IiwiY2hlY2tlZCIsIl9jIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIlByaW50ZXJNYW5hZ2VtZW50LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgdXNlU3RhdGUsIHVzZUVmZmVjdCB9IGZyb20gJ3JlYWN0JztcclxuaW1wb3J0IHtcclxuICBCb3gsXHJcbiAgQ2FyZCxcclxuICBDYXJkQ29udGVudCxcclxuICBUeXBvZ3JhcGh5LFxyXG4gIEdyaWQsXHJcbiAgQnV0dG9uLFxyXG4gIFRleHRGaWVsZCxcclxuICBEaWFsb2csXHJcbiAgRGlhbG9nVGl0bGUsXHJcbiAgRGlhbG9nQ29udGVudCxcclxuICBEaWFsb2dBY3Rpb25zLFxyXG4gIEZvcm1Db250cm9sLFxyXG4gIElucHV0TGFiZWwsXHJcbiAgU2VsZWN0LFxyXG4gIE1lbnVJdGVtLFxyXG4gIFN3aXRjaCxcclxuICBGb3JtQ29udHJvbExhYmVsLFxyXG4gIENoaXAsXHJcbiAgQWxlcnQsXHJcbiAgSWNvbkJ1dHRvbixcclxuICBUb29sdGlwLFxyXG4gIERpdmlkZXIsXHJcbiAgUGFwZXIsXHJcbiAgTGlzdCxcclxuICBMaXN0SXRlbSxcclxuICBMaXN0SXRlbVRleHQsXHJcbiAgTGlzdEl0ZW1TZWNvbmRhcnlBY3Rpb24sXHJcbiAgQ2lyY3VsYXJQcm9ncmVzcyxcclxuICBGYWJcclxufSBmcm9tICdAbXVpL21hdGVyaWFsJztcclxuaW1wb3J0IHtcclxuICBBZGQgYXMgQWRkSWNvbixcclxuICBQcmludCBhcyBQcmludEljb24sXHJcbiAgRWRpdCBhcyBFZGl0SWNvbixcclxuICBEZWxldGUgYXMgRGVsZXRlSWNvbixcclxuICBSZWZyZXNoIGFzIFJlZnJlc2hJY29uLFxyXG4gIFBsYXlBcnJvdyBhcyBUZXN0SWNvbixcclxuICBTZXR0aW5ncyBhcyBTZXR0aW5nc0ljb24sXHJcbiAgQ2hlY2tDaXJjbGUgYXMgT25saW5lSWNvbixcclxuICBFcnJvciBhcyBFcnJvckljb24sXHJcbiAgV2FybmluZyBhcyBXYXJuaW5nSWNvblxyXG59IGZyb20gJ0BtdWkvaWNvbnMtbWF0ZXJpYWwnO1xyXG5pbXBvcnQgeyB1c2VTbmFja2JhciB9IGZyb20gJ25vdGlzdGFjayc7XHJcbmltcG9ydCB7IGFwaSB9IGZyb20gJy4uL3NlcnZpY2VzL2FwaSc7XHJcblxyXG4vLyBUaXBvcyBUeXBlU2NyaXB0XHJcbmludGVyZmFjZSBJbXByZXNzb3JhIHtcclxuICBpZDogc3RyaW5nO1xyXG4gIG5vbWU6IHN0cmluZztcclxuICB0aXBvOiAnVEVSTUlDQV81OE1NJyB8ICdURVJNSUNBXzgwTU0nIHwgJ01BVFJJQ0lBTCcgfCAnSkFUT19USU5UQSc7XHJcbiAgaW50ZXJmYWNlOiAnVVNCJyB8ICdFVEhFUk5FVCcgfCAnV0lGSScgfCAnQkxVRVRPT1RIJyB8ICdQQVJBTEVMQScgfCAnU0VSSUFMJztcclxuICBlbmRlcmVjbzogc3RyaW5nO1xyXG4gIHBvcnRhPzogbnVtYmVyO1xyXG4gIHN0YXR1czogJ09OTElORScgfCAnT0ZGTElORScgfCAnRVJST19QQVBFTCcgfCAnRVJST19DT05FWEFPJyB8ICdNQU5VVEVOQ0FPJyB8ICdERVNDT05IRUNJRE8nO1xyXG4gIGVzdGFjYW8/OiBzdHJpbmc7XHJcbiAgbG9jYWxfZmlzaWNvPzogc3RyaW5nO1xyXG4gIGF0aXZvOiBib29sZWFuO1xyXG4gIGRlbnNpZGFkZTogbnVtYmVyO1xyXG4gIHZlbG9jaWRhZGU6IG51bWJlcjtcclxuICBjb3J0ZV9hdXRvbWF0aWNvOiBib29sZWFuO1xyXG4gIGV2ZW50b19pZDogbnVtYmVyO1xyXG4gIGlwX2JyaWRnZT86IHN0cmluZztcclxuICB2ZXJzYW9fZHJpdmVyPzogc3RyaW5nO1xyXG4gIHVsdGltb19oZWFydGJlYXQ/OiBzdHJpbmc7XHJcbiAgY3JpYWRvX2VtOiBzdHJpbmc7XHJcbiAgYXR1YWxpemFkb19lbTogc3RyaW5nO1xyXG59XHJcblxyXG5pbnRlcmZhY2UgTm92YUltcHJlc3NvcmEge1xyXG4gIG5vbWU6IHN0cmluZztcclxuICB0aXBvOiBzdHJpbmc7XHJcbiAgaW50ZXJmYWNlOiBzdHJpbmc7XHJcbiAgZW5kZXJlY286IHN0cmluZztcclxuICBwb3J0YT86IG51bWJlcjtcclxuICBlc3RhY2FvPzogc3RyaW5nO1xyXG4gIGxvY2FsX2Zpc2ljbz86IHN0cmluZztcclxuICBkZW5zaWRhZGU6IG51bWJlcjtcclxuICB2ZWxvY2lkYWRlOiBudW1iZXI7XHJcbiAgY29ydGVfYXV0b21hdGljbzogYm9vbGVhbjtcclxuICBldmVudG9faWQ6IG51bWJlcjtcclxufVxyXG5cclxuaW50ZXJmYWNlIFN0YXR1c0ltcHJlc3NvcmFzIHtcclxuICB0b3RhbF9pbXByZXNzb3JhczogbnVtYmVyO1xyXG4gIG9ubGluZTogbnVtYmVyO1xyXG4gIG9mZmxpbmU6IG51bWJlcjtcclxuICBjb21fZXJybzogbnVtYmVyO1xyXG4gIGpvYnNfcGVuZGVudGVzOiBudW1iZXI7XHJcbiAgam9ic19wcm9jZXNzYW5kbzogbnVtYmVyO1xyXG59XHJcblxyXG5jb25zdCBQcmludGVyTWFuYWdlbWVudDogUmVhY3QuRkMgPSAoKSA9PiB7XHJcbiAgLy8gRXN0YWRvcyBwcmluY2lwYWlzXHJcbiAgY29uc3QgW2ltcHJlc3NvcmFzLCBzZXRJbXByZXNzb3Jhc10gPSB1c2VTdGF0ZTxJbXByZXNzb3JhW10+KFtdKTtcclxuICBjb25zdCBbc3RhdHVzR2VyYWwsIHNldFN0YXR1c0dlcmFsXSA9IHVzZVN0YXRlPFN0YXR1c0ltcHJlc3NvcmFzIHwgbnVsbD4obnVsbCk7XHJcbiAgY29uc3QgW2xvYWRpbmcsIHNldExvYWRpbmddID0gdXNlU3RhdGUodHJ1ZSk7XHJcbiAgY29uc3QgW2RpYWxvZ0FiZXJ0bywgc2V0RGlhbG9nQWJlcnRvXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuICBjb25zdCBbaW1wcmVzc29yYVNlbGVjaW9uYWRhLCBzZXRJbXByZXNzb3JhU2VsZWNpb25hZGFdID0gdXNlU3RhdGU8SW1wcmVzc29yYSB8IG51bGw+KG51bGwpO1xyXG4gIGNvbnN0IFttb2RvRWRpY2FvLCBzZXRNb2RvRWRpY2FvXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuICBjb25zdCBbZmlsdHJvU3RhdHVzLCBzZXRGaWx0cm9TdGF0dXNdID0gdXNlU3RhdGU8c3RyaW5nPigndG9kb3MnKTtcclxuICBjb25zdCBbZmlsdHJvVGlwbywgc2V0RmlsdHJvVGlwb10gPSB1c2VTdGF0ZTxzdHJpbmc+KCd0b2RvcycpO1xyXG5cclxuICBjb25zdCB7IGVucXVldWVTbmFja2JhciB9ID0gdXNlU25hY2tiYXIoKTtcclxuXHJcbiAgLy8gRXN0YWRvcyBwYXJhIGZvcm11bMOhcmlvXHJcbiAgY29uc3QgW25vdmFJbXByZXNzb3JhLCBzZXROb3ZhSW1wcmVzc29yYV0gPSB1c2VTdGF0ZTxOb3ZhSW1wcmVzc29yYT4oe1xyXG4gICAgbm9tZTogJycsXHJcbiAgICB0aXBvOiAnVEVSTUlDQV84ME1NJyxcclxuICAgIGludGVyZmFjZTogJ0VUSEVSTkVUJyxcclxuICAgIGVuZGVyZWNvOiAnJyxcclxuICAgIHBvcnRhOiA5MTAwLFxyXG4gICAgZXN0YWNhbzogJycsXHJcbiAgICBsb2NhbF9maXNpY286ICcnLFxyXG4gICAgZGVuc2lkYWRlOiA4LFxyXG4gICAgdmVsb2NpZGFkZTogMTAwLFxyXG4gICAgY29ydGVfYXV0b21hdGljbzogdHJ1ZSxcclxuICAgIGV2ZW50b19pZDogMSAvLyBUT0RPOiBwZWdhciBkbyBjb250ZXh0b1xyXG4gIH0pO1xyXG5cclxuICAvLyBDYXJyZWdhciBkYWRvcyBpbmljaWFpc1xyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBjYXJyZWdhckRhZG9zKCk7XHJcbiAgICBjb25zdCBpbnRlcnZhbCA9IHNldEludGVydmFsKGNhcnJlZ2FyU3RhdHVzR2VyYWwsIDMwMDAwKTsgLy8gQXR1YWxpemFyIHN0YXR1cyBhIGNhZGEgMzBzXHJcbiAgICByZXR1cm4gKCkgPT4gY2xlYXJJbnRlcnZhbChpbnRlcnZhbCk7XHJcbiAgfSwgW10pO1xyXG5cclxuICBjb25zdCBjYXJyZWdhckRhZG9zID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgdHJ5IHtcclxuICAgICAgc2V0TG9hZGluZyh0cnVlKTtcclxuICAgICAgYXdhaXQgUHJvbWlzZS5hbGwoW1xyXG4gICAgICAgIGNhcnJlZ2FySW1wcmVzc29yYXMoKSxcclxuICAgICAgICBjYXJyZWdhclN0YXR1c0dlcmFsKClcclxuICAgICAgXSk7XHJcbiAgICB9IGNhdGNoIChlcnJvcikge1xyXG4gICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGNhcnJlZ2FyIGRhZG9zOicsIGVycm9yKTtcclxuICAgICAgZW5xdWV1ZVNuYWNrYmFyKCdFcnJvIGFvIGNhcnJlZ2FyIGRhZG9zIGRhcyBpbXByZXNzb3JhcycsIHsgdmFyaWFudDogJ2Vycm9yJyB9KTtcclxuICAgIH0gZmluYWxseSB7XHJcbiAgICAgIHNldExvYWRpbmcoZmFsc2UpO1xyXG4gICAgfVxyXG4gIH07XHJcblxyXG4gIGNvbnN0IGNhcnJlZ2FySW1wcmVzc29yYXMgPSBhc3luYyAoKSA9PiB7XHJcbiAgICB0cnkge1xyXG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGFwaS5nZXQoJy9hcGkvcHJpbnRlci9pbXByZXNzb3JhcycpO1xyXG4gICAgICBzZXRJbXByZXNzb3JhcyhyZXNwb25zZS5kYXRhKTtcclxuICAgIH0gY2F0Y2ggKGVycm9yKSB7XHJcbiAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gY2FycmVnYXIgaW1wcmVzc29yYXM6JywgZXJyb3IpO1xyXG4gICAgICB0aHJvdyBlcnJvcjtcclxuICAgIH1cclxuICB9O1xyXG5cclxuICBjb25zdCBjYXJyZWdhclN0YXR1c0dlcmFsID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgdHJ5IHtcclxuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBhcGkuZ2V0KCcvYXBpL3ByaW50ZXIvc3RhdHVzJyk7XHJcbiAgICAgIHNldFN0YXR1c0dlcmFsKHJlc3BvbnNlLmRhdGEpO1xyXG4gICAgfSBjYXRjaCAoZXJyb3IpIHtcclxuICAgICAgY29uc29sZS5lcnJvcignRXJybyBhbyBjYXJyZWdhciBzdGF0dXMgZ2VyYWw6JywgZXJyb3IpO1xyXG4gICAgfVxyXG4gIH07XHJcblxyXG4gIGNvbnN0IGhhbmRsZVNhbHZhckltcHJlc3NvcmEgPSBhc3luYyAoKSA9PiB7XHJcbiAgICB0cnkge1xyXG4gICAgICBpZiAobW9kb0VkaWNhbyAmJiBpbXByZXNzb3JhU2VsZWNpb25hZGEpIHtcclxuICAgICAgICAvLyBBdHVhbGl6YXIgaW1wcmVzc29yYSBleGlzdGVudGVcclxuICAgICAgICBhd2FpdCBhcGkucHV0KGAvYXBpL3ByaW50ZXIvaW1wcmVzc29yYXMvJHtpbXByZXNzb3JhU2VsZWNpb25hZGEuaWR9YCwgbm92YUltcHJlc3NvcmEpO1xyXG4gICAgICAgIGVucXVldWVTbmFja2JhcignSW1wcmVzc29yYSBhdHVhbGl6YWRhIGNvbSBzdWNlc3NvJywgeyB2YXJpYW50OiAnc3VjY2VzcycgfSk7XHJcbiAgICAgIH0gZWxzZSB7XHJcbiAgICAgICAgLy8gQ3JpYXIgbm92YSBpbXByZXNzb3JhXHJcbiAgICAgICAgYXdhaXQgYXBpLnBvc3QoJy9hcGkvcHJpbnRlci9pbXByZXNzb3JhcycsIG5vdmFJbXByZXNzb3JhKTtcclxuICAgICAgICBlbnF1ZXVlU25hY2tiYXIoJ0ltcHJlc3NvcmEgY3JpYWRhIGNvbSBzdWNlc3NvJywgeyB2YXJpYW50OiAnc3VjY2VzcycgfSk7XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgIHNldERpYWxvZ0FiZXJ0byhmYWxzZSk7XHJcbiAgICAgIGF3YWl0IGNhcnJlZ2FySW1wcmVzc29yYXMoKTtcclxuICAgICAgcmVzZXRhckZvcm11bGFyaW8oKTtcclxuICAgIH0gY2F0Y2ggKGVycm9yOiBhbnkpIHtcclxuICAgICAgY29uc29sZS5lcnJvcignRXJybyBhbyBzYWx2YXIgaW1wcmVzc29yYTonLCBlcnJvcik7XHJcbiAgICAgIGNvbnN0IG1lc3NhZ2UgPSBlcnJvci5yZXNwb25zZT8uZGF0YT8uZGV0YWlsIHx8ICdFcnJvIGFvIHNhbHZhciBpbXByZXNzb3JhJztcclxuICAgICAgZW5xdWV1ZVNuYWNrYmFyKG1lc3NhZ2UsIHsgdmFyaWFudDogJ2Vycm9yJyB9KTtcclxuICAgIH1cclxuICB9O1xyXG5cclxuICBjb25zdCBoYW5kbGVFZGl0YXJJbXByZXNzb3JhID0gKGltcHJlc3NvcmE6IEltcHJlc3NvcmEpID0+IHtcclxuICAgIHNldEltcHJlc3NvcmFTZWxlY2lvbmFkYShpbXByZXNzb3JhKTtcclxuICAgIHNldE5vdmFJbXByZXNzb3JhKHtcclxuICAgICAgbm9tZTogaW1wcmVzc29yYS5ub21lLFxyXG4gICAgICB0aXBvOiBpbXByZXNzb3JhLnRpcG8sXHJcbiAgICAgIGludGVyZmFjZTogaW1wcmVzc29yYS5pbnRlcmZhY2UsXHJcbiAgICAgIGVuZGVyZWNvOiBpbXByZXNzb3JhLmVuZGVyZWNvLFxyXG4gICAgICBwb3J0YTogaW1wcmVzc29yYS5wb3J0YSxcclxuICAgICAgZXN0YWNhbzogaW1wcmVzc29yYS5lc3RhY2FvIHx8ICcnLFxyXG4gICAgICBsb2NhbF9maXNpY286IGltcHJlc3NvcmEubG9jYWxfZmlzaWNvIHx8ICcnLFxyXG4gICAgICBkZW5zaWRhZGU6IGltcHJlc3NvcmEuZGVuc2lkYWRlLFxyXG4gICAgICB2ZWxvY2lkYWRlOiBpbXByZXNzb3JhLnZlbG9jaWRhZGUsXHJcbiAgICAgIGNvcnRlX2F1dG9tYXRpY286IGltcHJlc3NvcmEuY29ydGVfYXV0b21hdGljbyxcclxuICAgICAgZXZlbnRvX2lkOiBpbXByZXNzb3JhLmV2ZW50b19pZFxyXG4gICAgfSk7XHJcbiAgICBzZXRNb2RvRWRpY2FvKHRydWUpO1xyXG4gICAgc2V0RGlhbG9nQWJlcnRvKHRydWUpO1xyXG4gIH07XHJcblxyXG4gIGNvbnN0IGhhbmRsZURlbGV0YXJJbXByZXNzb3JhID0gYXN5bmMgKGltcHJlc3NvcmE6IEltcHJlc3NvcmEpID0+IHtcclxuICAgIGlmICh3aW5kb3cuY29uZmlybShgVGVtIGNlcnRlemEgcXVlIGRlc2VqYSBkZWxldGFyIGEgaW1wcmVzc29yYSBcIiR7aW1wcmVzc29yYS5ub21lfVwiP2ApKSB7XHJcbiAgICAgIHRyeSB7XHJcbiAgICAgICAgYXdhaXQgYXBpLmRlbGV0ZShgL2FwaS9wcmludGVyL2ltcHJlc3NvcmFzLyR7aW1wcmVzc29yYS5pZH1gKTtcclxuICAgICAgICBlbnF1ZXVlU25hY2tiYXIoJ0ltcHJlc3NvcmEgZGVsZXRhZGEgY29tIHN1Y2Vzc28nLCB7IHZhcmlhbnQ6ICdzdWNjZXNzJyB9KTtcclxuICAgICAgICBhd2FpdCBjYXJyZWdhckltcHJlc3NvcmFzKCk7XHJcbiAgICAgIH0gY2F0Y2ggKGVycm9yOiBhbnkpIHtcclxuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGRlbGV0YXIgaW1wcmVzc29yYTonLCBlcnJvcik7XHJcbiAgICAgICAgY29uc3QgbWVzc2FnZSA9IGVycm9yLnJlc3BvbnNlPy5kYXRhPy5kZXRhaWwgfHwgJ0Vycm8gYW8gZGVsZXRhciBpbXByZXNzb3JhJztcclxuICAgICAgICBlbnF1ZXVlU25hY2tiYXIobWVzc2FnZSwgeyB2YXJpYW50OiAnZXJyb3InIH0pO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgaGFuZGxlVGVzdGFySW1wcmVzc29yYSA9IGFzeW5jIChpbXByZXNzb3JhOiBJbXByZXNzb3JhKSA9PiB7XHJcbiAgICB0cnkge1xyXG4gICAgICBhd2FpdCBhcGkucG9zdChgL2FwaS9wcmludGVyL2ltcHJlc3NvcmFzLyR7aW1wcmVzc29yYS5pZH0vdGVzdGVgKTtcclxuICAgICAgZW5xdWV1ZVNuYWNrYmFyKCdUZXN0ZSBkZSBpbXByZXNzw6NvIGVudmlhZG8nLCB7IHZhcmlhbnQ6ICdzdWNjZXNzJyB9KTtcclxuICAgIH0gY2F0Y2ggKGVycm9yOiBhbnkpIHtcclxuICAgICAgY29uc29sZS5lcnJvcignRXJybyBhbyB0ZXN0YXIgaW1wcmVzc29yYTonLCBlcnJvcik7XHJcbiAgICAgIGNvbnN0IG1lc3NhZ2UgPSBlcnJvci5yZXNwb25zZT8uZGF0YT8uZGV0YWlsIHx8ICdFcnJvIGFvIGVudmlhciB0ZXN0ZSc7XHJcbiAgICAgIGVucXVldWVTbmFja2JhcihtZXNzYWdlLCB7IHZhcmlhbnQ6ICdlcnJvcicgfSk7XHJcbiAgICB9XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgcmVzZXRhckZvcm11bGFyaW8gPSAoKSA9PiB7XHJcbiAgICBzZXROb3ZhSW1wcmVzc29yYSh7XHJcbiAgICAgIG5vbWU6ICcnLFxyXG4gICAgICB0aXBvOiAnVEVSTUlDQV84ME1NJyxcclxuICAgICAgaW50ZXJmYWNlOiAnRVRIRVJORVQnLFxyXG4gICAgICBlbmRlcmVjbzogJycsXHJcbiAgICAgIHBvcnRhOiA5MTAwLFxyXG4gICAgICBlc3RhY2FvOiAnJyxcclxuICAgICAgbG9jYWxfZmlzaWNvOiAnJyxcclxuICAgICAgZGVuc2lkYWRlOiA4LFxyXG4gICAgICB2ZWxvY2lkYWRlOiAxMDAsXHJcbiAgICAgIGNvcnRlX2F1dG9tYXRpY286IHRydWUsXHJcbiAgICAgIGV2ZW50b19pZDogMVxyXG4gICAgfSk7XHJcbiAgICBzZXRJbXByZXNzb3JhU2VsZWNpb25hZGEobnVsbCk7XHJcbiAgICBzZXRNb2RvRWRpY2FvKGZhbHNlKTtcclxuICB9O1xyXG5cclxuICBjb25zdCBnZXRTdGF0dXNJY29uID0gKHN0YXR1czogc3RyaW5nKSA9PiB7XHJcbiAgICBzd2l0Y2ggKHN0YXR1cykge1xyXG4gICAgICBjYXNlICdPTkxJTkUnOlxyXG4gICAgICAgIHJldHVybiA8T25saW5lSWNvbiBjb2xvcj1cInN1Y2Nlc3NcIiAvPjtcclxuICAgICAgY2FzZSAnT0ZGTElORSc6XHJcbiAgICAgICAgcmV0dXJuIDxFcnJvckljb24gY29sb3I9XCJlcnJvclwiIC8+O1xyXG4gICAgICBjYXNlICdFUlJPX1BBUEVMJzpcclxuICAgICAgY2FzZSAnRVJST19DT05FWEFPJzpcclxuICAgICAgICByZXR1cm4gPEVycm9ySWNvbiBjb2xvcj1cImVycm9yXCIgLz47XHJcbiAgICAgIGNhc2UgJ01BTlVURU5DQU8nOlxyXG4gICAgICAgIHJldHVybiA8V2FybmluZ0ljb24gY29sb3I9XCJ3YXJuaW5nXCIgLz47XHJcbiAgICAgIGRlZmF1bHQ6XHJcbiAgICAgICAgcmV0dXJuIDxXYXJuaW5nSWNvbiBjb2xvcj1cImRpc2FibGVkXCIgLz47XHJcbiAgICB9XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgZ2V0U3RhdHVzQ29sb3IgPSAoc3RhdHVzOiBzdHJpbmcpID0+IHtcclxuICAgIHN3aXRjaCAoc3RhdHVzKSB7XHJcbiAgICAgIGNhc2UgJ09OTElORSc6IHJldHVybiAnc3VjY2Vzcyc7XHJcbiAgICAgIGNhc2UgJ09GRkxJTkUnOiByZXR1cm4gJ2Vycm9yJztcclxuICAgICAgY2FzZSAnRVJST19QQVBFTCc6XHJcbiAgICAgIGNhc2UgJ0VSUk9fQ09ORVhBTyc6IHJldHVybiAnZXJyb3InO1xyXG4gICAgICBjYXNlICdNQU5VVEVOQ0FPJzogcmV0dXJuICd3YXJuaW5nJztcclxuICAgICAgZGVmYXVsdDogcmV0dXJuICdkZWZhdWx0JztcclxuICAgIH1cclxuICB9O1xyXG5cclxuICBjb25zdCBpbXByZXNzb3Jhc0ZpbHRyYWRhcyA9IGltcHJlc3NvcmFzLmZpbHRlcihpbXByZXNzb3JhID0+IHtcclxuICAgIGNvbnN0IHN0YXR1c01hdGNoID0gZmlsdHJvU3RhdHVzID09PSAndG9kb3MnIHx8IGltcHJlc3NvcmEuc3RhdHVzID09PSBmaWx0cm9TdGF0dXM7XHJcbiAgICBjb25zdCB0aXBvTWF0Y2ggPSBmaWx0cm9UaXBvID09PSAndG9kb3MnIHx8IGltcHJlc3NvcmEudGlwbyA9PT0gZmlsdHJvVGlwbztcclxuICAgIHJldHVybiBzdGF0dXNNYXRjaCAmJiB0aXBvTWF0Y2g7XHJcbiAgfSk7XHJcblxyXG4gIGlmIChsb2FkaW5nKSB7XHJcbiAgICByZXR1cm4gKFxyXG4gICAgICA8Qm94IGRpc3BsYXk9XCJmbGV4XCIganVzdGlmeUNvbnRlbnQ9XCJjZW50ZXJcIiBhbGlnbkl0ZW1zPVwiY2VudGVyXCIgbWluSGVpZ2h0PVwiNDAwcHhcIj5cclxuICAgICAgICA8Q2lyY3VsYXJQcm9ncmVzcyAvPlxyXG4gICAgICA8L0JveD5cclxuICAgICk7XHJcbiAgfVxyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPEJveCBwPXszfT5cclxuICAgICAgey8qIEhlYWRlciBjb20gc3RhdHVzIGdlcmFsICovfVxyXG4gICAgICA8UGFwZXIgZWxldmF0aW9uPXsyfSBzeD17eyBwOiAyLCBtYjogMyB9fT5cclxuICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiaDRcIiBndXR0ZXJCb3R0b20+XHJcbiAgICAgICAgICBHZXJlbmNpYW1lbnRvIGRlIEltcHJlc3NvcmFzIFTDqXJtaWNhc1xyXG4gICAgICAgIDwvVHlwb2dyYXBoeT5cclxuICAgICAgICBcclxuICAgICAgICB7c3RhdHVzR2VyYWwgJiYgKFxyXG4gICAgICAgICAgPEdyaWQgY29udGFpbmVyIHNwYWNpbmc9ezJ9IHN4PXt7IG10OiAxIH19PlxyXG4gICAgICAgICAgICA8R3JpZCBpdGVtIHhzPXsxMn0gc209ezZ9IG1kPXsyfT5cclxuICAgICAgICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgICAgICAgIDxDYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgY29sb3I9XCJ0ZXh0U2Vjb25kYXJ5XCIgZ3V0dGVyQm90dG9tPlxyXG4gICAgICAgICAgICAgICAgICAgIFRvdGFsXHJcbiAgICAgICAgICAgICAgICAgIDwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImg1XCI+XHJcbiAgICAgICAgICAgICAgICAgICAge3N0YXR1c0dlcmFsLnRvdGFsX2ltcHJlc3NvcmFzfVxyXG4gICAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgICAgICA8L0NhcmRDb250ZW50PlxyXG4gICAgICAgICAgICAgIDwvQ2FyZD5cclxuICAgICAgICAgICAgPC9HcmlkPlxyXG4gICAgICAgICAgICA8R3JpZCBpdGVtIHhzPXsxMn0gc209ezZ9IG1kPXsyfT5cclxuICAgICAgICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgICAgICAgIDxDYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgY29sb3I9XCJ0ZXh0U2Vjb25kYXJ5XCIgZ3V0dGVyQm90dG9tPlxyXG4gICAgICAgICAgICAgICAgICAgIE9ubGluZVxyXG4gICAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJoNVwiIGNvbG9yPVwic3VjY2Vzcy5tYWluXCI+XHJcbiAgICAgICAgICAgICAgICAgICAge3N0YXR1c0dlcmFsLm9ubGluZX1cclxuICAgICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgICAgIDwvR3JpZD5cclxuICAgICAgICAgICAgPEdyaWQgaXRlbSB4cz17MTJ9IHNtPXs2fSBtZD17Mn0+XHJcbiAgICAgICAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGNvbG9yPVwidGV4dFNlY29uZGFyeVwiIGd1dHRlckJvdHRvbT5cclxuICAgICAgICAgICAgICAgICAgICBPZmZsaW5lXHJcbiAgICAgICAgICAgICAgICAgIDwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImg1XCIgY29sb3I9XCJlcnJvci5tYWluXCI+XHJcbiAgICAgICAgICAgICAgICAgICAge3N0YXR1c0dlcmFsLm9mZmxpbmV9XHJcbiAgICAgICAgICAgICAgICAgIDwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgPC9DYXJkPlxyXG4gICAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgICAgIDxHcmlkIGl0ZW0geHM9ezEyfSBzbT17Nn0gbWQ9ezJ9PlxyXG4gICAgICAgICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSBjb2xvcj1cInRleHRTZWNvbmRhcnlcIiBndXR0ZXJCb3R0b20+XHJcbiAgICAgICAgICAgICAgICAgICAgQ29tIEVycm9cclxuICAgICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiaDVcIiBjb2xvcj1cIndhcm5pbmcubWFpblwiPlxyXG4gICAgICAgICAgICAgICAgICAgIHtzdGF0dXNHZXJhbC5jb21fZXJyb31cclxuICAgICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgICAgIDwvR3JpZD5cclxuICAgICAgICAgICAgPEdyaWQgaXRlbSB4cz17MTJ9IHNtPXs2fSBtZD17Mn0+XHJcbiAgICAgICAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGNvbG9yPVwidGV4dFNlY29uZGFyeVwiIGd1dHRlckJvdHRvbT5cclxuICAgICAgICAgICAgICAgICAgICBKb2JzIFBlbmRlbnRlc1xyXG4gICAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJoNVwiPlxyXG4gICAgICAgICAgICAgICAgICAgIHtzdGF0dXNHZXJhbC5qb2JzX3BlbmRlbnRlc31cclxuICAgICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgICAgIDwvR3JpZD5cclxuICAgICAgICAgICAgPEdyaWQgaXRlbSB4cz17MTJ9IHNtPXs2fSBtZD17Mn0+XHJcbiAgICAgICAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IGNvbG9yPVwidGV4dFNlY29uZGFyeVwiIGd1dHRlckJvdHRvbT5cclxuICAgICAgICAgICAgICAgICAgICBQcm9jZXNzYW5kb1xyXG4gICAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJoNVwiIGNvbG9yPVwiaW5mby5tYWluXCI+XHJcbiAgICAgICAgICAgICAgICAgICAge3N0YXR1c0dlcmFsLmpvYnNfcHJvY2Vzc2FuZG99XHJcbiAgICAgICAgICAgICAgICAgIDwvVHlwb2dyYXBoeT5cclxuICAgICAgICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgPC9DYXJkPlxyXG4gICAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgKX1cclxuICAgICAgPC9QYXBlcj5cclxuXHJcbiAgICAgIHsvKiBGaWx0cm9zIGUgYcOnw7VlcyAqL31cclxuICAgICAgPEJveCBkaXNwbGF5PVwiZmxleFwiIGp1c3RpZnlDb250ZW50PVwic3BhY2UtYmV0d2VlblwiIGFsaWduSXRlbXM9XCJjZW50ZXJcIiBtYj17M30+XHJcbiAgICAgICAgPEJveCBkaXNwbGF5PVwiZmxleFwiIGdhcD17Mn0+XHJcbiAgICAgICAgICA8Rm9ybUNvbnRyb2wgc2l6ZT1cInNtYWxsXCIgc3g9e3sgbWluV2lkdGg6IDEyMCB9fT5cclxuICAgICAgICAgICAgPElucHV0TGFiZWw+U3RhdHVzPC9JbnB1dExhYmVsPlxyXG4gICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgdmFsdWU9e2ZpbHRyb1N0YXR1c31cclxuICAgICAgICAgICAgICBsYWJlbD1cIlN0YXR1c1wiXHJcbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGaWx0cm9TdGF0dXMoZS50YXJnZXQudmFsdWUpfVxyXG4gICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwidG9kb3NcIj5Ub2RvczwvTWVudUl0ZW0+XHJcbiAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiT05MSU5FXCI+T25saW5lPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJPRkZMSU5FXCI+T2ZmbGluZTwvTWVudUl0ZW0+XHJcbiAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiRVJST19QQVBFTFwiPkVycm8gUGFwZWw8L01lbnVJdGVtPlxyXG4gICAgICAgICAgICAgIDxNZW51SXRlbSB2YWx1ZT1cIkVSUk9fQ09ORVhBT1wiPkVycm8gQ29uZXjDo288L01lbnVJdGVtPlxyXG4gICAgICAgICAgICAgIDxNZW51SXRlbSB2YWx1ZT1cIk1BTlVURU5DQU9cIj5NYW51dGVuw6fDo288L01lbnVJdGVtPlxyXG4gICAgICAgICAgICA8L1NlbGVjdD5cclxuICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcblxyXG4gICAgICAgICAgPEZvcm1Db250cm9sIHNpemU9XCJzbWFsbFwiIHN4PXt7IG1pbldpZHRoOiAxMjAgfX0+XHJcbiAgICAgICAgICAgIDxJbnB1dExhYmVsPlRpcG88L0lucHV0TGFiZWw+XHJcbiAgICAgICAgICAgIDxTZWxlY3RcclxuICAgICAgICAgICAgICB2YWx1ZT17ZmlsdHJvVGlwb31cclxuICAgICAgICAgICAgICBsYWJlbD1cIlRpcG9cIlxyXG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0RmlsdHJvVGlwbyhlLnRhcmdldC52YWx1ZSl9XHJcbiAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJ0b2Rvc1wiPlRvZG9zPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJURVJNSUNBXzU4TU1cIj5Uw6lybWljYSA1OG1tPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJURVJNSUNBXzgwTU1cIj5Uw6lybWljYSA4MG1tPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJNQVRSSUNJQUxcIj5NYXRyaWNpYWw8L01lbnVJdGVtPlxyXG4gICAgICAgICAgICAgIDxNZW51SXRlbSB2YWx1ZT1cIkpBVE9fVElOVEFcIj5KYXRvIGRlIFRpbnRhPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgPC9TZWxlY3Q+XHJcbiAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgIDwvQm94PlxyXG5cclxuICAgICAgICA8Qm94IGRpc3BsYXk9XCJmbGV4XCIgZ2FwPXsxfT5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVkXCJcclxuICAgICAgICAgICAgc3RhcnRJY29uPXs8UmVmcmVzaEljb24gLz59XHJcbiAgICAgICAgICAgIG9uQ2xpY2s9e2NhcnJlZ2FyRGFkb3N9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIEF0dWFsaXphclxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgIHZhcmlhbnQ9XCJjb250YWluZWRcIlxyXG4gICAgICAgICAgICBzdGFydEljb249ezxBZGRJY29uIC8+fVxyXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7XHJcbiAgICAgICAgICAgICAgcmVzZXRhckZvcm11bGFyaW8oKTtcclxuICAgICAgICAgICAgICBzZXREaWFsb2dBYmVydG8odHJ1ZSk7XHJcbiAgICAgICAgICAgIH19XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIE5vdmEgSW1wcmVzc29yYVxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgPC9Cb3g+XHJcbiAgICAgIDwvQm94PlxyXG5cclxuICAgICAgey8qIExpc3RhIGRlIGltcHJlc3NvcmFzICovfVxyXG4gICAgICA8R3JpZCBjb250YWluZXIgc3BhY2luZz17Mn0+XHJcbiAgICAgICAge2ltcHJlc3NvcmFzRmlsdHJhZGFzLm1hcCgoaW1wcmVzc29yYSkgPT4gKFxyXG4gICAgICAgICAgPEdyaWQgaXRlbSB4cz17MTJ9IG1kPXs2fSBsZz17NH0ga2V5PXtpbXByZXNzb3JhLmlkfT5cclxuICAgICAgICAgICAgPENhcmQ+XHJcbiAgICAgICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgPEJveCBkaXNwbGF5PVwiZmxleFwiIGp1c3RpZnlDb250ZW50PVwic3BhY2UtYmV0d2VlblwiIGFsaWduSXRlbXM9XCJmbGV4LXN0YXJ0XCIgbWI9ezJ9PlxyXG4gICAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiaDZcIiBjb21wb25lbnQ9XCJkaXZcIj5cclxuICAgICAgICAgICAgICAgICAgICB7aW1wcmVzc29yYS5ub21lfVxyXG4gICAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgICAgICAgIDxCb3ggZGlzcGxheT1cImZsZXhcIiBhbGlnbkl0ZW1zPVwiY2VudGVyXCIgZ2FwPXsxfT5cclxuICAgICAgICAgICAgICAgICAgICB7Z2V0U3RhdHVzSWNvbihpbXByZXNzb3JhLnN0YXR1cyl9XHJcbiAgICAgICAgICAgICAgICAgICAgPENoaXBcclxuICAgICAgICAgICAgICAgICAgICAgIGxhYmVsPXtpbXByZXNzb3JhLnN0YXR1c31cclxuICAgICAgICAgICAgICAgICAgICAgIGNvbG9yPXtnZXRTdGF0dXNDb2xvcihpbXByZXNzb3JhLnN0YXR1cykgYXMgYW55fVxyXG4gICAgICAgICAgICAgICAgICAgICAgc2l6ZT1cInNtYWxsXCJcclxuICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0JveD5cclxuICAgICAgICAgICAgICAgIDwvQm94PlxyXG5cclxuICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5MlwiIGNvbG9yPVwidGV4dC5zZWNvbmRhcnlcIiBndXR0ZXJCb3R0b20+XHJcbiAgICAgICAgICAgICAgICAgIHtpbXByZXNzb3JhLnRpcG99IOKAoiB7aW1wcmVzc29yYS5pbnRlcmZhY2V9XHJcbiAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcblxyXG4gICAgICAgICAgICAgICAgPFR5cG9ncmFwaHkgdmFyaWFudD1cImJvZHkyXCIgZ3V0dGVyQm90dG9tPlxyXG4gICAgICAgICAgICAgICAgICA8c3Ryb25nPkVuZGVyZcOnbzo8L3N0cm9uZz4ge2ltcHJlc3NvcmEuZW5kZXJlY299XHJcbiAgICAgICAgICAgICAgICAgIHtpbXByZXNzb3JhLnBvcnRhICYmIGA6JHtpbXByZXNzb3JhLnBvcnRhfWB9XHJcbiAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcblxyXG4gICAgICAgICAgICAgICAge2ltcHJlc3NvcmEuZXN0YWNhbyAmJiAoXHJcbiAgICAgICAgICAgICAgICAgIDxUeXBvZ3JhcGh5IHZhcmlhbnQ9XCJib2R5MlwiIGd1dHRlckJvdHRvbT5cclxuICAgICAgICAgICAgICAgICAgICA8c3Ryb25nPkVzdGHDp8Ojbzo8L3N0cm9uZz4ge2ltcHJlc3NvcmEuZXN0YWNhb31cclxuICAgICAgICAgICAgICAgICAgPC9UeXBvZ3JhcGh5PlxyXG4gICAgICAgICAgICAgICAgKX1cclxuXHJcbiAgICAgICAgICAgICAgICB7aW1wcmVzc29yYS5sb2NhbF9maXNpY28gJiYgKFxyXG4gICAgICAgICAgICAgICAgICA8VHlwb2dyYXBoeSB2YXJpYW50PVwiYm9keTJcIiBndXR0ZXJCb3R0b20+XHJcbiAgICAgICAgICAgICAgICAgICAgPHN0cm9uZz5Mb2NhbDo8L3N0cm9uZz4ge2ltcHJlc3NvcmEubG9jYWxfZmlzaWNvfVxyXG4gICAgICAgICAgICAgICAgICA8L1R5cG9ncmFwaHk+XHJcbiAgICAgICAgICAgICAgICApfVxyXG5cclxuICAgICAgICAgICAgICAgIDxEaXZpZGVyIHN4PXt7IG15OiAyIH19IC8+XHJcblxyXG4gICAgICAgICAgICAgICAgPEJveCBkaXNwbGF5PVwiZmxleFwiIGp1c3RpZnlDb250ZW50PVwic3BhY2UtYmV0d2VlblwiIGFsaWduSXRlbXM9XCJjZW50ZXJcIj5cclxuICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sTGFiZWxcclxuICAgICAgICAgICAgICAgICAgICBjb250cm9sPXs8U3dpdGNoIGNoZWNrZWQ9e2ltcHJlc3NvcmEuYXRpdm99IGRpc2FibGVkIC8+fVxyXG4gICAgICAgICAgICAgICAgICAgIGxhYmVsPVwiQXRpdmFcIlxyXG4gICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgICAgPEJveD5cclxuICAgICAgICAgICAgICAgICAgICA8VG9vbHRpcCB0aXRsZT1cIlRlc3RhciBJbXByZXNzb3JhXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8SWNvbkJ1dHRvbiBcclxuICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZT1cInNtYWxsXCIgXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IGhhbmRsZVRlc3RhckltcHJlc3NvcmEoaW1wcmVzc29yYSl9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpbXByZXNzb3JhLnN0YXR1cyAhPT0gJ09OTElORSd9XHJcbiAgICAgICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDxUZXN0SWNvbiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9JY29uQnV0dG9uPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvVG9vbHRpcD5cclxuICAgICAgICAgICAgICAgICAgICA8VG9vbHRpcCB0aXRsZT1cIkVkaXRhclwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPEljb25CdXR0b24gXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHNpemU9XCJzbWFsbFwiIFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBoYW5kbGVFZGl0YXJJbXByZXNzb3JhKGltcHJlc3NvcmEpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8RWRpdEljb24gLz5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvSWNvbkJ1dHRvbj5cclxuICAgICAgICAgICAgICAgICAgICA8L1Rvb2x0aXA+XHJcbiAgICAgICAgICAgICAgICAgICAgPFRvb2x0aXAgdGl0bGU9XCJEZWxldGFyXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8SWNvbkJ1dHRvbiBcclxuICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZT1cInNtYWxsXCIgXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IGhhbmRsZURlbGV0YXJJbXByZXNzb3JhKGltcHJlc3NvcmEpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8RGVsZXRlSWNvbiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9JY29uQnV0dG9uPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvVG9vbHRpcD5cclxuICAgICAgICAgICAgICAgICAgPC9Cb3g+XHJcbiAgICAgICAgICAgICAgICA8L0JveD5cclxuICAgICAgICAgICAgICA8L0NhcmRDb250ZW50PlxyXG4gICAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgKSl9XHJcbiAgICAgIDwvR3JpZD5cclxuXHJcbiAgICAgIHtpbXByZXNzb3Jhc0ZpbHRyYWRhcy5sZW5ndGggPT09IDAgJiYgKFxyXG4gICAgICAgIDxBbGVydCBzZXZlcml0eT1cImluZm9cIiBzeD17eyBtdDogMiB9fT5cclxuICAgICAgICAgIE5lbmh1bWEgaW1wcmVzc29yYSBlbmNvbnRyYWRhIGNvbSBvcyBmaWx0cm9zIGFwbGljYWRvcy5cclxuICAgICAgICA8L0FsZXJ0PlxyXG4gICAgICApfVxyXG5cclxuICAgICAgey8qIERpYWxvZyBwYXJhIGNyaWFyL2VkaXRhciBpbXByZXNzb3JhICovfVxyXG4gICAgICA8RGlhbG9nIFxyXG4gICAgICAgIG9wZW49e2RpYWxvZ0FiZXJ0b30gXHJcbiAgICAgICAgb25DbG9zZT17KCkgPT4gc2V0RGlhbG9nQWJlcnRvKGZhbHNlKX1cclxuICAgICAgICBtYXhXaWR0aD1cIm1kXCJcclxuICAgICAgICBmdWxsV2lkdGhcclxuICAgICAgPlxyXG4gICAgICAgIDxEaWFsb2dUaXRsZT5cclxuICAgICAgICAgIHttb2RvRWRpY2FvID8gJ0VkaXRhciBJbXByZXNzb3JhJyA6ICdOb3ZhIEltcHJlc3NvcmEnfVxyXG4gICAgICAgIDwvRGlhbG9nVGl0bGU+XHJcbiAgICAgICAgPERpYWxvZ0NvbnRlbnQ+XHJcbiAgICAgICAgICA8R3JpZCBjb250YWluZXIgc3BhY2luZz17Mn0gc3g9e3sgbXQ6IDEgfX0+XHJcbiAgICAgICAgICAgIDxHcmlkIGl0ZW0geHM9ezEyfSBzbT17Nn0+XHJcbiAgICAgICAgICAgICAgPFRleHRGaWVsZFxyXG4gICAgICAgICAgICAgICAgZnVsbFdpZHRoXHJcbiAgICAgICAgICAgICAgICBsYWJlbD1cIk5vbWUgZGEgSW1wcmVzc29yYVwiXHJcbiAgICAgICAgICAgICAgICB2YWx1ZT17bm92YUltcHJlc3NvcmEubm9tZX1cclxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Tm92YUltcHJlc3NvcmEoeyAuLi5ub3ZhSW1wcmVzc29yYSwgbm9tZTogZS50YXJnZXQudmFsdWUgfSl9XHJcbiAgICAgICAgICAgICAgICByZXF1aXJlZFxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgIDwvR3JpZD5cclxuICAgICAgICAgICAgPEdyaWQgaXRlbSB4cz17MTJ9IHNtPXs2fT5cclxuICAgICAgICAgICAgICA8Rm9ybUNvbnRyb2wgZnVsbFdpZHRoIHJlcXVpcmVkPlxyXG4gICAgICAgICAgICAgICAgPElucHV0TGFiZWw+VGlwbzwvSW5wdXRMYWJlbD5cclxuICAgICAgICAgICAgICAgIDxTZWxlY3RcclxuICAgICAgICAgICAgICAgICAgdmFsdWU9e25vdmFJbXByZXNzb3JhLnRpcG99XHJcbiAgICAgICAgICAgICAgICAgIGxhYmVsPVwiVGlwb1wiXHJcbiAgICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Tm92YUltcHJlc3NvcmEoeyAuLi5ub3ZhSW1wcmVzc29yYSwgdGlwbzogZS50YXJnZXQudmFsdWUgfSl9XHJcbiAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgIDxNZW51SXRlbSB2YWx1ZT1cIlRFUk1JQ0FfNThNTVwiPlTDqXJtaWNhIDU4bW08L01lbnVJdGVtPlxyXG4gICAgICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJURVJNSUNBXzgwTU1cIj5Uw6lybWljYSA4MG1tPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiTUFUUklDSUFMXCI+TWF0cmljaWFsPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiSkFUT19USU5UQVwiPkphdG8gZGUgVGludGE8L01lbnVJdGVtPlxyXG4gICAgICAgICAgICAgICAgPC9TZWxlY3Q+XHJcbiAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgPC9HcmlkPlxyXG4gICAgICAgICAgICA8R3JpZCBpdGVtIHhzPXsxMn0gc209ezZ9PlxyXG4gICAgICAgICAgICAgIDxGb3JtQ29udHJvbCBmdWxsV2lkdGggcmVxdWlyZWQ+XHJcbiAgICAgICAgICAgICAgICA8SW5wdXRMYWJlbD5JbnRlcmZhY2U8L0lucHV0TGFiZWw+XHJcbiAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgIHZhbHVlPXtub3ZhSW1wcmVzc29yYS5pbnRlcmZhY2V9XHJcbiAgICAgICAgICAgICAgICAgIGxhYmVsPVwiSW50ZXJmYWNlXCJcclxuICAgICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXROb3ZhSW1wcmVzc29yYSh7IC4uLm5vdmFJbXByZXNzb3JhLCBpbnRlcmZhY2U6IGUudGFyZ2V0LnZhbHVlIH0pfVxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJVU0JcIj5VU0I8L01lbnVJdGVtPlxyXG4gICAgICAgICAgICAgICAgICA8TWVudUl0ZW0gdmFsdWU9XCJFVEhFUk5FVFwiPkV0aGVybmV0PC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiV0lGSVwiPldpLUZpPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiQkxVRVRPT1RIXCI+Qmx1ZXRvb3RoPC9NZW51SXRlbT5cclxuICAgICAgICAgICAgICAgICAgPE1lbnVJdGVtIHZhbHVlPVwiUEFSQUxFTEFcIj5QYXJhbGVsYTwvTWVudUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgIDxNZW51SXRlbSB2YWx1ZT1cIlNFUklBTFwiPlNlcmlhbDwvTWVudUl0ZW0+XHJcbiAgICAgICAgICAgICAgICA8L1NlbGVjdD5cclxuICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgICAgIDxHcmlkIGl0ZW0geHM9ezEyfSBzbT17Nn0+XHJcbiAgICAgICAgICAgICAgPFRleHRGaWVsZFxyXG4gICAgICAgICAgICAgICAgZnVsbFdpZHRoXHJcbiAgICAgICAgICAgICAgICBsYWJlbD1cIkVuZGVyZcOnb1wiXHJcbiAgICAgICAgICAgICAgICB2YWx1ZT17bm92YUltcHJlc3NvcmEuZW5kZXJlY299XHJcbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldE5vdmFJbXByZXNzb3JhKHsgLi4ubm92YUltcHJlc3NvcmEsIGVuZGVyZWNvOiBlLnRhcmdldC52YWx1ZSB9KX1cclxuICAgICAgICAgICAgICAgIHJlcXVpcmVkXHJcbiAgICAgICAgICAgICAgICBoZWxwZXJUZXh0PVwiSVAgcGFyYSBFdGhlcm5ldC9XaS1GaSwgQ2FtaW5obyBwYXJhIFVTQiwgTUFDIHBhcmEgQmx1ZXRvb3RoXCJcclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgICAgIDxHcmlkIGl0ZW0geHM9ezEyfSBzbT17Nn0+XHJcbiAgICAgICAgICAgICAgPFRleHRGaWVsZFxyXG4gICAgICAgICAgICAgICAgZnVsbFdpZHRoXHJcbiAgICAgICAgICAgICAgICBsYWJlbD1cIlBvcnRhXCJcclxuICAgICAgICAgICAgICAgIHR5cGU9XCJudW1iZXJcIlxyXG4gICAgICAgICAgICAgICAgdmFsdWU9e25vdmFJbXByZXNzb3JhLnBvcnRhIHx8ICcnfVxyXG4gICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXROb3ZhSW1wcmVzc29yYSh7IC4uLm5vdmFJbXByZXNzb3JhLCBwb3J0YTogZS50YXJnZXQudmFsdWUgPyBwYXJzZUludChlLnRhcmdldC52YWx1ZSkgOiB1bmRlZmluZWQgfSl9XHJcbiAgICAgICAgICAgICAgICBoZWxwZXJUZXh0PVwiUGFkcsOjbzogOTEwMCBwYXJhIEV0aGVybmV0XCJcclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgICAgIDxHcmlkIGl0ZW0geHM9ezEyfSBzbT17Nn0+XHJcbiAgICAgICAgICAgICAgPFRleHRGaWVsZFxyXG4gICAgICAgICAgICAgICAgZnVsbFdpZHRoXHJcbiAgICAgICAgICAgICAgICBsYWJlbD1cIkVzdGHDp8Ojby9TZXRvclwiXHJcbiAgICAgICAgICAgICAgICB2YWx1ZT17bm92YUltcHJlc3NvcmEuZXN0YWNhb31cclxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Tm92YUltcHJlc3NvcmEoeyAuLi5ub3ZhSW1wcmVzc29yYSwgZXN0YWNhbzogZS50YXJnZXQudmFsdWUgfSl9XHJcbiAgICAgICAgICAgICAgICBoZWxwZXJUZXh0PVwiRXg6IENPWklOSEEsIEJBUiwgQ0FJWEFcIlxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgIDwvR3JpZD5cclxuICAgICAgICAgICAgPEdyaWQgaXRlbSB4cz17MTJ9PlxyXG4gICAgICAgICAgICAgIDxUZXh0RmllbGRcclxuICAgICAgICAgICAgICAgIGZ1bGxXaWR0aFxyXG4gICAgICAgICAgICAgICAgbGFiZWw9XCJMb2NhbCBGw61zaWNvXCJcclxuICAgICAgICAgICAgICAgIHZhbHVlPXtub3ZhSW1wcmVzc29yYS5sb2NhbF9maXNpY299XHJcbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldE5vdmFJbXByZXNzb3JhKHsgLi4ubm92YUltcHJlc3NvcmEsIGxvY2FsX2Zpc2ljbzogZS50YXJnZXQudmFsdWUgfSl9XHJcbiAgICAgICAgICAgICAgICBoZWxwZXJUZXh0PVwiRGVzY3Jpw6fDo28gZGEgbG9jYWxpemHDp8OjbyBmw61zaWNhXCJcclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8L0dyaWQ+XHJcbiAgICAgICAgICAgIDxHcmlkIGl0ZW0geHM9ezEyfSBzbT17NH0+XHJcbiAgICAgICAgICAgICAgPFRleHRGaWVsZFxyXG4gICAgICAgICAgICAgICAgZnVsbFdpZHRoXHJcbiAgICAgICAgICAgICAgICBsYWJlbD1cIkRlbnNpZGFkZVwiXHJcbiAgICAgICAgICAgICAgICB0eXBlPVwibnVtYmVyXCJcclxuICAgICAgICAgICAgICAgIHZhbHVlPXtub3ZhSW1wcmVzc29yYS5kZW5zaWRhZGV9XHJcbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldE5vdmFJbXByZXNzb3JhKHsgLi4ubm92YUltcHJlc3NvcmEsIGRlbnNpZGFkZTogcGFyc2VJbnQoZS50YXJnZXQudmFsdWUpIH0pfVxyXG4gICAgICAgICAgICAgICAgaW5wdXRQcm9wcz17eyBtaW46IDEsIG1heDogMTUgfX1cclxuICAgICAgICAgICAgICAgIGhlbHBlclRleHQ9XCIxLTE1IChwYWRyw6NvOiA4KVwiXHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9HcmlkPlxyXG4gICAgICAgICAgICA8R3JpZCBpdGVtIHhzPXsxMn0gc209ezR9PlxyXG4gICAgICAgICAgICAgIDxUZXh0RmllbGRcclxuICAgICAgICAgICAgICAgIGZ1bGxXaWR0aFxyXG4gICAgICAgICAgICAgICAgbGFiZWw9XCJWZWxvY2lkYWRlXCJcclxuICAgICAgICAgICAgICAgIHR5cGU9XCJudW1iZXJcIlxyXG4gICAgICAgICAgICAgICAgdmFsdWU9e25vdmFJbXByZXNzb3JhLnZlbG9jaWRhZGV9XHJcbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldE5vdmFJbXByZXNzb3JhKHsgLi4ubm92YUltcHJlc3NvcmEsIHZlbG9jaWRhZGU6IHBhcnNlSW50KGUudGFyZ2V0LnZhbHVlKSB9KX1cclxuICAgICAgICAgICAgICAgIGlucHV0UHJvcHM9e3sgbWluOiAxLCBtYXg6IDIwMCB9fVxyXG4gICAgICAgICAgICAgICAgaGVscGVyVGV4dD1cIjEtMjAwJSAocGFkcsOjbzogMTAwKVwiXHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9HcmlkPlxyXG4gICAgICAgICAgICA8R3JpZCBpdGVtIHhzPXsxMn0gc209ezR9PlxyXG4gICAgICAgICAgICAgIDxGb3JtQ29udHJvbExhYmVsXHJcbiAgICAgICAgICAgICAgICBjb250cm9sPXtcclxuICAgICAgICAgICAgICAgICAgPFN3aXRjaFxyXG4gICAgICAgICAgICAgICAgICAgIGNoZWNrZWQ9e25vdmFJbXByZXNzb3JhLmNvcnRlX2F1dG9tYXRpY299XHJcbiAgICAgICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXROb3ZhSW1wcmVzc29yYSh7IC4uLm5vdmFJbXByZXNzb3JhLCBjb3J0ZV9hdXRvbWF0aWNvOiBlLnRhcmdldC5jaGVja2VkIH0pfVxyXG4gICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgbGFiZWw9XCJDb3J0ZSBBdXRvbcOhdGljb1wiXHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9HcmlkPlxyXG4gICAgICAgICAgPC9HcmlkPlxyXG4gICAgICAgIDwvRGlhbG9nQ29udGVudD5cclxuICAgICAgICA8RGlhbG9nQWN0aW9ucz5cclxuICAgICAgICAgIDxCdXR0b24gb25DbGljaz17KCkgPT4gc2V0RGlhbG9nQWJlcnRvKGZhbHNlKX0+XHJcbiAgICAgICAgICAgIENhbmNlbGFyXHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgIDxCdXR0b24gXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZVNhbHZhckltcHJlc3NvcmF9XHJcbiAgICAgICAgICAgIHZhcmlhbnQ9XCJjb250YWluZWRcIlxyXG4gICAgICAgICAgICBkaXNhYmxlZD17IW5vdmFJbXByZXNzb3JhLm5vbWUgfHwgIW5vdmFJbXByZXNzb3JhLmVuZGVyZWNvfVxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICB7bW9kb0VkaWNhbyA/ICdBdHVhbGl6YXInIDogJ0NyaWFyJ31cclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgIDwvRGlhbG9nQWN0aW9ucz5cclxuICAgICAgPC9EaWFsb2c+XHJcbiAgICA8L0JveD5cclxuICApO1xyXG59O1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgUHJpbnRlck1hbmFnZW1lbnQ7XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL1ByaW50ZXJNYW5hZ2VtZW50LnRzeCJ9

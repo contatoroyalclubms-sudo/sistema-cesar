@@ -1,0 +1,24 @@
+import {
+  require_react
+} from "/node_modules/.vite/deps/chunk-OU5AQDZK.js?v=47dd5afa";
+import {
+  __toESM
+} from "/node_modules/.vite/deps/chunk-EWTE5DHJ.js?v=47dd5afa";
+
+// node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
+var React = __toESM(require_react(), 1);
+function useCallbackRef(callback) {
+  const callbackRef = React.useRef(callback);
+  React.useEffect(() => {
+    callbackRef.current = callback;
+  });
+  return React.useMemo(() => (...args) => {
+    var _a;
+    return (_a = callbackRef.current) == null ? void 0 : _a.call(callbackRef, ...args);
+  }, []);
+}
+
+export {
+  useCallbackRef
+};
+//# sourceMappingURL=chunk-4EZH7PIZ.js.map

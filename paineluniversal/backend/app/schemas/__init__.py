@@ -4,6 +4,26 @@ from datetime import datetime, date, timezone
 from typing import Optional, List
 from decimal import Decimal
 
+# Import MEEP schemas from main schemas file
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+try:
+    from ..schemas import (
+        MEEPIntegrationCreate, MEEPIntegrationResponse, 
+        MEEPAnalyticsData, MEEPAnalyticsResponse
+    )
+except ImportError:
+    # Placeholder classes if not available
+    class MEEPIntegrationCreate(BaseModel):
+        pass
+    class MEEPIntegrationResponse(BaseModel):
+        pass
+    class MEEPAnalyticsData(BaseModel):
+        pass
+    class MEEPAnalyticsResponse(BaseModel):
+        pass
+
 # Schemas básicos para auth
 class Token(BaseModel):
     access_token: str
@@ -721,6 +741,7 @@ __all__.extend([
     "ClienteEventoResponse", "ClienteEventoCreate", "ValidacaoAcessoResponse",
     "EquipamentoEventoResponse", "EquipamentoEventoCreate", "PrevisaoIAResponse",
     "AnalyticsMEEPResponse", "LogSegurancaMEEPResponse",
+    "MEEPIntegrationCreate", "MEEPIntegrationResponse", "MEEPAnalyticsData", "MEEPAnalyticsResponse",
     # formas de pagamento
     "FormaPagamento", "FormaPagamentoCreate", "FormaPagamentoUpdate", "FormaPagamentoDetalhada", "FormaPagamentoList"
 ])

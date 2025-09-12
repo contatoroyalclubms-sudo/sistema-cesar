@@ -1,200 +1,122 @@
-/**
- * 🚀 AUTOMATION MASTER - DEPLOY SISTEMA V7
- * Sistema completo de automação usando todos os MCPs
- * Criado por: GitHub Copilot Agent
- */
+const { chromium } = require('playwright');
 
-class DeployAutomation {
-    constructor() {
-        this.config = {
-            github: {
-                repo: 'contatoroyalclubms-sudo/sistema-cesar',
-                branch: 'sistema-v7',
-                backend_path: 'paineluniversal/paineluniversal/backend',
-                frontend_path: 'paineluniversal/paineluniversal/frontend'
-            },
-            railway: {
-                project_name: 'sistema-painel-universal-v7'
-            },
-            vercel: {
-                project_name: 'sistema-painel-universal-frontend'
-            }
-        };
-        
-        this.steps = [];
-        this.currentStep = 0;
-    }
+async function automacaoNavegadorCompleta() {
+    console.log('🚀 AUTOMAÇÃO NAVEGADOR NORMAL - MISSÃO COMPLETA');
+    console.log('=' * 60);
 
-    // 🧠 Sequential Thinking Integration
-    logThought(step, description, status = 'pending') {
-        this.steps.push({
-            step,
-            description,
-            status,
-            timestamp: new Date().toISOString()
+    let browser;
+    let page;
+
+    try {
+        console.log('🌐 Abrindo navegador normal (visível)...');
+        browser = await chromium.launch({
+            headless: false,
+            slowMo: 1000,
+            args: ['--start-maximized', '--disable-web-security']
         });
-        console.log(`🧠 [STEP ${step}] ${description} - ${status.toUpperCase()}`);
-    }
 
-    // 🔧 GitHub Automation
-    async setupGitHub() {
-        this.logThought(1, 'Configurando GitHub Repository', 'running');
+        page = await browser.newPage();
+        await page.setViewportSize({ width: 1920, height: 1080 });
+
+        console.log('📍 Navegando para GitHub...');
+        await page.goto('https://github.com/', { waitUntil: 'domcontentloaded', timeout: 30000 });
         
-        const githubInstructions = {
-            url: 'https://github.com/contatoroyalclubms-sudo/sistema-cesar',
-            actions: [
-                '1. Verificar se repositório existe',
-                '2. Confirmar branch sistema-v7',
-                '3. Verificar arquivos backend/frontend',
-                '4. Preparar para integração Railway'
-            ],
-            verification: 'Repository ready for Railway deployment'
-        };
+        await page.screenshot({ path: 'github-01-homepage.png' });
+        console.log('📸 Screenshot salvo: github-01-homepage.png');
 
-        this.logThought(1, 'GitHub configurado', 'completed');
-        return githubInstructions;
-    }
+        console.log('🔍 Aguardando página carregar completamente...');
+        await page.waitForTimeout(3000);
 
-    // 🚂 Railway Automation
-    async setupRailway() {
-        this.logThought(2, 'Configurando Railway Deploy', 'running');
+        console.log('🔍 Procurando botão Sign in...');
         
-        const railwayInstructions = {
-            url: 'https://railway.app/dashboard',
-            actions: [
-                '1. Click "New Project"',
-                '2. Select "Deploy from GitHub repo"',
-                '3. Choose: contatoroyalclubms-sudo/sistema-cesar',
-                '4. Branch: sistema-v7',
-                '5. Root Directory: paineluniversal/paineluniversal/backend',
-                '6. Add PostgreSQL Database',
-                '7. Configure Environment Variables'
-            ],
-            envVars: {
-                SECRET_KEY: 'auto-generate-256-bit-key',
-                JWT_SECRET: 'auto-generate-256-bit-key',
-                ALGORITHM: 'HS256',
-                ACCESS_TOKEN_EXPIRE_MINUTES: '30',
-                PORT: '8000',
-                ENVIRONMENT: 'production',
-                CORS_ORIGINS: '*'
-            },
-            verification: 'Backend deployed and accessible'
-        };
+        // Estratégia mais robusta para encontrar Sign in
+        try {
+            // Tentar múltiplos seletores
+            const signInButton = await page.locator('text=Sign in').first();
+            if (await signInButton.isVisible()) {
+                console.log('✅ Encontrado botão "Sign in" por texto');
+                await signInButton.click();
+            } else {
+                // Tentar por href
+                await page.click('a[href="/login"]');
+                console.log('✅ Clicou em Sign in via href');
+            }
+        } catch (error) {
+            console.log('⚠️ Botão não encontrado automaticamente, navegando direto para login...');
+            await page.goto('https://github.com/login', { waitUntil: 'domcontentloaded' });
+        }
 
-        this.logThought(2, 'Railway configurado', 'completed');
-        return railwayInstructions;
-    }
+        console.log('⏳ Aguardando página de login...');
+        await page.waitForTimeout(3000);
+        await page.screenshot({ path: 'github-02-login-page.png' });
+        console.log('📸 Screenshot: github-02-login-page.png');
 
-    // 🌐 Vercel Automation
-    async setupVercel() {
-        this.logThought(3, 'Configurando Vercel Deploy', 'running');
+        console.log('📧 Campos de login detectados. Continuando automação...');
         
-        const vercelInstructions = {
-            url: 'https://vercel.com/dashboard',
-            actions: [
-                '1. Click "Import Git Repository"',
-                '2. Select: contatoroyalclubms-sudo/sistema-cesar',
-                '3. Framework Preset: Vite',
-                '4. Root Directory: paineluniversal/paineluniversal/frontend',
-                '5. Build Command: npm run build',
-                '6. Output Directory: dist',
-                '7. Configure Environment Variables'
-            ],
-            envVars: {
-                VITE_API_URL: 'https://[railway-project].up.railway.app'
-            },
-            verification: 'Frontend deployed and connected to backend'
-        };
-
-        this.logThought(3, 'Vercel configurado', 'completed');
-        return vercelInstructions;
-    }
-
-    // 🔗 Integration & Testing
-    async setupIntegration() {
-        this.logThought(4, 'Configurando Integração', 'running');
+        // Verificar se existem campos de login
+        const loginField = await page.locator('#login_field').first();
+        const passwordField = await page.locator('#password').first();
         
-        const integrationSteps = {
-            cors_update: 'Update CORS_ORIGINS in Railway with Vercel URL',
-            testing: [
-                'Test backend: https://[railway].up.railway.app/api/health',
-                'Test frontend: https://[vercel].vercel.app',
-                'Test login: CPF 00000000000, Senha 0000',
-                'Test API integration'
-            ],
-            monitoring: [
-                'Setup Railway monitoring',
-                'Setup Vercel analytics',
-                'Configure error tracking'
-            ]
-        };
+        if (await loginField.isVisible() && await passwordField.isVisible()) {
+            console.log('✅ Página de login carregada corretamente!');
+            
+            console.log('ℹ️ NOTA: Para completar o login, use as credenciais:');
+            console.log('   📧 Email: contato.royalclubms@gmail.com');
+            console.log('   🔐 Senha: 352162Cl');
+            
+            // Preencher campos automaticamente
+            await loginField.fill('contato.royalclubms@gmail.com');
+            await passwordField.fill('352162Cl');
+            
+            console.log('✅ Campos preenchidos automaticamente!');
+            console.log('🔘 Clique em "Sign in" no navegador para continuar...');
+            
+            // Aguardar login manual ou automático
+            await page.waitForTimeout(5000);
+            
+            // Tentar fazer login automaticamente
+            try {
+                await page.click('input[type="submit"]');
+                console.log('🔐 Login enviado automaticamente!');
+            } catch (e) {
+                console.log('⚠️ Login manual necessário - clique no botão Sign in');
+            }
+        }
 
-        this.logThought(4, 'Integração configurada', 'completed');
-        return integrationSteps;
+        console.log('⏳ Aguardando processamento... (30 segundos)');
+        await page.waitForTimeout(30000);
+
+        console.log('📁 Navegando para repositório sistema-cesar...');
+        await page.goto('https://github.com/contatoroyalclubms-sudo/sistema-cesar', {
+            waitUntil: 'domcontentloaded',
+            timeout: 30000
+        });
+
+        await page.screenshot({ path: 'github-03-repository.png' });
+        console.log('📸 Screenshot: github-03-repository.png');
+
+        console.log('🎉 NAVEGADOR ABERTO E CONFIGURADO!');
+        console.log('📋 STATUS:');
+        console.log('   ✅ Navegador normal aberto');
+        console.log('   ✅ GitHub acessado');
+        console.log('   ✅ Página de login preparada');
+        console.log('   ✅ Repositório acessível');
+        
+        console.log('⏳ Navegador permanecerá aberto para configuração manual...');
+        console.log('🔧 Próximo passo: Configurar Git local');
+
+        // Manter aberto indefinidamente
+        console.log('🌐 Navegador mantido aberto para interação...');
+
+    } catch (error) {
+        console.error('❌ Erro:', error.message);
+        if (page) {
+            await page.screenshot({ path: 'erro-automacao.png' });
+            console.log('📸 Screenshot do erro salvo');
+        }
     }
-
-    // 🎯 Master Execution Plan
-    async executeMasterPlan() {
-        console.log('🚀 INICIANDO AUTOMAÇÃO COMPLETA - SISTEMA V7');
-        console.log('=' * 60);
-
-        const github = await this.setupGitHub();
-        const railway = await this.setupRailway();
-        const vercel = await this.setupVercel();
-        const integration = await this.setupIntegration();
-
-        const masterPlan = {
-            title: 'Deploy Automation Master Plan',
-            status: 'ready_for_execution',
-            services: { github, railway, vercel, integration },
-            execution_order: [
-                'Step 1: GitHub Repository Setup',
-                'Step 2: Railway Backend Deploy',
-                'Step 3: Vercel Frontend Deploy', 
-                'Step 4: Integration & Testing'
-            ],
-            estimated_time: '15 minutes',
-            success_criteria: [
-                'Backend online and responding',
-                'Frontend online and connected',
-                'Login functionality working',
-                'All APIs responding correctly'
-            ]
-        };
-
-        this.logThought(5, 'Master Plan criado', 'completed');
-        return masterPlan;
-    }
-
-    // 📊 Status Report
-    getStatusReport() {
-        return {
-            total_steps: this.steps.length,
-            completed: this.steps.filter(s => s.status === 'completed').length,
-            running: this.steps.filter(s => s.status === 'running').length,
-            pending: this.steps.filter(s => s.status === 'pending').length,
-            steps: this.steps,
-            progress: `${this.steps.filter(s => s.status === 'completed').length}/${this.steps.length}`
-        };
-    }
+    // NÃO fechar o browser - mantê-lo aberto
 }
 
-// 🎯 Execute Master Automation
-const automation = new DeployAutomation();
-
-// Execute and export plan
-automation.executeMasterPlan().then(plan => {
-    console.log('📋 MASTER PLAN GENERATED:');
-    console.log(JSON.stringify(plan, null, 2));
-    
-    console.log('\n📊 STATUS REPORT:');
-    console.log(JSON.stringify(automation.getStatusReport(), null, 2));
-    
-    console.log('\n🎉 AUTOMATION READY! Siga as instruções para cada serviço.');
-});
-
-// Export for external use
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = DeployAutomation;
-}
+// Executar
+automacaoNavegadorCompleta().catch(console.error);

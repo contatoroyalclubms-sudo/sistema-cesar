@@ -1,0 +1,55 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/clientes/ClientesModule.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/clientes/ClientesModule.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import CadastroModule from "/src/components/common/CadastroModule.tsx";
+import { clientesConfig } from "/src/config/modules/clientesConfig.js";
+export default function ClientesModule() {
+  return /* @__PURE__ */ jsxDEV(
+    CadastroModule,
+    {
+      config: clientesConfig,
+      title: "Gestão de Clientes",
+      description: "Gerenciar clientes do sistema"
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/clientes/ClientesModule.tsx",
+      lineNumber: 26,
+      columnNumber: 5
+    },
+    this
+  );
+}
+_c = ClientesModule;
+var _c;
+$RefreshReg$(_c, "ClientesModule");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/clientes/ClientesModule.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/clientes/ClientesModule.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBTUk7Ozs7Ozs7Ozs7Ozs7Ozs7QUFMSixPQUFPQSxvQkFBb0I7QUFDM0IsU0FBU0Msc0JBQXNCO0FBRS9CLHdCQUF3QkMsaUJBQWlCO0FBQ3ZDLFNBQ0U7QUFBQSxJQUFDO0FBQUE7QUFBQSxNQUNDLFFBQVFEO0FBQUFBLE1BQ1IsT0FBTTtBQUFBLE1BQ04sYUFBWTtBQUFBO0FBQUEsSUFIZDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFHNkM7QUFHakQ7QUFBQ0UsS0FSdUJEO0FBQWMsSUFBQUM7QUFBQUMsYUFBQUQsSUFBQSIsIm5hbWVzIjpbIkNhZGFzdHJvTW9kdWxlIiwiY2xpZW50ZXNDb25maWciLCJDbGllbnRlc01vZHVsZSIsIl9jIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkNsaWVudGVzTW9kdWxlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgQ2FkYXN0cm9Nb2R1bGUgZnJvbSAnLi4vY29tbW9uL0NhZGFzdHJvTW9kdWxlJztcclxuaW1wb3J0IHsgY2xpZW50ZXNDb25maWcgfSBmcm9tICcuLi8uLi9jb25maWcvbW9kdWxlcy9jbGllbnRlc0NvbmZpZyc7XHJcblxyXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBDbGllbnRlc01vZHVsZSgpIHtcclxuICByZXR1cm4gKFxyXG4gICAgPENhZGFzdHJvTW9kdWxlIFxyXG4gICAgICBjb25maWc9e2NsaWVudGVzQ29uZmlnfVxyXG4gICAgICB0aXRsZT1cIkdlc3TDo28gZGUgQ2xpZW50ZXNcIlxyXG4gICAgICBkZXNjcmlwdGlvbj1cIkdlcmVuY2lhciBjbGllbnRlcyBkbyBzaXN0ZW1hXCJcclxuICAgIC8+XHJcbiAgKTtcclxufVxyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL1VzZXIvT25lRHJpdmUvRGVza3RvcC9zaXN0ZW1hLXY2LW5vdm8vcGFpbmVsdW5pdmVyc2FsL3BhaW5lbHVuaXZlcnNhbC9mcm9udGVuZC9zcmMvY29tcG9uZW50cy9jbGllbnRlcy9DbGllbnRlc01vZHVsZS50c3gifQ==

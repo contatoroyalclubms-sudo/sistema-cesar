@@ -1,0 +1,450 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/diagnostic/DiagnosticComponent.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const useState = __vite__cjsImport3_react["useState"]; const useEffect = __vite__cjsImport3_react["useEffect"];
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "/src/components/ui/card.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { Badge } from "/src/components/ui/badge.tsx";
+import { AlertTriangle, CheckCircle, XCircle, RefreshCw, Zap } from "/node_modules/.vite/deps/lucide-react.js?v=47dd5afa";
+import { runQuickDiagnostic, autoFix } from "/src/services/diagnostic.ts";
+const DiagnosticComponent = ({ onComplete }) => {
+  _s();
+  const [isRunning, setIsRunning] = useState(false);
+  const [isFixing, setIsFixing] = useState(false);
+  const [report, setReport] = useState(null);
+  const [autoRunCompleted, setAutoRunCompleted] = useState(false);
+  useEffect(() => {
+    if (!autoRunCompleted) {
+      handleRunDiagnostic();
+      setAutoRunCompleted(true);
+    }
+  }, [autoRunCompleted]);
+  const handleRunDiagnostic = async () => {
+    setIsRunning(true);
+    try {
+      console.log("🔍 Executando diagnóstico...");
+      const result = await runQuickDiagnostic();
+      setReport(result);
+      if (onComplete) {
+        onComplete(result.overall_status === "HEALTHY");
+      }
+    } catch (error) {
+      console.error("❌ Erro no diagnóstico:", error);
+    } finally {
+      setIsRunning(false);
+    }
+  };
+  const handleAutoFix = async () => {
+    setIsFixing(true);
+    try {
+      console.log("🔧 Executando auto-correção...");
+      const fixed = await autoFix();
+      if (fixed) {
+        await handleRunDiagnostic();
+      }
+    } catch (error) {
+      console.error("❌ Erro na auto-correção:", error);
+    } finally {
+      setIsFixing(false);
+    }
+  };
+  const getStatusIcon = (success) => {
+    return success ? /* @__PURE__ */ jsxDEV(CheckCircle, { className: "h-4 w-4 text-green-500" }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+      lineNumber: 82,
+      columnNumber: 5
+    }, this) : /* @__PURE__ */ jsxDEV(XCircle, { className: "h-4 w-4 text-red-500" }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+      lineNumber: 84,
+      columnNumber: 5
+    }, this);
+  };
+  const getOverallStatusColor = (status) => {
+    switch (status) {
+      case "HEALTHY":
+        return "bg-green-500";
+      case "WARNING":
+        return "bg-yellow-500";
+      case "CRITICAL":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
+    }
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: "max-w-4xl mx-auto p-6", children: /* @__PURE__ */ jsxDEV(Card, { children: [
+    /* @__PURE__ */ jsxDEV(CardHeader, { children: [
+      /* @__PURE__ */ jsxDEV(CardTitle, { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxDEV(Zap, { className: "h-5 w-5" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+          lineNumber: 106,
+          columnNumber: 13
+        }, this),
+        "Diagnóstico do Sistema"
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+        lineNumber: 105,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(CardDescription, { children: "Verificação completa da conectividade e funcionalidade do sistema" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+        lineNumber: 109,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+      lineNumber: 104,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV(CardContent, { className: "space-y-6", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "flex gap-3", children: [
+        /* @__PURE__ */ jsxDEV(
+          Button,
+          {
+            onClick: handleRunDiagnostic,
+            disabled: isRunning || isFixing,
+            className: "flex items-center gap-2",
+            children: [
+              /* @__PURE__ */ jsxDEV(RefreshCw, { className: `h-4 w-4 ${isRunning ? "animate-spin" : ""}` }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 122,
+                columnNumber: 15
+              }, this),
+              isRunning ? "Diagnosticando..." : "Executar Diagnóstico"
+            ]
+          },
+          void 0,
+          true,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 117,
+            columnNumber: 13
+          },
+          this
+        ),
+        report && report.overall_status !== "HEALTHY" && /* @__PURE__ */ jsxDEV(
+          Button,
+          {
+            onClick: handleAutoFix,
+            disabled: isRunning || isFixing,
+            variant: "secondary",
+            className: "flex items-center gap-2",
+            children: [
+              /* @__PURE__ */ jsxDEV(Zap, { className: `h-4 w-4 ${isFixing ? "animate-pulse" : ""}` }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 133,
+                columnNumber: 17
+              }, this),
+              isFixing ? "Corrigindo..." : "Auto-Correção"
+            ]
+          },
+          void 0,
+          true,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 127,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+        lineNumber: 116,
+        columnNumber: 11
+      }, this),
+      report && /* @__PURE__ */ jsxDEV(Fragment, { children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "p-4 border rounded-lg", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between mb-3", children: [
+            /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold", children: "Status Geral" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 144,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV(Badge, { className: getOverallStatusColor(report.overall_status), children: report.overall_status }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 145,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 143,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: report.recommendations.map(
+            (rec, index) => /* @__PURE__ */ jsxDEV("div", { className: "flex items-start gap-2 text-sm", children: [
+              rec.startsWith("✅") ? /* @__PURE__ */ jsxDEV(CheckCircle, { className: "h-4 w-4 text-green-500 mt-0.5" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 154,
+                columnNumber: 19
+              }, this) : rec.startsWith("⚠️") ? /* @__PURE__ */ jsxDEV(AlertTriangle, { className: "h-4 w-4 text-yellow-500 mt-0.5" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 156,
+                columnNumber: 19
+              }, this) : /* @__PURE__ */ jsxDEV(XCircle, { className: "h-4 w-4 text-red-500 mt-0.5" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 158,
+                columnNumber: 19
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { children: rec.replace(/^[✅⚠️❌]\s*/, "") }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 160,
+                columnNumber: 23
+              }, this)
+            ] }, index, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 152,
+              columnNumber: 17
+            }, this)
+          ) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 150,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+          lineNumber: 142,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-base flex items-center gap-2", children: [
+              getStatusIcon(report.backend_status.success),
+              "Backend"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 171,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 170,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: [
+              /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-muted-foreground", children: report.backend_status.message }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 177,
+                columnNumber: 21
+              }, this),
+              report.backend_status.details && /* @__PURE__ */ jsxDEV("div", { className: "mt-2 text-xs text-muted-foreground", children: [
+                "Ambiente: ",
+                report.backend_status.details.environment
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 181,
+                columnNumber: 19
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 176,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 169,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-base flex items-center gap-2", children: [
+              getStatusIcon(report.cors_test.success),
+              "CORS"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 191,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 190,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-muted-foreground", children: report.cors_test.message }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 197,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 196,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 189,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-base flex items-center gap-2", children: [
+              getStatusIcon(report.auth_status.success),
+              "Autenticação"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 206,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 205,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-muted-foreground", children: report.auth_status.message }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 212,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 211,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 204,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV(Card, { children: [
+            /* @__PURE__ */ jsxDEV(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-base flex items-center gap-2", children: [
+              getStatusIcon(report.token_validation.success),
+              "Token"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 221,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 220,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-muted-foreground", children: report.token_validation.message }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 227,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 226,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 219,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+          lineNumber: 167,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("h3", { className: "text-lg font-semibold mb-3", children: "Endpoints da API" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 236,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: Object.entries(report.api_endpoints).map(
+            ([key, endpoint]) => /* @__PURE__ */ jsxDEV(Card, { children: [
+              /* @__PURE__ */ jsxDEV(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "text-sm flex items-center gap-2", children: [
+                getStatusIcon(endpoint.success),
+                key.charAt(0).toUpperCase() + key.slice(1)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 241,
+                columnNumber: 25
+              }, this) }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 240,
+                columnNumber: 23
+              }, this),
+              /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-muted-foreground", children: endpoint.message }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 247,
+                columnNumber: 25
+              }, this) }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+                lineNumber: 246,
+                columnNumber: 23
+              }, this)
+            ] }, key, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+              lineNumber: 239,
+              columnNumber: 17
+            }, this)
+          ) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 237,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+          lineNumber: 235,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("details", { className: "border rounded-lg p-4", children: [
+          /* @__PURE__ */ jsxDEV("summary", { className: "font-medium cursor-pointer", children: "Informações Técnicas (Debug)" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 258,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("pre", { className: "mt-3 text-xs bg-muted p-3 rounded overflow-auto", children: JSON.stringify(report, null, 2) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+            lineNumber: 261,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+          lineNumber: 257,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+        lineNumber: 140,
+        columnNumber: 11
+      }, this),
+      !report && !isRunning && /* @__PURE__ */ jsxDEV("div", { className: "text-center text-muted-foreground", children: 'Clique em "Executar Diagnóstico" para verificar o sistema' }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+        lineNumber: 269,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+      lineNumber: 114,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+    lineNumber: 103,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx",
+    lineNumber: 102,
+    columnNumber: 5
+  }, this);
+};
+_s(DiagnosticComponent, "cvuIh5avGroVLqKi0Y32hkiw4BY=");
+_c = DiagnosticComponent;
+export default DiagnosticComponent;
+var _c;
+$RefreshReg$(_c, "DiagnosticComponent");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/diagnostic/DiagnosticComponent.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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V0FBVSx5QkFDakI7QUFBQSxpQ0FBQyxhQUFRLFdBQVUsOEJBQTZCLDRDQUFoRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUVBO0FBQUEsVUFDQSx1QkFBQyxTQUFJLFdBQVUsbURBQ1pLLGVBQUtDLFVBQVV0QyxRQUFRLE1BQU0sQ0FBQyxLQURqQztBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUVBO0FBQUEsYUFORjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBT0E7QUFBQSxXQTVIRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBNkhBO0FBQUEsTUFHRCxDQUFDQSxVQUFVLENBQUNKLGFBQ1gsdUJBQUMsU0FBSSxXQUFVLHFDQUFvQyx5RUFBbkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUVBO0FBQUEsU0E3Sko7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQStKQTtBQUFBLE9BMUtGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0EyS0EsS0E1S0Y7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQTZLQTtBQUVKO0FBQUVELEdBclBJRixxQkFBdUQ7QUFBQThDLEtBQXZEOUM7QUF1UE4sZUFBZUE7QUFBb0IsSUFBQThDO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsInVzZUVmZmVjdCIsIkNhcmQiLCJDYXJkQ29udGVudCIsIkNhcmREZXNjcmlwdGlvbiIsIkNhcmRIZWFkZXIiLCJDYXJkVGl0bGUiLCJCdXR0b24iLCJCYWRnZSIsIkFsZXJ0VHJpYW5nbGUiLCJDaGVja0NpcmNsZSIsIlhDaXJjbGUiLCJSZWZyZXNoQ3ciLCJaYXAiLCJydW5RdWlja0RpYWdub3N0aWMiLCJhdXRvRml4IiwiRGlhZ25vc3RpY0NvbXBvbmVudCIsIm9uQ29tcGxldGUiLCJfcyIsImlzUnVubmluZyIsInNldElzUnVubmluZyIsImlzRml4aW5nIiwic2V0SXNGaXhpbmciLCJyZXBvcnQiLCJzZXRSZXBvcnQiLCJhdXRvUnVuQ29tcGxldGVkIiwic2V0QXV0b1J1bkNvbXBsZXRlZCIsImhhbmRsZVJ1bkRpYWdub3N0aWMiLCJjb25zb2xlIiwibG9nIiwicmVzdWx0Iiwib3ZlcmFsbF9zdGF0dXMiLCJlcnJvciIsImhhbmRsZUF1dG9GaXgiLCJmaXhlZCIsImdldFN0YXR1c0ljb24iLCJzdWNjZXNzIiwiZ2V0T3ZlcmFsbFN0YXR1c0NvbG9yIiwic3RhdHVzIiwicmVjb21tZW5kYXRpb25zIiwibWFwIiwicmVjIiwiaW5kZXgiLCJzdGFydHNXaXRoIiwicmVwbGFjZSIsImJhY2tlbmRfc3RhdHVzIiwibWVzc2FnZSIsImRldGFpbHMiLCJlbnZpcm9ubWVudCIsImNvcnNfdGVzdCIsImF1dGhfc3RhdHVzIiwidG9rZW5fdmFsaWRhdGlvbiIsIk9iamVjdCIsImVudHJpZXMiLCJhcGlfZW5kcG9pbnRzIiwia2V5IiwiZW5kcG9pbnQiLCJjaGFyQXQiLCJ0b1VwcGVyQ2FzZSIsInNsaWNlIiwiSlNPTiIsInN0cmluZ2lmeSIsIl9jIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkRpYWdub3N0aWNDb21wb25lbnQudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyB1c2VTdGF0ZSwgdXNlRWZmZWN0IH0gZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgeyBDYXJkLCBDYXJkQ29udGVudCwgQ2FyZERlc2NyaXB0aW9uLCBDYXJkSGVhZGVyLCBDYXJkVGl0bGUgfSBmcm9tICdAL2NvbXBvbmVudHMvdWkvY2FyZCc7XHJcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9idXR0b24nO1xyXG5pbXBvcnQgeyBCYWRnZSB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9iYWRnZSc7XHJcbmltcG9ydCB7IFNlcGFyYXRvciB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9zZXBhcmF0b3InO1xyXG5pbXBvcnQgeyBBbGVydFRyaWFuZ2xlLCBDaGVja0NpcmNsZSwgWENpcmNsZSwgUmVmcmVzaEN3LCBaYXAgfSBmcm9tICdsdWNpZGUtcmVhY3QnO1xyXG5pbXBvcnQgeyBkaWFnbm9zdGljU2VydmljZSwgcnVuUXVpY2tEaWFnbm9zdGljLCBhdXRvRml4IH0gZnJvbSAnLi4vLi4vc2VydmljZXMvZGlhZ25vc3RpYyc7XHJcblxyXG5pbnRlcmZhY2UgRGlhZ25vc3RpY0NvbXBvbmVudFByb3BzIHtcclxuICBvbkNvbXBsZXRlPzogKHN1Y2Nlc3M6IGJvb2xlYW4pID0+IHZvaWQ7XHJcbn1cclxuXHJcbmNvbnN0IERpYWdub3N0aWNDb21wb25lbnQ6IFJlYWN0LkZDPERpYWdub3N0aWNDb21wb25lbnRQcm9wcz4gPSAoeyBvbkNvbXBsZXRlIH0pID0+IHtcclxuICBjb25zdCBbaXNSdW5uaW5nLCBzZXRJc1J1bm5pbmddID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFtpc0ZpeGluZywgc2V0SXNGaXhpbmddID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFtyZXBvcnQsIHNldFJlcG9ydF0gPSB1c2VTdGF0ZTxhbnk+KG51bGwpO1xyXG4gIGNvbnN0IFthdXRvUnVuQ29tcGxldGVkLCBzZXRBdXRvUnVuQ29tcGxldGVkXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuXHJcbiAgLy8gRXhlY3V0YXIgZGlhZ27Ds3N0aWNvIGF1dG9tYXRpY2FtZW50ZSBuYSBwcmltZWlyYSBjYXJnYVxyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBpZiAoIWF1dG9SdW5Db21wbGV0ZWQpIHtcclxuICAgICAgaGFuZGxlUnVuRGlhZ25vc3RpYygpO1xyXG4gICAgICBzZXRBdXRvUnVuQ29tcGxldGVkKHRydWUpO1xyXG4gICAgfVxyXG4gIH0sIFthdXRvUnVuQ29tcGxldGVkXSk7XHJcblxyXG4gIGNvbnN0IGhhbmRsZVJ1bkRpYWdub3N0aWMgPSBhc3luYyAoKSA9PiB7XHJcbiAgICBzZXRJc1J1bm5pbmcodHJ1ZSk7XHJcbiAgICB0cnkge1xyXG4gICAgICBjb25zb2xlLmxvZygn8J+UjSBFeGVjdXRhbmRvIGRpYWduw7NzdGljby4uLicpO1xyXG4gICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBydW5RdWlja0RpYWdub3N0aWMoKTtcclxuICAgICAgc2V0UmVwb3J0KHJlc3VsdCk7XHJcbiAgICAgIFxyXG4gICAgICBpZiAob25Db21wbGV0ZSkge1xyXG4gICAgICAgIG9uQ29tcGxldGUocmVzdWx0Lm92ZXJhbGxfc3RhdHVzID09PSAnSEVBTFRIWScpO1xyXG4gICAgICB9XHJcbiAgICB9IGNhdGNoIChlcnJvcikge1xyXG4gICAgICBjb25zb2xlLmVycm9yKCfinYwgRXJybyBubyBkaWFnbsOzc3RpY286JywgZXJyb3IpO1xyXG4gICAgfSBmaW5hbGx5IHtcclxuICAgICAgc2V0SXNSdW5uaW5nKGZhbHNlKTtcclxuICAgIH1cclxuICB9O1xyXG5cclxuICBjb25zdCBoYW5kbGVBdXRvRml4ID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgc2V0SXNGaXhpbmcodHJ1ZSk7XHJcbiAgICB0cnkge1xyXG4gICAgICBjb25zb2xlLmxvZygn8J+UpyBFeGVjdXRhbmRvIGF1dG8tY29ycmXDp8Ojby4uLicpO1xyXG4gICAgICBjb25zdCBmaXhlZCA9IGF3YWl0IGF1dG9GaXgoKTtcclxuICAgICAgXHJcbiAgICAgIGlmIChmaXhlZCkge1xyXG4gICAgICAgIC8vIFJlLWV4ZWN1dGFyIGRpYWduw7NzdGljbyBhcMOzcyBjb3JyZcOnw6NvXHJcbiAgICAgICAgYXdhaXQgaGFuZGxlUnVuRGlhZ25vc3RpYygpO1xyXG4gICAgICB9XHJcbiAgICB9IGNhdGNoIChlcnJvcikge1xyXG4gICAgICBjb25zb2xlLmVycm9yKCfinYwgRXJybyBuYSBhdXRvLWNvcnJlw6fDo286JywgZXJyb3IpO1xyXG4gICAgfSBmaW5hbGx5IHtcclxuICAgICAgc2V0SXNGaXhpbmcoZmFsc2UpO1xyXG4gICAgfVxyXG4gIH07XHJcblxyXG4gIGNvbnN0IGdldFN0YXR1c0ljb24gPSAoc3VjY2VzczogYm9vbGVhbikgPT4ge1xyXG4gICAgcmV0dXJuIHN1Y2Nlc3MgPyAoXHJcbiAgICAgIDxDaGVja0NpcmNsZSBjbGFzc05hbWU9XCJoLTQgdy00IHRleHQtZ3JlZW4tNTAwXCIgLz5cclxuICAgICkgOiAoXHJcbiAgICAgIDxYQ2lyY2xlIGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC1yZWQtNTAwXCIgLz5cclxuICAgICk7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgZ2V0T3ZlcmFsbFN0YXR1c0NvbG9yID0gKHN0YXR1czogc3RyaW5nKSA9PiB7XHJcbiAgICBzd2l0Y2ggKHN0YXR1cykge1xyXG4gICAgICBjYXNlICdIRUFMVEhZJzpcclxuICAgICAgICByZXR1cm4gJ2JnLWdyZWVuLTUwMCc7XHJcbiAgICAgIGNhc2UgJ1dBUk5JTkcnOlxyXG4gICAgICAgIHJldHVybiAnYmcteWVsbG93LTUwMCc7XHJcbiAgICAgIGNhc2UgJ0NSSVRJQ0FMJzpcclxuICAgICAgICByZXR1cm4gJ2JnLXJlZC01MDAnO1xyXG4gICAgICBkZWZhdWx0OlxyXG4gICAgICAgIHJldHVybiAnYmctZ3JheS01MDAnO1xyXG4gICAgfVxyXG4gIH07XHJcblxyXG4gIHJldHVybiAoXHJcbiAgICA8ZGl2IGNsYXNzTmFtZT1cIm1heC13LTR4bCBteC1hdXRvIHAtNlwiPlxyXG4gICAgICA8Q2FyZD5cclxuICAgICAgICA8Q2FyZEhlYWRlcj5cclxuICAgICAgICAgIDxDYXJkVGl0bGUgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cclxuICAgICAgICAgICAgPFphcCBjbGFzc05hbWU9XCJoLTUgdy01XCIgLz5cclxuICAgICAgICAgICAgRGlhZ27Ds3N0aWNvIGRvIFNpc3RlbWFcclxuICAgICAgICAgIDwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgPENhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICAgICAgVmVyaWZpY2HDp8OjbyBjb21wbGV0YSBkYSBjb25lY3RpdmlkYWRlIGUgZnVuY2lvbmFsaWRhZGUgZG8gc2lzdGVtYVxyXG4gICAgICAgICAgPC9DYXJkRGVzY3JpcHRpb24+XHJcbiAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgIFxyXG4gICAgICAgIDxDYXJkQ29udGVudCBjbGFzc05hbWU9XCJzcGFjZS15LTZcIj5cclxuICAgICAgICAgIHsvKiBDb250cm9sZXMgKi99XHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZ2FwLTNcIj5cclxuICAgICAgICAgICAgPEJ1dHRvbiBcclxuICAgICAgICAgICAgICBvbkNsaWNrPXtoYW5kbGVSdW5EaWFnbm9zdGljfSBcclxuICAgICAgICAgICAgICBkaXNhYmxlZD17aXNSdW5uaW5nIHx8IGlzRml4aW5nfVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCJcclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIDxSZWZyZXNoQ3cgY2xhc3NOYW1lPXtgaC00IHctNCAke2lzUnVubmluZyA/ICdhbmltYXRlLXNwaW4nIDogJyd9YH0gLz5cclxuICAgICAgICAgICAgICB7aXNSdW5uaW5nID8gJ0RpYWdub3N0aWNhbmRvLi4uJyA6ICdFeGVjdXRhciBEaWFnbsOzc3RpY28nfVxyXG4gICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgXHJcbiAgICAgICAgICAgIHtyZXBvcnQgJiYgcmVwb3J0Lm92ZXJhbGxfc3RhdHVzICE9PSAnSEVBTFRIWScgJiYgKFxyXG4gICAgICAgICAgICAgIDxCdXR0b24gXHJcbiAgICAgICAgICAgICAgICBvbkNsaWNrPXtoYW5kbGVBdXRvRml4fSBcclxuICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc1J1bm5pbmcgfHwgaXNGaXhpbmd9XHJcbiAgICAgICAgICAgICAgICB2YXJpYW50PVwic2Vjb25kYXJ5XCJcclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCJcclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICA8WmFwIGNsYXNzTmFtZT17YGgtNCB3LTQgJHtpc0ZpeGluZyA/ICdhbmltYXRlLXB1bHNlJyA6ICcnfWB9IC8+XHJcbiAgICAgICAgICAgICAgICB7aXNGaXhpbmcgPyAnQ29ycmlnaW5kby4uLicgOiAnQXV0by1Db3JyZcOnw6NvJ31cclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgKX1cclxuICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgIHtyZXBvcnQgJiYgKFxyXG4gICAgICAgICAgICA8PlxyXG4gICAgICAgICAgICAgIHsvKiBTdGF0dXMgR2VyYWwgKi99XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwLTQgYm9yZGVyIHJvdW5kZWQtbGdcIj5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIG1iLTNcIj5cclxuICAgICAgICAgICAgICAgICAgPGgzIGNsYXNzTmFtZT1cInRleHQtbGcgZm9udC1zZW1pYm9sZFwiPlN0YXR1cyBHZXJhbDwvaDM+XHJcbiAgICAgICAgICAgICAgICAgIDxCYWRnZSBjbGFzc05hbWU9e2dldE92ZXJhbGxTdGF0dXNDb2xvcihyZXBvcnQub3ZlcmFsbF9zdGF0dXMpfT5cclxuICAgICAgICAgICAgICAgICAgICB7cmVwb3J0Lm92ZXJhbGxfc3RhdHVzfVxyXG4gICAgICAgICAgICAgICAgICA8L0JhZGdlPlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgIHtyZXBvcnQucmVjb21tZW5kYXRpb25zLm1hcCgocmVjOiBzdHJpbmcsIGluZGV4OiBudW1iZXIpID0+IChcclxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGtleT17aW5kZXh9IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtc3RhcnQgZ2FwLTIgdGV4dC1zbVwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAge3JlYy5zdGFydHNXaXRoKCfinIUnKSA/IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgPENoZWNrQ2lyY2xlIGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC1ncmVlbi01MDAgbXQtMC41XCIgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICkgOiByZWMuc3RhcnRzV2l0aCgn4pqg77iPJykgPyAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDxBbGVydFRyaWFuZ2xlIGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC15ZWxsb3ctNTAwIG10LTAuNVwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICApIDogKFxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8WENpcmNsZSBjbGFzc05hbWU9XCJoLTQgdy00IHRleHQtcmVkLTUwMCBtdC0wLjVcIiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAgICAgICAgIDxzcGFuPntyZWMucmVwbGFjZSgvXlvinIXimqDvuI/inYxdXFxzKi8sICcnKX08L3NwYW4+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgICAgIHsvKiBUZXN0ZXMgSW5kaXZpZHVhaXMgKi99XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIGdyaWQtY29scy0xIG1kOmdyaWQtY29scy0yIGdhcC00XCI+XHJcbiAgICAgICAgICAgICAgICB7LyogQmFja2VuZCAqL31cclxuICAgICAgICAgICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgICAgICAgICA8Q2FyZEhlYWRlciBjbGFzc05hbWU9XCJwYi0zXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPENhcmRUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LWJhc2UgZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIHtnZXRTdGF0dXNJY29uKHJlcG9ydC5iYWNrZW5kX3N0YXR1cy5zdWNjZXNzKX1cclxuICAgICAgICAgICAgICAgICAgICAgIEJhY2tlbmRcclxuICAgICAgICAgICAgICAgICAgICA8L0NhcmRUaXRsZT5cclxuICAgICAgICAgICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgICAgICAgICA8Q2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1zbSB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIHtyZXBvcnQuYmFja2VuZF9zdGF0dXMubWVzc2FnZX1cclxuICAgICAgICAgICAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICAgICAgICAgICAge3JlcG9ydC5iYWNrZW5kX3N0YXR1cy5kZXRhaWxzICYmIChcclxuICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibXQtMiB0ZXh0LXhzIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICBBbWJpZW50ZToge3JlcG9ydC5iYWNrZW5kX3N0YXR1cy5kZXRhaWxzLmVudmlyb25tZW50fVxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgIDwvQ2FyZD5cclxuXHJcbiAgICAgICAgICAgICAgICB7LyogQ09SUyAqL31cclxuICAgICAgICAgICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgICAgICAgICA8Q2FyZEhlYWRlciBjbGFzc05hbWU9XCJwYi0zXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPENhcmRUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LWJhc2UgZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIHtnZXRTdGF0dXNJY29uKHJlcG9ydC5jb3JzX3Rlc3Quc3VjY2Vzcyl9XHJcbiAgICAgICAgICAgICAgICAgICAgICBDT1JTXHJcbiAgICAgICAgICAgICAgICAgICAgPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgICAgICAgICAgIDwvQ2FyZEhlYWRlcj5cclxuICAgICAgICAgICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7cmVwb3J0LmNvcnNfdGVzdC5tZXNzYWdlfVxyXG4gICAgICAgICAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgIDwvQ2FyZD5cclxuXHJcbiAgICAgICAgICAgICAgICB7LyogQXV0ZW50aWNhw6fDo28gKi99XHJcbiAgICAgICAgICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgICAgICAgICAgPENhcmRIZWFkZXIgY2xhc3NOYW1lPVwicGItM1wiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxDYXJkVGl0bGUgY2xhc3NOYW1lPVwidGV4dC1iYXNlIGZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7Z2V0U3RhdHVzSWNvbihyZXBvcnQuYXV0aF9zdGF0dXMuc3VjY2Vzcyl9XHJcbiAgICAgICAgICAgICAgICAgICAgICBBdXRlbnRpY2HDp8Ojb1xyXG4gICAgICAgICAgICAgICAgICAgIDwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICAgICAgICA8L0NhcmRIZWFkZXI+XHJcbiAgICAgICAgICAgICAgICAgIDxDYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAge3JlcG9ydC5hdXRoX3N0YXR1cy5tZXNzYWdlfVxyXG4gICAgICAgICAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgIDwvQ2FyZD5cclxuXHJcbiAgICAgICAgICAgICAgICB7LyogVG9rZW4gKi99XHJcbiAgICAgICAgICAgICAgICA8Q2FyZD5cclxuICAgICAgICAgICAgICAgICAgPENhcmRIZWFkZXIgY2xhc3NOYW1lPVwicGItM1wiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxDYXJkVGl0bGUgY2xhc3NOYW1lPVwidGV4dC1iYXNlIGZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7Z2V0U3RhdHVzSWNvbihyZXBvcnQudG9rZW5fdmFsaWRhdGlvbi5zdWNjZXNzKX1cclxuICAgICAgICAgICAgICAgICAgICAgIFRva2VuXHJcbiAgICAgICAgICAgICAgICAgICAgPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgICAgICAgICAgIDwvQ2FyZEhlYWRlcj5cclxuICAgICAgICAgICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7cmVwb3J0LnRva2VuX3ZhbGlkYXRpb24ubWVzc2FnZX1cclxuICAgICAgICAgICAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgICAgIHsvKiBFbmRwb2ludHMgZGEgQVBJICovfVxyXG4gICAgICAgICAgICAgIDxkaXY+XHJcbiAgICAgICAgICAgICAgICA8aDMgY2xhc3NOYW1lPVwidGV4dC1sZyBmb250LXNlbWlib2xkIG1iLTNcIj5FbmRwb2ludHMgZGEgQVBJPC9oMz5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBncmlkLWNvbHMtMSBtZDpncmlkLWNvbHMtMyBnYXAtNFwiPlxyXG4gICAgICAgICAgICAgICAgICB7T2JqZWN0LmVudHJpZXMocmVwb3J0LmFwaV9lbmRwb2ludHMpLm1hcCgoW2tleSwgZW5kcG9pbnRdOiBbc3RyaW5nLCBhbnldKSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgICAgPENhcmQga2V5PXtrZXl9PlxyXG4gICAgICAgICAgICAgICAgICAgICAgPENhcmRIZWFkZXIgY2xhc3NOYW1lPVwicGItM1wiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8Q2FyZFRpdGxlIGNsYXNzTmFtZT1cInRleHQtc20gZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICB7Z2V0U3RhdHVzSWNvbihlbmRwb2ludC5zdWNjZXNzKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICB7a2V5LmNoYXJBdCgwKS50b1VwcGVyQ2FzZSgpICsga2V5LnNsaWNlKDEpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8L0NhcmRUaXRsZT5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvQ2FyZEhlYWRlcj5cclxuICAgICAgICAgICAgICAgICAgICAgIDxDYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICB7ZW5kcG9pbnQubWVzc2FnZX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgICAgICAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgICAgIHsvKiBEZWJ1ZyBJbmZvICovfVxyXG4gICAgICAgICAgICAgIDxkZXRhaWxzIGNsYXNzTmFtZT1cImJvcmRlciByb3VuZGVkLWxnIHAtNFwiPlxyXG4gICAgICAgICAgICAgICAgPHN1bW1hcnkgY2xhc3NOYW1lPVwiZm9udC1tZWRpdW0gY3Vyc29yLXBvaW50ZXJcIj5cclxuICAgICAgICAgICAgICAgICAgSW5mb3JtYcOnw7VlcyBUw6ljbmljYXMgKERlYnVnKVxyXG4gICAgICAgICAgICAgICAgPC9zdW1tYXJ5PlxyXG4gICAgICAgICAgICAgICAgPHByZSBjbGFzc05hbWU9XCJtdC0zIHRleHQteHMgYmctbXV0ZWQgcC0zIHJvdW5kZWQgb3ZlcmZsb3ctYXV0b1wiPlxyXG4gICAgICAgICAgICAgICAgICB7SlNPTi5zdHJpbmdpZnkocmVwb3J0LCBudWxsLCAyKX1cclxuICAgICAgICAgICAgICAgIDwvcHJlPlxyXG4gICAgICAgICAgICAgIDwvZGV0YWlscz5cclxuICAgICAgICAgICAgPC8+XHJcbiAgICAgICAgICApfVxyXG5cclxuICAgICAgICAgIHshcmVwb3J0ICYmICFpc1J1bm5pbmcgJiYgKFxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtY2VudGVyIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlxyXG4gICAgICAgICAgICAgIENsaXF1ZSBlbSBcIkV4ZWN1dGFyIERpYWduw7NzdGljb1wiIHBhcmEgdmVyaWZpY2FyIG8gc2lzdGVtYVxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICl9XHJcbiAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgPC9DYXJkPlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IERpYWdub3N0aWNDb21wb25lbnQ7XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL2RpYWdub3N0aWMvRGlhZ25vc3RpY0NvbXBvbmVudC50c3gifQ==

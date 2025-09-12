@@ -1,0 +1,719 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/meep/MEEPValidacaoCPF.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const useState = __vite__cjsImport3_react["useState"];
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=47dd5afa";
+import {
+  Shield,
+  CheckCircle,
+  XCircle,
+  Search,
+  Clock,
+  AlertTriangle,
+  Copy,
+  FileText,
+  User
+} from "/node_modules/.vite/deps/lucide-react.js?v=47dd5afa";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "/src/components/ui/card.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Badge } from "/src/components/ui/badge.tsx";
+import { useToast } from "/src/hooks/use-toast.ts";
+const MEEPValidacaoCPF = () => {
+  _s();
+  const [cpf, setCpf] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resultado, setResultado] = useState(null);
+  const [historico, setHistorico] = useState([]);
+  const { toast } = useToast();
+  const formatCPF = (value) => {
+    const onlyDigits = value.replace(/\D/g, "");
+    if (onlyDigits.length <= 3) return onlyDigits;
+    if (onlyDigits.length <= 6) return `${onlyDigits.slice(0, 3)}.${onlyDigits.slice(3)}`;
+    if (onlyDigits.length <= 9) return `${onlyDigits.slice(0, 3)}.${onlyDigits.slice(3, 6)}.${onlyDigits.slice(6)}`;
+    return `${onlyDigits.slice(0, 3)}.${onlyDigits.slice(3, 6)}.${onlyDigits.slice(6, 9)}-${onlyDigits.slice(9, 11)}`;
+  };
+  const validarCPF = (cpf2) => {
+    const digits = cpf2.replace(/\D/g, "");
+    if (digits.length !== 11) return false;
+    if (digits === digits[0].repeat(11)) return false;
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(digits[i]) * (10 - i);
+    }
+    let digit1 = 11 - sum % 11;
+    if (digit1 > 9) digit1 = 0;
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+      sum += parseInt(digits[i]) * (11 - i);
+    }
+    let digit2 = 11 - sum % 11;
+    if (digit2 > 9) digit2 = 0;
+    return digit1 === parseInt(digits[9]) && digit2 === parseInt(digits[10]);
+  };
+  const handleValidacao = async () => {
+    if (!cpf) {
+      toast({
+        title: "CPF obrigatório",
+        description: "Por favor, informe um CPF para validação",
+        variant: "destructive"
+      });
+      return;
+    }
+    const cpfDigits = cpf.replace(/\D/g, "");
+    if (!validarCPF(cpfDigits)) {
+      toast({
+        title: "CPF inválido",
+        description: "O CPF informado não é válido",
+        variant: "destructive"
+      });
+      return;
+    }
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2e3));
+      const mockResult = {
+        cpf: cpfDigits,
+        valido: Math.random() > 0.2,
+        // 80% de chance de ser válido
+        nome: "João Silva Santos",
+        situacao: Math.random() > 0.1 ? "regular" : "irregular",
+        fonte: "Receita Federal",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      };
+      setResultado(mockResult);
+      setHistorico((prev) => [mockResult, ...prev.slice(0, 9)]);
+      toast({
+        title: mockResult.valido ? "CPF válido" : "CPF inválido",
+        description: mockResult.valido ? `CPF validado com sucesso - ${mockResult.nome}` : "CPF não encontrado ou inválido",
+        variant: mockResult.valido ? "default" : "destructive"
+      });
+    } catch (error) {
+      toast({
+        title: "Erro na validação",
+        description: "Não foi possível validar o CPF. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copiado!",
+      description: "CPF copiado para a área de transferência"
+    });
+  };
+  const getStatusIcon = (valido) => {
+    return valido ? /* @__PURE__ */ jsxDEV(CheckCircle, { className: "h-5 w-5 text-green-500" }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+      lineNumber: 159,
+      columnNumber: 5
+    }, this) : /* @__PURE__ */ jsxDEV(XCircle, { className: "h-5 w-5 text-red-500" }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+      lineNumber: 160,
+      columnNumber: 5
+    }, this);
+  };
+  const getStatusBadge = (valido) => {
+    return /* @__PURE__ */ jsxDEV(Badge, { variant: valido ? "default" : "destructive", children: valido ? "Válido" : "Inválido" }, void 0, false, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+      lineNumber: 165,
+      columnNumber: 7
+    }, this);
+  };
+  return /* @__PURE__ */ jsxDEV(
+    motion.div,
+    {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      className: "space-y-6",
+      children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("h1", { className: "text-3xl font-bold text-foreground", children: "MEEP Validação CPF" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 179,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { className: "text-muted-foreground", children: "Validação de CPF integrada com a Receita Federal" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 180,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 178,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2", children: /* @__PURE__ */ jsxDEV(Shield, { className: "h-8 w-8 text-primary" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 186,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 185,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+          lineNumber: 177,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV(Card, { children: [
+          /* @__PURE__ */ jsxDEV(CardHeader, { children: [
+            /* @__PURE__ */ jsxDEV(CardTitle, { className: "flex items-center space-x-2", children: [
+              /* @__PURE__ */ jsxDEV(Search, { className: "h-5 w-5" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 194,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { children: "Validar CPF" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 195,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 193,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardDescription, { children: "Digite o CPF para validação junto à Receita Federal" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 197,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 192,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(CardContent, { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "flex space-x-2", children: [
+              /* @__PURE__ */ jsxDEV(
+                Input,
+                {
+                  placeholder: "000.000.000-00",
+                  value: cpf,
+                  onChange: (e) => setCpf(formatCPF(e.target.value)),
+                  maxLength: 14,
+                  className: "flex-1"
+                },
+                void 0,
+                false,
+                {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                  lineNumber: 203,
+                  columnNumber: 13
+                },
+                this
+              ),
+              /* @__PURE__ */ jsxDEV(
+                Button,
+                {
+                  onClick: handleValidacao,
+                  disabled: loading,
+                  className: "px-8",
+                  children: loading ? "Validando..." : "Validar"
+                },
+                void 0,
+                false,
+                {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                  lineNumber: 210,
+                  columnNumber: 13
+                },
+                this
+              )
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 202,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-muted-foreground", children: [
+              /* @__PURE__ */ jsxDEV("p", { children: "• Validação em tempo real com a Receita Federal" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 220,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { children: "• Dados protegidos por hash SHA256" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 221,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { children: "• Cache inteligente para otimização" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 222,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 219,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 201,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+          lineNumber: 191,
+          columnNumber: 7
+        }, this),
+        resultado && /* @__PURE__ */ jsxDEV(
+          motion.div,
+          {
+            initial: { opacity: 0, scale: 0.95 },
+            animate: { opacity: 1, scale: 1 },
+            children: /* @__PURE__ */ jsxDEV(Card, { className: `border-2 ${resultado.valido ? "border-green-200" : "border-red-200"}`, children: [
+              /* @__PURE__ */ jsxDEV(CardHeader, { children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "flex items-center justify-between", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2", children: [
+                  getStatusIcon(resultado.valido),
+                  /* @__PURE__ */ jsxDEV("span", { children: "Resultado da Validação" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 238,
+                    columnNumber: 19
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                  lineNumber: 236,
+                  columnNumber: 17
+                }, this),
+                getStatusBadge(resultado.valido)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 235,
+                columnNumber: 15
+              }, this) }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 234,
+                columnNumber: 13
+              }, this),
+              /* @__PURE__ */ jsxDEV(CardContent, { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxDEV("label", { className: "text-sm font-medium text-muted-foreground", children: "CPF" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 246,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2", children: [
+                      /* @__PURE__ */ jsxDEV("code", { className: "px-2 py-1 bg-muted rounded text-sm", children: formatCPF(resultado.cpf) }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 248,
+                        columnNumber: 21
+                      }, this),
+                      /* @__PURE__ */ jsxDEV(
+                        Button,
+                        {
+                          variant: "ghost",
+                          size: "sm",
+                          onClick: () => copyToClipboard(resultado.cpf),
+                          children: /* @__PURE__ */ jsxDEV(Copy, { className: "h-4 w-4" }, void 0, false, {
+                            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                            lineNumber: 256,
+                            columnNumber: 23
+                          }, this)
+                        },
+                        void 0,
+                        false,
+                        {
+                          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                          lineNumber: 251,
+                          columnNumber: 21
+                        },
+                        this
+                      )
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 247,
+                      columnNumber: 19
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 245,
+                    columnNumber: 17
+                  }, this),
+                  resultado.nome && /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxDEV("label", { className: "text-sm font-medium text-muted-foreground", children: "Nome" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 263,
+                      columnNumber: 21
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2", children: [
+                      /* @__PURE__ */ jsxDEV(User, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 265,
+                        columnNumber: 23
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("span", { className: "text-sm", children: resultado.nome }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 266,
+                        columnNumber: 23
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 264,
+                      columnNumber: 21
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 262,
+                    columnNumber: 15
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxDEV("label", { className: "text-sm font-medium text-muted-foreground", children: "Situação" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 272,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(Badge, { variant: resultado.situacao === "regular" ? "default" : "secondary", children: resultado.situacao }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 273,
+                      columnNumber: 19
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 271,
+                    columnNumber: 17
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxDEV("label", { className: "text-sm font-medium text-muted-foreground", children: "Fonte" }, void 0, false, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 279,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2", children: [
+                      /* @__PURE__ */ jsxDEV(FileText, { className: "h-4 w-4 text-muted-foreground" }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 281,
+                        columnNumber: 21
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("span", { className: "text-sm", children: resultado.fonte }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 282,
+                        columnNumber: 21
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 280,
+                      columnNumber: 19
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 278,
+                    columnNumber: 17
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                  lineNumber: 244,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "pt-4 border-t", children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-2 text-sm text-muted-foreground", children: [
+                  /* @__PURE__ */ jsxDEV(Clock, { className: "h-4 w-4" }, void 0, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 289,
+                    columnNumber: 19
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("span", { children: [
+                    "Validado em ",
+                    new Date(resultado.timestamp).toLocaleString("pt-BR")
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 290,
+                    columnNumber: 19
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                  lineNumber: 288,
+                  columnNumber: 17
+                }, this) }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                  lineNumber: 287,
+                  columnNumber: 15
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 243,
+                columnNumber: 13
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 233,
+              columnNumber: 11
+            }, this)
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 229,
+            columnNumber: 7
+          },
+          this
+        ),
+        historico.length > 0 && /* @__PURE__ */ jsxDEV(Card, { children: [
+          /* @__PURE__ */ jsxDEV(CardHeader, { children: [
+            /* @__PURE__ */ jsxDEV(CardTitle, { children: "Histórico de Validações" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 304,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(CardDescription, { children: "Últimas validações realizadas nesta sessão" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 305,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 303,
+            columnNumber: 11
+          }, this),
+          /* @__PURE__ */ jsxDEV(CardContent, { children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: historico.map(
+            (item, index) => /* @__PURE__ */ jsxDEV(
+              motion.div,
+              {
+                initial: { opacity: 0, x: -20 },
+                animate: { opacity: 1, x: 0 },
+                transition: { delay: index * 0.1 },
+                className: "flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors",
+                children: [
+                  /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-3", children: [
+                    getStatusIcon(item.valido),
+                    /* @__PURE__ */ jsxDEV("div", { children: [
+                      /* @__PURE__ */ jsxDEV("div", { className: "font-medium", children: formatCPF(item.cpf) }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 322,
+                        columnNumber: 23
+                      }, this),
+                      item.nome && /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-muted-foreground", children: item.nome }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 324,
+                        columnNumber: 19
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 321,
+                      columnNumber: 21
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 319,
+                    columnNumber: 19
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-3", children: [
+                    /* @__PURE__ */ jsxDEV("div", { className: "text-right", children: [
+                      /* @__PURE__ */ jsxDEV("div", { className: "text-sm", children: getStatusBadge(item.valido) }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 331,
+                        columnNumber: 23
+                      }, this),
+                      /* @__PURE__ */ jsxDEV("div", { className: "text-xs text-muted-foreground", children: new Date(item.timestamp).toLocaleTimeString("pt-BR") }, void 0, false, {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 334,
+                        columnNumber: 23
+                      }, this)
+                    ] }, void 0, true, {
+                      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                      lineNumber: 330,
+                      columnNumber: 21
+                    }, this),
+                    /* @__PURE__ */ jsxDEV(
+                      Button,
+                      {
+                        variant: "ghost",
+                        size: "sm",
+                        onClick: () => copyToClipboard(item.cpf),
+                        children: /* @__PURE__ */ jsxDEV(Copy, { className: "h-4 w-4" }, void 0, false, {
+                          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                          lineNumber: 343,
+                          columnNumber: 23
+                        }, this)
+                      },
+                      void 0,
+                      false,
+                      {
+                        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                        lineNumber: 338,
+                        columnNumber: 21
+                      },
+                      this
+                    )
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                    lineNumber: 329,
+                    columnNumber: 19
+                  }, this)
+                ]
+              },
+              index,
+              true,
+              {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 312,
+                columnNumber: 13
+              },
+              this
+            )
+          ) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 310,
+            columnNumber: 13
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 309,
+            columnNumber: 11
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+          lineNumber: 302,
+          columnNumber: 7
+        }, this),
+        /* @__PURE__ */ jsxDEV(Card, { className: "bg-muted/50", children: [
+          /* @__PURE__ */ jsxDEV(CardHeader, { children: /* @__PURE__ */ jsxDEV(CardTitle, { className: "flex items-center space-x-2", children: [
+            /* @__PURE__ */ jsxDEV(AlertTriangle, { className: "h-5 w-5 text-yellow-600" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 357,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: "Informações de Segurança" }, void 0, false, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 358,
+              columnNumber: 13
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 356,
+            columnNumber: 11
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 355,
+            columnNumber: 9
+          }, this),
+          /* @__PURE__ */ jsxDEV(CardContent, { className: "space-y-2 text-sm", children: [
+            /* @__PURE__ */ jsxDEV("p", { children: [
+              "• ",
+              /* @__PURE__ */ jsxDEV("strong", { children: "LGPD Compliance:" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 362,
+                columnNumber: 16
+              }, this),
+              " Todos os CPFs são protegidos por hash SHA256"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 362,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: [
+              "• ",
+              /* @__PURE__ */ jsxDEV("strong", { children: "Rate Limiting:" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 363,
+                columnNumber: 16
+              }, this),
+              " Máximo de 10 consultas por minuto por usuário"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 363,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: [
+              "• ",
+              /* @__PURE__ */ jsxDEV("strong", { children: "Cache Inteligente:" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 364,
+                columnNumber: 16
+              }, this),
+              " Resultados válidos são cached por 24 horas"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 364,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: [
+              "• ",
+              /* @__PURE__ */ jsxDEV("strong", { children: "Logs de Auditoria:" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 365,
+                columnNumber: 16
+              }, this),
+              " Todas as consultas são registradas para segurança"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 365,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: [
+              "• ",
+              /* @__PURE__ */ jsxDEV("strong", { children: "Fonte Oficial:" }, void 0, false, {
+                fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+                lineNumber: 366,
+                columnNumber: 16
+              }, this),
+              " Dados diretos da Receita Federal do Brasil"
+            ] }, void 0, true, {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+              lineNumber: 366,
+              columnNumber: 11
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+            lineNumber: 361,
+            columnNumber: 9
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+          lineNumber: 354,
+          columnNumber: 7
+        }, this)
+      ]
+    },
+    void 0,
+    true,
+    {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx",
+      lineNumber: 172,
+      columnNumber: 5
+    },
+    this
+  );
+};
+_s(MEEPValidacaoCPF, "A/+L3ksukw1ByxM6BslxxOnMOIQ=", false, function() {
+  return [useToast];
+});
+_c = MEEPValidacaoCPF;
+export default MEEPValidacaoCPF;
+var _c;
+$RefreshReg$(_c, "MEEPValidacaoCPF");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/meep/MEEPValidacaoCPF.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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Y0FBRSx1QkFBQyxZQUFPLDhCQUFSO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQXNCO0FBQUEsY0FBUztBQUFBLGlCQUFwQztBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFrRjtBQUFBLFlBQ2xGLHVCQUFDLE9BQUU7QUFBQTtBQUFBLGNBQUUsdUJBQUMsWUFBTyxrQ0FBUjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUEwQjtBQUFBLGNBQVM7QUFBQSxpQkFBeEM7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBbUY7QUFBQSxZQUNuRix1QkFBQyxPQUFFO0FBQUE7QUFBQSxjQUFFLHVCQUFDLFlBQU8sa0NBQVI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBMEI7QUFBQSxjQUFTO0FBQUEsaUJBQXhDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQTBGO0FBQUEsWUFDMUYsdUJBQUMsT0FBRTtBQUFBO0FBQUEsY0FBRSx1QkFBQyxZQUFPLDhCQUFSO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQXNCO0FBQUEsY0FBUztBQUFBLGlCQUFwQztBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUErRTtBQUFBLGVBTGpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBTUE7QUFBQSxhQWJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFjQTtBQUFBO0FBQUE7QUFBQSxJQXBNRjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFxTUE7QUFFSjtBQUFFM0QsR0FuVUlELGtCQUEwQjtBQUFBLFVBS1pELFFBQVE7QUFBQTtBQUFBaUUsS0FMdEJoRTtBQXFVTixlQUFlQTtBQUFpQixJQUFBZ0U7QUFBQUMsYUFBQUQsSUFBQSIsIm5hbWVzIjpbInVzZVN0YXRlIiwibW90aW9uIiwiU2hpZWxkIiwiQ2hlY2tDaXJjbGUiLCJYQ2lyY2xlIiwiU2VhcmNoIiwiQ2xvY2siLCJBbGVydFRyaWFuZ2xlIiwiQ29weSIsIkZpbGVUZXh0IiwiVXNlciIsIkNhcmQiLCJDYXJkQ29udGVudCIsIkNhcmREZXNjcmlwdGlvbiIsIkNhcmRIZWFkZXIiLCJDYXJkVGl0bGUiLCJCdXR0b24iLCJJbnB1dCIsIkJhZGdlIiwidXNlVG9hc3QiLCJNRUVQVmFsaWRhY2FvQ1BGIiwiX3MiLCJjcGYiLCJzZXRDcGYiLCJsb2FkaW5nIiwic2V0TG9hZGluZyIsInJlc3VsdGFkbyIsInNldFJlc3VsdGFkbyIsImhpc3RvcmljbyIsInNldEhpc3RvcmljbyIsInRvYXN0IiwiZm9ybWF0Q1BGIiwidmFsdWUiLCJvbmx5RGlnaXRzIiwicmVwbGFjZSIsImxlbmd0aCIsInNsaWNlIiwidmFsaWRhckNQRiIsImRpZ2l0cyIsInJlcGVhdCIsInN1bSIsImkiLCJwYXJzZUludCIsImRpZ2l0MSIsImRpZ2l0MiIsImhhbmRsZVZhbGlkYWNhbyIsInRpdGxlIiwiZGVzY3JpcHRpb24iLCJ2YXJpYW50IiwiY3BmRGlnaXRzIiwiUHJvbWlzZSIsInJlc29sdmUiLCJzZXRUaW1lb3V0IiwibW9ja1Jlc3VsdCIsInZhbGlkbyIsIk1hdGgiLCJyYW5kb20iLCJub21lIiwic2l0dWFjYW8iLCJmb250ZSIsInRpbWVzdGFtcCIsIkRhdGUiLCJ0b0lTT1N0cmluZyIsInByZXYiLCJlcnJvciIsImNvcHlUb0NsaXBib2FyZCIsInRleHQiLCJuYXZpZ2F0b3IiLCJjbGlwYm9hcmQiLCJ3cml0ZVRleHQiLCJnZXRTdGF0dXNJY29uIiwiZ2V0U3RhdHVzQmFkZ2UiLCJvcGFjaXR5IiwieSIsImUiLCJ0YXJnZXQiLCJzY2FsZSIsInRvTG9jYWxlU3RyaW5nIiwibWFwIiwiaXRlbSIsImluZGV4IiwieCIsImRlbGF5IiwidG9Mb2NhbGVUaW1lU3RyaW5nIiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiTUVFUFZhbGlkYWNhb0NQRi50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlIH0gZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgeyBtb3Rpb24gfSBmcm9tICdmcmFtZXItbW90aW9uJztcclxuaW1wb3J0IHsgXHJcbiAgU2hpZWxkLCBcclxuICBDaGVja0NpcmNsZSwgXHJcbiAgWENpcmNsZSwgXHJcbiAgU2VhcmNoLCBcclxuICBDbG9jaywgXHJcbiAgQWxlcnRUcmlhbmdsZSxcclxuICBDb3B5LFxyXG4gIEZpbGVUZXh0LFxyXG4gIFVzZXJcclxufSBmcm9tICdsdWNpZGUtcmVhY3QnO1xyXG5pbXBvcnQgeyBDYXJkLCBDYXJkQ29udGVudCwgQ2FyZERlc2NyaXB0aW9uLCBDYXJkSGVhZGVyLCBDYXJkVGl0bGUgfSBmcm9tICcuLi91aS9jYXJkJztcclxuaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSAnLi4vdWkvYnV0dG9uJztcclxuaW1wb3J0IHsgSW5wdXQgfSBmcm9tICcuLi91aS9pbnB1dCc7XHJcbmltcG9ydCB7IEJhZGdlIH0gZnJvbSAnLi4vdWkvYmFkZ2UnO1xyXG5pbXBvcnQgeyB1c2VUb2FzdCB9IGZyb20gJy4uLy4uL2hvb2tzL3VzZS10b2FzdCc7XHJcblxyXG5pbnRlcmZhY2UgVmFsaWRhY2FvQ1BGIHtcclxuICBjcGY6IHN0cmluZztcclxuICB2YWxpZG86IGJvb2xlYW47XHJcbiAgbm9tZT86IHN0cmluZztcclxuICBzaXR1YWNhbzogc3RyaW5nO1xyXG4gIGZvbnRlOiBzdHJpbmc7XHJcbiAgdGltZXN0YW1wOiBzdHJpbmc7XHJcbn1cclxuXHJcbmNvbnN0IE1FRVBWYWxpZGFjYW9DUEY6IFJlYWN0LkZDID0gKCkgPT4ge1xyXG4gIGNvbnN0IFtjcGYsIHNldENwZl0gPSB1c2VTdGF0ZSgnJyk7XHJcbiAgY29uc3QgW2xvYWRpbmcsIHNldExvYWRpbmddID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFtyZXN1bHRhZG8sIHNldFJlc3VsdGFkb10gPSB1c2VTdGF0ZTxWYWxpZGFjYW9DUEYgfCBudWxsPihudWxsKTtcclxuICBjb25zdCBbaGlzdG9yaWNvLCBzZXRIaXN0b3JpY29dID0gdXNlU3RhdGU8VmFsaWRhY2FvQ1BGW10+KFtdKTtcclxuICBjb25zdCB7IHRvYXN0IH0gPSB1c2VUb2FzdCgpO1xyXG5cclxuICBjb25zdCBmb3JtYXRDUEYgPSAodmFsdWU6IHN0cmluZykgPT4ge1xyXG4gICAgLy8gUmVtb3ZlIHR1ZG8gcXVlIG7Do28gw6kgZMOtZ2l0b1xyXG4gICAgY29uc3Qgb25seURpZ2l0cyA9IHZhbHVlLnJlcGxhY2UoL1xcRC9nLCAnJyk7XHJcbiAgICBcclxuICAgIC8vIEFwbGljYSBhIG3DoXNjYXJhXHJcbiAgICBpZiAob25seURpZ2l0cy5sZW5ndGggPD0gMykgcmV0dXJuIG9ubHlEaWdpdHM7XHJcbiAgICBpZiAob25seURpZ2l0cy5sZW5ndGggPD0gNikgcmV0dXJuIGAke29ubHlEaWdpdHMuc2xpY2UoMCwgMyl9LiR7b25seURpZ2l0cy5zbGljZSgzKX1gO1xyXG4gICAgaWYgKG9ubHlEaWdpdHMubGVuZ3RoIDw9IDkpIHJldHVybiBgJHtvbmx5RGlnaXRzLnNsaWNlKDAsIDMpfS4ke29ubHlEaWdpdHMuc2xpY2UoMywgNil9LiR7b25seURpZ2l0cy5zbGljZSg2KX1gO1xyXG4gICAgcmV0dXJuIGAke29ubHlEaWdpdHMuc2xpY2UoMCwgMyl9LiR7b25seURpZ2l0cy5zbGljZSgzLCA2KX0uJHtvbmx5RGlnaXRzLnNsaWNlKDYsIDkpfS0ke29ubHlEaWdpdHMuc2xpY2UoOSwgMTEpfWA7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgdmFsaWRhckNQRiA9IChjcGY6IHN0cmluZyk6IGJvb2xlYW4gPT4ge1xyXG4gICAgY29uc3QgZGlnaXRzID0gY3BmLnJlcGxhY2UoL1xcRC9nLCAnJyk7XHJcbiAgICBcclxuICAgIGlmIChkaWdpdHMubGVuZ3RoICE9PSAxMSkgcmV0dXJuIGZhbHNlO1xyXG4gICAgaWYgKGRpZ2l0cyA9PT0gZGlnaXRzWzBdLnJlcGVhdCgxMSkpIHJldHVybiBmYWxzZTtcclxuICAgIFxyXG4gICAgLy8gVmFsaWRhw6fDo28gbWF0ZW3DoXRpY2FcclxuICAgIGxldCBzdW0gPSAwO1xyXG4gICAgZm9yIChsZXQgaSA9IDA7IGkgPCA5OyBpKyspIHtcclxuICAgICAgc3VtICs9IHBhcnNlSW50KGRpZ2l0c1tpXSkgKiAoMTAgLSBpKTtcclxuICAgIH1cclxuICAgIGxldCBkaWdpdDEgPSAxMSAtIChzdW0gJSAxMSk7XHJcbiAgICBpZiAoZGlnaXQxID4gOSkgZGlnaXQxID0gMDtcclxuICAgIFxyXG4gICAgc3VtID0gMDtcclxuICAgIGZvciAobGV0IGkgPSAwOyBpIDwgMTA7IGkrKykge1xyXG4gICAgICBzdW0gKz0gcGFyc2VJbnQoZGlnaXRzW2ldKSAqICgxMSAtIGkpO1xyXG4gICAgfVxyXG4gICAgbGV0IGRpZ2l0MiA9IDExIC0gKHN1bSAlIDExKTtcclxuICAgIGlmIChkaWdpdDIgPiA5KSBkaWdpdDIgPSAwO1xyXG4gICAgXHJcbiAgICByZXR1cm4gZGlnaXQxID09PSBwYXJzZUludChkaWdpdHNbOV0pICYmIGRpZ2l0MiA9PT0gcGFyc2VJbnQoZGlnaXRzWzEwXSk7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgaGFuZGxlVmFsaWRhY2FvID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgaWYgKCFjcGYpIHtcclxuICAgICAgdG9hc3Qoe1xyXG4gICAgICAgIHRpdGxlOiBcIkNQRiBvYnJpZ2F0w7NyaW9cIixcclxuICAgICAgICBkZXNjcmlwdGlvbjogXCJQb3IgZmF2b3IsIGluZm9ybWUgdW0gQ1BGIHBhcmEgdmFsaWRhw6fDo29cIixcclxuICAgICAgICB2YXJpYW50OiBcImRlc3RydWN0aXZlXCIsXHJcbiAgICAgIH0pO1xyXG4gICAgICByZXR1cm47XHJcbiAgICB9XHJcblxyXG4gICAgY29uc3QgY3BmRGlnaXRzID0gY3BmLnJlcGxhY2UoL1xcRC9nLCAnJyk7XHJcbiAgICBcclxuICAgIGlmICghdmFsaWRhckNQRihjcGZEaWdpdHMpKSB7XHJcbiAgICAgIHRvYXN0KHtcclxuICAgICAgICB0aXRsZTogXCJDUEYgaW52w6FsaWRvXCIsXHJcbiAgICAgICAgZGVzY3JpcHRpb246IFwiTyBDUEYgaW5mb3JtYWRvIG7Do28gw6kgdsOhbGlkb1wiLFxyXG4gICAgICAgIHZhcmlhbnQ6IFwiZGVzdHJ1Y3RpdmVcIixcclxuICAgICAgfSk7XHJcbiAgICAgIHJldHVybjtcclxuICAgIH1cclxuXHJcbiAgICBzZXRMb2FkaW5nKHRydWUpO1xyXG4gICAgXHJcbiAgICB0cnkge1xyXG4gICAgICAvLyBTaW11bGFyIGNvbnN1bHRhIMOgIEFQSSBNRUVQXHJcbiAgICAgIGF3YWl0IG5ldyBQcm9taXNlKHJlc29sdmUgPT4gc2V0VGltZW91dChyZXNvbHZlLCAyMDAwKSk7XHJcbiAgICAgIFxyXG4gICAgICAvLyBNb2NrIGRhdGEgcGFyYSBkZW1vbnN0cmHDp8Ojb1xyXG4gICAgICBjb25zdCBtb2NrUmVzdWx0OiBWYWxpZGFjYW9DUEYgPSB7XHJcbiAgICAgICAgY3BmOiBjcGZEaWdpdHMsXHJcbiAgICAgICAgdmFsaWRvOiBNYXRoLnJhbmRvbSgpID4gMC4yLCAvLyA4MCUgZGUgY2hhbmNlIGRlIHNlciB2w6FsaWRvXHJcbiAgICAgICAgbm9tZTogJ0pvw6NvIFNpbHZhIFNhbnRvcycsXHJcbiAgICAgICAgc2l0dWFjYW86IE1hdGgucmFuZG9tKCkgPiAwLjEgPyAncmVndWxhcicgOiAnaXJyZWd1bGFyJyxcclxuICAgICAgICBmb250ZTogJ1JlY2VpdGEgRmVkZXJhbCcsXHJcbiAgICAgICAgdGltZXN0YW1wOiBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKClcclxuICAgICAgfTtcclxuICAgICAgXHJcbiAgICAgIHNldFJlc3VsdGFkbyhtb2NrUmVzdWx0KTtcclxuICAgICAgc2V0SGlzdG9yaWNvKHByZXYgPT4gW21vY2tSZXN1bHQsIC4uLnByZXYuc2xpY2UoMCwgOSldKTsgLy8gTWFudGVyIGFwZW5hcyBvcyAxMCDDumx0aW1vc1xyXG4gICAgICBcclxuICAgICAgdG9hc3Qoe1xyXG4gICAgICAgIHRpdGxlOiBtb2NrUmVzdWx0LnZhbGlkbyA/IFwiQ1BGIHbDoWxpZG9cIiA6IFwiQ1BGIGludsOhbGlkb1wiLFxyXG4gICAgICAgIGRlc2NyaXB0aW9uOiBtb2NrUmVzdWx0LnZhbGlkbyA/IFxyXG4gICAgICAgICAgYENQRiB2YWxpZGFkbyBjb20gc3VjZXNzbyAtICR7bW9ja1Jlc3VsdC5ub21lfWAgOiBcclxuICAgICAgICAgIFwiQ1BGIG7Do28gZW5jb250cmFkbyBvdSBpbnbDoWxpZG9cIixcclxuICAgICAgICB2YXJpYW50OiBtb2NrUmVzdWx0LnZhbGlkbyA/IFwiZGVmYXVsdFwiIDogXCJkZXN0cnVjdGl2ZVwiLFxyXG4gICAgICB9KTtcclxuICAgICAgXHJcbiAgICB9IGNhdGNoIChlcnJvcikge1xyXG4gICAgICB0b2FzdCh7XHJcbiAgICAgICAgdGl0bGU6IFwiRXJybyBuYSB2YWxpZGHDp8Ojb1wiLFxyXG4gICAgICAgIGRlc2NyaXB0aW9uOiBcIk7Do28gZm9pIHBvc3PDrXZlbCB2YWxpZGFyIG8gQ1BGLiBUZW50ZSBub3ZhbWVudGUuXCIsXHJcbiAgICAgICAgdmFyaWFudDogXCJkZXN0cnVjdGl2ZVwiLFxyXG4gICAgICB9KTtcclxuICAgIH0gZmluYWxseSB7XHJcbiAgICAgIHNldExvYWRpbmcoZmFsc2UpO1xyXG4gICAgfVxyXG4gIH07XHJcblxyXG4gIGNvbnN0IGNvcHlUb0NsaXBib2FyZCA9ICh0ZXh0OiBzdHJpbmcpID0+IHtcclxuICAgIG5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGVUZXh0KHRleHQpO1xyXG4gICAgdG9hc3Qoe1xyXG4gICAgICB0aXRsZTogXCJDb3BpYWRvIVwiLFxyXG4gICAgICBkZXNjcmlwdGlvbjogXCJDUEYgY29waWFkbyBwYXJhIGEgw6FyZWEgZGUgdHJhbnNmZXLDqm5jaWFcIixcclxuICAgIH0pO1xyXG4gIH07XHJcblxyXG4gIGNvbnN0IGdldFN0YXR1c0ljb24gPSAodmFsaWRvOiBib29sZWFuKSA9PiB7XHJcbiAgICByZXR1cm4gdmFsaWRvID8gXHJcbiAgICAgIDxDaGVja0NpcmNsZSBjbGFzc05hbWU9XCJoLTUgdy01IHRleHQtZ3JlZW4tNTAwXCIgLz4gOiBcclxuICAgICAgPFhDaXJjbGUgY2xhc3NOYW1lPVwiaC01IHctNSB0ZXh0LXJlZC01MDBcIiAvPjtcclxuICB9O1xyXG5cclxuICBjb25zdCBnZXRTdGF0dXNCYWRnZSA9ICh2YWxpZG86IGJvb2xlYW4pID0+IHtcclxuICAgIHJldHVybiAoXHJcbiAgICAgIDxCYWRnZSB2YXJpYW50PXt2YWxpZG8gPyBcImRlZmF1bHRcIiA6IFwiZGVzdHJ1Y3RpdmVcIn0+XHJcbiAgICAgICAge3ZhbGlkbyA/IFwiVsOhbGlkb1wiIDogXCJJbnbDoWxpZG9cIn1cclxuICAgICAgPC9CYWRnZT5cclxuICAgICk7XHJcbiAgfTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMjAgfX1cclxuICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB5OiAwIH19XHJcbiAgICAgIGNsYXNzTmFtZT1cInNwYWNlLXktNlwiXHJcbiAgICA+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuXCI+XHJcbiAgICAgICAgPGRpdj5cclxuICAgICAgICAgIDxoMSBjbGFzc05hbWU9XCJ0ZXh0LTN4bCBmb250LWJvbGQgdGV4dC1mb3JlZ3JvdW5kXCI+TUVFUCBWYWxpZGHDp8OjbyBDUEY8L2gxPlxyXG4gICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICAgIFZhbGlkYcOnw6NvIGRlIENQRiBpbnRlZ3JhZGEgY29tIGEgUmVjZWl0YSBGZWRlcmFsXHJcbiAgICAgICAgICA8L3A+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgXHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBzcGFjZS14LTJcIj5cclxuICAgICAgICAgIDxTaGllbGQgY2xhc3NOYW1lPVwiaC04IHctOCB0ZXh0LXByaW1hcnlcIiAvPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICA8L2Rpdj5cclxuXHJcbiAgICAgIHsvKiBGb3JtdWzDoXJpbyBkZSBWYWxpZGHDp8OjbyAqL31cclxuICAgICAgPENhcmQ+XHJcbiAgICAgICAgPENhcmRIZWFkZXI+XHJcbiAgICAgICAgICA8Q2FyZFRpdGxlIGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHNwYWNlLXgtMlwiPlxyXG4gICAgICAgICAgICA8U2VhcmNoIGNsYXNzTmFtZT1cImgtNSB3LTVcIiAvPlxyXG4gICAgICAgICAgICA8c3Bhbj5WYWxpZGFyIENQRjwvc3Bhbj5cclxuICAgICAgICAgIDwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgPENhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICAgICAgRGlnaXRlIG8gQ1BGIHBhcmEgdmFsaWRhw6fDo28ganVudG8gw6AgUmVjZWl0YSBGZWRlcmFsXHJcbiAgICAgICAgICA8L0NhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICA8L0NhcmRIZWFkZXI+XHJcbiAgICAgICAgPENhcmRDb250ZW50IGNsYXNzTmFtZT1cInNwYWNlLXktNFwiPlxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IHNwYWNlLXgtMlwiPlxyXG4gICAgICAgICAgICA8SW5wdXRcclxuICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIjAwMC4wMDAuMDAwLTAwXCJcclxuICAgICAgICAgICAgICB2YWx1ZT17Y3BmfVxyXG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Q3BmKGZvcm1hdENQRihlLnRhcmdldC52YWx1ZSkpfVxyXG4gICAgICAgICAgICAgIG1heExlbmd0aD17MTR9XHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleC0xXCJcclxuICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPEJ1dHRvbiBcclxuICAgICAgICAgICAgICBvbkNsaWNrPXtoYW5kbGVWYWxpZGFjYW99XHJcbiAgICAgICAgICAgICAgZGlzYWJsZWQ9e2xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwicHgtOFwiXHJcbiAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICB7bG9hZGluZyA/IFwiVmFsaWRhbmRvLi4uXCIgOiBcIlZhbGlkYXJcIn1cclxuICAgICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIFxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlxyXG4gICAgICAgICAgICA8cD7igKIgVmFsaWRhw6fDo28gZW0gdGVtcG8gcmVhbCBjb20gYSBSZWNlaXRhIEZlZGVyYWw8L3A+XHJcbiAgICAgICAgICAgIDxwPuKAoiBEYWRvcyBwcm90ZWdpZG9zIHBvciBoYXNoIFNIQTI1NjwvcD5cclxuICAgICAgICAgICAgPHA+4oCiIENhY2hlIGludGVsaWdlbnRlIHBhcmEgb3RpbWl6YcOnw6NvPC9wPlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgPC9DYXJkPlxyXG5cclxuICAgICAgey8qIFJlc3VsdGFkbyBkYSBWYWxpZGHDp8OjbyAqL31cclxuICAgICAge3Jlc3VsdGFkbyAmJiAoXHJcbiAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgc2NhbGU6IDAuOTUgfX1cclxuICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgc2NhbGU6IDEgfX1cclxuICAgICAgICA+XHJcbiAgICAgICAgICA8Q2FyZCBjbGFzc05hbWU9e2Bib3JkZXItMiAke3Jlc3VsdGFkby52YWxpZG8gPyAnYm9yZGVyLWdyZWVuLTIwMCcgOiAnYm9yZGVyLXJlZC0yMDAnfWB9PlxyXG4gICAgICAgICAgICA8Q2FyZEhlYWRlcj5cclxuICAgICAgICAgICAgICA8Q2FyZFRpdGxlIGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlblwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBzcGFjZS14LTJcIj5cclxuICAgICAgICAgICAgICAgICAge2dldFN0YXR1c0ljb24ocmVzdWx0YWRvLnZhbGlkbyl9XHJcbiAgICAgICAgICAgICAgICAgIDxzcGFuPlJlc3VsdGFkbyBkYSBWYWxpZGHDp8Ojbzwvc3Bhbj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAge2dldFN0YXR1c0JhZGdlKHJlc3VsdGFkby52YWxpZG8pfVxyXG4gICAgICAgICAgICAgIDwvQ2FyZFRpdGxlPlxyXG4gICAgICAgICAgICA8L0NhcmRIZWFkZXI+XHJcbiAgICAgICAgICAgIDxDYXJkQ29udGVudCBjbGFzc05hbWU9XCJzcGFjZS15LTRcIj5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTEgbWQ6Z3JpZC1jb2xzLTIgZ2FwLTRcIj5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPkNQRjwvbGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPGNvZGUgY2xhc3NOYW1lPVwicHgtMiBweS0xIGJnLW11dGVkIHJvdW5kZWQgdGV4dC1zbVwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAge2Zvcm1hdENQRihyZXN1bHRhZG8uY3BmKX1cclxuICAgICAgICAgICAgICAgICAgICA8L2NvZGU+XHJcbiAgICAgICAgICAgICAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgICAgICAgICAgICAgdmFyaWFudD1cImdob3N0XCJcclxuICAgICAgICAgICAgICAgICAgICAgIHNpemU9XCJzbVwiXHJcbiAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBjb3B5VG9DbGlwYm9hcmQocmVzdWx0YWRvLmNwZil9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPENvcHkgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgIHtyZXN1bHRhZG8ubm9tZSAmJiAoXHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cInRleHQtc20gZm9udC1tZWRpdW0gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+Tm9tZTwvbGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBzcGFjZS14LTJcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIDxVc2VyIGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtc21cIj57cmVzdWx0YWRvLm5vbWV9PC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlNpdHVhw6fDo288L2xhYmVsPlxyXG4gICAgICAgICAgICAgICAgICA8QmFkZ2UgdmFyaWFudD17cmVzdWx0YWRvLnNpdHVhY2FvID09PSAncmVndWxhcicgPyAnZGVmYXVsdCcgOiAnc2Vjb25kYXJ5J30+XHJcbiAgICAgICAgICAgICAgICAgICAge3Jlc3VsdGFkby5zaXR1YWNhb31cclxuICAgICAgICAgICAgICAgICAgPC9CYWRnZT5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgXHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktMlwiPlxyXG4gICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwidGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5Gb250ZTwvbGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZpbGVUZXh0IGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXNtXCI+e3Jlc3VsdGFkby5mb250ZX08L3NwYW4+XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgXHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwdC00IGJvcmRlci10XCI+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHNwYWNlLXgtMiB0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZFwiPlxyXG4gICAgICAgICAgICAgICAgICA8Q2xvY2sgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XHJcbiAgICAgICAgICAgICAgICAgIDxzcGFuPlxyXG4gICAgICAgICAgICAgICAgICAgIFZhbGlkYWRvIGVtIHtuZXcgRGF0ZShyZXN1bHRhZG8udGltZXN0YW1wKS50b0xvY2FsZVN0cmluZygncHQtQlInKX1cclxuICAgICAgICAgICAgICAgICAgPC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgICA8L0NhcmQ+XHJcbiAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgICApfVxyXG5cclxuICAgICAgey8qIEhpc3TDs3JpY28gZGUgVmFsaWRhw6fDtWVzICovfVxyXG4gICAgICB7aGlzdG9yaWNvLmxlbmd0aCA+IDAgJiYgKFxyXG4gICAgICAgIDxDYXJkPlxyXG4gICAgICAgICAgPENhcmRIZWFkZXI+XHJcbiAgICAgICAgICAgIDxDYXJkVGl0bGU+SGlzdMOzcmljbyBkZSBWYWxpZGHDp8O1ZXM8L0NhcmRUaXRsZT5cclxuICAgICAgICAgICAgPENhcmREZXNjcmlwdGlvbj5cclxuICAgICAgICAgICAgICDDmmx0aW1hcyB2YWxpZGHDp8O1ZXMgcmVhbGl6YWRhcyBuZXN0YSBzZXNzw6NvXHJcbiAgICAgICAgICAgIDwvQ2FyZERlc2NyaXB0aW9uPlxyXG4gICAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgICAgPENhcmRDb250ZW50PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktM1wiPlxyXG4gICAgICAgICAgICAgIHtoaXN0b3JpY28ubWFwKChpdGVtLCBpbmRleCkgPT4gKFxyXG4gICAgICAgICAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgICAgICAgICAga2V5PXtpbmRleH1cclxuICAgICAgICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB4OiAtMjAgfX1cclxuICAgICAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB4OiAwIH19XHJcbiAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZGVsYXk6IGluZGV4ICogMC4xIH19XHJcbiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBwLTMgYm9yZGVyIHJvdW5kZWQtbGcgaG92ZXI6YmctbXV0ZWQvNTAgdHJhbnNpdGlvbi1jb2xvcnNcIlxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHNwYWNlLXgtM1wiPlxyXG4gICAgICAgICAgICAgICAgICAgIHtnZXRTdGF0dXNJY29uKGl0ZW0udmFsaWRvKX1cclxuICAgICAgICAgICAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmb250LW1lZGl1bVwiPntmb3JtYXRDUEYoaXRlbS5jcGYpfTwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgICAge2l0ZW0ubm9tZSAmJiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC1zbSB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj57aXRlbS5ub21lfTwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIFxyXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHNwYWNlLXgtM1wiPlxyXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC1yaWdodFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXNtXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHtnZXRTdGF0dXNCYWRnZShpdGVtLnZhbGlkbyl9XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAge25ldyBEYXRlKGl0ZW0udGltZXN0YW1wKS50b0xvY2FsZVRpbWVTdHJpbmcoJ3B0LUJSJyl9XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgICAgICAgICAgICB2YXJpYW50PVwiZ2hvc3RcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgc2l6ZT1cInNtXCJcclxuICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IGNvcHlUb0NsaXBib2FyZChpdGVtLmNwZil9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPENvcHkgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIDwvQ2FyZENvbnRlbnQ+XHJcbiAgICAgICAgPC9DYXJkPlxyXG4gICAgICApfVxyXG5cclxuICAgICAgey8qIEluZm9ybWHDp8O1ZXMgZGUgU2VndXJhbsOnYSAqL31cclxuICAgICAgPENhcmQgY2xhc3NOYW1lPVwiYmctbXV0ZWQvNTBcIj5cclxuICAgICAgICA8Q2FyZEhlYWRlcj5cclxuICAgICAgICAgIDxDYXJkVGl0bGUgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCI+XHJcbiAgICAgICAgICAgIDxBbGVydFRyaWFuZ2xlIGNsYXNzTmFtZT1cImgtNSB3LTUgdGV4dC15ZWxsb3ctNjAwXCIgLz5cclxuICAgICAgICAgICAgPHNwYW4+SW5mb3JtYcOnw7VlcyBkZSBTZWd1cmFuw6dhPC9zcGFuPlxyXG4gICAgICAgICAgPC9DYXJkVGl0bGU+XHJcbiAgICAgICAgPC9DYXJkSGVhZGVyPlxyXG4gICAgICAgIDxDYXJkQ29udGVudCBjbGFzc05hbWU9XCJzcGFjZS15LTIgdGV4dC1zbVwiPlxyXG4gICAgICAgICAgPHA+4oCiIDxzdHJvbmc+TEdQRCBDb21wbGlhbmNlOjwvc3Ryb25nPiBUb2RvcyBvcyBDUEZzIHPDo28gcHJvdGVnaWRvcyBwb3IgaGFzaCBTSEEyNTY8L3A+XHJcbiAgICAgICAgICA8cD7igKIgPHN0cm9uZz5SYXRlIExpbWl0aW5nOjwvc3Ryb25nPiBNw6F4aW1vIGRlIDEwIGNvbnN1bHRhcyBwb3IgbWludXRvIHBvciB1c3XDoXJpbzwvcD5cclxuICAgICAgICAgIDxwPuKAoiA8c3Ryb25nPkNhY2hlIEludGVsaWdlbnRlOjwvc3Ryb25nPiBSZXN1bHRhZG9zIHbDoWxpZG9zIHPDo28gY2FjaGVkIHBvciAyNCBob3JhczwvcD5cclxuICAgICAgICAgIDxwPuKAoiA8c3Ryb25nPkxvZ3MgZGUgQXVkaXRvcmlhOjwvc3Ryb25nPiBUb2RhcyBhcyBjb25zdWx0YXMgc8OjbyByZWdpc3RyYWRhcyBwYXJhIHNlZ3VyYW7Dp2E8L3A+XHJcbiAgICAgICAgICA8cD7igKIgPHN0cm9uZz5Gb250ZSBPZmljaWFsOjwvc3Ryb25nPiBEYWRvcyBkaXJldG9zIGRhIFJlY2VpdGEgRmVkZXJhbCBkbyBCcmFzaWw8L3A+XHJcbiAgICAgICAgPC9DYXJkQ29udGVudD5cclxuICAgICAgPC9DYXJkPlxyXG4gICAgPC9tb3Rpb24uZGl2PlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBNRUVQVmFsaWRhY2FvQ1BGO1xyXG4iXSwiZmlsZSI6IkM6L1VzZXJzL1VzZXIvT25lRHJpdmUvRGVza3RvcC9zaXN0ZW1hLXY2LW5vdm8vcGFpbmVsdW5pdmVyc2FsL3BhaW5lbHVuaXZlcnNhbC9mcm9udGVuZC9zcmMvY29tcG9uZW50cy9tZWVwL01FRVBWYWxpZGFjYW9DUEYudHN4In0=

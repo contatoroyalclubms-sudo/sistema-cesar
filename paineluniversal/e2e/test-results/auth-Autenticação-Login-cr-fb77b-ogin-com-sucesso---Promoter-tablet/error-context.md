@@ -1,0 +1,15 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: CPF
+      - textbox "CPF" [ref=e6]: 987.654.321-00
+    - generic [ref=e7]:
+      - generic [ref=e8]: Senha
+      - textbox "Senha" [ref=e9]: Promoter@123
+    - button "Entrar" [ref=e10] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list
+```

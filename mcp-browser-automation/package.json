@@ -1,0 +1,27 @@
+{
+  "name": "mcp-browser-automation",
+  "version": "1.0.0",
+  "description": "MCP Server for Browser Automation with Playwright",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test-client.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "playwright": "^1.40.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": [
+    "mcp",
+    "browser-automation",
+    "playwright",
+    "web-scraping"
+  ],
+  "author": "",
+  "license": "MIT"
+}

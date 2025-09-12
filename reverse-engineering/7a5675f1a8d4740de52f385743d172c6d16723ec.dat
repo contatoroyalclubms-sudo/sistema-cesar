@@ -1,0 +1,366 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/estoque/TransferModal.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=47dd5afa"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=47dd5afa"; const useState = __vite__cjsImport3_react["useState"];
+export function TransferModal({ isOpen, onClose, onSuccess }) {
+  _s();
+  const [formData, setFormData] = useState({
+    reference: "",
+    product: "",
+    quantity: "",
+    fromLocation: "",
+    toLocation: "",
+    notes: ""
+  });
+  console.log("🔄 TransferModal renderizado com isOpen:", isOpen);
+  if (!isOpen) return null;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("🔄 Formulário de transferência submetido:", formData);
+    alert("Transferência realizada com sucesso! (Mock)");
+    onSuccess?.();
+    onClose();
+  };
+  const locations = [
+    { value: "deposito", label: "Depósito Principal" },
+    { value: "bar", label: "Bar Principal" },
+    { value: "cozinha", label: "Cozinha" },
+    { value: "bar-secundario", label: "Bar Secundário" },
+    { value: "almoxarifado", label: "Almoxarifado" }
+  ];
+  return /* @__PURE__ */ jsxDEV("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50", children: /* @__PURE__ */ jsxDEV("div", { className: "bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between items-center mb-4", children: [
+      /* @__PURE__ */ jsxDEV("h2", { className: "text-2xl font-bold", children: "🔄 Nova Transferência" }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 62,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "button",
+        {
+          onClick: onClose,
+          className: "text-gray-500 hover:text-gray-700 text-2xl font-bold",
+          children: "×"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 63,
+          columnNumber: 11
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+      lineNumber: 61,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium mb-1", children: "Referência" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 73,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(
+          "input",
+          {
+            type: "text",
+            value: formData.reference,
+            onChange: (e) => setFormData({ ...formData, reference: e.target.value }),
+            className: "w-full border rounded px-3 py-2",
+            placeholder: "Ex: TRF 001234",
+            required: true
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 74,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 72,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium mb-1", children: "Produto" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 85,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(
+          "input",
+          {
+            type: "text",
+            value: formData.product,
+            onChange: (e) => setFormData({ ...formData, product: e.target.value }),
+            className: "w-full border rounded px-3 py-2",
+            placeholder: "Nome do produto",
+            required: true
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 86,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 84,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium mb-1", children: "Quantidade" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 97,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(
+          "input",
+          {
+            type: "number",
+            value: formData.quantity,
+            onChange: (e) => setFormData({ ...formData, quantity: e.target.value }),
+            className: "w-full border rounded px-3 py-2",
+            placeholder: "0",
+            min: "0",
+            required: true
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 98,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 96,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-2 gap-2", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium mb-1", children: "De" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 111,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "select",
+            {
+              value: formData.fromLocation,
+              onChange: (e) => setFormData({ ...formData, fromLocation: e.target.value }),
+              className: "w-full border rounded px-3 py-2",
+              required: true,
+              children: [
+                /* @__PURE__ */ jsxDEV("option", { value: "", children: "Origem" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+                  lineNumber: 118,
+                  columnNumber: 17
+                }, this),
+                locations.map(
+                  (location) => /* @__PURE__ */ jsxDEV("option", { value: location.value, children: location.label }, location.value, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+                    lineNumber: 120,
+                    columnNumber: 17
+                  }, this)
+                )
+              ]
+            },
+            void 0,
+            true,
+            {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+              lineNumber: 112,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 110,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium mb-1", children: "Para" }, void 0, false, {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 128,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "select",
+            {
+              value: formData.toLocation,
+              onChange: (e) => setFormData({ ...formData, toLocation: e.target.value }),
+              className: "w-full border rounded px-3 py-2",
+              required: true,
+              children: [
+                /* @__PURE__ */ jsxDEV("option", { value: "", children: "Destino" }, void 0, false, {
+                  fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+                  lineNumber: 135,
+                  columnNumber: 17
+                }, this),
+                locations.map(
+                  (location) => /* @__PURE__ */ jsxDEV("option", { value: location.value, children: location.label }, location.value, false, {
+                    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+                    lineNumber: 137,
+                    columnNumber: 17
+                  }, this)
+                )
+              ]
+            },
+            void 0,
+            true,
+            {
+              fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+              lineNumber: 129,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 127,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 109,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-medium mb-1", children: "Observações" }, void 0, false, {
+          fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+          lineNumber: 146,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(
+          "textarea",
+          {
+            value: formData.notes,
+            onChange: (e) => setFormData({ ...formData, notes: e.target.value }),
+            className: "w-full border rounded px-3 py-2",
+            placeholder: "Motivo da transferência...",
+            rows: 3
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 147,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 145,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "bg-blue-50 border border-blue-200 p-3 rounded", children: /* @__PURE__ */ jsxDEV("p", { className: "text-sm text-blue-800", children: "📦 A transferência será registrada em ambos os locais automaticamente." }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 157,
+        columnNumber: 13
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 156,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "flex gap-2 justify-end", children: [
+        /* @__PURE__ */ jsxDEV(
+          "button",
+          {
+            type: "button",
+            onClick: onClose,
+            className: "px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600",
+            children: "Cancelar"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 163,
+            columnNumber: 13
+          },
+          this
+        ),
+        /* @__PURE__ */ jsxDEV(
+          "button",
+          {
+            type: "submit",
+            className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600",
+            children: "Transferir"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+            lineNumber: 170,
+            columnNumber: 13
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+        lineNumber: 162,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+      lineNumber: 71,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+    lineNumber: 60,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx",
+    lineNumber: 59,
+    columnNumber: 5
+  }, this);
+}
+_s(TransferModal, "dyO1mWZk5Vn2UTb5gbSDyA8H6Ps=");
+_c = TransferModal;
+var _c;
+$RefreshReg$(_c, "TransferModal");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/User/OneDrive/Desktop/sistema-v6-novo/paineluniversal/paineluniversal/frontend/src/components/estoque/TransferModal.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBQTtBQUFBO0FBQUEsUUFLVTtBQUFBLFdBUFo7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQVNBO0FBQUEsTUFFQSx1QkFBQyxTQUFJLFdBQVUsaURBQ2IsaUNBQUMsT0FBRSxXQUFVLHlCQUF3QixzRkFBckM7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUVBLEtBSEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUlBO0FBQUEsTUFFQSx1QkFBQyxTQUFJLFdBQVUsMEJBQ2I7QUFBQTtBQUFBLFVBQUM7QUFBQTtBQUFBLFlBQ0MsTUFBSztBQUFBLFlBQ0wsU0FBU2xCO0FBQUFBLFlBQ1QsV0FBVTtBQUFBLFlBQTREO0FBQUE7QUFBQSxVQUh4RTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsUUFNQTtBQUFBLFFBQ0E7QUFBQSxVQUFDO0FBQUE7QUFBQSxZQUNDLE1BQUs7QUFBQSxZQUNMLFdBQVU7QUFBQSxZQUE0RDtBQUFBO0FBQUEsVUFGeEU7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLFFBS0E7QUFBQSxXQWJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFjQTtBQUFBLFNBekdGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0EwR0E7QUFBQSxPQXJIRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBc0hBLEtBdkhGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0F3SEE7QUFFSjtBQUFDRSxHQXpKZUosZUFBYTtBQUFBeUIsS0FBYnpCO0FBQWEsSUFBQXlCO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsIlRyYW5zZmVyTW9kYWwiLCJpc09wZW4iLCJvbkNsb3NlIiwib25TdWNjZXNzIiwiX3MiLCJmb3JtRGF0YSIsInNldEZvcm1EYXRhIiwicmVmZXJlbmNlIiwicHJvZHVjdCIsInF1YW50aXR5IiwiZnJvbUxvY2F0aW9uIiwidG9Mb2NhdGlvbiIsIm5vdGVzIiwiY29uc29sZSIsImxvZyIsImhhbmRsZVN1Ym1pdCIsImUiLCJwcmV2ZW50RGVmYXVsdCIsImFsZXJ0IiwibG9jYXRpb25zIiwidmFsdWUiLCJsYWJlbCIsInRhcmdldCIsIm1hcCIsImxvY2F0aW9uIiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiVHJhbnNmZXJNb2RhbC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlIH0gZnJvbSAncmVhY3QnO1xyXG5cclxuaW50ZXJmYWNlIFRyYW5zZmVyTW9kYWxQcm9wcyB7XHJcbiAgaXNPcGVuOiBib29sZWFuO1xyXG4gIG9uQ2xvc2U6ICgpID0+IHZvaWQ7XHJcbiAgb25TdWNjZXNzPzogKCkgPT4gdm9pZDtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIFRyYW5zZmVyTW9kYWwoeyBpc09wZW4sIG9uQ2xvc2UsIG9uU3VjY2VzcyB9OiBUcmFuc2Zlck1vZGFsUHJvcHMpIHtcclxuICBjb25zdCBbZm9ybURhdGEsIHNldEZvcm1EYXRhXSA9IHVzZVN0YXRlKHtcclxuICAgIHJlZmVyZW5jZTogJycsXHJcbiAgICBwcm9kdWN0OiAnJyxcclxuICAgIHF1YW50aXR5OiAnJyxcclxuICAgIGZyb21Mb2NhdGlvbjogJycsXHJcbiAgICB0b0xvY2F0aW9uOiAnJyxcclxuICAgIG5vdGVzOiAnJ1xyXG4gIH0pO1xyXG5cclxuICBjb25zb2xlLmxvZygn8J+UhCBUcmFuc2Zlck1vZGFsIHJlbmRlcml6YWRvIGNvbSBpc09wZW46JywgaXNPcGVuKTtcclxuXHJcbiAgaWYgKCFpc09wZW4pIHJldHVybiBudWxsO1xyXG5cclxuICBjb25zdCBoYW5kbGVTdWJtaXQgPSAoZTogUmVhY3QuRm9ybUV2ZW50KSA9PiB7XHJcbiAgICBlLnByZXZlbnREZWZhdWx0KCk7XHJcbiAgICBjb25zb2xlLmxvZygn8J+UhCBGb3JtdWzDoXJpbyBkZSB0cmFuc2ZlcsOqbmNpYSBzdWJtZXRpZG86JywgZm9ybURhdGEpO1xyXG4gICAgYWxlcnQoJ1RyYW5zZmVyw6puY2lhIHJlYWxpemFkYSBjb20gc3VjZXNzbyEgKE1vY2spJyk7XHJcbiAgICBvblN1Y2Nlc3M/LigpO1xyXG4gICAgb25DbG9zZSgpO1xyXG4gIH07XHJcblxyXG4gIGNvbnN0IGxvY2F0aW9ucyA9IFtcclxuICAgIHsgdmFsdWU6ICdkZXBvc2l0bycsIGxhYmVsOiAnRGVww7NzaXRvIFByaW5jaXBhbCcgfSxcclxuICAgIHsgdmFsdWU6ICdiYXInLCBsYWJlbDogJ0JhciBQcmluY2lwYWwnIH0sXHJcbiAgICB7IHZhbHVlOiAnY296aW5oYScsIGxhYmVsOiAnQ296aW5oYScgfSxcclxuICAgIHsgdmFsdWU6ICdiYXItc2VjdW5kYXJpbycsIGxhYmVsOiAnQmFyIFNlY3VuZMOhcmlvJyB9LFxyXG4gICAgeyB2YWx1ZTogJ2FsbW94YXJpZmFkbycsIGxhYmVsOiAnQWxtb3hhcmlmYWRvJyB9XHJcbiAgXTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxkaXYgY2xhc3NOYW1lPVwiZml4ZWQgaW5zZXQtMCB6LTUwIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGJnLWJsYWNrIGJnLW9wYWNpdHktNTBcIj5cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJiZy13aGl0ZSBwLTYgcm91bmRlZC1sZyBzaGFkb3cteGwgbWF4LXctbWQgdy1mdWxsIG14LTRcIj5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXgganVzdGlmeS1iZXR3ZWVuIGl0ZW1zLWNlbnRlciBtYi00XCI+XHJcbiAgICAgICAgICA8aDIgY2xhc3NOYW1lPVwidGV4dC0yeGwgZm9udC1ib2xkXCI+8J+UhCBOb3ZhIFRyYW5zZmVyw6puY2lhPC9oMj5cclxuICAgICAgICAgIDxidXR0b24gXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9e29uQ2xvc2V9XHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtZ3JheS01MDAgaG92ZXI6dGV4dC1ncmF5LTcwMCB0ZXh0LTJ4bCBmb250LWJvbGRcIlxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICDDl1xyXG4gICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgXHJcbiAgICAgICAgPGZvcm0gb25TdWJtaXQ9e2hhbmRsZVN1Ym1pdH0gY2xhc3NOYW1lPVwic3BhY2UteS00XCI+XHJcbiAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiYmxvY2sgdGV4dC1zbSBmb250LW1lZGl1bSBtYi0xXCI+UmVmZXLDqm5jaWE8L2xhYmVsPlxyXG4gICAgICAgICAgICA8aW5wdXRcclxuICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm1EYXRhLnJlZmVyZW5jZX1cclxuICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm1EYXRhKHsuLi5mb3JtRGF0YSwgcmVmZXJlbmNlOiBlLnRhcmdldC52YWx1ZX0pfVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctZnVsbCBib3JkZXIgcm91bmRlZCBweC0zIHB5LTJcIlxyXG4gICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRXg6IFRSRiAwMDEyMzRcIlxyXG4gICAgICAgICAgICAgIHJlcXVpcmVkXHJcbiAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIFxyXG4gICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtc20gZm9udC1tZWRpdW0gbWItMVwiPlByb2R1dG88L2xhYmVsPlxyXG4gICAgICAgICAgICA8aW5wdXRcclxuICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm1EYXRhLnByb2R1Y3R9XHJcbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtRGF0YSh7Li4uZm9ybURhdGEsIHByb2R1Y3Q6IGUudGFyZ2V0LnZhbHVlfSl9XHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGJvcmRlciByb3VuZGVkIHB4LTMgcHktMlwiXHJcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJOb21lIGRvIHByb2R1dG9cIlxyXG4gICAgICAgICAgICAgIHJlcXVpcmVkXHJcbiAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIFxyXG4gICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtc20gZm9udC1tZWRpdW0gbWItMVwiPlF1YW50aWRhZGU8L2xhYmVsPlxyXG4gICAgICAgICAgICA8aW5wdXRcclxuICAgICAgICAgICAgICB0eXBlPVwibnVtYmVyXCJcclxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybURhdGEucXVhbnRpdHl9XHJcbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtRGF0YSh7Li4uZm9ybURhdGEsIHF1YW50aXR5OiBlLnRhcmdldC52YWx1ZX0pfVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctZnVsbCBib3JkZXIgcm91bmRlZCBweC0zIHB5LTJcIlxyXG4gICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiMFwiXHJcbiAgICAgICAgICAgICAgbWluPVwiMFwiXHJcbiAgICAgICAgICAgICAgcmVxdWlyZWRcclxuICAgICAgICAgICAgLz5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgXHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTIgZ2FwLTJcIj5cclxuICAgICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiYmxvY2sgdGV4dC1zbSBmb250LW1lZGl1bSBtYi0xXCI+RGU8L2xhYmVsPlxyXG4gICAgICAgICAgICAgIDxzZWxlY3RcclxuICAgICAgICAgICAgICAgIHZhbHVlPXtmb3JtRGF0YS5mcm9tTG9jYXRpb259XHJcbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm1EYXRhKHsuLi5mb3JtRGF0YSwgZnJvbUxvY2F0aW9uOiBlLnRhcmdldC52YWx1ZX0pfVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGJvcmRlciByb3VuZGVkIHB4LTMgcHktMlwiXHJcbiAgICAgICAgICAgICAgICByZXF1aXJlZFxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9XCJcIj5PcmlnZW08L29wdGlvbj5cclxuICAgICAgICAgICAgICAgIHtsb2NhdGlvbnMubWFwKGxvY2F0aW9uID0+IChcclxuICAgICAgICAgICAgICAgICAgPG9wdGlvbiBrZXk9e2xvY2F0aW9uLnZhbHVlfSB2YWx1ZT17bG9jYXRpb24udmFsdWV9PlxyXG4gICAgICAgICAgICAgICAgICAgIHtsb2NhdGlvbi5sYWJlbH1cclxuICAgICAgICAgICAgICAgICAgPC9vcHRpb24+XHJcbiAgICAgICAgICAgICAgICApKX1cclxuICAgICAgICAgICAgICA8L3NlbGVjdD5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIFxyXG4gICAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJibG9jayB0ZXh0LXNtIGZvbnQtbWVkaXVtIG1iLTFcIj5QYXJhPC9sYWJlbD5cclxuICAgICAgICAgICAgICA8c2VsZWN0XHJcbiAgICAgICAgICAgICAgICB2YWx1ZT17Zm9ybURhdGEudG9Mb2NhdGlvbn1cclxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybURhdGEoey4uLmZvcm1EYXRhLCB0b0xvY2F0aW9uOiBlLnRhcmdldC52YWx1ZX0pfVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGJvcmRlciByb3VuZGVkIHB4LTMgcHktMlwiXHJcbiAgICAgICAgICAgICAgICByZXF1aXJlZFxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9XCJcIj5EZXN0aW5vPC9vcHRpb24+XHJcbiAgICAgICAgICAgICAgICB7bG9jYXRpb25zLm1hcChsb2NhdGlvbiA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxvcHRpb24ga2V5PXtsb2NhdGlvbi52YWx1ZX0gdmFsdWU9e2xvY2F0aW9uLnZhbHVlfT5cclxuICAgICAgICAgICAgICAgICAgICB7bG9jYXRpb24ubGFiZWx9XHJcbiAgICAgICAgICAgICAgICAgIDwvb3B0aW9uPlxyXG4gICAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgICAgPC9zZWxlY3Q+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICBcclxuICAgICAgICAgIDxkaXY+XHJcbiAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJibG9jayB0ZXh0LXNtIGZvbnQtbWVkaXVtIG1iLTFcIj5PYnNlcnZhw6fDtWVzPC9sYWJlbD5cclxuICAgICAgICAgICAgPHRleHRhcmVhXHJcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm1EYXRhLm5vdGVzfVxyXG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybURhdGEoey4uLmZvcm1EYXRhLCBub3RlczogZS50YXJnZXQudmFsdWV9KX1cclxuICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ3LWZ1bGwgYm9yZGVyIHJvdW5kZWQgcHgtMyBweS0yXCJcclxuICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIk1vdGl2byBkYSB0cmFuc2ZlcsOqbmNpYS4uLlwiXHJcbiAgICAgICAgICAgICAgcm93cz17M31cclxuICAgICAgICAgICAgLz5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgXHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJnLWJsdWUtNTAgYm9yZGVyIGJvcmRlci1ibHVlLTIwMCBwLTMgcm91bmRlZFwiPlxyXG4gICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtYmx1ZS04MDBcIj5cclxuICAgICAgICAgICAgICDwn5OmIEEgdHJhbnNmZXLDqm5jaWEgc2Vyw6EgcmVnaXN0cmFkYSBlbSBhbWJvcyBvcyBsb2NhaXMgYXV0b21hdGljYW1lbnRlLlxyXG4gICAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIFxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGdhcC0yIGp1c3RpZnktZW5kXCI+XHJcbiAgICAgICAgICAgIDxidXR0b24gXHJcbiAgICAgICAgICAgICAgdHlwZT1cImJ1dHRvblwiXHJcbiAgICAgICAgICAgICAgb25DbGljaz17b25DbG9zZX1cclxuICAgICAgICAgICAgICBjbGFzc05hbWU9XCJweC00IHB5LTIgYmctZ3JheS01MDAgdGV4dC13aGl0ZSByb3VuZGVkIGhvdmVyOmJnLWdyYXktNjAwXCJcclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIENhbmNlbGFyXHJcbiAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICA8YnV0dG9uIFxyXG4gICAgICAgICAgICAgIHR5cGU9XCJzdWJtaXRcIlxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cInB4LTQgcHktMiBiZy1ibHVlLTUwMCB0ZXh0LXdoaXRlIHJvdW5kZWQgaG92ZXI6YmctYmx1ZS02MDBcIlxyXG4gICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgVHJhbnNmZXJpclxyXG4gICAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvZm9ybT5cclxuICAgICAgPC9kaXY+XHJcbiAgICA8L2Rpdj5cclxuICApO1xyXG59XHJcbiJdLCJmaWxlIjoiQzovVXNlcnMvVXNlci9PbmVEcml2ZS9EZXNrdG9wL3Npc3RlbWEtdjYtbm92by9wYWluZWx1bml2ZXJzYWwvcGFpbmVsdW5pdmVyc2FsL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL2VzdG9xdWUvVHJhbnNmZXJNb2RhbC50c3gifQ==

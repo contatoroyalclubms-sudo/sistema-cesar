@@ -1,0 +1,40 @@
+{
+  "title": "Sistema de Eventos - API Documentation",
+  "version": "1.0.0",
+  "baseUrl": "http://localhost:8000",
+  "authentication": {},
+  "endpoints": {
+    "Outros": [
+      {
+        "method": "GET",
+        "endpoint": "/api/cors-test",
+        "headers": {
+          "sec-ch-ua-platform": "\"Windows\"",
+          "referer": "http://localhost:5173/",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+          "accept": "application/json, text/plain, */*",
+          "sec-ch-ua": "\"Not=A?Brand\";v=\"24\", \"Chromium\";v=\"140\"",
+          "sec-ch-ua-mobile": "?0",
+          "x-debug-mode": "true"
+        },
+        "body": null,
+        "curl": "curl -X GET 'http://localhost:8003/api/cors-test' \\\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\n  -H 'referer: http://localhost:5173/' \\\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \\\n  -H 'accept: application/json, text/plain, */*' \\\n  -H 'sec-ch-ua: \"Not=A?Brand\";v=\"24\", \"Chromium\";v=\"140\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'x-debug-mode: true' \\\n  --compressed \\\n  --insecure \\\n  -w '\\n%{http_code}'"
+      },
+      {
+        "method": "GET",
+        "endpoint": "/api/cors-test",
+        "headers": {
+          "sec-ch-ua-platform": "\"Windows\"",
+          "referer": "http://localhost:5173/",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+          "accept": "application/json, text/plain, */*",
+          "sec-ch-ua": "\"Not=A?Brand\";v=\"24\", \"Chromium\";v=\"140\"",
+          "sec-ch-ua-mobile": "?0",
+          "x-debug-mode": "true"
+        },
+        "body": null,
+        "curl": "curl -X GET 'http://localhost:8003/api/cors-test' \\\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\n  -H 'referer: http://localhost:5173/' \\\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \\\n  -H 'accept: application/json, text/plain, */*' \\\n  -H 'sec-ch-ua: \"Not=A?Brand\";v=\"24\", \"Chromium\";v=\"140\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'x-debug-mode: true' \\\n  --compressed \\\n  --insecure \\\n  -w '\\n%{http_code}'"
+      }
+    ]
+  }
+}
