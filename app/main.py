@@ -20,11 +20,21 @@ from app.routers import pdv
 from app.routers import gamificacao
 from app.routers import formas_pagamento
 from app.routers import meep
+from app.routers import gestao_venda
+from app.routers import solucoes_online
+from app.routers import ingressos
+from app.routers import equipe
+from app.routers import pedidos
+from app.routers import mapa_operacao
+from app.routers import marketing
+from app.routers import bi
+from app.routers import automacao
+from app.routers import integracao
 
 app = FastAPI(
     title="MEEP Clone API",
-    description="Clone completo com 141+ endpoints",
-    version="1.0.0"
+    description="Clone completo com 250+ endpoints - Sistema Universal v6",
+    version="2.0.0"
 )
 
 # CORS
@@ -53,6 +63,16 @@ app.include_router(pdv.router)
 app.include_router(gamificacao.router)
 app.include_router(formas_pagamento.router)
 app.include_router(meep.router)
+app.include_router(gestao_venda.router)
+app.include_router(solucoes_online.router)
+app.include_router(ingressos.router)
+app.include_router(equipe.router)
+app.include_router(pedidos.router)
+app.include_router(mapa_operacao.router)
+app.include_router(marketing.router)
+app.include_router(bi.router)
+app.include_router(automacao.router)
+app.include_router(integracao.router)
 
 @app.get("/")
 async def root():
