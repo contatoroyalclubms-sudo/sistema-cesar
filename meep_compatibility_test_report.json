@@ -1,0 +1,320 @@
+{
+  "total_tests": 52,
+  "passed": 17,
+  "failed": 35,
+  "success_rate": "32.7%",
+  "test_results": [
+    {
+      "endpoint": "GET /api/dashboard/geral",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/dashboard/favoritos",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/dashboard/metricas",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/clientes",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/clientes/categorias",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/clientes/pesquisa-satisfacao",
+      "status": "FAIL",
+      "status_code": 422,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/equipe/colaboradores",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/equipe/cargos",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/equipe/permissoes",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/cardapio",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/cardapio/items",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/cardapio/categorias",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/conta-digital",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/antecipacao",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/split",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/link-pagamento",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/permutas",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/taxas",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/direcionamento",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/contas-bancarias",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/faturas",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/estornos",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/conciliacao",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/fluxo-caixa?data_inicio=2024-01-01&data_fim=2024-12-31",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/contas-pagar",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/financeiro/contas-receber",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/fidelidade",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/crm",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/lista-convidados",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/cupons",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/campanhas",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/promocoes",
+      "status": "FAIL",
+      "status_code": 405,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/email/templates",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/automacao",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/marketing/analytics",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/pdv/terminais",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/pdv/operadores",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/pdv/configuracoes",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/pedidos",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/pedidos/fila",
+      "status": "FAIL",
+      "status_code": 422,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/estoque/produtos",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/estoque/inventario",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/estoque/movimentacoes",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/relatorios/vendas",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/relatorios/financeiro",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/relatorios/gerencial",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/bi/dashboards",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/bi/metricas",
+      "status": "FAIL",
+      "status_code": 404,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/integracao/webhooks",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/integracao/marketplace",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/automacao/workflows",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    },
+    {
+      "endpoint": "GET /api/automacao/triggers",
+      "status": "PASS",
+      "status_code": 200,
+      "expected": 200
+    }
+  ]
+}

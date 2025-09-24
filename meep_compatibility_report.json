@@ -1,0 +1,369 @@
+{
+  "timestamp": "2025-09-23T22:24:32.908955",
+  "modules_found": [
+    "transacoes",
+    "financeiro",
+    "empresas",
+    "bi",
+    "produtos",
+    "marketing",
+    "dashboard",
+    "pedidos",
+    "automacao",
+    "meep",
+    "relatorios",
+    "eventos",
+    "erp",
+    "ingressos",
+    "gamificacao",
+    "estoque",
+    "mapa_operacao",
+    "solucoes_online",
+    "integracao",
+    "checkins",
+    "clientes",
+    "n8n",
+    "cupons",
+    "cardapio",
+    "formas_pagamento",
+    "listas",
+    "pdv",
+    "whatsapp",
+    "usuarios",
+    "auth",
+    "gestao_venda",
+    "equipe"
+  ],
+  "modules_missing": [],
+  "modules_created": [],
+  "total_routes": 151,
+  "meep_structure": {
+    "dashboard": {
+      "rotas": [
+        "/api/dashboard/geral",
+        "/api/dashboard/favoritos",
+        "/api/dashboard/evento-caixa/geral",
+        "/api/dashboard/evento-caixa/ia",
+        "/api/dashboard/metrics",
+        "/api/dashboard/widgets",
+        "/api/dashboard/analytics",
+        "/api/dashboard/kpis"
+      ],
+      "funcionalidades": [
+        "widgets_personalizados",
+        "metricas_tempo_real",
+        "graficos_interativos",
+        "alertas_dashboard",
+        "favoritos_usuario"
+      ]
+    },
+    "clientes": {
+      "rotas": [
+        "/api/clientes",
+        "/api/clientes/informacoes",
+        "/api/clientes/categorias",
+        "/api/clientes/listagem",
+        "/api/clientes/pesquisa-satisfacao",
+        "/api/clientes/historico",
+        "/api/clientes/segmentacao",
+        "/api/clientes/tags",
+        "/api/clientes/import",
+        "/api/clientes/export",
+        "/api/clientes/merge",
+        "/api/clientes/duplicados"
+      ],
+      "funcionalidades": [
+        "cadastro_completo",
+        "historico_compras",
+        "segmentacao_avancada",
+        "tags_personalizadas",
+        "importacao_massa",
+        "deteccao_duplicados"
+      ]
+    },
+    "equipe": {
+      "rotas": [
+        "/api/equipe/colaboradores",
+        "/api/equipe/cargos",
+        "/api/equipe/permissoes",
+        "/api/equipe/horarios",
+        "/api/equipe/escalas",
+        "/api/equipe/folha-pagamento",
+        "/api/equipe/comissoes",
+        "/api/equipe/metas",
+        "/api/equipe/treinamentos"
+      ],
+      "funcionalidades": [
+        "gestao_colaboradores",
+        "controle_permissoes",
+        "gestao_escalas",
+        "calculo_comissoes",
+        "controle_metas"
+      ]
+    },
+    "cardapio": {
+      "rotas": [
+        "/api/cardapio",
+        "/api/cardapio/items",
+        "/api/cardapio/categorias",
+        "/api/cardapio/modificadores",
+        "/api/cardapio/combos",
+        "/api/cardapio/precos",
+        "/api/cardapio/disponibilidade",
+        "/api/cardapio/imagens",
+        "/api/cardapio/nutricional",
+        "/api/cardapio/alergenos"
+      ],
+      "funcionalidades": [
+        "gestao_produtos",
+        "modificadores_dinamicos",
+        "combos_promocoes",
+        "controle_disponibilidade",
+        "informacoes_nutricionais"
+      ]
+    },
+    "gestao_venda": {
+      "rotas": [
+        "/api/vendas",
+        "/api/vendas/solucoes-online",
+        "/api/vendas/ingressos",
+        "/api/vendas/reservas",
+        "/api/vendas/pre-venda",
+        "/api/vendas/lotes",
+        "/api/vendas/cortesias",
+        "/api/vendas/cancelamentos",
+        "/api/vendas/transferencias"
+      ],
+      "funcionalidades": [
+        "venda_online",
+        "gestao_ingressos",
+        "controle_lotes",
+        "gestao_cortesias",
+        "politica_cancelamento"
+      ]
+    },
+    "relatorios": {
+      "rotas": [
+        "/api/relatorios/vendas",
+        "/api/relatorios/cartoes",
+        "/api/relatorios/caixa",
+        "/api/relatorios/ficha",
+        "/api/relatorios/gerencial",
+        "/api/relatorios/financeiro",
+        "/api/relatorios/customizados",
+        "/api/relatorios/templates",
+        "/api/relatorios/agendados",
+        "/api/relatorios/export"
+      ],
+      "funcionalidades": [
+        "relatorios_dinamicos",
+        "export_multiplos_formatos",
+        "agendamento_relatorios",
+        "templates_customizados",
+        "dashboards_gerenciais"
+      ]
+    },
+    "estoque": {
+      "rotas": [
+        "/api/estoque/cadastros",
+        "/api/estoque/central-lancamento",
+        "/api/estoque/inventario",
+        "/api/estoque/posicao",
+        "/api/estoque/entrada",
+        "/api/estoque/saida",
+        "/api/estoque/motivos",
+        "/api/estoque/fornecedores",
+        "/api/estoque/requisicoes",
+        "/api/estoque/transferencias",
+        "/api/estoque/perdas",
+        "/api/estoque/validade",
+        "/api/estoque/minimo-maximo"
+      ],
+      "funcionalidades": [
+        "controle_inventario",
+        "gestao_fornecedores",
+        "controle_validade",
+        "alertas_estoque_minimo",
+        "rastreabilidade_lotes"
+      ]
+    },
+    "pdv": {
+      "rotas": [
+        "/api/pdv/perfis",
+        "/api/pdv/impressoras",
+        "/api/pdv/impressoras-inteligentes",
+        "/api/pdv/equipamentos",
+        "/api/pdv/operadores",
+        "/api/pdv/terminais",
+        "/api/pdv/configuracoes",
+        "/api/pdv/layouts",
+        "/api/pdv/atalhos",
+        "/api/pdv/sangrias",
+        "/api/pdv/suprimentos"
+      ],
+      "funcionalidades": [
+        "multiplos_terminais",
+        "impressao_inteligente",
+        "gestao_operadores",
+        "controle_sangrias",
+        "layouts_personalizados"
+      ]
+    },
+    "pedidos": {
+      "rotas": [
+        "/api/pedidos",
+        "/api/pedidos/gestor",
+        "/api/pedidos/status",
+        "/api/pedidos/fila",
+        "/api/pedidos/prioridades",
+        "/api/pedidos/tempo-preparo",
+        "/api/pedidos/notificacoes",
+        "/api/pedidos/kds"
+      ],
+      "funcionalidades": [
+        "gestao_fila_pedidos",
+        "kds_cozinha",
+        "tempo_preparo_dinamico",
+        "notificacoes_tempo_real",
+        "priorizacao_inteligente"
+      ]
+    },
+    "financeiro": {
+      "rotas": [
+        "/api/financeiro/conta-digital",
+        "/api/financeiro/permutas",
+        "/api/financeiro/antecipacao",
+        "/api/financeiro/taxas",
+        "/api/financeiro/direcionamento",
+        "/api/financeiro/contas-bancarias",
+        "/api/financeiro/link-pagamento",
+        "/api/financeiro/formas-pagamento",
+        "/api/financeiro/faturas",
+        "/api/financeiro/split",
+        "/api/financeiro/estornos",
+        "/api/financeiro/conciliacao",
+        "/api/financeiro/dre",
+        "/api/financeiro/fluxo-caixa",
+        "/api/financeiro/contas-pagar",
+        "/api/financeiro/contas-receber"
+      ],
+      "funcionalidades": [
+        "conta_digital_integrada",
+        "antecipacao_recebiveis",
+        "split_pagamento",
+        "conciliacao_automatica",
+        "dre_automatico",
+        "fluxo_caixa_projetado"
+      ]
+    },
+    "mapa_operacao": {
+      "rotas": [
+        "/api/mapa/contas-bloqueios",
+        "/api/mapa/mesas",
+        "/api/mapa/pre-ativacao",
+        "/api/mapa/comandas",
+        "/api/mapa/grupo-cartoes",
+        "/api/mapa/lojas",
+        "/api/mapa/setores",
+        "/api/mapa/layout",
+        "/api/mapa/ocupacao"
+      ],
+      "funcionalidades": [
+        "gestao_mesas_visual",
+        "controle_comandas",
+        "pre_ativacao_cartoes",
+        "mapa_ocupacao_tempo_real",
+        "gestao_multi_loja"
+      ]
+    },
+    "marketing": {
+      "rotas": [
+        "/api/marketing/fidelidade",
+        "/api/marketing/crm",
+        "/api/marketing/lista-convidados",
+        "/api/marketing/cupons",
+        "/api/marketing/campanhas",
+        "/api/marketing/promocoes",
+        "/api/marketing/email",
+        "/api/marketing/sms",
+        "/api/marketing/push",
+        "/api/marketing/automacao",
+        "/api/marketing/segmentacao",
+        "/api/marketing/analytics"
+      ],
+      "funcionalidades": [
+        "programa_fidelidade",
+        "crm_completo",
+        "campanhas_automatizadas",
+        "cupons_personalizados",
+        "multi_canal",
+        "analytics_campanhas"
+      ]
+    },
+    "bi": {
+      "rotas": [
+        "/api/bi/dashboards",
+        "/api/bi/metricas",
+        "/api/bi/indicadores",
+        "/api/bi/analises",
+        "/api/bi/previsoes",
+        "/api/bi/comparativos",
+        "/api/bi/export"
+      ],
+      "funcionalidades": [
+        "dashboards_interativos",
+        "analise_preditiva",
+        "comparativos_periodo",
+        "kpis_personalizados"
+      ]
+    },
+    "erp": {
+      "rotas": [
+        "/api/erp/integracao",
+        "/api/erp/sincronizacao",
+        "/api/erp/configuracoes",
+        "/api/erp/logs",
+        "/api/erp/mapeamentos"
+      ],
+      "funcionalidades": [
+        "integracao_erp",
+        "sincronizacao_bidirecional",
+        "mapeamento_campos",
+        "logs_auditoria"
+      ]
+    },
+    "automacao": {
+      "rotas": [
+        "/api/automacao/workflows",
+        "/api/automacao/triggers",
+        "/api/automacao/acoes",
+        "/api/automacao/condicoes",
+        "/api/automacao/agendamentos",
+        "/api/automacao/historico"
+      ],
+      "funcionalidades": [
+        "workflows_customizados",
+        "triggers_eventos",
+        "acoes_automatizadas",
+        "agendamentos_tarefas"
+      ]
+    },
+    "integracao": {
+      "rotas": [
+        "/api/integracao/webhooks",
+        "/api/integracao/apis",
+        "/api/integracao/marketplace",
+        "/api/integracao/delivery",
+        "/api/integracao/fiscal",
+        "/api/integracao/pagamento"
+      ],
+      "funcionalidades": [
+        "webhooks_eventos",
+        "api_rest_completa",
+        "integracao_marketplaces",
+        "integracao_delivery",
+        "integracao_fiscal"
+      ]
+    }
+  }
+}
