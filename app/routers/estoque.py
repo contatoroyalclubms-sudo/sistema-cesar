@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import datetime, date
 from pydantic import BaseModel
-from app.database import get_db
+from database import get_db
 
 router = APIRouter(prefix="/api/estoque", tags=["Gestão de Estoque"])
 

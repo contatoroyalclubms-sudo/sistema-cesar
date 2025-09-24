@@ -4,7 +4,7 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime, date, timedelta
 from decimal import Decimal
 from pydantic import BaseModel
-from app.database import get_db
+from database import get_db
 
 router = APIRouter(prefix="/api/financeiro", tags=["Financeiro"])
 

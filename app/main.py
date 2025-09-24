@@ -3,38 +3,38 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 # Importar todos os routers
-from app.routers import auth
-from app.routers import empresas
-from app.routers import usuarios
-from app.routers import eventos
-from app.routers import listas
-from app.routers import transacoes
-from app.routers import checkins
-from app.routers import dashboard
-from app.routers import relatorios
-from app.routers import whatsapp
-from app.routers import cupons
-from app.routers import n8n
-from app.routers import produtos
-from app.routers import pdv
-from app.routers import gamificacao
-from app.routers import formas_pagamento
-from app.routers import meep
-from app.routers import gestao_venda
-from app.routers import solucoes_online
-from app.routers import ingressos
-from app.routers import equipe
-from app.routers import pedidos
-from app.routers import mapa_operacao
-from app.routers import marketing
-from app.routers import bi
-from app.routers import automacao
-from app.routers import integracao
-from app.routers import estoque
-from app.routers import cardapio
-from app.routers import financeiro
-from app.routers import clientes
-from app.routers import erp
+from routers import auth
+from routers import empresas
+from routers import usuarios
+from routers import eventos
+from routers import listas
+from routers import transacoes
+from routers import checkins
+from routers import dashboard
+from routers import relatorios
+from routers import whatsapp
+from routers import cupons
+from routers import n8n
+from routers import produtos
+from routers import pdv
+from routers import gamificacao
+from routers import formas_pagamento
+from routers import meep
+from routers import gestao_venda
+from routers import solucoes_online
+from routers import ingressos
+from routers import equipe
+from routers import pedidos
+from routers import mapa_operacao
+from routers import marketing
+from routers import bi
+from routers import automacao
+from routers import integracao
+from routers import estoque
+from routers import cardapio
+from routers import financeiro
+from routers import clientes
+from routers import erp
 
 app = FastAPI(
     title="MEEP Clone API - Sistema Completo",
