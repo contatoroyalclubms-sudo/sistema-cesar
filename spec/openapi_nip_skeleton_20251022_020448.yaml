@@ -1,0 +1,1342 @@
+openapi: 3.1.0
+info:
+  title: "Sistema NIP - API Completa"
+  description: |
+    API completa do Sistema NIP baseada na análise do Portal Meep.
+    Implementa todos os módulos e submódulos com padrões CRUD consistentes.
+    
+    **Características:**
+    - JWT Bearer Authentication
+    - Paginação padrão para listagens
+    - Envelope de resposta consistente
+    - Códigos de erro padronizados
+    - Suporte completo a operações CRUD
+    
+    **Módulos Implementados:**
+    - Dashboard, Financeiro, PDV, Gestão de Venda
+    - Estoque, Marketing, BI, Sistema ERP
+    - Automação, Integração, Usuários, Configurações
+    
+  version: "1.0.0"
+  contact:
+    name: "Sistema NIP"
+    email: "api@sistema-nip.com"
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/MIT"
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: "Ambiente de Desenvolvimento"
+  - url: https://api.sistema-nip.com/v1
+    description: "Ambiente de Produção"
+
+# Componentes globais reutilizáveis
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT Token para autenticação"
+      
+  parameters:
+    # Parâmetros de paginação padrão
+    PageParam:
+      name: page
+      in: query
+      description: "Número da página (inicia em 1)"
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        
+    LimitParam:
+      name: limit
+      in: query
+      description: "Quantidade de itens por página"
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+        
+    SortParam:
+      name: sort
+      in: query
+      description: "Campo para ordenação"
+      required: false
+      schema:
+        type: string
+        default: "created_at"
+        
+    OrderParam:
+      name: order
+      in: query
+      description: "Direção da ordenação"
+      required: false
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: "desc"
+        
+    SearchParam:
+      name: search
+      in: query
+      description: "Termo para busca textual"
+      required: false
+      schema:
+        type: string
+        minLength: 2
+        
+    OwnerIdParam:
+      name: owner_id
+      in: query
+      description: "ID do proprietário/empresa"
+      required: true
+      schema:
+        type: string
+        
+    IdParam:
+      name: id
+      in: path
+      description: "ID único do recurso"
+      required: true
+      schema:
+        type: string
+        
+  schemas:
+    # Envelope padrão de resposta
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, error]
+          description: "Status da operação"
+        message:
+          type: string
+          description: "Mensagem descritiva"
+        data:
+          description: "Dados da resposta"
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+      required: [status]
+      
+    ResponseMeta:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        request_id:
+          type: string
+        pagination:
+          $ref: '#/components/schemas/PaginationMeta'
+          
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        limit:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+        total_pages:
+          type: integer
+          minimum: 0
+        has_next:
+          type: boolean
+        has_prev:
+          type: boolean
+          
+    # Schema base para entidades
+    BaseEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "ID único da entidade"
+        created_at:
+          type: string
+          format: date-time
+          description: "Data de criação"
+        updated_at:
+          type: string
+          format: date-time
+          description: "Data da última atualização"
+        created_by:
+          type: string
+          description: "ID do usuário que criou"
+        updated_by:
+          type: string
+          description: "ID do usuário que atualizou"
+      required: [id]
+      
+    # Esquema de erro padrão
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+          description: "Mensagem de erro"
+        error_code:
+          type: string
+          description: "Código interno do erro"
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+      required: [status, message]
+
+# Segurança global
+security:
+  - BearerAuth: []
+
+# Paths organizados por módulo
+paths:
+  # ==========================================================================
+  # DASHBOARD - Visão geral e métricas principais
+  # ==========================================================================
+  /dashboard/overview:
+    get:
+      tags: ["Dashboard"]
+      summary: "Lista dados do dashboard principal"
+      description: "Retorna métricas e KPIs para o dashboard de visão geral"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+      responses:
+        '200':
+          description: "Dados do dashboard retornados com sucesso"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          kpis:
+                            type: object
+                          charts:
+                            type: array
+                            items:
+                              type: object
+        '401':
+          description: "Não autorizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ==========================================================================
+  # FINANCEIRO - Gestão financeira e contas digitais
+  # ==========================================================================
+  
+  # Conta Digital
+  /financeiro/conta-digital:
+    get:
+      tags: ["Financeiro"]
+      summary: "Lista contas digitais"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: "Lista de contas digitais"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Financeiro"]
+      summary: "Cria nova conta digital"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                type:
+                  type: string
+                balance:
+                  type: number
+              required: [name, type]
+      responses:
+        '201':
+          description: "Conta digital criada com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /financeiro/conta-digital/{id}:
+    get:
+      tags: ["Financeiro"]
+      summary: "Busca conta digital por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Conta digital encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Financeiro"]
+      summary: "Atualiza conta digital"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                balance:
+                  type: number
+      responses:
+        '200':
+          description: "Conta digital atualizada"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Financeiro"]
+      summary: "Remove conta digital"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Conta digital removida com sucesso"
+          
+  # Extrato
+  /financeiro/extrato:
+    get:
+      tags: ["Financeiro"]
+      summary: "Lista extratos bancários"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: data_inicio
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: data_fim
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: "Lista de extratos"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  # Instituições Bancárias
+  /financeiro/instituicoes-bancarias:
+    get:
+      tags: ["Financeiro"]
+      summary: "Lista instituições bancárias"
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: "Lista de bancos"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Financeiro"]
+      summary: "Cadastra nova instituição bancária"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+                full_name:
+                  type: string
+              required: [code, name]
+      responses:
+        '201':
+          description: "Banco cadastrado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /financeiro/instituicoes-bancarias/{id}:
+    get:
+      tags: ["Financeiro"]
+      summary: "Busca banco por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Banco encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Financeiro"]
+      summary: "Atualiza dados do banco"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                full_name:
+                  type: string
+      responses:
+        '200':
+          description: "Banco atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Financeiro"]
+      summary: "Remove banco"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Banco removido com sucesso"
+          
+  # Cartões
+  /financeiro/cartoes:
+    get:
+      tags: ["Financeiro"]
+      summary: "Lista cartões"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: "Lista de cartões"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Financeiro"]
+      summary: "Cadastra novo cartão"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                type:
+                  type: string
+                  enum: [credit, debit]
+                holder_name:
+                  type: string
+              required: [number, type, holder_name]
+      responses:
+        '201':
+          description: "Cartão cadastrado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /financeiro/cartoes/{id}:
+    get:
+      tags: ["Financeiro"]
+      summary: "Busca cartão por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Cartão encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Financeiro"]
+      summary: "Atualiza dados do cartão"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                holder_name:
+                  type: string
+                status:
+                  type: string
+                  enum: [active, blocked, expired]
+      responses:
+        '200':
+          description: "Cartão atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Financeiro"]
+      summary: "Remove cartão"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Cartão removido com sucesso"
+
+  # ==========================================================================
+  # PDV - Point of Sale e equipamentos
+  # ==========================================================================
+  
+  # Equipamentos
+  /pdv/equipamentos:
+    get:
+      tags: ["PDV"]
+      summary: "Lista equipamentos PDV"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [online, offline, maintenance]
+      responses:
+        '200':
+          description: "Lista de equipamentos"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["PDV"]
+      summary: "Cadastra novo equipamento"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                serial_number:
+                  type: string
+                type:
+                  type: string
+                location:
+                  type: string
+              required: [name, serial_number, type]
+      responses:
+        '201':
+          description: "Equipamento cadastrado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /pdv/equipamentos/{id}:
+    get:
+      tags: ["PDV"]
+      summary: "Busca equipamento por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Equipamento encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["PDV"]
+      summary: "Atualiza equipamento"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                location:
+                  type: string
+                status:
+                  type: string
+                  enum: [online, offline, maintenance]
+      responses:
+        '200':
+          description: "Equipamento atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["PDV"]
+      summary: "Remove equipamento"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Equipamento removido com sucesso"
+          
+  # Sessões
+  /pdv/sessoes:
+    get:
+      tags: ["PDV"]
+      summary: "Lista sessões PDV"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, closed, suspended]
+      responses:
+        '200':
+          description: "Lista de sessões"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["PDV"]
+      summary: "Inicia nova sessão"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                equipment_id:
+                  type: string
+                operator_id:
+                  type: string
+                initial_balance:
+                  type: number
+              required: [equipment_id, operator_id]
+      responses:
+        '201':
+          description: "Sessão iniciada com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /pdv/sessoes/{id}:
+    get:
+      tags: ["PDV"]
+      summary: "Busca sessão por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Sessão encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["PDV"]
+      summary: "Atualiza sessão"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [active, closed, suspended]
+                final_balance:
+                  type: number
+      responses:
+        '200':
+          description: "Sessão atualizada"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["PDV"]
+      summary: "Remove sessão"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Sessão removida com sucesso"
+          
+  # Operadores
+  /pdv/operadores:
+    get:
+      tags: ["PDV"]
+      summary: "Lista operadores PDV"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, suspended]
+      responses:
+        '200':
+          description: "Lista de operadores"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["PDV"]
+      summary: "Cadastra novo operador"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                profile_id:
+                  type: string
+              required: [name, email, profile_id]
+      responses:
+        '201':
+          description: "Operador cadastrado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /pdv/operadores/{id}:
+    get:
+      tags: ["PDV"]
+      summary: "Busca operador por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Operador encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["PDV"]
+      summary: "Atualiza operador"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                status:
+                  type: string
+                  enum: [active, inactive, suspended]
+      responses:
+        '200':
+          description: "Operador atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["PDV"]
+      summary: "Remove operador"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Operador removido com sucesso"
+          
+  # Perfis
+  /pdv/perfis:
+    get:
+      tags: ["PDV"]
+      summary: "Lista perfis de acesso PDV"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: "Lista de perfis"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["PDV"]
+      summary: "Cria novo perfil"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                permissions:
+                  type: array
+                  items:
+                    type: string
+              required: [name, permissions]
+      responses:
+        '201':
+          description: "Perfil criado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /pdv/perfis/{id}:
+    get:
+      tags: ["PDV"]
+      summary: "Busca perfil por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Perfil encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["PDV"]
+      summary: "Atualiza perfil"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                permissions:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: "Perfil atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["PDV"]
+      summary: "Remove perfil"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Perfil removido com sucesso"
+
+  # ==========================================================================
+  # MARKETING - CRM, Fidelidade e Campanhas
+  # ==========================================================================
+  
+  # Fidelidade
+  /marketing/fidelidade:
+    get:
+      tags: ["Marketing"]
+      summary: "Lista programas de fidelidade"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: "Lista de programas de fidelidade"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Marketing"]
+      summary: "Cria programa de fidelidade"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                rules:
+                  type: object
+              required: [name]
+      responses:
+        '201':
+          description: "Programa criado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /marketing/fidelidade/{id}:
+    get:
+      tags: ["Marketing"]
+      summary: "Busca programa por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Programa encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Marketing"]
+      summary: "Atualiza programa"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                rules:
+                  type: object
+      responses:
+        '200':
+          description: "Programa atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Marketing"]
+      summary: "Remove programa"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Programa removido com sucesso"
+          
+  # CRM
+  /marketing/crm:
+    get:
+      tags: ["Marketing"]
+      summary: "Lista clientes CRM"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/SearchParam'
+      responses:
+        '200':
+          description: "Lista de clientes"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Marketing"]
+      summary: "Cadastra cliente CRM"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                birth_date:
+                  type: string
+                  format: date
+                gender:
+                  type: string
+                  enum: [M, F, Other]
+              required: [name, email]
+      responses:
+        '201':
+          description: "Cliente cadastrado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /marketing/crm/{id}:
+    get:
+      tags: ["Marketing"]
+      summary: "Busca cliente por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Cliente encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Marketing"]
+      summary: "Atualiza cliente"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                birth_date:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          description: "Cliente atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Marketing"]
+      summary: "Remove cliente"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Cliente removido com sucesso"
+          
+  # Campanhas
+  /marketing/campanhas:
+    get:
+      tags: ["Marketing"]
+      summary: "Lista campanhas de marketing"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, active, paused, completed]
+      responses:
+        '200':
+          description: "Lista de campanhas"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Marketing"]
+      summary: "Cria campanha"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                type:
+                  type: string
+                  enum: [email, sms, push, whatsapp]
+                target_audience:
+                  type: object
+                content:
+                  type: object
+              required: [name, type]
+      responses:
+        '201':
+          description: "Campanha criada com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /marketing/campanhas/{id}:
+    get:
+      tags: ["Marketing"]
+      summary: "Busca campanha por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Campanha encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Marketing"]
+      summary: "Atualiza campanha"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                status:
+                  type: string
+                  enum: [draft, active, paused, completed]
+      responses:
+        '200':
+          description: "Campanha atualizada"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Marketing"]
+      summary: "Remove campanha"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Campanha removida com sucesso"
+
+  # Cupons
+  /marketing/cupons:
+    get:
+      tags: ["Marketing"]
+      summary: "Lista cupons de desconto"
+      parameters:
+        - $ref: '#/components/parameters/OwnerIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, expired, used]
+      responses:
+        '200':
+          description: "Lista de cupons"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags: ["Marketing"]
+      summary: "Cria cupom de desconto"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+                discount_type:
+                  type: string
+                  enum: [percentage, fixed]
+                discount_value:
+                  type: number
+                min_value:
+                  type: number
+                max_uses:
+                  type: integer
+                expires_at:
+                  type: string
+                  format: date-time
+              required: [code, name, discount_type, discount_value]
+      responses:
+        '201':
+          description: "Cupom criado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+                
+  /marketing/cupons/{id}:
+    get:
+      tags: ["Marketing"]
+      summary: "Busca cupom por ID"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: "Cupom encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags: ["Marketing"]
+      summary: "Atualiza cupom"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                status:
+                  type: string
+                  enum: [active, expired, used]
+                max_uses:
+                  type: integer
+      responses:
+        '200':
+          description: "Cupom atualizado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags: ["Marketing"]
+      summary: "Remove cupom"
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: "Cupom removido com sucesso"
+
+# Tags para organização
+tags:
+  - name: "Dashboard"
+    description: "Operações do dashboard principal"
+  - name: "Financeiro"
+    description: "Gestão financeira e contas digitais"
+  - name: "PDV"
+    description: "Point of Sale e equipamentos"
+  - name: "Marketing"
+    description: "CRM, fidelidade e campanhas"
+  - name: "Estoque"
+    description: "Gestão de estoque e inventário"
+  - name: "BI"
+    description: "Business Intelligence e relatórios"
+  - name: "ERP"
+    description: "Enterprise Resource Planning"
+  - name: "Automação"
+    description: "Automação de processos"
+  - name: "Integração"
+    description: "Integrações e APIs externas"
+  - name: "Usuários"
+    description: "Gestão de usuários e permissões"
+  - name: "Configurações"
+    description: "Configurações do sistema"

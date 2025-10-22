@@ -1,0 +1,534 @@
+{
+  "info": {
+    "name": "Sistema NIP - API Unificada (Full)",
+    "description": "Coleção completa da API NIP compatível com Meep Portal - Todos os módulos implementados",
+    "version": "4.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🏥 System",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Verifica se a API está funcionando"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔐 Autenticação",
+      "item": [
+        {
+          "name": "Login (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.access_token) {",
+                  "        pm.collectionVariables.set('token', response.access_token);",
+                  "        console.log('Token JWT salvo:', response.access_token.substring(0, 50) + '...');",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"admin@meep.com.br\", \"senha\": \"admin123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Realiza login e obtém token JWT"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Obtém informações do usuário atual"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🏢 Empresas",
+      "item": [
+        {
+          "name": "Listar Empresas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/empresas?page=1&pageSize=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista empresas com paginação e filtros"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Empresa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Empresa Teste Postman\",\n  \"cnpj\": \"12.345.678/0001-90\",\n  \"email\": \"teste@postman.com\",\n  \"telefone\": \"(11) 99999-9999\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/empresas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas"]
+            },
+            "description": "Cria nova empresa (retorna 201 + Location header)"
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Empresa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/empresas/{{empresa_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas", "{{empresa_id}}"]
+            },
+            "description": "Obtém empresa específica por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Empresa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Empresa Atualizada\",\n  \"email\": \"novo@email.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/empresas/{{empresa_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas", "{{empresa_id}}"]
+            },
+            "description": "Atualiza empresa completamente"
+          },
+          "response": []
+        },
+        {
+          "name": "Alterar Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"inativo\",\n  \"motivo\": \"Teste de alteração de status\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/empresas/{{empresa_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas", "{{empresa_id}}", "status"]
+            },
+            "description": "Altera status da empresa (ativo/inativo/suspenso)"
+          },
+          "response": []
+        },
+        {
+          "name": "Remover Empresa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/empresas/{{empresa_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas", "{{empresa_id}}"]
+            },
+            "description": "Remove empresa (retorna 204 No Content)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📊 Dashboard",
+      "item": [
+        {
+          "name": "Dashboard Principal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/dashboard?dateFrom=2024-01-01&dateTo=2024-12-31",
+              "host": ["{{base_url}}"],
+              "path": ["api", "dashboard"],
+              "query": [
+                {
+                  "key": "dateFrom",
+                  "value": "2024-01-01"
+                },
+                {
+                  "key": "dateTo",
+                  "value": "2024-12-31"
+                }
+              ]
+            },
+            "description": "Obtém métricas e visão geral do dashboard"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "💰 Financeiro",
+      "item": [
+        {
+          "name": "Listar Transações",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/financeiro/transacoes?page=1&pageSize=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "financeiro", "transacoes"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20"
+                },
+                {
+                  "key": "tipo",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista transações com paginação e filtros"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Transação (com Idempotência)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"valor\": 150.75,\n  \"tipo\": \"receita\",\n  \"descricao\": \"Venda teste via Postman\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/financeiro/transacoes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "financeiro", "transacoes"]
+            },
+            "description": "Cria nova transação com chave de idempotência"
+          },
+          "response": []
+        },
+        {
+          "name": "Relatório Fluxo de Caixa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/financeiro/relatorios/fluxo-caixa?dateFrom=2024-01-01&dateTo=2024-12-31&periodicidade=mensal",
+              "host": ["{{base_url}}"],
+              "path": ["api", "financeiro", "relatorios", "fluxo-caixa"],
+              "query": [
+                {
+                  "key": "dateFrom",
+                  "value": "2024-01-01"
+                },
+                {
+                  "key": "dateTo",
+                  "value": "2024-12-31"
+                },
+                {
+                  "key": "periodicidade",
+                  "value": "mensal"
+                }
+              ]
+            },
+            "description": "Obtém relatório de fluxo de caixa"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🛒 PDV",
+      "item": [
+        {
+          "name": "Configurações PDV",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pdv/configuracoes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pdv", "configuracoes"]
+            },
+            "description": "Obtém configurações do PDV"
+          },
+          "response": []
+        },
+        {
+          "name": "Tipos de Vínculo Proprietário",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pdv/proprietario/tipo-vinculo",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pdv", "proprietario", "tipo-vinculo"]
+            },
+            "description": "Lista tipos de vínculo do proprietário (REST normalizado)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📢 Marketing",
+      "item": [
+        {
+          "name": "Listar Campanhas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/marketing/campanhas?page=1&pageSize=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "marketing", "campanhas"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20"
+                },
+                {
+                  "key": "canal",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista campanhas de marketing"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Campanha",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Campanha Black Friday\",\n  \"canal\": \"email\",\n  \"conteudo\": {\n    \"assunto\": \"Ofertas imperdíveis!\",\n    \"corpo\": \"Não perca as melhores ofertas da Black Friday\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/marketing/campanhas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "marketing", "campanhas"]
+            },
+            "description": "Cria nova campanha de marketing"
+          },
+          "response": []
+        },
+        {
+          "name": "Programas de Fidelidade",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/marketing/fidelidade/programas?page=1&pageSize=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "marketing", "fidelidade", "programas"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "20"
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista programas de fidelidade"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "⚠️ Deprecated Routes (Compatibility)",
+      "item": [
+        {
+          "name": "Empresas - Criar (GET) [DEPRECATED]",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/empresas/criar",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas", "criar"]
+            },
+            "description": "DEPRECATED: Retorna 301 redirect para POST /api/empresas"
+          },
+          "response": []
+        },
+        {
+          "name": "Empresas - Listar (GET) [DEPRECATED]",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/empresas/listar",
+              "host": ["{{base_url}}"],
+              "path": ["api", "empresas", "listar"]
+            },
+            "description": "DEPRECATED: Retorna 301 redirect para GET /api/empresas"
+          },
+          "response": []
+        },
+        {
+          "name": "PDV - Tipo Vínculo (PascalCase) [DEPRECATED]",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/Proprietario/tipovinculo",
+              "host": ["{{base_url}}"],
+              "path": ["api", "Proprietario", "tipovinculo"]
+            },
+            "description": "DEPRECATED: Retorna 301 redirect para /api/pdv/proprietario/tipo-vinculo"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

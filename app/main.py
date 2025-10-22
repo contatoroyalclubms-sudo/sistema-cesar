@@ -1,45 +1,39 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime
 import uvicorn
 
-# Importar todos os routers
-from app.routers import auth
-from app.routers import empresas
-from app.routers import usuarios
-from app.routers import eventos
-from app.routers import listas
-from app.routers import transacoes
-from app.routers import checkins
-from app.routers import dashboard
-from app.routers import relatorios
-from app.routers import whatsapp
-from app.routers import cupons
-from app.routers import n8n
-from app.routers import produtos
-from app.routers import pdv
-from app.routers import gamificacao
-from app.routers import formas_pagamento
-from app.routers import meep
-from app.routers import gestao_venda
-from app.routers import solucoes_online
-from app.routers import ingressos
-from app.routers import equipe
-from app.routers import pedidos
-from app.routers import mapa_operacao
-from app.routers import marketing
-from app.routers import bi
-from app.routers import automacao
-from app.routers import integracao
-from app.routers import estoque
-from app.routers import cardapio
-from app.routers import financeiro
-from app.routers import clientes
-from app.routers import erp
+# Importar routers seguindo estrutura NIP organizacional
+from app.routers import (
+    # Core
+    auth, dashboard,
+    # Financeiro
+    financeiro,
+    # PDV e Vendas  
+    pdv, gestao_venda,
+    # Operações
+    estoque, produtos,
+    # Marketing e CRM
+    marketing, clientes,
+    # Business Intelligence
+    bi, relatorios,
+    # ERP e Automação
+    erp, automacao,
+    # Integração e APIs
+    integracao, n8n, whatsapp,
+    # Gestão
+    usuarios, empresas, equipe,
+    # Eventos e Entretenimento
+    eventos, ingressos, listas, checkins,
+    # Outros módulos
+    cardapio, cupons, formas_pagamento, gamificacao,
+    mapa_operacao, meep, pedidos, solucoes_online, transacoes
+)
 
 app = FastAPI(
-    title="MEEP Clone API - Sistema Completo",
-    description="Sistema completo com 500+ endpoints - Todos os módulos MEEP implementados",
-    version="3.0.0"
+    title="Sistema NIP - API Unificada Meep Compatible",
+    description="API unificada do Sistema NIP compatível com o portal Meep - Todos os módulos implementados",
+    version="4.0.0"
 )
 
 # CORS
@@ -49,6 +43,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+# Endpoint de health check
+@app.get("/health", tags=["System"])
+async def health_check():
+    """
+    Health Check - Verifica se a API está funcionando
+    """
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now().isoformat(),
+        "version": "4.0.0",
+        "message": "Sistema NIP - API operacional"
+    }
 
 # Registrar todos os routers
 app.include_router(auth.router)

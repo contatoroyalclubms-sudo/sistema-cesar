@@ -1,0 +1,338 @@
+# Regras Spectral NIP - Validação de Contrato API
+# Garante aderência a padrões REST, JWT, paginação e boas práticas
+
+extends: ["spectral:oas"]
+
+rules:
+  # =============================================================================
+  # REGRAS DE INFORMAÇÕES BÁSICAS
+  # =============================================================================
+  nip-info-title:
+    description: "API deve ter título descritivo"
+    given: "$.info"
+    severity: error
+    then:
+      field: "title"
+      function: truthy
+
+  nip-info-version:
+    description: "API deve ter versão semântica"
+    given: "$.info.version"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^\\d+\\.\\d+\\.\\d+$"
+
+  nip-info-description:
+    description: "API deve ter descrição detalhada"
+    given: "$.info"
+    severity: warn
+    then:
+      field: "description"
+      function: truthy
+
+  # =============================================================================
+  # REGRAS DE SEGURANÇA JWT
+  # =============================================================================
+  nip-security-global:
+    description: "API deve ter segurança global definida"
+    given: "$"
+    severity: error
+    then:
+      field: "security"
+      function: truthy
+
+  nip-security-bearer-scheme:
+    description: "Deve usar JWT Bearer como esquema de segurança"
+    given: "$.components.securitySchemes.*"
+    severity: error
+    then:
+      field: "scheme"
+      function: pattern
+      functionOptions:
+        match: "^bearer$"
+
+  nip-public-endpoints-no-security:
+    description: "Endpoints públicos devem ter security: []"
+    given: "$.paths['/health', '/api/auth/login'].*"
+    severity: error
+    then:
+      field: "security"
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          maxItems: 0
+
+  # =============================================================================
+  # REGRAS REST - NORMALIZAÇÃO DE PATHS
+  # =============================================================================
+  nip-no-verbs-in-paths:
+    description: "Paths não devem conter verbos (criar, listar, obter, etc.)"
+    given: "$.paths.*~"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/(criar|listar|obter|atualizar|ativar|desativar|remover|deletar|buscar|pesquisar|consultar)($|/)"
+
+  nip-rest-resource-naming:
+    description: "Recursos devem usar substantivos no plural"
+    given: "$.paths.*~"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/api/[a-z-]+(/[a-z-]+)*(/\\{[a-zA-Z0-9_-]+\\})?(/[a-z-]+)*$"
+
+  nip-kebab-case-paths:
+    description: "Paths devem usar kebab-case"
+    given: "$.paths.*~"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[/a-z0-9{}-]*$"
+
+  # =============================================================================
+  # REGRAS DE MÉTODOS HTTP
+  # =============================================================================
+  nip-auth-login-post:
+    description: "Login deve usar método POST"
+    given: "$.paths['/api/auth/login']"
+    severity: error
+    then:
+      field: "post"
+      function: truthy
+
+  nip-create-post-method:
+    description: "Criação de recursos deve usar POST"
+    given: "$.paths[*][*].tags[*]"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "criar|Create"
+
+  nip-update-put-method:
+    description: "Atualização completa deve usar PUT"
+    given: "$.paths[*/*/{id}]"
+    severity: warn
+    then:
+      field: "put"
+      function: truthy
+
+  # =============================================================================
+  # REGRAS DE STATUS CODES
+  # =============================================================================
+  nip-creation-201-status:
+    description: "Criação deve retornar 201 com Location header"
+    given: "$.paths[*].post.responses"
+    severity: error
+    then:
+      field: "201"
+      function: truthy
+
+  nip-creation-location-header:
+    description: "Criação (201) deve incluir header Location"
+    given: "$.paths[*].post.responses['201']"
+    severity: error
+    then:
+      field: "headers.Location"
+      function: truthy
+
+  nip-deletion-204-status:
+    description: "Deleção deve retornar 204 (sem corpo)"
+    given: "$.paths[*].delete.responses"
+    severity: error
+    then:
+      field: "204"
+      function: truthy
+
+  nip-error-responses:
+    description: "Endpoints devem ter respostas de erro (4xx/5xx)"
+    given: "$.paths[*][*].responses"
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["400"]
+            - required: ["401"]
+            - required: ["403"]
+            - required: ["404"]
+            - required: ["422"]
+            - required: ["500"]
+
+  # =============================================================================
+  # REGRAS DE PAGINAÇÃO
+  # =============================================================================
+  nip-list-endpoints-pagination:
+    description: "Endpoints de listagem devem ter parâmetros de paginação"
+    given: "$.paths[*].get[?(@.summary && (@.summary.match(/listar|list/i) || @.tags[*].match(/list/i)))]"
+    severity: warn
+    then:
+      field: "parameters"
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            anyOf:
+              - properties:
+                  name:
+                    const: "page"
+              - properties:
+                  name:
+                    const: "pageSize"
+
+  nip-pagination-parameters:
+    description: "Parâmetros de paginação devem usar nomes padronizados"
+    given: "$.paths[*][*].parameters[?(@.name.match(/page|limit|size|offset/i))]"
+    severity: error
+    then:
+      field: "name"
+      function: enumeration
+      functionOptions:
+        values: ["page", "pageSize", "limit", "offset"]
+
+  # =============================================================================
+  # REGRAS DE REQUEST/RESPONSE SCHEMAS
+  # =============================================================================
+  nip-request-body-required:
+    description: "POST/PUT devem ter requestBody obrigatório"
+    given: "$.paths[*]['post','put']"
+    severity: error
+    then:
+      field: "requestBody.required"
+      function: truthy
+
+  nip-response-schema-defined:
+    description: "Respostas devem ter schema definido"
+    given: "$.paths[*][*].responses[*].content['application/json']"
+    severity: error
+    then:
+      field: "schema"
+      function: truthy
+
+  nip-success-response-schema:
+    description: "Respostas de sucesso devem usar APIResponse schema"
+    given: "$.paths[*][*].responses['200','201'].content['application/json'].schema"
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - properties:
+                $ref:
+                  const: "#/components/schemas/APIResponse"
+            - allOf:
+                - properties:
+                    $ref:
+                      const: "#/components/schemas/APIResponse"
+
+  # =============================================================================
+  # REGRAS DE COMPATIBILIDADE MEEP
+  # =============================================================================
+  nip-deprecated-routes-marked:
+    description: "Rotas legadas devem estar marcadas como deprecated"
+    given: "$.paths[*][*][?(@.summary && @.summary.match(/criar|listar|obter|atualizar/i))]"
+    severity: warn
+    then:
+      field: "deprecated"
+      function: truthy
+
+  nip-deprecated-redirect-301:
+    description: "Rotas deprecated devem retornar 301 com Location"
+    given: "$.paths[*][*][?(@.deprecated === true)]"
+    severity: warn
+    then:
+      field: "responses.301"
+      function: truthy
+
+  # =============================================================================
+  # REGRAS DE IDEMPOTÊNCIA (FINANCEIRO)
+  # =============================================================================
+  nip-financial-idempotency:
+    description: "Endpoints financeiros críticos devem suportar Idempotency-Key"
+    given: "$.paths[/.*financeiro.*].post"
+    severity: error
+    then:
+      field: "parameters"
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            properties:
+              name:
+                const: "Idempotency-Key"
+              in:
+                const: "header"
+
+  nip-idempotency-409-response:
+    description: "Endpoints com idempotência devem retornar 409 para duplicatas"
+    given: "$.paths[*].post[?(@.parameters[*].name === 'Idempotency-Key')]"
+    severity: error
+    then:
+      field: "responses.409"
+      function: truthy
+
+  # =============================================================================
+  # REGRAS DE DOCUMENTAÇÃO
+  # =============================================================================
+  nip-operations-summary:
+    description: "Todas as operações devem ter summary"
+    given: "$.paths[*][*]"
+    severity: error
+    then:
+      field: "summary"
+      function: truthy
+
+  nip-operations-description:
+    description: "Operações devem ter description detalhada"
+    given: "$.paths[*][*]"
+    severity: warn
+    then:
+      field: "description"
+      function: truthy
+
+  nip-tags-required:
+    description: "Operações devem ter tags para organização"
+    given: "$.paths[*][*]"
+    severity: error
+    then:
+      field: "tags"
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+
+  # =============================================================================
+  # REGRAS DE PARÂMETROS REUTILIZÁVEIS
+  # =============================================================================
+  nip-reusable-parameters:
+    description: "Parâmetros comuns devem usar $ref para componentes"
+    given: "$.paths[*][*].parameters[?(@.name.match(/^(page|pageSize|sort|order|search|dateFrom|dateTo|ownerId)$/))]"
+    severity: warn
+    then:
+      field: "$ref"
+      function: pattern
+      functionOptions:
+        match: "^#/components/parameters/"
+
+  # =============================================================================
+  # REGRAS DE EXAMPLES
+  # =============================================================================
+  nip-schema-examples:
+    description: "Schemas devem ter examples para documentação"
+    given: "$.components.schemas[*].properties[*]"
+    severity: info
+    then:
+      field: "example"
+      function: truthy

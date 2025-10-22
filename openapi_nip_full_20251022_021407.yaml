@@ -1,0 +1,3995 @@
+openapi: 3.1.0
+info:
+  title: MEEP Clone API
+  version: 3.0.0
+  description: 'Patch Plan — Primeira leva (Auth, Empresas, Usuários, Eventos, Clientes,
+    PDV, Ingressos, Financeiro). Padrões aplicados: RESTful, JWT bearer, paginação,
+    erros tipados, idempotência em operações financeiras, webhooks como POST, versionamento
+    /api/v1.
+
+    '
+servers:
+- url: https://api.seudominio.com/api/v1
+security:
+- bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    ErrorResponse:
+      description: Erro padrão
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+    PageSizeParam:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+    SortParam:
+      name: sort
+      in: query
+      schema:
+        type: string
+    QueryParam:
+      name: q
+      in: query
+      schema:
+        type: string
+    DateFromParam:
+      name: date_from
+      in: query
+      schema:
+        type: string
+        format: date-time
+    DateToParam:
+      name: date_to
+      in: query
+      schema:
+        type: string
+        format: date-time
+    IdempotencyKeyHeader:
+      name: Idempotency-Key
+      in: header
+      required: false
+      schema:
+        type: string
+  schemas:
+    Empresa:
+      type: object
+      required:
+      - nome
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        cnpj:
+          type: string
+        status:
+          type: string
+          enum:
+          - ativo
+          - inativo
+    Usuario:
+      type: object
+      required:
+      - nome
+      - email
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        email:
+          type: string
+          format: email
+        perfil:
+          type: string
+        status:
+          type: string
+          enum:
+          - ativo
+          - inativo
+    Evento:
+      type: object
+      required:
+      - nome
+      - data_inicio
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_inicio:
+          type: string
+          format: date-time
+        data_fim:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - ativo
+          - cancelado
+          - encerrado
+          - rascunho
+    Cliente:
+      type: object
+      required:
+      - nome
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        cpf:
+          type: string
+        email:
+          type: string
+          format: email
+        telefone:
+          type: string
+        categoria_id:
+          type: integer
+    Produto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        preco:
+          type: number
+          format: float
+        categoria_id:
+          type: integer
+        estoque_atual:
+          type: number
+    Venda:
+      type: object
+      properties:
+        id:
+          type: integer
+        total:
+          type: number
+          format: float
+        forma_pagamento:
+          type: string
+        itens:
+          type: array
+          items:
+            type: object
+            properties:
+              produto_id:
+                type: integer
+              quantidade:
+                type: number
+              preco_unitario:
+                type: number
+                format: float
+tags:
+- name: Favoritos
+  description: Módulo Favoritos
+- name: Dashboard
+  description: Módulo Dashboard
+- name: Informações dos clientes
+  description: Módulo Informações dos clientes
+- name: Equipe
+  description: Módulo Equipe
+- name: Cardápio
+  description: Módulo Cardápio
+- name: Gestão de venda
+  description: Módulo Gestão de venda
+- name: Soluções Online
+  description: Módulo Soluções Online
+- name: Ingressos
+  description: Módulo Ingressos
+- name: Relatórios
+  description: Módulo Relatórios
+- name: Clientes
+  description: Módulo Clientes
+- name: Gestão de estoque
+  description: Módulo Gestão de estoque
+- name: Estoque
+  description: Módulo Estoque
+- name: PDV
+  description: Módulo PDV
+- name: Pedidos
+  description: Módulo Pedidos
+- name: Financeiro
+  description: Módulo Financeiro
+- name: Mapa da operação
+  description: Módulo Mapa da operação
+- name: Marketing
+  description: Módulo Marketing
+- name: BI
+  description: Módulo BI
+- name: Sistema ERP
+  description: Módulo Sistema ERP
+- name: Automação
+  description: Módulo Automação
+- name: Integração
+  description: Módulo Integração
+paths:
+  /favoritos/ia:
+    get:
+      tags:
+      - Favoritos
+      summary: Listar favoritos/ia
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Favoritos
+      summary: Criar favoritos/ia
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /favoritos/ia/{id}:
+    get:
+      tags:
+      - Favoritos
+      summary: Obter favoritos/ia por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Favoritos
+      summary: Atualizar favoritos/ia
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Favoritos
+      summary: Excluir favoritos/ia
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /favoritos/evento-caixa:
+    get:
+      tags:
+      - Favoritos
+      summary: Listar favoritos/evento-caixa
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Favoritos
+      summary: Criar favoritos/evento-caixa
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /favoritos/evento-caixa/{id}:
+    get:
+      tags:
+      - Favoritos
+      summary: Obter favoritos/evento-caixa por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Favoritos
+      summary: Atualizar favoritos/evento-caixa
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Favoritos
+      summary: Excluir favoritos/evento-caixa
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /dashboard/geral:
+    get:
+      tags:
+      - Dashboard
+      summary: Listar dashboard/geral
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Dashboard
+      summary: Criar dashboard/geral
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /dashboard/geral/{id}:
+    get:
+      tags:
+      - Dashboard
+      summary: Obter dashboard/geral por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Dashboard
+      summary: Atualizar dashboard/geral
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Dashboard
+      summary: Excluir dashboard/geral
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /dashboard/clientes:
+    get:
+      tags:
+      - Dashboard
+      summary: Listar dashboard/clientes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Dashboard
+      summary: Criar dashboard/cliente
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /dashboard/clientes/{id}:
+    get:
+      tags:
+      - Dashboard
+      summary: Obter dashboard/clientes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Dashboard
+      summary: Atualizar dashboard/clientes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Dashboard
+      summary: Excluir dashboard/clientes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /informacoes-dos-clientes/comandas:
+    get:
+      tags:
+      - Informações dos clientes
+      summary: Listar informacoes-dos-clientes/comandas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Informações dos clientes
+      summary: Criar informacoes-dos-clientes/comanda
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /informacoes-dos-clientes/comandas/{id}:
+    get:
+      tags:
+      - Informações dos clientes
+      summary: Obter informacoes-dos-clientes/comandas por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Informações dos clientes
+      summary: Atualizar informacoes-dos-clientes/comandas
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Informações dos clientes
+      summary: Excluir informacoes-dos-clientes/comandas
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /informacoes-dos-clientes/cashless:
+    get:
+      tags:
+      - Informações dos clientes
+      summary: Listar informacoes-dos-clientes/cashless
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Informações dos clientes
+      summary: Criar informacoes-dos-clientes/cashles
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /informacoes-dos-clientes/cashless/{id}:
+    get:
+      tags:
+      - Informações dos clientes
+      summary: Obter informacoes-dos-clientes/cashless por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Informações dos clientes
+      summary: Atualizar informacoes-dos-clientes/cashless
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Informações dos clientes
+      summary: Excluir informacoes-dos-clientes/cashless
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /equipe/colaboradores:
+    get:
+      tags:
+      - Equipe
+      summary: Listar equipe/colaboradores
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Equipe
+      summary: Criar equipe/colaboradore
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /equipe/colaboradores/{id}:
+    get:
+      tags:
+      - Equipe
+      summary: Obter equipe/colaboradores por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Equipe
+      summary: Atualizar equipe/colaboradores
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Equipe
+      summary: Excluir equipe/colaboradores
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /equipe/cargos:
+    get:
+      tags:
+      - Equipe
+      summary: Listar equipe/cargos
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Equipe
+      summary: Criar equipe/cargo
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /equipe/cargos/{id}:
+    get:
+      tags:
+      - Equipe
+      summary: Obter equipe/cargos por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Equipe
+      summary: Atualizar equipe/cargos
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Equipe
+      summary: Excluir equipe/cargos
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /cardapio/cardapios:
+    get:
+      tags:
+      - Cardápio
+      summary: Listar cardapio/cardapios
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Cardápio
+      summary: Criar cardapio/cardapio
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /cardapio/cardapios/{id}:
+    get:
+      tags:
+      - Cardápio
+      summary: Obter cardapio/cardapios por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Cardápio
+      summary: Atualizar cardapio/cardapios
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Cardápio
+      summary: Excluir cardapio/cardapios
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-venda:
+    get:
+      tags:
+      - Gestão de venda
+      summary: Listar gestao-de-venda
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Gestão de venda
+      summary: Criar gestao-de-venda
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-venda/{id}:
+    get:
+      tags:
+      - Gestão de venda
+      summary: Obter gestao-de-venda por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Gestão de venda
+      summary: Atualizar gestao-de-venda
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Gestão de venda
+      summary: Excluir gestao-de-venda
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /solucoes-online:
+    get:
+      tags:
+      - Soluções Online
+      summary: Listar solucoes-online
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Soluções Online
+      summary: Criar solucoes-online
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /solucoes-online/{id}:
+    get:
+      tags:
+      - Soluções Online
+      summary: Obter solucoes-online por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Soluções Online
+      summary: Atualizar solucoes-online
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Soluções Online
+      summary: Excluir solucoes-online
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /ingressos:
+    get:
+      tags:
+      - Ingressos
+      summary: Listar ingressos
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Ingressos
+      summary: Criar ingresso
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /ingressos/{id}:
+    get:
+      tags:
+      - Ingressos
+      summary: Obter ingressos por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Ingressos
+      summary: Atualizar ingressos
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Ingressos
+      summary: Excluir ingressos
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/venda:
+    get:
+      tags:
+      - Relatórios
+      summary: Listar relatorios/venda
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Relatórios
+      summary: Criar relatorios/venda
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/venda/{id}:
+    get:
+      tags:
+      - Relatórios
+      summary: Obter relatorios/venda por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Relatórios
+      summary: Atualizar relatorios/venda
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Relatórios
+      summary: Excluir relatorios/venda
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/cartoes:
+    get:
+      tags:
+      - Relatórios
+      summary: Listar relatorios/cartoes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Relatórios
+      summary: Criar relatorios/cartoe
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/cartoes/{id}:
+    get:
+      tags:
+      - Relatórios
+      summary: Obter relatorios/cartoes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Relatórios
+      summary: Atualizar relatorios/cartoes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Relatórios
+      summary: Excluir relatorios/cartoes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/caixa:
+    get:
+      tags:
+      - Relatórios
+      summary: Listar relatorios/caixa
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Relatórios
+      summary: Criar relatorios/caixa
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/caixa/{id}:
+    get:
+      tags:
+      - Relatórios
+      summary: Obter relatorios/caixa por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Relatórios
+      summary: Atualizar relatorios/caixa
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Relatórios
+      summary: Excluir relatorios/caixa
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/ficha:
+    get:
+      tags:
+      - Relatórios
+      summary: Listar relatorios/ficha
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Relatórios
+      summary: Criar relatorios/ficha
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/ficha/{id}:
+    get:
+      tags:
+      - Relatórios
+      summary: Obter relatorios/ficha por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Relatórios
+      summary: Atualizar relatorios/ficha
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Relatórios
+      summary: Excluir relatorios/ficha
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/gerencial:
+    get:
+      tags:
+      - Relatórios
+      summary: Listar relatorios/gerencial
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Relatórios
+      summary: Criar relatorios/gerencial
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/gerencial/{id}:
+    get:
+      tags:
+      - Relatórios
+      summary: Obter relatorios/gerencial por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Relatórios
+      summary: Atualizar relatorios/gerencial
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Relatórios
+      summary: Excluir relatorios/gerencial
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/financeiro:
+    get:
+      tags:
+      - Relatórios
+      summary: Listar relatorios/financeiro
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Relatórios
+      summary: Criar relatorios/financeiro
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /relatorios/financeiro/{id}:
+    get:
+      tags:
+      - Relatórios
+      summary: Obter relatorios/financeiro por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Relatórios
+      summary: Atualizar relatorios/financeiro
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Relatórios
+      summary: Excluir relatorios/financeiro
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/categoria-de-clientes:
+    get:
+      tags:
+      - Clientes
+      summary: Listar clientes/categoria-de-clientes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Clientes
+      summary: Criar clientes/categoria-de-cliente
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/categoria-de-clientes/{id}:
+    get:
+      tags:
+      - Clientes
+      summary: Obter clientes/categoria-de-clientes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Clientes
+      summary: Atualizar clientes/categoria-de-clientes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Clientes
+      summary: Excluir clientes/categoria-de-clientes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/listagem-de-clientes:
+    get:
+      tags:
+      - Clientes
+      summary: Listar clientes/listagem-de-clientes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Clientes
+      summary: Criar clientes/listagem-de-cliente
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/listagem-de-clientes/{id}:
+    get:
+      tags:
+      - Clientes
+      summary: Obter clientes/listagem-de-clientes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Clientes
+      summary: Atualizar clientes/listagem-de-clientes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Clientes
+      summary: Excluir clientes/listagem-de-clientes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/pesquisa-de-satisfacao:
+    get:
+      tags:
+      - Clientes
+      summary: Listar clientes/pesquisa-de-satisfacao
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Clientes
+      summary: Criar clientes/pesquisa-de-satisfacao
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/pesquisa-de-satisfacao/{id}:
+    get:
+      tags:
+      - Clientes
+      summary: Obter clientes/pesquisa-de-satisfacao por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Clientes
+      summary: Atualizar clientes/pesquisa-de-satisfacao
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Clientes
+      summary: Excluir clientes/pesquisa-de-satisfacao
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/cadastros:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Listar gestao-de-estoque/cadastros
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Gestão de estoque
+      summary: Criar gestao-de-estoque/cadastro
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/cadastros/{id}:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Obter gestao-de-estoque/cadastros por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Gestão de estoque
+      summary: Atualizar gestao-de-estoque/cadastros
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Gestão de estoque
+      summary: Excluir gestao-de-estoque/cadastros
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/central-de-lancamento:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Listar gestao-de-estoque/central-de-lancamento
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Gestão de estoque
+      summary: Criar gestao-de-estoque/central-de-lancamento
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/central-de-lancamento/{id}:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Obter gestao-de-estoque/central-de-lancamento por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Gestão de estoque
+      summary: Atualizar gestao-de-estoque/central-de-lancamento
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Gestão de estoque
+      summary: Excluir gestao-de-estoque/central-de-lancamento
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/estoque:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Listar gestao-de-estoque/estoque
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Gestão de estoque
+      summary: Criar gestao-de-estoque/estoque
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/estoque/{id}:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Obter gestao-de-estoque/estoque por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Gestão de estoque
+      summary: Atualizar gestao-de-estoque/estoque
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Gestão de estoque
+      summary: Excluir gestao-de-estoque/estoque
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/inventario:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Listar gestao-de-estoque/inventario
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Gestão de estoque
+      summary: Criar gestao-de-estoque/inventario
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /gestao-de-estoque/inventario/{id}:
+    get:
+      tags:
+      - Gestão de estoque
+      summary: Obter gestao-de-estoque/inventario por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Gestão de estoque
+      summary: Atualizar gestao-de-estoque/inventario
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Gestão de estoque
+      summary: Excluir gestao-de-estoque/inventario
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/posicao:
+    get:
+      tags:
+      - Estoque
+      summary: Listar estoque/posicao
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Estoque
+      summary: Criar estoque/posicao
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/posicao/{id}:
+    get:
+      tags:
+      - Estoque
+      summary: Obter estoque/posicao por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Estoque
+      summary: Atualizar estoque/posicao
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Estoque
+      summary: Excluir estoque/posicao
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/entrada:
+    get:
+      tags:
+      - Estoque
+      summary: Listar estoque/entrada
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Estoque
+      summary: Criar estoque/entrada
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/entrada/{id}:
+    get:
+      tags:
+      - Estoque
+      summary: Obter estoque/entrada por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Estoque
+      summary: Atualizar estoque/entrada
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Estoque
+      summary: Excluir estoque/entrada
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/saida:
+    get:
+      tags:
+      - Estoque
+      summary: Listar estoque/saida
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Estoque
+      summary: Criar estoque/saida
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/saida/{id}:
+    get:
+      tags:
+      - Estoque
+      summary: Obter estoque/saida por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Estoque
+      summary: Atualizar estoque/saida
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Estoque
+      summary: Excluir estoque/saida
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/motivo:
+    get:
+      tags:
+      - Estoque
+      summary: Listar estoque/motivo
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Estoque
+      summary: Criar estoque/motivo
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /estoque/motivo/{id}:
+    get:
+      tags:
+      - Estoque
+      summary: Obter estoque/motivo por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Estoque
+      summary: Atualizar estoque/motivo
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Estoque
+      summary: Excluir estoque/motivo
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/perfil:
+    get:
+      tags:
+      - PDV
+      summary: Listar pdv/perfil
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - PDV
+      summary: Criar pdv/perfil
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/perfil/{id}:
+    get:
+      tags:
+      - PDV
+      summary: Obter pdv/perfil por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - PDV
+      summary: Atualizar pdv/perfil
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - PDV
+      summary: Excluir pdv/perfil
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/impressoras:
+    get:
+      tags:
+      - PDV
+      summary: Listar pdv/impressoras
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - PDV
+      summary: Criar pdv/impressora
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/impressoras/{id}:
+    get:
+      tags:
+      - PDV
+      summary: Obter pdv/impressoras por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - PDV
+      summary: Atualizar pdv/impressoras
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - PDV
+      summary: Excluir pdv/impressoras
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/impressoras-inteligentes:
+    get:
+      tags:
+      - PDV
+      summary: Listar pdv/impressoras-inteligentes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - PDV
+      summary: Criar pdv/impressoras-inteligente
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/impressoras-inteligentes/{id}:
+    get:
+      tags:
+      - PDV
+      summary: Obter pdv/impressoras-inteligentes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - PDV
+      summary: Atualizar pdv/impressoras-inteligentes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - PDV
+      summary: Excluir pdv/impressoras-inteligentes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/equipamentos:
+    get:
+      tags:
+      - PDV
+      summary: Listar pdv/equipamentos
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - PDV
+      summary: Criar pdv/equipamento
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/equipamentos/{id}:
+    get:
+      tags:
+      - PDV
+      summary: Obter pdv/equipamentos por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - PDV
+      summary: Atualizar pdv/equipamentos
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - PDV
+      summary: Excluir pdv/equipamentos
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/operador:
+    get:
+      tags:
+      - PDV
+      summary: Listar pdv/operador
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - PDV
+      summary: Criar pdv/operador
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/operador/{id}:
+    get:
+      tags:
+      - PDV
+      summary: Obter pdv/operador por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - PDV
+      summary: Atualizar pdv/operador
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - PDV
+      summary: Excluir pdv/operador
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pedidos/gestor-de-pedidos:
+    get:
+      tags:
+      - Pedidos
+      summary: Listar pedidos/gestor-de-pedidos
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Pedidos
+      summary: Criar pedidos/gestor-de-pedido
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pedidos/gestor-de-pedidos/{id}:
+    get:
+      tags:
+      - Pedidos
+      summary: Obter pedidos/gestor-de-pedidos por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Pedidos
+      summary: Atualizar pedidos/gestor-de-pedidos
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Pedidos
+      summary: Excluir pedidos/gestor-de-pedidos
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/conta-digital:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/conta-digital
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/conta-digital
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/conta-digital/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/conta-digital por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/conta-digital
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/conta-digital
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/permutas:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/permutas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/permuta
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/permutas/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/permutas por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/permutas
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/permutas
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/antecipacao-de-recebiveis:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/antecipacao-de-recebiveis
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/antecipacao-de-recebivei
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/antecipacao-de-recebiveis/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/antecipacao-de-recebiveis por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/antecipacao-de-recebiveis
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/antecipacao-de-recebiveis
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/taxas:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/taxas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/taxa
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/taxas/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/taxas por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/taxas
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/taxas
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/direcionamento-de-transacoes:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/direcionamento-de-transacoes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/direcionamento-de-transacoe
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/direcionamento-de-transacoes/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/direcionamento-de-transacoes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/direcionamento-de-transacoes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/direcionamento-de-transacoes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/contas-bancarias:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/contas-bancarias
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/contas-bancaria
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/contas-bancarias/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/contas-bancarias por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/contas-bancarias
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/contas-bancarias
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/link-de-pagamento:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/link-de-pagamento
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/link-de-pagamento
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/link-de-pagamento/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/link-de-pagamento por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/link-de-pagamento
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/link-de-pagamento
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/forma-de-pagamento:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/forma-de-pagamento
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/forma-de-pagamento
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/forma-de-pagamento/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/forma-de-pagamento por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/forma-de-pagamento
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/forma-de-pagamento
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/fatura:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/fatura
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/fatura
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/fatura/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/fatura por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/fatura
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/fatura
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/split:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/split
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/split
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/split/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/split por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/split
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/split
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/estorno-de-transacoes:
+    get:
+      tags:
+      - Financeiro
+      summary: Listar financeiro/estorno-de-transacoes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Financeiro
+      summary: Criar financeiro/estorno-de-transacoe
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/estorno-de-transacoes/{id}:
+    get:
+      tags:
+      - Financeiro
+      summary: Obter financeiro/estorno-de-transacoes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Financeiro
+      summary: Atualizar financeiro/estorno-de-transacoes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Financeiro
+      summary: Excluir financeiro/estorno-de-transacoes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/contas-e-bloqueios:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Listar mapa-da-operacao/contas-e-bloqueios
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Mapa da operação
+      summary: Criar mapa-da-operacao/contas-e-bloqueio
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/contas-e-bloqueios/{id}:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Obter mapa-da-operacao/contas-e-bloqueios por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Mapa da operação
+      summary: Atualizar mapa-da-operacao/contas-e-bloqueios
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Mapa da operação
+      summary: Excluir mapa-da-operacao/contas-e-bloqueios
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/cadastro-de-mesas:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Listar mapa-da-operacao/cadastro-de-mesas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Mapa da operação
+      summary: Criar mapa-da-operacao/cadastro-de-mesa
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/cadastro-de-mesas/{id}:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Obter mapa-da-operacao/cadastro-de-mesas por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Mapa da operação
+      summary: Atualizar mapa-da-operacao/cadastro-de-mesas
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Mapa da operação
+      summary: Excluir mapa-da-operacao/cadastro-de-mesas
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/pre-ativacao-de-cartoes:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Listar mapa-da-operacao/pre-ativacao-de-cartoes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Mapa da operação
+      summary: Criar mapa-da-operacao/pre-ativacao-de-cartoe
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/pre-ativacao-de-cartoes/{id}:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Obter mapa-da-operacao/pre-ativacao-de-cartoes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Mapa da operação
+      summary: Atualizar mapa-da-operacao/pre-ativacao-de-cartoes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Mapa da operação
+      summary: Excluir mapa-da-operacao/pre-ativacao-de-cartoes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/mapa-de-comandas:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Listar mapa-da-operacao/mapa-de-comandas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Mapa da operação
+      summary: Criar mapa-da-operacao/mapa-de-comanda
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/mapa-de-comandas/{id}:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Obter mapa-da-operacao/mapa-de-comandas por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Mapa da operação
+      summary: Atualizar mapa-da-operacao/mapa-de-comandas
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Mapa da operação
+      summary: Excluir mapa-da-operacao/mapa-de-comandas
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/grupo-de-cartoes:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Listar mapa-da-operacao/grupo-de-cartoes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Mapa da operação
+      summary: Criar mapa-da-operacao/grupo-de-cartoe
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/grupo-de-cartoes/{id}:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Obter mapa-da-operacao/grupo-de-cartoes por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Mapa da operação
+      summary: Atualizar mapa-da-operacao/grupo-de-cartoes
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Mapa da operação
+      summary: Excluir mapa-da-operacao/grupo-de-cartoes
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/cadastro-de-loja:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Listar mapa-da-operacao/cadastro-de-loja
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Mapa da operação
+      summary: Criar mapa-da-operacao/cadastro-de-loja
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /mapa-da-operacao/cadastro-de-loja/{id}:
+    get:
+      tags:
+      - Mapa da operação
+      summary: Obter mapa-da-operacao/cadastro-de-loja por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Mapa da operação
+      summary: Atualizar mapa-da-operacao/cadastro-de-loja
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Mapa da operação
+      summary: Excluir mapa-da-operacao/cadastro-de-loja
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/fidelidade:
+    get:
+      tags:
+      - Marketing
+      summary: Listar marketing/fidelidade
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Marketing
+      summary: Criar marketing/fidelidade
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/fidelidade/{id}:
+    get:
+      tags:
+      - Marketing
+      summary: Obter marketing/fidelidade por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Marketing
+      summary: Atualizar marketing/fidelidade
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Marketing
+      summary: Excluir marketing/fidelidade
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/crm:
+    get:
+      tags:
+      - Marketing
+      summary: Listar marketing/crm
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Marketing
+      summary: Criar marketing/crm
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/crm/{id}:
+    get:
+      tags:
+      - Marketing
+      summary: Obter marketing/crm por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Marketing
+      summary: Atualizar marketing/crm
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Marketing
+      summary: Excluir marketing/crm
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/desconto-lista-de-convidados:
+    get:
+      tags:
+      - Marketing
+      summary: Listar marketing/desconto-lista-de-convidados
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Marketing
+      summary: Criar marketing/desconto-lista-de-convidado
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/desconto-lista-de-convidados/{id}:
+    get:
+      tags:
+      - Marketing
+      summary: Obter marketing/desconto-lista-de-convidados por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Marketing
+      summary: Atualizar marketing/desconto-lista-de-convidados
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Marketing
+      summary: Excluir marketing/desconto-lista-de-convidados
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/cupons-de-desconto:
+    get:
+      tags:
+      - Marketing
+      summary: Listar marketing/cupons-de-desconto
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Marketing
+      summary: Criar marketing/cupons-de-desconto
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/cupons-de-desconto/{id}:
+    get:
+      tags:
+      - Marketing
+      summary: Obter marketing/cupons-de-desconto por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Marketing
+      summary: Atualizar marketing/cupons-de-desconto
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Marketing
+      summary: Excluir marketing/cupons-de-desconto
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/campanhas:
+    get:
+      tags:
+      - Marketing
+      summary: Listar marketing/campanhas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Marketing
+      summary: Criar marketing/campanha
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/campanhas/{id}:
+    get:
+      tags:
+      - Marketing
+      summary: Obter marketing/campanhas por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Marketing
+      summary: Atualizar marketing/campanhas
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Marketing
+      summary: Excluir marketing/campanhas
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/promocao:
+    get:
+      tags:
+      - Marketing
+      summary: Listar marketing/promocao
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Marketing
+      summary: Criar marketing/promocao
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /marketing/promocao/{id}:
+    get:
+      tags:
+      - Marketing
+      summary: Obter marketing/promocao por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Marketing
+      summary: Atualizar marketing/promocao
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Marketing
+      summary: Excluir marketing/promocao
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /bi:
+    get:
+      tags:
+      - BI
+      summary: Listar bi
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - BI
+      summary: Criar bi
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /bi/{id}:
+    get:
+      tags:
+      - BI
+      summary: Obter bi por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - BI
+      summary: Atualizar bi
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - BI
+      summary: Excluir bi
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /sistema-erp:
+    get:
+      tags:
+      - Sistema ERP
+      summary: Listar sistema-erp
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Sistema ERP
+      summary: Criar sistema-erp
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /sistema-erp/{id}:
+    get:
+      tags:
+      - Sistema ERP
+      summary: Obter sistema-erp por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Sistema ERP
+      summary: Atualizar sistema-erp
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Sistema ERP
+      summary: Excluir sistema-erp
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /automacao:
+    get:
+      tags:
+      - Automação
+      summary: Listar automacao
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Automação
+      summary: Criar automacao
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /automacao/{id}:
+    get:
+      tags:
+      - Automação
+      summary: Obter automacao por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Automação
+      summary: Atualizar automacao
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Automação
+      summary: Excluir automacao
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /integracao:
+    get:
+      tags:
+      - Integração
+      summary: Listar integracao
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      tags:
+      - Integração
+      summary: Criar integracao
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /integracao/{id}:
+    get:
+      tags:
+      - Integração
+      summary: Obter integracao por id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+      - Integração
+      summary: Atualizar integracao
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+      - Integração
+      summary: Excluir integracao
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /auth/login:
+    post:
+      security: []
+      summary: Auth Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - senha
+              properties:
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+                  minLength: 6
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  token_type:
+                    type: string
+                    example: Bearer
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /auth/me:
+    get:
+      summary: Perfil autenticado
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /empresas:
+    get:
+      summary: Listar empresas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Empresa'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: Criar empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empresa'
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /empresas/{{empresa_id}}:
+    get:
+      summary: Obter empresa
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      summary: Atualizar empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empresa'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      summary: Excluir/Desativar
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    patch:
+      summary: Alterar status da empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              properties:
+                status:
+                  type: string
+                  enum:
+                  - ativo
+                  - inativo
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /usuarios:
+    get:
+      summary: Listar usuários
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: Criar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /usuarios/{{usuario_id}}:
+    get:
+      summary: Obter usuário
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      summary: Atualizar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    patch:
+      summary: Alterar status usuário
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /eventos:
+    get:
+      summary: Listar eventos
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/DateFromParam'
+      - $ref: '#/components/parameters/DateToParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: Criar evento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evento'
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /eventos/{{evento_id}}:
+    get:
+      summary: Obter evento
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      summary: Atualizar evento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evento'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      summary: Cancelar evento
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes:
+    get:
+      summary: Listar clientes
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/QueryParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: Criar cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /clientes/{{cliente_id}}:
+    get:
+      summary: Obter cliente
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    put:
+      summary: Atualizar cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      summary: Excluir cliente
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/caixa/abrir:
+    post:
+      summary: Abrir caixa
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/caixa/fechar:
+    post:
+      summary: Fechar caixa
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/vendas:
+    get:
+      summary: Listar vendas
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageSizeParam'
+      - $ref: '#/components/parameters/DateFromParam'
+      - $ref: '#/components/parameters/DateToParam'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: Criar venda
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Venda'
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /pdv/vendas/{{venda_id}}:
+    get:
+      summary: Obter venda
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      summary: Estornar venda
+      operationId: estornarVenda
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /ingressos/eventos:
+    get:
+      summary: Listar eventos bilheteria
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /ingressos/eventos/{{evento_id}}/ingressos:
+    get:
+      summary: Obter ingressos do evento
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /ingressos/vendas:
+    post:
+      summary: Criar venda de ingresso
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /ingressos/validacao/{{codigo}}:
+    get:
+      summary: Validar ingresso
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/conta-digital/pix:
+    post:
+      summary: Realizar PIX
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKeyHeader'
+      responses:
+        '201':
+          description: Created
+        '409':
+          description: Conflict
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /financeiro/estornos:
+    post:
+      summary: Solicitar estorno
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKeyHeader'
+      responses:
+        '201':
+          description: Created
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /integracao/webhooks/{{provedor}}:
+    post:
+      summary: Receber webhook do provedor
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        default:
+          $ref: '#/components/responses/ErrorResponse'

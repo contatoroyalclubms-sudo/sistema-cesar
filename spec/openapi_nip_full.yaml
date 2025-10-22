@@ -1,0 +1,997 @@
+openapi: 3.1.0
+info:
+  title: Sistema NIP - API Unificada Meep Compatible
+  description: |
+    API unificada do Sistema NIP compatível com o portal Meep.
+    
+    **Autenticação:** JWT Bearer Token (obter via POST /api/auth/login)
+    
+    **Módulos disponíveis:**
+    - Dashboard: Métricas e visão geral
+    - Financeiro: Transações, faturamento, relatórios
+    - PDV: Ponto de venda, operações, configurações
+    - Gestão de Venda: Vendas, comissões, metas
+    - Estoque: Produtos, movimentações, inventário
+    - Marketing: Campanhas, fidelidade, CRM
+    - BI: Business Intelligence, analytics
+    - Sistema ERP: Integração ERP, sincronização
+    - Automação: Workflows, triggers, integrações
+    - Integração: APIs externas, webhooks
+    - Usuários: Gestão de usuários, permissões
+    - Configurações: Parâmetros do sistema
+  version: 4.0.0
+  contact:
+    name: Sistema NIP
+    email: suporte@nip.com.br
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000
+    description: Desenvolvimento Local
+  - url: https://api.nip.com.br
+    description: Produção
+  - url: https://beta.portal.meep.com.br
+    description: Portal Meep (compatibilidade)
+
+# =============================================================================
+# SEGURANÇA JWT GLOBAL
+# =============================================================================
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token JWT obtido via POST /api/auth/login
+
+  # =============================================================================
+  # PARÂMETROS REUTILIZÁVEIS
+  # =============================================================================
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Número da página (inicia em 1)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    
+    PageSize:
+      name: pageSize
+      in: query
+      description: Quantidade de itens por página (máximo 100)
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    
+    Sort:
+      name: sort
+      in: query
+      description: Campo para ordenação
+      required: false
+      schema:
+        type: string
+        example: "created_at"
+    
+    Order:
+      name: order
+      in: query
+      description: Direção da ordenação
+      required: false
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: desc
+    
+    Search:
+      name: search
+      in: query
+      description: Termo para busca textual
+      required: false
+      schema:
+        type: string
+    
+    DateFrom:
+      name: dateFrom
+      in: query
+      description: Data inicial (formato ISO)
+      required: false
+      schema:
+        type: string
+        format: date
+    
+    DateTo:
+      name: dateTo
+      in: query
+      description: Data final (formato ISO)
+      required: false
+      schema:
+        type: string
+        format: date
+    
+    OwnerId:
+      name: ownerId
+      in: path
+      description: ID do proprietário/empresa
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  # =============================================================================
+  # SCHEMAS GLOBAIS
+  # =============================================================================
+  schemas:
+    # Schemas de resposta padrão
+    APIResponse:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: string
+          enum: [success, error, pending]
+        message:
+          type: string
+        data:
+          type: object
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+    
+    ResponseMeta:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        request_id:
+          type: string
+          format: uuid
+        pagination:
+          $ref: '#/components/schemas/PaginationMeta'
+    
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        pageSize:
+          type: integer
+          minimum: 1
+          maximum: 100
+        total:
+          type: integer
+          minimum: 0
+        totalPages:
+          type: integer
+          minimum: 0
+        hasNext:
+          type: boolean
+        hasPrev:
+          type: boolean
+    
+    ErrorResponse:
+      type: object
+      required:
+        - status
+        - message
+        - code
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+    
+    # Schemas de autenticação
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - senha
+      properties:
+        email:
+          type: string
+          format: email
+          example: "admin@meep.com.br"
+        senha:
+          type: string
+          format: password
+          example: "password123"
+    
+    TokenResponse:
+      type: object
+      required:
+        - access_token
+        - token_type
+      properties:
+        access_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        token_type:
+          type: string
+          example: "bearer"
+        expires_in:
+          type: integer
+          example: 3600
+        refresh_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+# =============================================================================
+# PATHS - AUTENTICAÇÃO (PÚBLICO)
+# =============================================================================
+paths:
+  /health:
+    get:
+      tags: [System]
+      summary: Health Check
+      description: Verifica se a API está funcionando
+      security: []  # Público
+      responses:
+        '200':
+          description: API funcionando
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: "4.0.0"
+
+  /api/auth/login:
+    post:
+      tags: [Autenticação]
+      summary: Realizar login
+      description: Autentica usuário e retorna token JWT
+      security: []  # Público
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Dados de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # =============================================================================
+  # MÓDULO: DASHBOARD
+  # =============================================================================
+  /api/dashboard:
+    get:
+      tags: [Dashboard]
+      summary: Obter dashboard principal
+      description: Retorna métricas e visão geral do sistema
+      parameters:
+        - $ref: '#/components/parameters/DateFrom'
+        - $ref: '#/components/parameters/DateTo'
+      responses:
+        '200':
+          description: Dashboard carregado com sucesso
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          metrics:
+                            type: object
+                            properties:
+                              total_vendas:
+                                type: number
+                                format: float
+                              total_clientes:
+                                type: integer
+                              total_produtos:
+                                type: integer
+                              receita_mensal:
+                                type: number
+                                format: float
+                          charts:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                title:
+                                  type: string
+                                type:
+                                  type: string
+                                  enum: [line, bar, pie, donut]
+                                data:
+                                  type: array
+
+  /api/dashboard/widgets:
+    get:
+      tags: [Dashboard]
+      summary: Listar widgets disponíveis
+      description: Retorna lista de widgets configuráveis do dashboard
+      responses:
+        '200':
+          description: Widgets carregados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+  # =============================================================================
+  # MÓDULO: EMPRESAS (REST NORMALIZADO)
+  # =============================================================================
+  /api/empresas:
+    get:
+      tags: [Empresas]
+      summary: Listar empresas
+      description: Retorna lista paginada de empresas
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Order'
+      responses:
+        '200':
+          description: Lista de empresas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+    
+    post:
+      tags: [Empresas]
+      summary: Criar nova empresa
+      description: Cria uma nova empresa no sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+                - cnpj
+              properties:
+                nome:
+                  type: string
+                  example: "Empresa Exemplo Ltda"
+                cnpj:
+                  type: string
+                  pattern: '^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$'
+                  example: "12.345.678/0001-90"
+                email:
+                  type: string
+                  format: email
+                telefone:
+                  type: string
+      responses:
+        '201':
+          description: Empresa criada com sucesso
+          headers:
+            Location:
+              description: URL da empresa criada
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        '422':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/empresas/{id}:
+    get:
+      tags: [Empresas]
+      summary: Obter empresa específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Dados da empresa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        '404':
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    put:
+      tags: [Empresas]
+      summary: Atualizar empresa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                telefone:
+                  type: string
+      responses:
+        '200':
+          description: Empresa atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        '404':
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      tags: [Empresas]
+      summary: Remover empresa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Empresa removida com sucesso
+        '404':
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/empresas/{id}/status:
+    patch:
+      tags: [Empresas]
+      summary: Alterar status da empresa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [ativo, inativo, suspenso]
+      responses:
+        '200':
+          description: Status alterado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+  # Rotas legadas (deprecated) - compatibilidade
+  /api/empresas/criar:
+    get:
+      tags: [Empresas - Legado]
+      summary: "[DEPRECATED] Criar empresa"
+      deprecated: true
+      description: "⚠️ DEPRECATED: Use POST /api/empresas"
+      responses:
+        '301':
+          description: Redirecionamento para nova rota
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "/api/empresas"
+
+  /api/empresas/listar:
+    get:
+      tags: [Empresas - Legado]
+      summary: "[DEPRECATED] Listar empresas"
+      deprecated: true
+      description: "⚠️ DEPRECATED: Use GET /api/empresas"
+      responses:
+        '301':
+          description: Redirecionamento para nova rota
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "/api/empresas"
+
+  # =============================================================================
+  # MÓDULO: FINANCEIRO
+  # =============================================================================
+  /api/financeiro/transacoes:
+    get:
+      tags: [Financeiro]
+      summary: Listar transações
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/DateFrom'
+        - $ref: '#/components/parameters/DateTo'
+        - name: tipo
+          in: query
+          schema:
+            type: string
+            enum: [receita, despesa, transferencia]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pendente, confirmada, cancelada]
+      responses:
+        '200':
+          description: Lista de transações
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          transacoes:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                valor:
+                                  type: number
+                                  format: float
+                                tipo:
+                                  type: string
+                                  enum: [receita, despesa, transferencia]
+                                status:
+                                  type: string
+                                  enum: [pendente, confirmada, cancelada]
+                                data_transacao:
+                                  type: string
+                                  format: date-time
+                                descricao:
+                                  type: string
+
+    post:
+      tags: [Financeiro]
+      summary: Criar nova transação
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          description: Chave de idempotência para evitar duplicatas
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - valor
+                - tipo
+                - descricao
+              properties:
+                valor:
+                  type: number
+                  format: float
+                  minimum: 0.01
+                tipo:
+                  type: string
+                  enum: [receita, despesa, transferencia]
+                descricao:
+                  type: string
+                categoria_id:
+                  type: string
+                  format: uuid
+      responses:
+        '201':
+          description: Transação criada com sucesso
+          headers:
+            Location:
+              description: URL da transação criada
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        '409':
+          description: Duplicata detectada (Idempotency-Key já usado)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/financeiro/relatorios/fluxo-caixa:
+    get:
+      tags: [Financeiro]
+      summary: Relatório de fluxo de caixa
+      parameters:
+        - $ref: '#/components/parameters/DateFrom'
+        - $ref: '#/components/parameters/DateTo'
+        - name: periodicidade
+          in: query
+          schema:
+            type: string
+            enum: [diario, semanal, mensal]
+            default: mensal
+      responses:
+        '200':
+          description: Dados do fluxo de caixa
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          periodo:
+                            type: object
+                            properties:
+                              inicio:
+                                type: string
+                                format: date
+                              fim:
+                                type: string
+                                format: date
+                          saldo_inicial:
+                            type: number
+                            format: float
+                          total_receitas:
+                            type: number
+                            format: float
+                          total_despesas:
+                            type: number
+                            format: float
+                          saldo_final:
+                            type: number
+                            format: float
+                          movimentacoes:
+                            type: array
+                            items:
+                              type: object
+
+  # =============================================================================
+  # MÓDULO: PDV (com aliases REST para rotas PascalCase)
+  # =============================================================================
+  /api/pdv/proprietario/tipo-vinculo:
+    get:
+      tags: [PDV]
+      summary: Listar tipos de vínculo do proprietário
+      responses:
+        '200':
+          description: Lista de tipos de vínculo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+  /api/pdv/configuracoes:
+    get:
+      tags: [PDV]
+      summary: Obter configurações do PDV
+      responses:
+        '200':
+          description: Configurações do PDV
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          impressora:
+                            type: object
+                            properties:
+                              habilitada:
+                                type: boolean
+                              modelo:
+                                type: string
+                          fiscal:
+                            type: object
+                            properties:
+                              regime:
+                                type: string
+                                enum: [simples, lucro_real, lucro_presumido]
+                              certificado:
+                                type: string
+
+    put:
+      tags: [PDV]
+      summary: Atualizar configurações do PDV
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                impressora:
+                  type: object
+                fiscal:
+                  type: object
+      responses:
+        '200':
+          description: Configurações atualizadas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+  # Rotas legadas PascalCase (deprecated com aliases)
+  /api/Proprietario/tipovinculo:
+    get:
+      tags: [PDV - Legado]
+      summary: "[DEPRECATED] Tipos de vínculo"
+      deprecated: true
+      description: "⚠️ DEPRECATED: Use GET /api/pdv/proprietario/tipo-vinculo"
+      responses:
+        '301':
+          description: Redirecionamento para nova rota
+          headers:
+            Location:
+              schema:
+                type: string
+                example: "/api/pdv/proprietario/tipo-vinculo"
+
+  # =============================================================================
+  # MÓDULO: MARKETING (Fidelidade & CRM)
+  # =============================================================================
+  /api/marketing/fidelidade/programas:
+    get:
+      tags: [Marketing]
+      summary: Listar programas de fidelidade
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ativo, inativo, pausado]
+      responses:
+        '200':
+          description: Lista de programas de fidelidade
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          programas:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                nome:
+                                  type: string
+                                tipo:
+                                  type: string
+                                  enum: [pontos, cashback, desconto]
+                                status:
+                                  type: string
+                                  enum: [ativo, inativo, pausado]
+                                regras:
+                                  type: object
+
+    post:
+      tags: [Marketing]
+      summary: Criar programa de fidelidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+                - tipo
+              properties:
+                nome:
+                  type: string
+                tipo:
+                  type: string
+                  enum: [pontos, cashback, desconto]
+                regras:
+                  type: object
+      responses:
+        '201':
+          description: Programa criado com sucesso
+          headers:
+            Location:
+              description: URL do programa criado
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+  /api/marketing/campanhas:
+    get:
+      tags: [Marketing]
+      summary: Listar campanhas de marketing
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/DateFrom'
+        - $ref: '#/components/parameters/DateTo'
+        - name: canal
+          in: query
+          schema:
+            type: string
+            enum: [email, sms, whatsapp, push]
+      responses:
+        '200':
+          description: Lista de campanhas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+    post:
+      tags: [Marketing]
+      summary: Criar nova campanha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+                - canal
+                - conteudo
+              properties:
+                nome:
+                  type: string
+                canal:
+                  type: string
+                  enum: [email, sms, whatsapp, push]
+                conteudo:
+                  type: object
+                agendamento:
+                  type: object
+                  properties:
+                    data_envio:
+                      type: string
+                      format: date-time
+      responses:
+        '201':
+          description: Campanha criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+
+# =============================================================================
+# TAGS ORGANIZACIONAIS
+# =============================================================================
+tags:
+  - name: System
+    description: Endpoints do sistema (health, versão)
+  - name: Autenticação
+    description: Login e gestão de tokens
+  - name: Dashboard
+    description: Métricas e visão geral
+  - name: Empresas
+    description: Gestão de empresas
+  - name: Empresas - Legado
+    description: Rotas legadas (deprecated)
+  - name: Financeiro
+    description: Transações, relatórios financeiros
+  - name: PDV
+    description: Ponto de venda e configurações
+  - name: PDV - Legado
+    description: Rotas PDV legadas (deprecated)
+  - name: Marketing
+    description: Campanhas, fidelidade, CRM
+  - name: Estoque
+    description: Produtos, movimentações
+  - name: Gestão de Venda
+    description: Vendas, comissões, metas
+  - name: BI
+    description: Business Intelligence
+  - name: Sistema ERP
+    description: Integração ERP
+  - name: Automação
+    description: Workflows e triggers
+  - name: Integração
+    description: APIs externas, webhooks
+  - name: Usuários
+    description: Gestão de usuários
+  - name: Configurações
+    description: Parâmetros do sistema

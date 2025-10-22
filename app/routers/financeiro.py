@@ -174,6 +174,131 @@ async def obter_saldo_conta(conta_id: int, db: Session = Depends(get_db)):
         "atualizado_em": datetime.now()
     }
 
+# ===== ENDPOINTS COMPATÍVEIS COM MEEP API =====
+
+@router.get("/ContaDigital/BuscarSaldoAtual/{local_id}")
+async def buscar_saldo_atual_meep(local_id: str, db: Session = Depends(get_db)):
+    """Endpoint compatível com Meep API"""
+    return {
+        "saldo_disponivel": 118.67,
+        "saldo_a_liberar": 0.00,
+        "saldo_retido": 2665.00,
+        "moeda": "BRL",
+        "local_id": local_id,
+        "atualizado_em": datetime.now().isoformat()
+    }
+
+@router.get("/ContaDigital/BuscarSaldoDaContaBancaria/{local_id}/{conta_id}")
+async def buscar_saldo_conta_bancaria_meep(
+    local_id: str, 
+    conta_id: str, 
+    disableError: Optional[bool] = Query(True),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return {
+        "conta_id": conta_id,
+        "local_id": local_id,
+        "saldo_disponivel": 118.67,
+        "saldo_bloqueado": 2665.00,
+        "instituicao": "260 - (Adquirência Meep) UNICA ENTRETENIMENTOS",
+        "agencia": "0001",
+        "conta": "7976689217",
+        "documento": "46685267000241"
+    }
+
+@router.get("/ContaDigital/BuscarDetalhamentoSaldoRetido/{conta_id}")
+async def buscar_detalhamento_saldo_retido_meep(
+    conta_id: str,
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return {
+        "conta_id": conta_id,
+        "saldo_retido_total": 2665.00,
+        "detalhes": [
+            {
+                "motivo": "Antecipação pendente",
+                "valor": 1500.00,
+                "data_liberacao_prevista": "2025-10-25"
+            },
+            {
+                "motivo": "Taxa de serviço retida",
+                "valor": 1165.00,
+                "data_liberacao_prevista": "2025-10-24"
+            }
+        ]
+    }
+
+@router.get("/ContaDigital/ProximasLiberacoes/{local_id}/{conta_id}")
+async def proximas_liberacoes_meep(
+    local_id: str,
+    conta_id: str,
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return {
+        "local_id": local_id,
+        "conta_id": conta_id,
+        "proximas_liberacoes": [
+            {
+                "data": "2025-10-24",
+                "valor": 1165.00,
+                "tipo": "Taxa de serviço"
+            },
+            {
+                "data": "2025-10-25",
+                "valor": 1500.00,
+                "tipo": "Antecipação"
+            }
+        ],
+        "total_a_liberar": 2665.00
+    }
+
+@router.get("/ContaDigital/GetExtract")
+async def get_extract_meep(
+    BankAccountId: Optional[str] = Query(None),
+    StartDate: str = Query(...),
+    EndDate: str = Query(...),
+    LocalId: str = Query(...),
+    Page: int = Query(0),
+    PageSize: int = Query(20),
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API para extrato"""
+    return {
+        "local_id": LocalId,
+        "conta_bancaria_id": BankAccountId,
+        "periodo": {
+            "inicio": StartDate,
+            "fim": EndDate
+        },
+        "pagina": Page,
+        "total_paginas": 5,
+        "total_registros": 95,
+        "transacoes": [
+            {
+                "data": "2025-10-22T14:30:00Z",
+                "descricao": "PIX Recebido - Venda",
+                "valor": 150.00,
+                "tipo": "CREDITO",
+                "saldo_apos": 268.67,
+                "forma_pagamento": "PIX"
+            },
+            {
+                "data": "2025-10-22T12:15:00Z",
+                "descricao": "Taxa de Serviço - Comandas",
+                "valor": -32.50,
+                "tipo": "DEBITO",
+                "saldo_apos": 118.67,
+                "forma_pagamento": "TAXA"
+            }
+        ]
+    }
+
 @router.post("/conta-digital/transacoes")
 async def criar_transacao(transacao: TransacaoContaDigital, db: Session = Depends(get_db)):
     return {
@@ -267,6 +392,133 @@ async def criar_permuta(permuta: Permuta, db: Session = Depends(get_db)):
         "id": 1,
         **permuta.dict(),
         "created_at": datetime.now()
+    }
+
+# ===== MAIS ENDPOINTS COMPATÍVEIS COM MEEP =====
+
+@router.get("/Financeiro/BuscarInstituicoesBancarias")
+async def buscar_instituicoes_bancarias_meep(
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return [
+        {
+            "codigo": "260",
+            "nome": "Adquirência Meep",
+            "nome_completo": "(Adquirência Meep) UNICA ENTRETENIMENTOS E RESTAURANTES LTDA"
+        },
+        {
+            "codigo": "001",
+            "nome": "Banco do Brasil",
+            "nome_completo": "Banco do Brasil S.A."
+        },
+        {
+            "codigo": "341",
+            "nome": "Itaú",
+            "nome_completo": "Itaú Unibanco S.A."
+        }
+    ]
+
+@router.get("/financial/totalLock/{local_id}/{conta_id}")
+async def total_lock_meep(
+    local_id: str,
+    conta_id: str,
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return {
+        "local_id": local_id,
+        "conta_id": conta_id,
+        "total_bloqueado": 2665.00,
+        "detalhes_bloqueio": {
+            "antecipacao": 1500.00,
+            "taxa_servico": 1165.00,
+            "outros": 0.00
+        }
+    }
+
+@router.get("/Local/BuscarContasVirtuaisMeep/{local_id}")
+async def buscar_contas_virtuais_meep(
+    local_id: str,
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return [
+        {
+            "id": "3e813119-7353-40e0-b340-5f3ecaca7fd7",
+            "local_id": local_id,
+            "banco": "260",
+            "agencia": "0001",
+            "conta": "7976689217",
+            "documento": "46685267000241",
+            "nome_conta": "UNICA ENTRETENIMENTOS E RESTAURANTES LTDA",
+            "tipo": "CONTA_DIGITAL",
+            "ativo": True
+        }
+    ]
+
+@router.get("/Local/BuscarDadosBancariosParaDepositoDoLocal/{local_id}")
+async def buscar_dados_bancarios_deposito(
+    local_id: str,
+    disableError: Optional[bool] = Query(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API"""
+    return {
+        "local_id": local_id,
+        "dados_deposito": {
+            "banco": "260",
+            "banco_nome": "Adquirência Meep",
+            "agencia": "0001",
+            "conta": "7976689217",
+            "documento": "46.685.267/0001-41",
+            "nome_titular": "UNICA ENTRETENIMENTOS E RESTAURANTES LTDA",
+            "chave_pix": "46685267000141",
+            "qr_code_pix": "00020126360014BR.GOV.BCB.PIX0114+5567996123456"
+        }
+    }
+
+@router.get("/app/Configuration/{local_id}")
+async def get_app_configuration_meep(
+    local_id: str,
+    disableError: Optional[bool] = Query(True),
+    db: Session = Depends(get_db)
+):
+    """Endpoint compatível com Meep API para configurações da aplicação"""
+    return {
+        "local_id": local_id,
+        "configuracoes": {
+            "nome_estabelecimento": "NOVA UNICA CLUB",
+            "documento": "46.685.267/0001-41",
+            "endereco": "Campo Grande - Mato Grosso do Sul",
+            "telefone": "(67) 99999-9999",
+            "email": "contato@unicaclub.com.br",
+            "funcionamento": {
+                "domingo": "22:00-06:00",
+                "segunda": "Fechado",
+                "terca": "Fechado",
+                "quarta": "22:00-06:00",
+                "quinta": "22:00-06:00",
+                "sexta": "22:00-06:00",
+                "sabado": "22:00-06:00"
+            },
+            "configuracoes_financeiras": {
+                "taxa_servico_padrao": 10.0,
+                "aceita_cartao": True,
+                "aceita_pix": True,
+                "aceita_dinheiro": True
+            },
+            "modulos_ativos": {
+                "conta_digital": True,
+                "ingressos": True,
+                "pos_pago": True,
+                "dashboard": True,
+                "relatorios": True
+            }
+        }
     }
 
 @router.get("/permutas")
@@ -879,3 +1131,240 @@ async def relatorio_contas(
                 {"fornecedor": "Fornecedor X", "valor": 10000.00, "vencimento": "2024-01-25"}
             ]
         }
+
+# Schemas - Contas Bancárias
+class ContaBancaria(BaseModel):
+    id: Optional[int] = None
+    banco: str  # Código ou nome do banco
+    agencia: str
+    conta: str
+    digito: str
+    tipo_conta: str  # CORRENTE, POUPANCA, SALARIO
+    titular: str
+    documento_titular: str
+    saldo_atual: float = 0.0
+    limite_especial: Optional[float] = None
+    status: str = "ATIVA"  # ATIVA, INATIVA, BLOQUEADA
+    data_abertura: datetime
+    gerente: Optional[str] = None
+    telefone_gerente: Optional[str] = None
+    observacoes: Optional[str] = None
+
+class MovimentacaoContaBancaria(BaseModel):
+    id: Optional[int] = None
+    conta_bancaria_id: int
+    tipo_movimentacao: str  # DEPOSITO, SAQUE, TRANSFERENCIA, DEBITO_AUTOMATICO, CREDITO
+    valor: float
+    data_movimentacao: datetime
+    descricao: str
+    numero_documento: Optional[str] = None
+    conta_destino: Optional[str] = None
+    saldo_anterior: float
+    saldo_posterior: float
+    conciliado: bool = False
+
+# Contas Bancárias
+@router.post("/contas-bancarias")
+async def criar_conta_bancaria(conta: ContaBancaria, db: Session = Depends(get_db)):
+    """Criar nova conta bancária"""
+    return {
+        "conta_id": 1,
+        "banco": conta.banco,
+        "agencia": conta.agencia,
+        "conta": f"{conta.conta}-{conta.digito}",
+        "titular": conta.titular,
+        "tipo": conta.tipo_conta,
+        "status": "CRIADA",
+        "data_criacao": datetime.now().isoformat(),
+        "saldo_inicial": conta.saldo_atual
+    }
+
+@router.get("/contas-bancarias")
+async def listar_contas_bancarias(
+    status: Optional[str] = Query(None, description="Status: ATIVA, INATIVA, BLOQUEADA"),
+    banco: Optional[str] = Query(None, description="Filtrar por banco"),
+    db: Session = Depends(get_db)
+):
+    """Listar contas bancárias com filtros"""
+    return {
+        "contas": [
+            {
+                "id": 1,
+                "banco": "001 - Banco do Brasil",
+                "agencia": "1234-5",
+                "conta": "12345678-9",
+                "tipo": "CORRENTE",
+                "titular": "Empresa XPTO LTDA",
+                "saldo_atual": 15678.90,
+                "status": "ATIVA",
+                "data_abertura": "2023-01-15"
+            },
+            {
+                "id": 2,
+                "banco": "341 - Itaú Unibanco",
+                "agencia": "5678",
+                "conta": "98765432-1",
+                "tipo": "CORRENTE",
+                "titular": "Empresa XPTO LTDA",
+                "saldo_atual": 8945.67,
+                "status": "ATIVA",
+                "data_abertura": "2023-03-10"
+            }
+        ],
+        "total": 2,
+        "filtros_aplicados": {
+            "status": status,
+            "banco": banco
+        }
+    }
+
+@router.get("/contas-bancarias/{conta_id}")
+async def obter_conta_bancaria(conta_id: int, db: Session = Depends(get_db)):
+    """Obter detalhes de uma conta bancária específica"""
+    return {
+        "id": conta_id,
+        "banco": "001 - Banco do Brasil",
+        "agencia": "1234-5",
+        "conta": "12345678-9",
+        "digito": "9",
+        "tipo": "CORRENTE",
+        "titular": "Empresa XPTO LTDA",
+        "documento_titular": "12.345.678/0001-90",
+        "saldo_atual": 15678.90,
+        "limite_especial": 5000.00,
+        "saldo_disponivel": 20678.90,
+        "status": "ATIVA",
+        "data_abertura": "2023-01-15T10:30:00",
+        "gerente": "João Silva",
+        "telefone_gerente": "(11) 99999-9999",
+        "observacoes": "Conta principal da empresa"
+    }
+
+@router.put("/contas-bancarias/{conta_id}")
+async def atualizar_conta_bancaria(conta_id: int, conta: ContaBancaria, db: Session = Depends(get_db)):
+    """Atualizar dados de uma conta bancária"""
+    return {
+        "conta_id": conta_id,
+        "status": "ATUALIZADA",
+        "alteracoes": {
+            "titular": conta.titular,
+            "limite_especial": conta.limite_especial,
+            "gerente": conta.gerente,
+            "telefone_gerente": conta.telefone_gerente,
+            "observacoes": conta.observacoes
+        },
+        "data_atualizacao": datetime.now().isoformat()
+    }
+
+@router.patch("/contas-bancarias/{conta_id}/status")
+async def alterar_status_conta_bancaria(
+    conta_id: int, 
+    status: str = Body(..., description="Novo status: ATIVA, INATIVA, BLOQUEADA"),
+    motivo: Optional[str] = Body(None, description="Motivo da alteração"),
+    db: Session = Depends(get_db)
+):
+    """Alterar status de uma conta bancária"""
+    return {
+        "conta_id": conta_id,
+        "status_anterior": "ATIVA",
+        "status_atual": status,
+        "motivo": motivo,
+        "data_alteracao": datetime.now().isoformat(),
+        "alterado_por": "sistema"
+    }
+
+@router.get("/contas-bancarias/{conta_id}/extrato")
+async def obter_extrato_conta_bancaria(
+    conta_id: int,
+    data_inicio: Optional[str] = Query(None, description="Data início (YYYY-MM-DD)"),
+    data_fim: Optional[str] = Query(None, description="Data fim (YYYY-MM-DD)"),
+    tipo_movimentacao: Optional[str] = Query(None, description="Tipo de movimentação"),
+    db: Session = Depends(get_db)
+):
+    """Obter extrato bancário com filtros"""
+    return {
+        "conta": {
+            "id": conta_id,
+            "banco": "001 - Banco do Brasil",
+            "conta": "12345678-9",
+            "titular": "Empresa XPTO LTDA"
+        },
+        "periodo": {
+            "inicio": data_inicio or "2024-01-01",
+            "fim": data_fim or datetime.now().strftime("%Y-%m-%d")
+        },
+        "saldo_inicial": 10000.00,
+        "saldo_final": 15678.90,
+        "movimentacoes": [
+            {
+                "id": 1,
+                "data": "2024-01-15T14:30:00",
+                "tipo": "DEPOSITO",
+                "valor": 5000.00,
+                "descricao": "Depósito em espécie",
+                "documento": "DEP-001",
+                "saldo_apos": 15000.00,
+                "conciliado": True
+            },
+            {
+                "id": 2,
+                "data": "2024-01-16T09:15:00",
+                "tipo": "TRANSFERENCIA",
+                "valor": -2000.00,
+                "descricao": "TED para fornecedor",
+                "documento": "TED-002",
+                "conta_destino": "Banco Itaú - Ag: 5678 - Conta: 98765",
+                "saldo_apos": 13000.00,
+                "conciliado": True
+            }
+        ],
+        "resumo": {
+            "total_entradas": 8678.90,
+            "total_saidas": 3000.00,
+            "saldo_liquido": 5678.90,
+            "quantidade_movimentacoes": 15
+        }
+    }
+
+@router.post("/contas-bancarias/{conta_id}/conciliacao")
+async def conciliar_extrato_bancario(
+    conta_id: int,
+    movimentacoes_ids: List[int] = Body(..., description="IDs das movimentações para conciliar"),
+    observacao: Optional[str] = Body(None, description="Observação da conciliação"),
+    db: Session = Depends(get_db)
+):
+    """Conciliar movimentações bancárias"""
+    return {
+        "conta_id": conta_id,
+        "movimentacoes_conciliadas": len(movimentacoes_ids),
+        "ids_processados": movimentacoes_ids,
+        "observacao": observacao,
+        "data_conciliacao": datetime.now().isoformat(),
+        "conciliado_por": "sistema",
+        "status": "CONCILIADO"
+    }
+
+@router.get("/contas-bancarias/{conta_id}/saldo-historico")
+async def obter_historico_saldos(
+    conta_id: int,
+    periodo: str = Query("30d", description="Período: 7d, 30d, 90d, 1y"),
+    db: Session = Depends(get_db)
+):
+    """Obter histórico de saldos da conta"""
+    return {
+        "conta_id": conta_id,
+        "periodo": periodo,
+        "historico": [
+            {"data": "2024-01-01", "saldo": 10000.00},
+            {"data": "2024-01-08", "saldo": 12500.50},
+            {"data": "2024-01-15", "saldo": 15678.90},
+            {"data": "2024-01-22", "saldo": 13240.75},
+            {"data": "2024-01-29", "saldo": 15678.90}
+        ],
+        "estatisticas": {
+            "saldo_medio": 13415.61,
+            "saldo_maximo": 15678.90,
+            "saldo_minimo": 10000.00,
+            "variacao_periodo": 5678.90
+        }
+    }

@@ -7,6 +7,10 @@ from app.database import get_db
 
 router = APIRouter(prefix="/api/estoque", tags=["Gestão de Estoque"])
 
+# Constantes para evitar duplicação
+LOCAL_ID_DESC = "ID do local"
+PRODUTO_EXEMPLO_NOME = "Produto Exemplo"
+
 # Schemas
 class ProdutoEstoque(BaseModel):
     id: Optional[int] = None
@@ -529,3 +533,139 @@ async def listar_auditoria(
             "ip_address": "192.168.1.100"
         }
     ]
+
+# Meep-compatible Estoque endpoints discovered during portal analysis
+# These endpoints maintain compatibility with Meep's legacy AngularJS-based stock management
+
+# Route to handle iframe-based legacy system integration
+@router.get("/posicao/iframe")
+async def estoque_posicao_iframe():
+    """
+    Legacy system compatibility endpoint for iframe-based stock position
+    Discovered: Uses portal.meep.cloud/estoque/posicao within iframe
+    """
+    return {
+        "iframe_url": "portal.meep.cloud/estoque/posicao",
+        "legacy_system": True,
+        "authentication_required": True,
+        "features": ["Entrada", "Saída", "Posição", "Motivo"]
+    }
+
+# Compatibility routes for legacy AngularJS services
+@router.get("/legacy/produtos")
+async def estoque_legacy_produtos(
+    local_id: str = Query(..., description=LOCAL_ID_DESC),
+    categoria_id: Optional[int] = Query(None, description="ID da categoria")
+):
+    """
+    Legacy compatibility endpoint for product stock management
+    Compatible with Angular estoqueService.js
+    """
+    return {
+        "produtos": [
+            {
+                "id": 1,
+                "codigo": "PROD001",
+                "nome": PRODUTO_EXEMPLO_NOME,
+                "categoria": "Bebidas",
+                "estoque_atual": 50,
+                "estoque_minimo": 10,
+                "estoque_maximo": 100,
+                "valor_unitario": 5.50,
+                "localizacao": "Depósito A",
+                "ativo": True
+            }
+        ],
+        "total": 1,
+        "localId": local_id
+    }
+
+@router.get("/legacy/movimentacoes")
+async def estoque_legacy_movimentacoes(
+    local_id: str = Query(..., description=LOCAL_ID_DESC),
+    tipo: Optional[str] = Query(None, description="Tipo de movimentação"),
+    data_inicio: Optional[str] = Query(None, description="Data início"),
+    data_fim: Optional[str] = Query(None, description="Data fim")
+):
+    """
+    Legacy compatibility endpoint for stock movements
+    Compatible with Angular movement tracking system
+    """
+    return {
+        "movimentacoes": [
+            {
+                "id": 1,
+                "produto_id": 1,
+                "produto_nome": PRODUTO_EXEMPLO_NOME,
+                "tipo": "ENTRADA",
+                "quantidade": 20,
+                "valor_unitario": 5.50,
+                "valor_total": 110.00,
+                "data_movimento": "2025-01-15T10:30:00Z",
+                "documento": "NF-001",
+                "usuario": "admin"
+            }
+        ],
+        "total": 1,
+        "localId": local_id
+    }
+
+@router.get("/legacy/posicao")
+async def estoque_legacy_posicao(
+    local_id: str = Query(..., description=LOCAL_ID_DESC),
+    produto_id: Optional[int] = Query(None, description="ID do produto")
+):
+    """
+    Legacy stock position endpoint
+    Main functionality for the Posição tab in the legacy system
+    """
+    return {
+        "posicao": [
+            {
+                "produto_id": 1,
+                "codigo": "PROD001",
+                "nome": PRODUTO_EXEMPLO_NOME,
+                "categoria": "Bebidas",
+                "estoque_atual": 50,
+                "valor_estoque": 275.00,
+                "ultima_movimentacao": "2025-01-15T10:30:00Z",
+                "estoque_minimo": 10,
+                "estoque_maximo": 100,
+                "status": "NORMAL"
+            }
+        ],
+        "total_itens": 1,
+        "valor_total_estoque": 275.00,
+        "localId": local_id
+    }
+
+@router.get("/legacy/motivos")
+async def estoque_legacy_motivos():
+    """
+    Stock movement reason codes for legacy system compatibility
+    """
+    return {
+        "motivos": [
+            {
+                "id": 1,
+                "codigo": "ENT01",
+                "descricao": "Compra de Mercadoria",
+                "tipo": "ENTRADA",
+                "ativo": True
+            },
+            {
+                "id": 2,
+                "codigo": "SAI01",
+                "descricao": "Venda",
+                "tipo": "SAIDA",
+                "ativo": True
+            },
+            {
+                "id": 3,
+                "codigo": "AJ01",
+                "descricao": "Ajuste de Inventário",
+                "tipo": "AJUSTE",
+                "ativo": True
+            }
+        ]
+    }

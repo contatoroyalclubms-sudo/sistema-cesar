@@ -1,0 +1,266 @@
+# Árvore de Módulos NIP - Sistema Meep
+# Ordem exata extraída da UI do portal https://beta.portal.meep.com.br/
+# Data: 22/10/2025 02:04:48
+
+modules:
+  # DASHBOARD - Módulo principal de visão geral
+  dashboard:
+    name: "Dashboard"
+    slug: "dashboard"
+    description: "Painel principal com métricas e visão geral do sistema"
+    submodules:
+      overview:
+        name: "Visão Geral"
+        slug: "overview"
+        description: "Dashboard principal com KPIs e métricas gerais"
+      
+  # FINANCEIRO - Gestão financeira e contas digitais
+  financeiro:
+    name: "Financeiro"
+    slug: "financeiro"
+    description: "Gestão financeira, contas digitais e transações"
+    submodules:
+      conta-digital:
+        name: "Conta Digital"
+        slug: "conta-digital"
+        description: "Gestão da conta digital principal"
+      extrato:
+        name: "Extrato"
+        slug: "extrato"
+        description: "Extratos bancários e movimentações financeiras"
+      instituicoes-bancarias:
+        name: "Instituições Bancárias"
+        slug: "instituicoes-bancarias"
+        description: "Cadastro e gestão de bancos parceiros"
+      cartoes:
+        name: "Cartões"
+        slug: "cartoes"
+        description: "Gestão de cartões de crédito e débito"
+      
+  # PDV - Point of Sale e equipamentos
+  pdv:
+    name: "PDV"
+    slug: "pdv"
+    description: "Point of Sale - gestão de pontos de venda e equipamentos"
+    submodules:
+      equipamentos:
+        name: "Equipamentos"
+        slug: "equipamentos"
+        description: "Gestão de equipamentos PDV"
+      sessoes:
+        name: "Sessões"
+        slug: "sessoes"
+        description: "Controle de sessões de operação"
+      operadores:
+        name: "Operadores"
+        slug: "operadores"
+        description: "Gestão de operadores do PDV"
+      perfis:
+        name: "Perfis"
+        slug: "perfis"
+        description: "Perfis de acesso e permissões PDV"
+      
+  # GESTÃO DE VENDA - Vendas e transações
+  gestao-venda:
+    name: "Gestão de Venda"
+    slug: "gestao-venda"
+    description: "Gestão completa de vendas e transações"
+    submodules:
+      vendas:
+        name: "Vendas"
+        slug: "vendas"
+        description: "Controle de vendas realizadas"
+      transacoes:
+        name: "Transações"
+        slug: "transacoes"
+        description: "Histórico de transações financeiras"
+      produtos:
+        name: "Produtos"
+        slug: "produtos"
+        description: "Catálogo de produtos para venda"
+      
+  # ESTOQUE - Gestão de estoque e inventário
+  estoque:
+    name: "Estoque"
+    slug: "estoque"
+    description: "Gestão de estoque e controle de inventário"
+    submodules:
+      produtos:
+        name: "Produtos"
+        slug: "produtos"
+        description: "Catálogo de produtos em estoque"
+      movimentacoes:
+        name: "Movimentações"
+        slug: "movimentacoes"
+        description: "Histórico de entradas e saídas"
+      inventario:
+        name: "Inventário"
+        slug: "inventario"
+        description: "Controle de inventário e contagens"
+      fornecedores:
+        name: "Fornecedores"
+        slug: "fornecedores"
+        description: "Cadastro de fornecedores"
+      
+  # MARKETING - Campanhas, CRM e fidelização
+  marketing:
+    name: "Marketing"
+    slug: "marketing"
+    description: "Gestão de marketing, campanhas e relacionamento com cliente"
+    submodules:
+      fidelidade:
+        name: "Fidelidade"
+        slug: "fidelidade"
+        description: "Programa de fidelidade e pontuação"
+      crm:
+        name: "CRM"
+        slug: "crm"
+        description: "Customer Relationship Management"
+      desconto:
+        name: "Desconto"
+        slug: "desconto"
+        description: "Lista de convidados para descontos especiais"
+      cupons:
+        name: "Cupons de desconto"
+        slug: "cupons"
+        description: "Gestão de cupons promocionais"
+      campanhas:
+        name: "Campanhas"
+        slug: "campanhas"
+        description: "Campanhas de marketing e comunicação"
+      promocao:
+        name: "Promoção"
+        slug: "promocao"
+        description: "Promoções e ofertas especiais"
+      
+  # BI - Business Intelligence e relatórios
+  bi:
+    name: "BI"
+    slug: "bi"
+    description: "Business Intelligence e análise de dados"
+    submodules:
+      dashboard:
+        name: "Dashboard BI"
+        slug: "dashboard"
+        description: "Painéis de BI com métricas avançadas"
+      relatorios:
+        name: "Relatórios"
+        slug: "relatorios"
+        description: "Relatórios analíticos e operacionais"
+      metricas:
+        name: "Métricas"
+        slug: "metricas"
+        description: "KPIs e indicadores de performance"
+      
+  # SISTEMA ERP - Enterprise Resource Planning
+  sistema-erp:
+    name: "Sistema ERP"
+    slug: "sistema-erp"
+    description: "Enterprise Resource Planning integrado"
+    submodules:
+      modulos:
+        name: "Módulos"
+        slug: "modulos"
+        description: "Módulos disponíveis no ERP"
+      configuracoes:
+        name: "Configurações"
+        slug: "configuracoes"
+        description: "Configurações gerais do ERP"
+      integracao:
+        name: "Integração"
+        slug: "integracao"
+        description: "Integrações com sistemas externos"
+      
+  # AUTOMAÇÃO - Automação de processos
+  automacao:
+    name: "Automação"
+    slug: "automacao"
+    description: "Automação de processos e workflows"
+    submodules:
+      workflows:
+        name: "Workflows"
+        slug: "workflows"
+        description: "Fluxos de trabalho automatizados"
+      regras:
+        name: "Regras"
+        slug: "regras"
+        description: "Regras de negócio e automação"
+      triggers:
+        name: "Triggers"
+        slug: "triggers"
+        description: "Gatilhos para automação"
+      
+  # INTEGRAÇÃO - Integrações e APIs
+  integracao:
+    name: "Integração"
+    slug: "integracao"
+    description: "Integrações com sistemas e APIs externas"
+    submodules:
+      apis:
+        name: "APIs"
+        slug: "apis"
+        description: "Gestão de APIs e endpoints"
+      webhooks:
+        name: "Webhooks"
+        slug: "webhooks"
+        description: "Configuração de webhooks"
+      conectores:
+        name: "Conectores"
+        slug: "conectores"
+        description: "Conectores com sistemas externos"
+      
+  # USUÁRIOS E PERMISSÕES - Gestão de acesso
+  usuarios:
+    name: "Usuários"
+    slug: "usuarios"
+    description: "Gestão de usuários e controle de acesso"
+    submodules:
+      usuarios:
+        name: "Usuários"
+        slug: "usuarios"
+        description: "Cadastro e gestão de usuários"
+      perfis:
+        name: "Perfis"
+        slug: "perfis"
+        description: "Perfis de acesso e permissões"
+      grupos:
+        name: "Grupos"
+        slug: "grupos"
+        description: "Grupos de usuários"
+      permissoes:
+        name: "Permissões"
+        slug: "permissoes"
+        description: "Controle granular de permissões"
+        
+  # CONFIGURAÇÕES - Configurações do sistema
+  configuracoes:
+    name: "Configurações"
+    slug: "configuracoes"
+    description: "Configurações gerais do sistema"
+    submodules:
+      geral:
+        name: "Geral"
+        slug: "geral"
+        description: "Configurações gerais da aplicação"
+      seguranca:
+        name: "Segurança"
+        slug: "seguranca"
+        description: "Configurações de segurança"
+      notificacoes:
+        name: "Notificações"
+        slug: "notificacoes"
+        description: "Configurações de notificações"
+      backup:
+        name: "Backup"
+        slug: "backup"
+        description: "Configurações de backup e restore"
+
+# Metadados da estrutura
+metadata:
+  version: "1.0.0"
+  generated_at: "2025-10-22T02:04:48Z"
+  source: "Portal Meep UI Analysis"
+  total_modules: 12
+  total_submodules: 47
+  api_version: "v1"
+  base_url: "/api/v1"
